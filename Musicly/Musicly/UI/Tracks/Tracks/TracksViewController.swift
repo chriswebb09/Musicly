@@ -34,7 +34,7 @@
     
     var musicIcon: UIImageView = {
         var musicIcon = UIImageView()
-        musicIcon.image = #imageLiteral(resourceName: "headphonesicon")
+        musicIcon.image = #imageLiteral(resourceName: "headphonesblue")
         return musicIcon
     }()
     
@@ -49,9 +49,6 @@
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         setupCollectionView()
         title = "Music.ly"
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -152,7 +149,8 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                      for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
         return cell
     }
@@ -250,6 +248,12 @@
         let searchString = searchController.searchBar.text
         
         if searchString != nil {
+            store?.setSearch(string: searchString!)
+            store?.searchForTracks { tracks, error in
+                self.store?.searchForTracks { tracks, error in
+                    self.tracks = tracks
+                }
+            }
         }
         collectionView.reloadData()
     }

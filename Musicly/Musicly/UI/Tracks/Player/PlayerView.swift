@@ -37,7 +37,6 @@ final class PlayerView: UIView {
     
     private var trackTitleView: UIView = {
         let trackTitleView = UIView()
-        trackTitleView.backgroundColor = .white
         return trackTitleView
     }()
     
@@ -153,8 +152,8 @@ final class PlayerView: UIView {
     private func setupArtworkView() {
         addSubview(artworkView)
         artworkView.translatesAutoresizingMaskIntoConstraints = false
-        artworkView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
-        artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
+        artworkView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.35).isActive = true
         artworkView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         artworkView.topAnchor.constraint(equalTo: trackTitleView.bottomAnchor).isActive = true
     }
@@ -162,7 +161,7 @@ final class PlayerView: UIView {
     private func setupAlbumArtworkView() {
         artworkView.addSubview(albumArtworkView)
         albumArtworkView.translatesAutoresizingMaskIntoConstraints = false
-        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.6).isActive = true
+        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.5).isActive = true
         albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.7).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
@@ -171,7 +170,7 @@ final class PlayerView: UIView {
     private func setupPreferencesView() {
         addSubview(preferencesView)
         preferencesView.translatesAutoresizingMaskIntoConstraints = false
-        preferencesView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.06).isActive = true
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
     }
@@ -196,10 +195,9 @@ final class PlayerView: UIView {
     
     private func setupControlsView() {
         addSubview(controlsView)
-        
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
-        controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
+        controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.45).isActive = true
         controlsView.topAnchor.constraint(equalTo: preferencesView.bottomAnchor).isActive = true
     }
     
@@ -207,7 +205,7 @@ final class PlayerView: UIView {
         trackTitleView.addSubview(trackTitleLabel)
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor, multiplier: 1).isActive = true
-        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 1).isActive = true
+        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
         trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
     }
     
@@ -217,16 +215,7 @@ final class PlayerView: UIView {
         playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.12).isActive = true
         playButton.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
         playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        playButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor).isActive = true
-    }
-    
-    private func setupProgressView() {
-        controlsView.addSubview(progressView)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.65).isActive = true
-        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
-        progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: controlsView.bounds.height * 0.05).isActive = true
     }
     
     private func setupPauseButton() {
@@ -235,7 +224,17 @@ final class PlayerView: UIView {
         pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.12).isActive = true
         pauseButton.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
         pauseButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        pauseButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor).isActive = true
+        pauseButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: controlsView.bounds.height * 0.05).isActive = true
+    }
+    
+    
+    private func setupProgressView() {
+        controlsView.addSubview(progressView)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.65).isActive = true
+        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
+        progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
+        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.15).isActive = true
     }
     
     private func setupTotalPlayLengthLabel() {
@@ -244,7 +243,7 @@ final class PlayerView: UIView {
         totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
         totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
         totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.04).isActive = true
-        totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+        totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.15).isActive = true
     }
     
     private func setupCurrentPlayLength() {
@@ -253,7 +252,7 @@ final class PlayerView: UIView {
         currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
         currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
         currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.04).isActive = true
-        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.15).isActive = true
     }
     
     fileprivate func setupView() {
@@ -264,7 +263,7 @@ final class PlayerView: UIView {
         setupThumbsUpButton()
         setupThumbsDownButton()
         setupControlsView()
-        setupTrackTitleView()
+        setupTrackTitleLabel()
         setupPlayButton()
         setupProgressView()
         setupPauseButton()

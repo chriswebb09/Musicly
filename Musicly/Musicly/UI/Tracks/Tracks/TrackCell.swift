@@ -9,7 +9,7 @@
 import UIKit
 
 final internal class TrackCell: UICollectionViewCell {
-    
+
     fileprivate var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
