@@ -18,3 +18,4 @@ extension UISearchBar {
         return ""
     }
 }
+

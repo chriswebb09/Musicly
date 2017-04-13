@@ -16,26 +16,29 @@ protocol iTrackDelegate: class {
 struct iTrack {
     
     weak var delegate: iTrackDelegate?
+    
     let trackName: String
     let artistName: String
     let artistId: Int
     let previewUrl: String
     let artworkUrl: String
     let collectionName: String
+    
     var downloaded: Bool {
         didSet {
-            print("DOWNLOAD complete \(downloaded)")
             delegate?.downloadIsComplete(downloaded: downloaded)
         }
     }
     
     init?(json: [String : Any]) {
+        
         if let trackName = json["trackName"] as? String,
             let artistName = json["artistName"] as? String,
             let artistId = json["artistId"] as? Int,
             let previewUrl = json["previewUrl"] as? String,
             let artworkUrl = json["artworkUrl100"] as? String,
             let collectionName = json["collectionName"] as? String {
+            
             self.trackName = trackName
             self.artistName = artistName
             self.artistId = artistId
@@ -59,9 +62,3 @@ extension iTrack: Hashable {
         return lhs.previewUrl == rhs.previewUrl
     }
 }
-
-
-
-
-
-

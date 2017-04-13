@@ -10,12 +10,21 @@ import UIKit
 
 extension UIViewController {
     func setupDefaultUI() {
-        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .lightGray
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for songs...", attributes: [NSForegroundColorAttributeName: UIColor.black])
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for songs...", attributes: [NSForegroundColorAttributeName: UIColor.white])
+    }
+    
+    func setSearchBarColor(searchBar: UISearchBar) {
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        //valueForKey("searchField") as? UITextField
+        
+        textFieldInsideSearchBar?.textColor = .white
     }
 }
+
+
 
 extension UICollectionView {
     
@@ -25,13 +34,21 @@ extension UICollectionView {
                                                             for: indexPath) as! HeaderReusableView
         return reusableView
     }
-}
 
-extension UICollectionView {
     func updateLayout(newLayout: UICollectionViewLayout) {
         DispatchQueue.main.async {
             self.reloadData()
             self.setCollectionViewLayout(newLayout, animated: true)
         }
     }
+    
+   func setupInfoLabel(infoLabel: UILabel) {
+        addSubview(infoLabel)
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0).isActive = true
+        infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
 }

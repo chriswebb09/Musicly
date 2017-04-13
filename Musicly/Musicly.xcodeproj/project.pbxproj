@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
+		A73268CF1E9F045200B48CD9 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CE1E9F045200B48CD9 /* PlayerViewController.swift */; };
+		A73268D11E9F046100B48CD9 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268D01E9F046100B48CD9 /* PlayerView.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
 		A7C995A61E9EA6CF004826EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A51E9EA6CF004826EE /* Assets.xcassets */; };
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
@@ -52,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		A73268CE1E9F045200B48CD9 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewController.swift; path = Tracks/PlayerViewController.swift; sourceTree = "<group>"; };
+		A73268D01E9F046100B48CD9 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = Tracks/PlayerView.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7C995A51E9EA6CF004826EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 				A73268C61E9EB61500B48CD9 /* Extensions */,
 				A73268CA1E9ECB1400B48CD9 /* HeaderReusableView */,
 				A73268C51E9EB60B00B48CD9 /* Tracks */,
+				A73268CE1E9F045200B48CD9 /* PlayerViewController.swift */,
+				A73268D01E9F046100B48CD9 /* PlayerView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				A7C995EE1E9EA6F6004826EE /* TracksViewController.swift in Sources */,
 				A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */,
 				A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */,
+				A73268D11E9F046100B48CD9 /* PlayerView.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
@@ -410,6 +417,7 @@
 				A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */,
 				A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */,
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
+				A73268CF1E9F045200B48CD9 /* PlayerViewController.swift in Sources */,
 				A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */,
 				A7C995ED1E9EA6F6004826EE /* TrackCell.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,

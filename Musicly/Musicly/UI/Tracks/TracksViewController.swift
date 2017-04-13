@@ -77,17 +77,8 @@
         collectionView.frame = UIScreen.main.bounds
         collectionView.backgroundColor = CollectionViewAttributes.backgroundColor
         view.addSubview(collectionView)
-        setupInfoLabel()
+        collectionView.setupInfoLabel(infoLabel: infoLabel)
         collectionViewRegister()
-    }
-    
-    private func setupInfoLabel() {
-        collectionView.addSubview(infoLabel)
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.5).isActive = true
-        infoLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1.0).isActive = true
-        infoLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
-        infoLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
     }
     
     private func collectionViewRegister() {
@@ -133,11 +124,6 @@
         }
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBarActive = true
-        view.endEditing(true)
-    }
-    
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchBarActive = false
         searchBar.setShowsCancelButton(false, animated: false)
@@ -174,6 +160,14 @@
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let track = tracks?[indexPath.row] {
+            let destinationVC = PlayerViewController()
+            destinationVC.track = track
+            navigationController?.pushViewController(destinationVC, animated: false)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
@@ -204,6 +198,7 @@
  }
  
  extension TracksViewController: TrackCellDelegate {
+    
     func pauseButtonTapped(tapped: Bool) {
         player.pause()
     }
@@ -265,8 +260,21 @@
         searchBarActive = false
     }
     
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if !searchBarActive {
+            searchBarActive = true
+            collectionView.reloadData()
+        }
+        searchController.searchBar.resignFirstResponder()
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBarActive = false
+        if !searchBarActive {
+            searchBarActive = true
+            collectionView.reloadData()
+        }
+        searchController.searchBar.resignFirstResponder()
+//        searchBarActive = false
     }
     
     fileprivate func noSearchBarInput() {
@@ -307,8 +315,20 @@
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        self.searchController.isActive = true
+        let searchString = searchController.searchBar.text
+        
+        if searchString != nil {
+            //let saidByFilter = filteredPosts.filter { $0.author.containsString(searchString!) }
+           // let hearByFilter = filteredPosts.filter { stringVersion($0.heardBy).containsString(searchString!) }
+            
+            //searchFilteredPosts = saidByFilter + hearByFilter
+        }
+        collectionView.reloadData()
     }
+    
+//    func updateSearchResultsForSearchController(searchController: UISearchController) {
+//        self.searchController.isActive = true
+//    }
     
     public func updateSearchResults(for searchController: UISearchController) {
         searchBarActive = true
@@ -348,10 +368,11 @@
     func setupResuableView(_ reuseableView: HeaderReusableView) {
         reuseableView.searchBar = searchController.searchBar
         reuseableView.searchBar.delegate = self
+        setSearchBarColor(searchBar: reuseableView.searchBar)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         reuseableView.searchBar.delegate = self
-        reuseableView.searchBar.barTintColor = .black
+        reuseableView.searchBar.barTintColor = .white
     }
  }

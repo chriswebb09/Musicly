@@ -18,14 +18,14 @@ final internal class TrackCell: UICollectionViewCell {
     
     weak var delegate: TrackCellDelegate?
     
-    var downloadOverlayView: UIView = {
+    fileprivate var downloadOverlayView: UIView = {
         let downloadOverlay = UIView()
         downloadOverlay.backgroundColor = .black
         downloadOverlay.alpha = 0
         return downloadOverlay
     }()
     
-    var downloaded: Bool = false {
+   fileprivate var downloaded: Bool = false {
         didSet {
             playButton.alpha = 0.6
             downloadOverlayView.alpha = 0
@@ -33,25 +33,25 @@ final internal class TrackCell: UICollectionViewCell {
         }
     }
     
-    var downloadButton: UIButton = {
+    fileprivate var downloadButton: UIButton = {
         var downloadButton = UIButton()
         downloadButton.setImage(#imageLiteral(resourceName: "download200x"), for: .normal)
         return downloadButton
     }()
     
-    var playButton: UIButton = {
+    fileprivate var playButton: UIButton = {
         var playButton = UIButton()
         playButton.setImage(#imageLiteral(resourceName: "pausebutton200x"), for: .normal)
         return playButton
     }()
     
-    var pauseButton: UIButton = {
+    fileprivate var pauseButton: UIButton = {
         var pauseButton = UIButton()
         pauseButton.setImage(#imageLiteral(resourceName: "playbutton200x"), for: .normal)
         return pauseButton
     }()
     
-    var progressLabel: UILabel = {
+    fileprivate var progressLabel: UILabel = {
         var progressLabel = UILabel()
         progressLabel.textColor = .white
         progressLabel.font = UIFont(name: "Avenir-Black", size: 16)
@@ -59,7 +59,7 @@ final internal class TrackCell: UICollectionViewCell {
         return progressLabel
     }()
     
-    var trackNameLabel: UILabel = {
+    fileprivate var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
         trackName.font = UIFont(name: "Avenir-Light", size: 12)
@@ -68,7 +68,7 @@ final internal class TrackCell: UICollectionViewCell {
         return trackName
     }()
     
-    var albumArtView: UIImageView = {
+    fileprivate var albumArtView: UIImageView = {
         var album = UIImageView()
         return album
     }()

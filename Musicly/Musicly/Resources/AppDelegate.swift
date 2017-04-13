@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = TracksViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: viewController)
+        UINavigationBar.appearance().tintColor = NavigationBarAttributes.navBarTint
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "Avenir-Light", size: 18)!,
+            NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        ]
         window?.makeKeyAndVisible()
         return true
     }
