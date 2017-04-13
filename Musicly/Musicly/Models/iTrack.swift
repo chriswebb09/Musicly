@@ -13,16 +13,20 @@ protocol iTrackDelegate: class {
     func downloadIsComplete(downloaded: Bool)
 }
 
+enum Thumbs {
+    case up, down, none
+}
+
 struct iTrack {
     
     weak var delegate: iTrackDelegate?
-    
     let trackName: String
     let artistName: String
     let artistId: Int
     let previewUrl: String
     let artworkUrl: String
     let collectionName: String
+    var thumbs: Thumbs
     
     var downloaded: Bool {
         didSet {
@@ -46,6 +50,7 @@ struct iTrack {
             self.artworkUrl = artworkUrl
             self.collectionName = collectionName
             self.downloaded = false
+            self.thumbs = .none
         } else {
             return nil
         }

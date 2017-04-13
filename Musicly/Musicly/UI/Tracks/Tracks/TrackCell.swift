@@ -95,7 +95,6 @@ final internal class TrackCell: UICollectionViewCell {
         pauseButton.isEnabled = false
         playButton.alpha = 0
         pauseButton.alpha = 0
-        ///downloadButton.alpha = 0.6
         layoutSubviews()
     }
     

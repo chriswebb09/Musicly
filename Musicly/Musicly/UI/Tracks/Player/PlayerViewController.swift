@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class PlayerViewController: UIViewController {
+final class PlayerViewController: UIViewController {
     
     var playerView: PlayerView = PlayerView()
     var track: iTrack?
@@ -42,20 +42,28 @@ class PlayerViewController: UIViewController {
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
         player.rate = PlayerAttributes.playerRate
+        player.pause()
     }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    func thumbsDownTapped() {
+        track?.thumbs = .down
+         print("thumbs down")
+    }
+
+    func thumbsUpTapped() {
+        track?.thumbs = .up
+        print("thumbs up")
+    }
+
     
     func pauseButtonTapped() {
-        player.currentItem?.duration
         print("pause")
         player.pause()
     }
     
     func playButtonTapped() {
-       
-        
         player.play()
     }
     

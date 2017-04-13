@@ -14,9 +14,11 @@ protocol PlayerViewDelegate: class {
     func downloadButtonTapped()
     func playButtonTapped()
     func pauseButtonTapped()
+    func thumbsUpTapped()
+    func thumbsDownTapped()
 }
 
-class PlayerView: UIView {
+final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     
@@ -104,6 +106,7 @@ class PlayerView: UIView {
     fileprivate var playButton: UIButton = {
         var playButton = UIButton()
         playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
+        
         return playButton
     }()
     
@@ -127,31 +130,25 @@ class PlayerView: UIView {
         }
         albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
         trackTitleView.layer.setCellShadow(contentView: trackTitleView)
+        playButton.layer.setViewShadow(view: playButton)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+        thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
+        thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
     }
     
     func setupTime(time: CMTime) {
         if let track = track {
             let asset = AVAsset(url: URL(string: track.previewUrl)!)
-            
-            
-                //AVURLAsset(URL: URL(string: track.previewUrl)!, options: nil)
             let audioDuration = asset.duration
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
             let minutes = Int(audioDurationSeconds / 60)
             let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-           // print(rem) // 0.3
-            
-           // let seconds = Float(audioDurationSeconds) % 60
-            
             DispatchQueue.main.async {
                 self.totalPlayLengthLabel.text = "\(minutes):\(rem)"
             }
-            
             print(time)
         }
-       
     }
     
     func setupView() {
@@ -184,16 +181,16 @@ class PlayerView: UIView {
         
         preferencesView.addSubview(thumbsUpButton)
         thumbsUpButton.translatesAutoresizingMaskIntoConstraints = false
-        thumbsUpButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.08).isActive = true
+        thumbsUpButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.07).isActive = true
         thumbsUpButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
-        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.08).isActive = true
+        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.1).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         
         preferencesView.addSubview(thumbsDownButton)
         thumbsDownButton.translatesAutoresizingMaskIntoConstraints = false
-        thumbsDownButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.08).isActive = true
+        thumbsDownButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.07).isActive = true
         thumbsDownButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
-        thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * -0.08).isActive = true
+        thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * -0.1).isActive = true
         thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         
         addSubview(controlsView)
@@ -226,17 +223,15 @@ class PlayerView: UIView {
         totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
         totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.02).isActive = true
+        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.04).isActive = true
         totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
-
         
         controlsView.addSubview(currentPlayLength)
         currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
         currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
         currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.02).isActive = true
+        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.04).isActive = true
         currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
-
         
         controlsView.addSubview(pauseButton)
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
@@ -247,7 +242,18 @@ class PlayerView: UIView {
     }
     
     func downloadButtonTapped() {
+        
         delegate?.downloadButtonTapped()
+    }
+    
+    func thumbsUpTapped() {
+        thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+        delegate?.thumbsUpTapped()
+    }
+    
+    func thumbsDownTapped() {
+        thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
+        delegate?.thumbsDownTapped()
     }
     
     func playButtonTapped() {

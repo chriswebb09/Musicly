@@ -15,15 +15,4 @@ class Search {
     }
 }
 
-//        self.store?.setSearch(string: searchTerm)
-//        if let store = store {
-//            store.searchForTracks { newTracks, error in
-//                if let tracks = newTracks {
-//                    for track in tracks {
-//                        self.tracks?.append(track)
-//                    }
-//                    completion()
-//                }
-//            }
-//        }
-//    }
+

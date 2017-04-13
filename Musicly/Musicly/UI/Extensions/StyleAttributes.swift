@@ -37,7 +37,6 @@ struct PlayerAttributes {
 
 struct NavigationBarAttributes {
     static let navBarTint = UIColor.white
-    //UIColor(red:0.79, green:0.79, blue:0.81, alpha:1.0)
 }
 
 enum RowSize {

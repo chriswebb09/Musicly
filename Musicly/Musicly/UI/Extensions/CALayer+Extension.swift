@@ -9,18 +9,19 @@
 import UIKit
 
 extension CALayer {
-//    func setCellShadow(contentView: UIView) {
-//        let shadowOffsetWidth: CGFloat = contentView.bounds.height * 0.00001
-//        let shadowOffsetHeight: CGFloat = contentView.bounds.width * 0.0002
-//        shadowColor = UIColor.black.cgColor
-//        shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
-//        shadowRadius = 1.5
-//        shadowOpacity = 0.5
-//    }
     
     func setCellShadow(contentView: UIView) {
         let shadowOffsetWidth: CGFloat = contentView.bounds.height * 0.00001
         let shadowOffsetHeight: CGFloat = contentView.bounds.width * 0.0002
+        shadowColor = UIColor.black.cgColor
+        shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
+        shadowRadius = 1.5
+        shadowOpacity = 0.5
+    }
+    
+    func setViewShadow(view: UIView) {
+        let shadowOffsetWidth: CGFloat = view.bounds.height * 0.00001
+        let shadowOffsetHeight: CGFloat = view.bounds.width * 0.0002
         shadowColor = UIColor.black.cgColor
         shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         shadowRadius = 1.5
