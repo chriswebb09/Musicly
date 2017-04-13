@@ -242,17 +242,42 @@ final class PlayerView: UIView {
     }
     
     func downloadButtonTapped() {
-        
         delegate?.downloadButtonTapped()
     }
     
+    func switchThumbs() {
+        if let track = track {
+            if track.thumbs == .down {
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+            } else if track.thumbs == .up {
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
+            } else if track.thumbs == .none {
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
+            }
+        }
+    }
+    
     func thumbsUpTapped() {
-        thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+        
+        if self.track?.thumbs == .up {
+            self.track?.thumbs = .none
+        } else {
+            self.track?.thumbs = .up
+        }
+        switchThumbs()
         delegate?.thumbsUpTapped()
     }
     
     func thumbsDownTapped() {
-        thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
+        if self.track?.thumbs == .down {
+            self.track?.thumbs = .none
+        } else {
+            self.track?.thumbs = .down
+        }
+        switchThumbs()
         delegate?.thumbsDownTapped()
     }
     

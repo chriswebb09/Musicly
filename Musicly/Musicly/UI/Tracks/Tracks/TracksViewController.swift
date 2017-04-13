@@ -7,7 +7,6 @@
  //
  
  import UIKit
- import AVFoundation
  
  private let reuseIdentifier = "trackCell"
  private let headerIdentifier = "headerView"
@@ -19,13 +18,8 @@
     let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore?
     var tracks: [iTrack?]?
-    var downloads: [String: Download?]?
-    var collections: [String] = [String]()
-    var searchBarActive: Bool = false
     
-    lazy var player: AVPlayer = {
-        return AVPlayer()
-    }()
+    var searchBarActive: Bool = false
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -36,22 +30,8 @@
         return layout
     }()
     
-    fileprivate lazy var big: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = EdgeAttributes.sectionInset
-        layout.itemSize = RowSize.largeLayout.rawValue
-        return layout
-    }()
+    var infoLabel: UILabel = UILabel.setupInfoLabel()
     
-    var infoLabel: UILabel = {
-        var infoLabel = UILabel()
-        infoLabel.textAlignment = .center
-        infoLabel.textColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
-        infoLabel.font = UIFont(name: "Avenir-Book", size: 18)!
-        infoLabel.text = "Search for music"
-        return infoLabel
-    }()
-
     var musicIcon: UIImageView = {
         var musicIcon = UIImageView()
         musicIcon.image = #imageLiteral(resourceName: "headphonesicon")
@@ -154,19 +134,12 @@
     }
  }
  
- extension TracksViewController: iTrackDelegate {
-    
-    func downloadIsComplete(downloaded: Bool) {
-        print("COMPLETED")
-    }
+ extension TracksViewController {
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         if let index = indexPath,
-            var track = tracks?[index.row] {
+            let track = tracks?[index.row] {
             cell.configureWith(track)
-            cell.delegate = self
-            track.delegate = self
-            collections.append(track.collectionName)
         }
     }
     
@@ -204,58 +177,6 @@
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
         return 5
-    }
- }
- 
- extension TracksViewController: TrackCellDelegate {
-    
-    func pauseButtonTapped(tapped: Bool) {
-        player.pause()
-    }
-    
-    private func setupPlayer(url: URL) {
-        let playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-        player.rate = PlayerAttributes.playerRate
-    }
-    
-    @objc internal func playButtonTapped(tapped: Bool, download: Download?) {
-        if let urlString = download?.url, let url = URL(string: urlString) {
-            print(url)
-            setupPlayer(url: url)
-            player.play()
-        }
-    }
-    
-    private func getLocalURL(from newTrack: Download?) -> URL? {
-        if let newTrack = newTrack,
-            let url = newTrack.url,
-            let localUrl = LocalStorageManager.localFilePathForUrl(url) {
-            return localUrl
-        }
-        return nil
-    }
-    
-    private func getDownloadURL(from download: Download?) {
-        if let url = download?.url {
-            downloads?[url] = download
-        }
-    }
-    
-    @objc func download(_ download: Download?) {
-        if let store = store {
-            store.downloadTrackPreview(for: download)
-        }
-    }
-    
-    @objc func downloadButtonTapped(tapped: Bool, download: Download?) {
-        if let download = download {
-            sendDownloadRequest(download: download)
-        }
-    }
-    
-    @objc func sendDownloadRequest(download: Download) {
-        self.download(download)
     }
  }
  
@@ -332,18 +253,13 @@
         }
         collectionView.reloadData()
     }
-
+    
     public func updateSearchResults(for searchController: UISearchController) {
         searchBarActive = true
     }
  }
  
  extension TracksViewController: UISearchBarDelegate {
-    
-    func removeData() {
-        downloads?.removeAll()
-        tracks?.removeAll()
-    }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBarActive = false

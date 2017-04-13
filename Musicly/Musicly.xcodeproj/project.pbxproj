@@ -34,6 +34,7 @@
 		A7CBC3E91E9FBACF00C95A50 /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3E71E9FBACF00C95A50 /* TracksViewController.swift */; };
 		A7CBC3EC1E9FBAE000C95A50 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EA1E9FBAE000C95A50 /* PlayerView.swift */; };
 		A7CBC3ED1E9FBAE000C95A50 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EB1E9FBAE000C95A50 /* PlayerViewController.swift */; };
+		A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		A7CBC3E71E9FBACF00C95A50 /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewController.swift; path = Tracks/TracksViewController.swift; sourceTree = "<group>"; };
 		A7CBC3EA1E9FBAE000C95A50 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = Tracks/Player/PlayerView.swift; sourceTree = "<group>"; };
 		A7CBC3EB1E9FBAE000C95A50 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewController.swift; path = Tracks/Player/PlayerViewController.swift; sourceTree = "<group>"; };
+		A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */,
 				A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */,
 				A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */,
+				A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
 				A7C995EA1E9EA6F6004826EE /* iTrack.swift in Sources */,
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
+				A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */,
 				A7C995D51E9EA6DF004826EE /* DataParser.swift in Sources */,
 				A7CBC3E51E9FB7DA00C95A50 /* Playlist.swift in Sources */,
 				A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */,
