@@ -38,3 +38,14 @@ final class Download: Operation {
         self.url = url
     }
 }
+
+extension Download {
+    
+    func getDownloadURL() -> URL? {
+        if let url = self.url {
+            return URL(string: url)
+        }
+        return nil
+    }
+    
+}

@@ -16,30 +16,29 @@
 		A7C995D51E9EA6DF004826EE /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CC1E9EA6DF004826EE /* DataParser.swift */; };
 		A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CD1E9EA6DF004826EE /* DataStorage.swift */; };
 		A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */; };
-		A7C995D81E9EA6DF004826EE /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CF1E9EA6DF004826EE /* Download.swift */; };
-		A7C995D91E9EA6DF004826EE /* Download+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D01E9EA6DF004826EE /* Download+Extension.swift */; };
-		A7C995DA1E9EA6DF004826EE /* DownloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D11E9EA6DF004826EE /* DownloadStatus.swift */; };
 		A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D31E9EA6DF004826EE /* Filter.swift */; };
 		A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */; };
 		A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */; };
-		A7C995EA1E9EA6F6004826EE /* iTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DF1E9EA6F6004826EE /* iTrack.swift */; };
 		A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E01E9EA6F6004826EE /* Search.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
 		A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */; };
 		A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */; };
 		A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */; };
 		A7C995F51E9EA707004826EE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995F41E9EA707004826EE /* APIClient.swift */; };
-		A7CBC3E51E9FB7DA00C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3E41E9FB7DA00C95A50 /* Playlist.swift */; };
 		A7CBC3E81E9FBACF00C95A50 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3E61E9FBACF00C95A50 /* TrackCell.swift */; };
 		A7CBC3E91E9FBACF00C95A50 /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3E71E9FBACF00C95A50 /* TracksViewController.swift */; };
 		A7CBC3EC1E9FBAE000C95A50 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EA1E9FBAE000C95A50 /* PlayerView.swift */; };
 		A7CBC3ED1E9FBAE000C95A50 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EB1E9FBAE000C95A50 /* PlayerViewController.swift */; };
 		A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */; };
 		A7CBC3F21E9FD14500C95A50 /* PlayerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F11E9FD14500C95A50 /* PlayerViewDelegate.swift */; };
-		A7CBC3F41E9FD19E00C95A50 /* DownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F31E9FD19E00C95A50 /* DownloadDelegate.swift */; };
-		A7CBC3F61E9FD1C800C95A50 /* iTrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F51E9FD1C800C95A50 /* iTrackDelegate.swift */; };
-		A7CBC3F81E9FD1DC00C95A50 /* Thumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F71E9FD1DC00C95A50 /* Thumbs.swift */; };
 		A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */; };
+		A7CBC4011E9FE61500C95A50 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3FE1E9FE61500C95A50 /* Download.swift */; };
+		A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3FF1E9FE61500C95A50 /* DownloadDelegate.swift */; };
+		A7CBC4031E9FE61500C95A50 /* DownloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4001E9FE61500C95A50 /* DownloadStatus.swift */; };
+		A7CBC4071E9FE62300C95A50 /* iTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4041E9FE62300C95A50 /* iTrack.swift */; };
+		A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */; };
+		A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4061E9FE62300C95A50 /* Thumbs.swift */; };
+		A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC40A1E9FE63000C95A50 /* Playlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,30 +74,29 @@
 		A7C995CC1E9EA6DF004826EE /* DataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		A7C995CD1E9EA6DF004826EE /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDataStore.swift; sourceTree = "<group>"; };
-		A7C995CF1E9EA6DF004826EE /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
-		A7C995D01E9EA6DF004826EE /* Download+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Download+Extension.swift"; sourceTree = "<group>"; };
-		A7C995D11E9EA6DF004826EE /* DownloadStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadStatus.swift; sourceTree = "<group>"; };
 		A7C995D31E9EA6DF004826EE /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCounter.swift; sourceTree = "<group>"; };
-		A7C995DF1E9EA6F6004826EE /* iTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrack.swift; sourceTree = "<group>"; };
 		A7C995E01E9EA6F6004826EE /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
 		A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		A7C995F41E9EA707004826EE /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		A7CBC3E41E9FB7DA00C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		A7CBC3E61E9FBACF00C95A50 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCell.swift; path = Tracks/TrackCell.swift; sourceTree = "<group>"; };
 		A7CBC3E71E9FBACF00C95A50 /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewController.swift; path = Tracks/TracksViewController.swift; sourceTree = "<group>"; };
 		A7CBC3EA1E9FBAE000C95A50 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = Tracks/Player/PlayerView.swift; sourceTree = "<group>"; };
 		A7CBC3EB1E9FBAE000C95A50 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewController.swift; path = Tracks/Player/PlayerViewController.swift; sourceTree = "<group>"; };
 		A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		A7CBC3F11E9FD14500C95A50 /* PlayerViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewDelegate.swift; path = Tracks/Player/PlayerViewDelegate.swift; sourceTree = "<group>"; };
-		A7CBC3F31E9FD19E00C95A50 /* DownloadDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadDelegate.swift; sourceTree = "<group>"; };
-		A7CBC3F51E9FD1C800C95A50 /* iTrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDelegate.swift; sourceTree = "<group>"; };
-		A7CBC3F71E9FD1DC00C95A50 /* Thumbs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbs.swift; sourceTree = "<group>"; };
 		A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		A7CBC3FE1E9FE61500C95A50 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Download/Download.swift; sourceTree = "<group>"; };
+		A7CBC3FF1E9FE61500C95A50 /* DownloadDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadDelegate.swift; path = Download/DownloadDelegate.swift; sourceTree = "<group>"; };
+		A7CBC4001E9FE61500C95A50 /* DownloadStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadStatus.swift; path = Download/DownloadStatus.swift; sourceTree = "<group>"; };
+		A7CBC4041E9FE62300C95A50 /* iTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iTrack.swift; path = iTrack/iTrack.swift; sourceTree = "<group>"; };
+		A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iTrackDelegate.swift; path = iTrack/iTrackDelegate.swift; sourceTree = "<group>"; };
+		A7CBC4061E9FE62300C95A50 /* Thumbs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Thumbs.swift; path = iTrack/Thumbs.swift; sourceTree = "<group>"; };
+		A7CBC40A1E9FE63000C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Playlist/Playlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,14 +127,9 @@
 		A73268C21E9EB5BD00B48CD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A7C995D01E9EA6DF004826EE /* Download+Extension.swift */,
-				A7C995CF1E9EA6DF004826EE /* Download.swift */,
-				A7CBC3F31E9FD19E00C95A50 /* DownloadDelegate.swift */,
-				A7C995D11E9EA6DF004826EE /* DownloadStatus.swift */,
-				A7C995DF1E9EA6F6004826EE /* iTrack.swift */,
-				A7CBC3F71E9FD1DC00C95A50 /* Thumbs.swift */,
-				A7CBC3F51E9FD1C800C95A50 /* iTrackDelegate.swift */,
-				A7CBC3E41E9FB7DA00C95A50 /* Playlist.swift */,
+				A7CBC3FB1E9FE56C00C95A50 /* Download */,
+				A7CBC3FC1E9FE57700C95A50 /* iTrack */,
+				A7CBC3FD1E9FE58200C95A50 /* Playlist */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,6 +285,34 @@
 			name = Player;
 			sourceTree = "<group>";
 		};
+		A7CBC3FB1E9FE56C00C95A50 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				A7CBC3FE1E9FE61500C95A50 /* Download.swift */,
+				A7CBC3FF1E9FE61500C95A50 /* DownloadDelegate.swift */,
+				A7CBC4001E9FE61500C95A50 /* DownloadStatus.swift */,
+			);
+			name = Download;
+			sourceTree = "<group>";
+		};
+		A7CBC3FC1E9FE57700C95A50 /* iTrack */ = {
+			isa = PBXGroup;
+			children = (
+				A7CBC4041E9FE62300C95A50 /* iTrack.swift */,
+				A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */,
+				A7CBC4061E9FE62300C95A50 /* Thumbs.swift */,
+			);
+			name = iTrack;
+			sourceTree = "<group>";
+		};
+		A7CBC3FD1E9FE58200C95A50 /* Playlist */ = {
+			isa = PBXGroup;
+			children = (
+				A7CBC40A1E9FE63000C95A50 /* Playlist.swift */,
+			);
+			name = Playlist;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -434,29 +455,28 @@
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
+				A7CBC4071E9FE62300C95A50 /* iTrack.swift in Sources */,
+				A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */,
+				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
-				A7CBC3F41E9FD19E00C95A50 /* DownloadDelegate.swift in Sources */,
-				A7C995EA1E9EA6F6004826EE /* iTrack.swift in Sources */,
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
 				A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */,
 				A7C995D51E9EA6DF004826EE /* DataParser.swift in Sources */,
-				A7CBC3E51E9FB7DA00C95A50 /* Playlist.swift in Sources */,
 				A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */,
-				A7C995DA1E9EA6DF004826EE /* DownloadStatus.swift in Sources */,
-				A7C995D81E9EA6DF004826EE /* Download.swift in Sources */,
 				A7CBC3ED1E9FBAE000C95A50 /* PlayerViewController.swift in Sources */,
 				A7CBC3F21E9FD14500C95A50 /* PlayerViewDelegate.swift in Sources */,
-				A7C995D91E9EA6DF004826EE /* Download+Extension.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */,
 				A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */,
+				A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */,
+				A7CBC4031E9FE61500C95A50 /* DownloadStatus.swift in Sources */,
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
-				A7CBC3F81E9FD1DC00C95A50 /* Thumbs.swift in Sources */,
 				A7CBC3E91E9FBACF00C95A50 /* TracksViewController.swift in Sources */,
+				A7CBC4011E9FE61500C95A50 /* Download.swift in Sources */,
 				A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */,
+				A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,
 				A7CBC3E81E9FBACF00C95A50 /* TrackCell.swift in Sources */,
-				A7CBC3F61E9FD1C800C95A50 /* iTrackDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
