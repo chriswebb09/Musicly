@@ -46,8 +46,16 @@
     var infoLabel: UILabel = {
         var infoLabel = UILabel()
         infoLabel.textAlignment = .center
+        infoLabel.textColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        infoLabel.font = UIFont(name: "Avenir-Book", size: 18)!
         infoLabel.text = "Search for music"
         return infoLabel
+    }()
+
+    var musicIcon: UIImageView = {
+        var musicIcon = UIImageView()
+        musicIcon.image = #imageLiteral(resourceName: "headphonesicon")
+        return musicIcon
     }()
     
     var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -60,6 +68,7 @@
         edgesForExtendedLayout = [.all]
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         setupCollectionView()
+        title = "Music.ly"
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -77,6 +86,7 @@
         collectionView.frame = UIScreen.main.bounds
         collectionView.backgroundColor = CollectionViewAttributes.backgroundColor
         view.addSubview(collectionView)
+        collectionView.setupMusicIcon(icon: musicIcon)
         collectionView.setupInfoLabel(infoLabel: infoLabel)
         collectionViewRegister()
     }
@@ -274,10 +284,10 @@
             collectionView.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
-//        searchBarActive = false
     }
     
     fileprivate func noSearchBarInput() {
+        musicIcon.isHidden = false
         infoLabel.isHidden = false
         tracks?.removeAll()
         collectionView.updateLayout(newLayout: small)
@@ -287,6 +297,7 @@
         collectionView.backgroundView?.isHidden = true
         tracks?.removeAll()
         infoLabel.isHidden = true
+        musicIcon.isHidden = true
         store?.searchForTracks { tracks, error in
             self.tracks = tracks
             self.collectionView.collectionViewLayout.invalidateLayout()
@@ -318,18 +329,10 @@
         let searchString = searchController.searchBar.text
         
         if searchString != nil {
-            //let saidByFilter = filteredPosts.filter { $0.author.containsString(searchString!) }
-           // let hearByFilter = filteredPosts.filter { stringVersion($0.heardBy).containsString(searchString!) }
-            
-            //searchFilteredPosts = saidByFilter + hearByFilter
         }
         collectionView.reloadData()
     }
-    
-//    func updateSearchResultsForSearchController(searchController: UISearchController) {
-//        self.searchController.isActive = true
-//    }
-    
+
     public func updateSearchResults(for searchController: UISearchController) {
         searchBarActive = true
     }

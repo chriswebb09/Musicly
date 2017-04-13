@@ -26,6 +26,13 @@ class PlayerView: UIView {
         return albumArtworkView
     }()
     
+    var progressView: UIProgressView = {
+        var progressView = UIProgressView()
+        progressView.observedProgress = Progress(totalUnitCount: 100)
+        
+        return progressView
+    }()
+    
     var artworkView: UIView = {
         var artworkView = UIView()
         artworkView.backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
@@ -36,6 +43,28 @@ class PlayerView: UIView {
         let trackTitleView = UIView()
         trackTitleView.backgroundColor = .white
         return trackTitleView
+    }()
+    
+    var totalPlayLengthLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1:27"
+        label.font = UIFont(name: "Avenir-Book", size: 18)!
+        label.textColor = .white
+        return label
+    }()
+    
+    var currentPlayLength: UILabel = {
+        let label = UILabel()
+        label.text = "0:07"
+        label.font = UIFont(name: "Avenir-Book", size: 18)!
+        label.textColor = .orange
+        return label
+    }()
+    
+    var thumbsUpButton: UIButton = {
+        let thumbsUpButton = UIButton()
+        thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
+        return thumbsUpButton
     }()
     
     var controlsView: UIView = {
@@ -110,8 +139,8 @@ class PlayerView: UIView {
         
         artworkView.addSubview(albumArtworkView)
         albumArtworkView.translatesAutoresizingMaskIntoConstraints = false
-        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.7).isActive = true
-        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.75).isActive = true
+        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.6).isActive = true
+        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.7).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
         
@@ -120,6 +149,13 @@ class PlayerView: UIView {
         preferencesView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
         preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.06).isActive = true
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
+        
+        preferencesView.addSubview(thumbsUpButton)
+        thumbsUpButton.translatesAutoresizingMaskIntoConstraints = false
+        thumbsUpButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.04).isActive = true
+        thumbsUpButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.45).isActive = true
+        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor).isActive = true
+        thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
@@ -139,6 +175,29 @@ class PlayerView: UIView {
         playButton.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
         playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
         playButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor).isActive = true
+        
+        controlsView.addSubview(progressView)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.65).isActive = true
+        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
+        progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
+        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+        
+        controlsView.addSubview(totalPlayLengthLabel)
+        totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
+        totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
+        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.03).isActive = true
+        totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+
+        
+        controlsView.addSubview(currentPlayLength)
+        currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
+        currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
+        currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
+        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.03).isActive = true
+        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
+
         
         controlsView.addSubview(pauseButton)
         pauseButton.translatesAutoresizingMaskIntoConstraints = false

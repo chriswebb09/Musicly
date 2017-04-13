@@ -36,6 +36,7 @@ final internal class TrackCell: UICollectionViewCell {
     fileprivate var downloadButton: UIButton = {
         var downloadButton = UIButton()
         downloadButton.setImage(#imageLiteral(resourceName: "download200x"), for: .normal)
+        downloadButton.alpha = 0
         return downloadButton
     }()
     
@@ -62,7 +63,7 @@ final internal class TrackCell: UICollectionViewCell {
     fileprivate var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
-        trackName.font = UIFont(name: "Avenir-Light", size: 12)
+        trackName.font = UIFont(name: "Avenir-Book", size: 12)
         trackName.textAlignment = .center
         trackName.numberOfLines = 0
         return trackName
@@ -94,7 +95,7 @@ final internal class TrackCell: UICollectionViewCell {
         pauseButton.isEnabled = false
         playButton.alpha = 0
         pauseButton.alpha = 0
-        downloadButton.alpha = 0.6
+        ///downloadButton.alpha = 0.6
         layoutSubviews()
     }
     
