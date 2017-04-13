@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreMedia
+import AVFoundation
 
 protocol PlayerViewDelegate: class {
     func downloadButtonTapped()
@@ -47,15 +49,16 @@ class PlayerView: UIView {
     
     var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
-        label.text = "1:27"
         label.font = UIFont(name: "Avenir-Book", size: 18)!
         label.textColor = .white
+        label.textAlignment = .right
         return label
     }()
     
     var currentPlayLength: UILabel = {
         let label = UILabel()
         label.text = "0:07"
+        label.textAlignment = .left
         label.font = UIFont(name: "Avenir-Book", size: 18)!
         label.textColor = .orange
         return label
@@ -65,6 +68,12 @@ class PlayerView: UIView {
         let thumbsUpButton = UIButton()
         thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
         return thumbsUpButton
+    }()
+    
+    var thumbsDownButton: UIButton = {
+        let thumbsDownButton = UIButton()
+        thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
+        return thumbsDownButton
     }()
     
     var controlsView: UIView = {
@@ -122,6 +131,29 @@ class PlayerView: UIView {
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
     }
     
+    func setupTime(time: CMTime) {
+        if let track = track {
+            let asset = AVAsset(url: URL(string: track.previewUrl)!)
+            
+            
+                //AVURLAsset(URL: URL(string: track.previewUrl)!, options: nil)
+            let audioDuration = asset.duration
+            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+            let minutes = Int(audioDurationSeconds / 60)
+            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+           // print(rem) // 0.3
+            
+           // let seconds = Float(audioDurationSeconds) % 60
+            
+            DispatchQueue.main.async {
+                self.totalPlayLengthLabel.text = "\(minutes):\(rem)"
+            }
+            
+            print(time)
+        }
+       
+    }
+    
     func setupView() {
         
         addSubview(trackTitleView)
@@ -152,10 +184,17 @@ class PlayerView: UIView {
         
         preferencesView.addSubview(thumbsUpButton)
         thumbsUpButton.translatesAutoresizingMaskIntoConstraints = false
-        thumbsUpButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.04).isActive = true
-        thumbsUpButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.45).isActive = true
-        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor).isActive = true
+        thumbsUpButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.08).isActive = true
+        thumbsUpButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
+        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.08).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
+        
+        preferencesView.addSubview(thumbsDownButton)
+        thumbsDownButton.translatesAutoresizingMaskIntoConstraints = false
+        thumbsDownButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.08).isActive = true
+        thumbsDownButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
+        thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor, constant: UIScreen.main.bounds.width * -0.08).isActive = true
+        thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
@@ -185,9 +224,9 @@ class PlayerView: UIView {
         
         controlsView.addSubview(totalPlayLengthLabel)
         totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
+        totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
         totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.03).isActive = true
+        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.02).isActive = true
         totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
 
         
@@ -195,7 +234,7 @@ class PlayerView: UIView {
         currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
         currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
         currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.03).isActive = true
+        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.02).isActive = true
         currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.1).isActive = true
 
         

@@ -29,26 +29,33 @@ class PlayerViewController: UIViewController {
             playerView.configure(with: track)
         }
         title = track?.artistName
+        if let urlString = track?.previewUrl, let url = URL(string: urlString) {
+            setupPlayer(url: url)
+            
+        }
+        if let currentItem = player.currentItem {
+            playerView.setupTime(time: currentItem.duration)
+        }
     }
-}
-
-extension PlayerViewController: PlayerViewDelegate {
     
     private func setupPlayer(url: URL) {
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
         player.rate = PlayerAttributes.playerRate
     }
+}
+
+extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
+        player.currentItem?.duration
         print("pause")
         player.pause()
     }
     
     func playButtonTapped() {
-        if let urlString = track?.previewUrl, let url = URL(string: urlString) {
-            setupPlayer(url: url)
-        }
+       
+        
         player.play()
     }
     
