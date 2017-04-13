@@ -15,7 +15,7 @@ extension UILabel {
         infoLabel.textAlignment = .center
         infoLabel.textColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
         infoLabel.font = UIFont(name: "Avenir-Book", size: 18)!
-        infoLabel.text = "Search for music"
+        infoLabel.text = "Add to your playlist..."
         return infoLabel
     }
     

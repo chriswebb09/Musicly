@@ -27,8 +27,8 @@ extension UICollectionView {
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2).isActive = true
-        icon.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4).isActive = true
+        icon.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.18).isActive = true
+        icon.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.35).isActive = true
         icon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         icon.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * -0.13).isActive = true
     }
@@ -39,7 +39,7 @@ extension UICollectionView {
         infoLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
         infoLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0).isActive = true
         infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * 0.08).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
     }
     
 }

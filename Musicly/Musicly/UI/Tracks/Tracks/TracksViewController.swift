@@ -34,7 +34,7 @@
     
     var musicIcon: UIImageView = {
         var musicIcon = UIImageView()
-        musicIcon.image = #imageLiteral(resourceName: "headphonesblue")
+        musicIcon.image = #imageLiteral(resourceName: "headphones-blue")
         return musicIcon
     }()
     
