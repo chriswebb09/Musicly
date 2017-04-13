@@ -16,9 +16,8 @@
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
     let searchController = UISearchController(searchResultsController: nil)
-    var store: iTrackDataStore?
+    weak var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
-    
     var searchBarActive: Bool = false
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
@@ -38,13 +37,12 @@
         return musicIcon
     }()
     
-    var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.delegate = self
         setupDefaultUI()
-        store = iTrackDataStore(searchTerm: "")
         edgesForExtendedLayout = [.all]
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         setupCollectionView()
@@ -53,29 +51,29 @@
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.layoutIfNeeded()
+        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView?.layoutIfNeeded()
     }
     
     func setCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.frame = UIScreen.main.bounds
-        collectionView.backgroundColor = CollectionViewAttributes.backgroundColor
-        view.addSubview(collectionView)
-        collectionView.setupMusicIcon(icon: musicIcon)
-        collectionView.setupInfoLabel(infoLabel: infoLabel)
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.frame = UIScreen.main.bounds
+        collectionView?.backgroundColor = CollectionViewAttributes.backgroundColor
+        view.addSubview(collectionView!)
+        collectionView?.setupMusicIcon(icon: musicIcon)
+        collectionView?.setupInfoLabel(infoLabel: infoLabel)
         collectionViewRegister()
     }
     
     private func collectionViewRegister() {
-        collectionView.register(TrackCell.self,
+        collectionView?.register(TrackCell.self,
                                 forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.register(HeaderReusableView.self,
+        collectionView?.register(HeaderReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                 withReuseIdentifier: headerIdentifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
     }
     
     fileprivate func setupFlow(flowLayout: UICollectionViewFlowLayout) {
@@ -88,26 +86,26 @@
         layout.minimumInteritemSpacing = 5.0
         layout.minimumLineSpacing = 5.0
         layout.itemSize = RowSize.item.rawValue
-        collectionView.collectionViewLayout = layout
+        collectionView?.collectionViewLayout = layout
         setCollectionView()
     }
     
     fileprivate func setupCollectionView() {
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
             setupFlow(flowLayout: flowLayout)
-            collectionView.collectionViewLayout.invalidateLayout()
-            collectionView.layoutIfNeeded()
+            collectionView?.collectionViewLayout.invalidateLayout()
+            collectionView?.layoutIfNeeded()
             setupLayout(layout: newLayout)
         }
-        collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
-        view.addSubview(collectionView)
+        collectionView?.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+        view.addSubview(collectionView!)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBarActive = cancelSearching(searchBar, searchBarActive: searchBarActive)
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.collectionView?.reloadData()
         }
     }
     
@@ -192,7 +190,7 @@
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if !searchBarActive {
             searchBarActive = true
-            collectionView.reloadData()
+            collectionView?.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
     }
@@ -200,7 +198,7 @@
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !searchBarActive {
             searchBarActive = true
-            collectionView.reloadData()
+            collectionView?.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
     }
@@ -209,19 +207,19 @@
         musicIcon.isHidden = false
         infoLabel.isHidden = false
         tracks?.removeAll()
-        collectionView.updateLayout(newLayout: small)
+        collectionView?.updateLayout(newLayout: small)
     }
     
     func searchBarHasInput() {
-        collectionView.backgroundView?.isHidden = true
+        collectionView?.backgroundView?.isHidden = true
         tracks?.removeAll()
         infoLabel.isHidden = true
         musicIcon.isHidden = true
         store?.searchForTracks { tracks, error in
             self.tracks = tracks
-            self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.updateLayout(newLayout: self.small)
-            self.collectionView.reloadData()
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+            self.collectionView?.updateLayout(newLayout: self.small)
+            self.collectionView?.reloadData()
         }
     }
     
@@ -255,7 +253,7 @@
                 }
             }
         }
-        collectionView.reloadData()
+        collectionView?.reloadData()
     }
     
     public func updateSearchResults(for searchController: UISearchController) {

@@ -29,6 +29,7 @@ final class PlayerViewController: UIViewController {
             playerView.configure(with: track)
         }
         title = track?.artistName
+        
         if let urlString = track?.previewUrl, let url = URL(string: urlString) {
             setupPlayer(url: url)
             
@@ -41,7 +42,7 @@ final class PlayerViewController: UIViewController {
     private func setupPlayer(url: URL) {
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
-        player.pause()
+        
         player.rate = PlayerAttributes.playerRate
         player.pause()
     }
@@ -50,14 +51,14 @@ final class PlayerViewController: UIViewController {
 extension PlayerViewController: PlayerViewDelegate {
     func thumbsDownTapped() {
         track?.thumbs = .down
-        print("thumbs down")
+         print("thumbs down")
     }
-    
+
     func thumbsUpTapped() {
         track?.thumbs = .up
         print("thumbs up")
     }
-    
+
     
     func pauseButtonTapped() {
         print("pause")

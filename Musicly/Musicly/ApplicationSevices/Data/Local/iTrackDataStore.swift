@@ -10,17 +10,15 @@ import UIKit
 
 final class iTrackDataStore {
     
-    var downloads: [String: Download?]?
-    fileprivate var client: iTunesAPIClient? = iTunesAPIClient()
+    fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
     
-    init(searchTerm: String) {
+    init(searchTerm: String?) {
         self.searchTerm = searchTerm
         client?.setup()
-        downloads = [String: Download?]()
     }
     
-    func setSearch(string: String) {
+    func setSearch(string: String?) {
         self.searchTerm = string
     }
     

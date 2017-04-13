@@ -15,12 +15,13 @@ final class iTunesAPIClient: NSObject {
     
     var tracks: [iTrack]?
     var activeDownloads: [String: Download]?
-    var defaultSession: URLSession? = URLSession(configuration: .default)
+    weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
-    var downloadsSession : URLSession {
+    weak var downloadsSession : URLSession? {
         get {
             let config = URLSessionConfiguration.background(withIdentifier: "background")
-            return URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+            weak var queue = OperationQueue()
+            return URLSession(configuration: config, delegate: self, delegateQueue: queue)
         }
     }
     
@@ -74,7 +75,7 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
             download.isDownloading = true
             download.downloadStatus = .downloading
             activeDownloads?[urlString] = download
-            download.downloadTask = downloadsSession.downloadTask(with: url)
+            download.downloadTask = downloadsSession?.downloadTask(with: url)
             download.downloadTask?.resume()
         }
     }
