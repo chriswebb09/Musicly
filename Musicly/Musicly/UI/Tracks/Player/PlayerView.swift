@@ -24,32 +24,32 @@ final class PlayerView: UIView {
     
     var track: iTrack?
     
-    var albumArtworkView: UIImageView = {
+   private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
         albumArtworkView.backgroundColor = .white
         return albumArtworkView
     }()
     
-    var progressView: UIProgressView = {
+    private var progressView: UIProgressView = {
         var progressView = UIProgressView()
         progressView.observedProgress = Progress(totalUnitCount: 100)
         
         return progressView
     }()
     
-    var artworkView: UIView = {
+    private var artworkView: UIView = {
         var artworkView = UIView()
         artworkView.backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
         return artworkView
     }()
     
-    var trackTitleView: UIView = {
+    private var trackTitleView: UIView = {
         let trackTitleView = UIView()
         trackTitleView.backgroundColor = .white
         return trackTitleView
     }()
     
-    var totalPlayLengthLabel: UILabel = {
+   private var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir-Book", size: 18)!
         label.textColor = .white
@@ -57,7 +57,7 @@ final class PlayerView: UIView {
         return label
     }()
     
-    var currentPlayLength: UILabel = {
+   private var currentPlayLength: UILabel = {
         let label = UILabel()
         label.text = "0:07"
         label.textAlignment = .left
@@ -66,51 +66,51 @@ final class PlayerView: UIView {
         return label
     }()
     
-    var thumbsUpButton: UIButton = {
+   private var thumbsUpButton: UIButton = {
         let thumbsUpButton = UIButton()
         thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
         return thumbsUpButton
     }()
     
-    var thumbsDownButton: UIButton = {
+  private  var thumbsDownButton: UIButton = {
         let thumbsDownButton = UIButton()
         thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
         return thumbsDownButton
     }()
     
-    var controlsView: UIView = {
+   private var controlsView: UIView = {
         let controlsView = UIView()
         controlsView.backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
         return controlsView
     }()
     
-    var preferencesView: UIView = {
+    private var preferencesView: UIView = {
         let preferencesView = UIView()
         preferencesView.backgroundColor = .white
         return preferencesView
     }()
     
-    var trackTitleLabel: UILabel = {
+  private  var trackTitleLabel: UILabel = {
         var trackTitleLabel = UILabel()
         trackTitleLabel.textColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
         trackTitleLabel.textAlignment = .center
         return trackTitleLabel
     }()
     
-    fileprivate var downloadButton: UIButton = {
+    private var downloadButton: UIButton = {
         var downloadButton = UIButton()
         downloadButton.setImage(#imageLiteral(resourceName: "download200x"), for: .normal)
         return downloadButton
     }()
     
-    fileprivate var playButton: UIButton = {
+   private var playButton: UIButton = {
         var playButton = UIButton()
         playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
         
         return playButton
     }()
     
-    fileprivate var pauseButton: UIButton = {
+    private var pauseButton: UIButton = {
         var pauseButton = UIButton()
         pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-2white"), for: .normal)
         return pauseButton
@@ -151,7 +151,7 @@ final class PlayerView: UIView {
         }
     }
     
-    func setupView() {
+    private func setupView() {
         
         addSubview(trackTitleView)
         trackTitleView.translatesAutoresizingMaskIntoConstraints = false
@@ -260,7 +260,7 @@ final class PlayerView: UIView {
         }
     }
     
-    func thumbsUpTapped() {
+    @objc private func thumbsUpTapped() {
         
         if self.track?.thumbs == .up {
             self.track?.thumbs = .none
@@ -271,7 +271,7 @@ final class PlayerView: UIView {
         delegate?.thumbsUpTapped()
     }
     
-    func thumbsDownTapped() {
+    @objc private func thumbsDownTapped() {
         if self.track?.thumbs == .down {
             self.track?.thumbs = .none
         } else {
@@ -281,7 +281,7 @@ final class PlayerView: UIView {
         delegate?.thumbsDownTapped()
     }
     
-    func playButtonTapped() {
+    @objc private func playButtonTapped() {
         delegate?.playButtonTapped()
         playButton.isEnabled = false
         playButton.alpha = 0
@@ -291,7 +291,7 @@ final class PlayerView: UIView {
         controlsView.sendSubview(toBack: playButton)
     }
     
-    func pauseButtonTapped() {
+   @objc private func pauseButtonTapped() {
         delegate?.pauseButtonTapped()
         controlsView.bringSubview(toFront: playButton)
         controlsView.sendSubview(toBack: pauseButton)
