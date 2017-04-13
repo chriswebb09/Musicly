@@ -8,13 +8,10 @@
 
 import UIKit
 
-protocol DownloadDelegate: class {
-    func downloadProgressUpdated(for progress: Float, for url: String, task: URLSessionDownloadTask)
-}
-
 final class Download: Operation {
     
     weak var delegate: DownloadDelegate?
+    
     var url: String?
     var downloadStatus: DownloadStatus = .waiting
     var isDownloading: Bool? = false

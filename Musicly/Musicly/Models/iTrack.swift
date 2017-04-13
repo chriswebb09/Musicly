@@ -9,14 +9,6 @@
 
 import Foundation
 
-protocol iTrackDelegate: class {
-    func downloadIsComplete(downloaded: Bool)
-}
-
-enum Thumbs {
-    case up, down, none
-}
-
 struct iTrack {
     
     weak var delegate: iTrackDelegate?
