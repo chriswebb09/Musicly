@@ -8,12 +8,21 @@
 
 import UIKit
 
+extension UIViewController {
+    func setupDefaultUI() {
+        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .lightGray
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for songs...", attributes: [NSForegroundColorAttributeName: UIColor.black])
+    }
+}
+
 extension UICollectionView {
     
     func getHeader(indexPath: IndexPath, identifier: String) -> HeaderReusableView {
         let reusableView = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                                 withReuseIdentifier: identifier,
-                                                                 for: indexPath) as! HeaderReusableView
+                                                            withReuseIdentifier: identifier,
+                                                            for: indexPath) as! HeaderReusableView
         return reusableView
     }
 }

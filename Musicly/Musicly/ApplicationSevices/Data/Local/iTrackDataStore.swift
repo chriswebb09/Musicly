@@ -16,7 +16,6 @@ final class iTrackDataStore {
     
     init(searchTerm: String) {
         self.searchTerm = searchTerm
-        
         client?.setup()
         downloads = [String: Download?]()
     }

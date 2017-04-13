@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
 		A7C995A61E9EA6CF004826EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A51E9EA6CF004826EE /* Assets.xcassets */; };
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
@@ -20,13 +21,12 @@
 		A7C995DA1E9EA6DF004826EE /* DownloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D11E9EA6DF004826EE /* DownloadStatus.swift */; };
 		A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D31E9EA6DF004826EE /* Filter.swift */; };
 		A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */; };
-		A7C995E91E9EA6F6004826EE /* ItemCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DE1E9EA6F6004826EE /* ItemCounter.swift */; };
+		A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */; };
 		A7C995EA1E9EA6F6004826EE /* iTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DF1E9EA6F6004826EE /* iTrack.swift */; };
 		A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E01E9EA6F6004826EE /* Search.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
 		A7C995ED1E9EA6F6004826EE /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E21E9EA6F6004826EE /* TrackCell.swift */; };
 		A7C995EE1E9EA6F6004826EE /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E31E9EA6F6004826EE /* TracksViewController.swift */; };
-		A7C995F01E9EA6F6004826EE /* TrackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E51E9EA6F6004826EE /* TrackViewModel.swift */; };
 		A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */; };
 		A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */; };
 		A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */; };
@@ -51,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7C995A51E9EA6CF004826EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,13 +71,12 @@
 		A7C995D11E9EA6DF004826EE /* DownloadStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadStatus.swift; sourceTree = "<group>"; };
 		A7C995D31E9EA6DF004826EE /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
-		A7C995DE1E9EA6F6004826EE /* ItemCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCounter.swift; sourceTree = "<group>"; };
+		A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCounter.swift; sourceTree = "<group>"; };
 		A7C995DF1E9EA6F6004826EE /* iTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrack.swift; sourceTree = "<group>"; };
 		A7C995E01E9EA6F6004826EE /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
 		A7C995E21E9EA6F6004826EE /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		A7C995E31E9EA6F6004826EE /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksViewController.swift; sourceTree = "<group>"; };
-		A7C995E51E9EA6F6004826EE /* TrackViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackViewModel.swift; sourceTree = "<group>"; };
 		A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 			children = (
 				A73268C71E9EB65A00B48CD9 /* Local */,
 				A73268C41E9EB5F400B48CD9 /* Networking */,
-				A7C995DE1E9EA6F6004826EE /* ItemCounter.swift */,
+				A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */,
 				A7C995E01E9EA6F6004826EE /* Search.swift */,
 			);
 			path = Data;
@@ -142,7 +142,6 @@
 			isa = PBXGroup;
 			children = (
 				A7C995E21E9EA6F6004826EE /* TrackCell.swift */,
-				A7C995E51E9EA6F6004826EE /* TrackViewModel.swift */,
 				A7C995E31E9EA6F6004826EE /* TracksViewController.swift */,
 			);
 			path = Tracks;
@@ -154,6 +153,7 @@
 				A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */,
 				A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */,
 				A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */,
+				A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */,
 				A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */,
 			);
 			path = Extensions;
@@ -396,6 +396,7 @@
 				A7C995EE1E9EA6F6004826EE /* TracksViewController.swift in Sources */,
 				A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */,
 				A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */,
+				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
 				A7C995EA1E9EA6F6004826EE /* iTrack.swift in Sources */,
@@ -407,12 +408,11 @@
 				A7C995D91E9EA6DF004826EE /* Download+Extension.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */,
-				A7C995E91E9EA6F6004826EE /* ItemCounter.swift in Sources */,
+				A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */,
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
 				A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */,
 				A7C995ED1E9EA6F6004826EE /* TrackCell.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,
-				A7C995F01E9EA6F6004826EE /* TrackViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

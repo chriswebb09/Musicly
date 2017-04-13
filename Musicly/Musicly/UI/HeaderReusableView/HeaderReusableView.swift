@@ -16,5 +16,4 @@ final class HeaderReusableView: UICollectionReusableView {
         super.layoutSubviews()
         addSubview(searchBar)
     }
-    
 }

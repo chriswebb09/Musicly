@@ -1,5 +1,5 @@
 //
-//  ItemCounter.swift
+//  TrackCounter.swift
 //  Musically
 //
 //  Created by Christopher Webb-Orenstein on 4/10/17.
@@ -10,13 +10,15 @@ import UIKit
 
 protocol ItemCounter {
     associatedtype T
-    func getCount(for items: [T]) -> Int
+    
+    func getCount(for items: [T?]) -> Int
 }
 
-class TrackCounter: ItemCounter {
+final class TrackCounter: ItemCounter {
+    
     typealias T = iTrack
     
-    func getCount(for items: [iTrack]) -> Int {
-        return items.count - 30
+    func getCount(for items: [iTrack?]) -> Int {
+        return items.count
     }
 }

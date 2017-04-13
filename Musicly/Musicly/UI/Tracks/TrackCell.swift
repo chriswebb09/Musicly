@@ -16,7 +16,7 @@ protocol TrackCellDelegate: class {
 
 final internal class TrackCell: UICollectionViewCell {
     
-    var model: TrackViewModel?
+    weak var delegate: TrackCellDelegate?
     
     var downloadOverlayView: UIView = {
         let downloadOverlay = UIView()
@@ -27,28 +27,27 @@ final internal class TrackCell: UICollectionViewCell {
     
     var downloaded: Bool = false {
         didSet {
-            //s
-            self.playButton.alpha = 0.6
-            self.downloadOverlayView.alpha = 0
+            playButton.alpha = 0.6
+            downloadOverlayView.alpha = 0
             contentView.bringSubview(toFront: playButton)
         }
     }
     
     var downloadButton: UIButton = {
         var downloadButton = UIButton()
-        downloadButton.setImage(#imageLiteral(resourceName: "downloadicon"), for: .normal)
+        downloadButton.setImage(#imageLiteral(resourceName: "download200x"), for: .normal)
         return downloadButton
     }()
     
     var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "playbutton"), for: .normal)
+        playButton.setImage(#imageLiteral(resourceName: "pausebutton200x"), for: .normal)
         return playButton
     }()
     
     var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pause-icon"), for: .normal)
+        pauseButton.setImage(#imageLiteral(resourceName: "playbutton200x"), for: .normal)
         return pauseButton
     }()
     
@@ -69,8 +68,6 @@ final internal class TrackCell: UICollectionViewCell {
         return trackName
     }()
     
-    weak var delegate: TrackCellDelegate?
-    
     var albumArtView: UIImageView = {
         var album = UIImageView()
         return album
@@ -79,32 +76,10 @@ final internal class TrackCell: UICollectionViewCell {
     var track: iTrack?
     var download: Download?
     
-    func downloadTapped(tap: Bool, index: Int) {
-        downloadButton.alpha = 0
-        contentView.bringSubview(toFront: downloadOverlayView)
-        downloadOverlayView.alpha = 0.2
-        progressLabel.alpha = 1
-        if var track = track {
-            track.delegate = self
-            download = Download(url: track.previewUrl)
-            download?.delegate = self
-            
-            if let download = self.download {
-                contentView.bringSubview(toFront: progressLabel)
-                delegate?.downloadButtonTapped(tapped: true, download: download)
-                downloadButton.isEnabled = false
-                track.downloaded = true
-            }
-        }
-    }
-    
     func setShadow() {
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: contentView.bounds.height * 0.00001,
-                                    height: contentView.bounds.width * 0.0002)
-        layer.shadowRadius = 1.5
-        layer.shadowOpacity = 0.5
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        layer.setCellShadow(contentView: contentView)
+        layer.shadowPath = UIBezierPath(roundedRect: bounds,
+                                        cornerRadius: contentView.layer.cornerRadius).cgPath
     }
     
     func configureWith(_ track: iTrack?) {
@@ -112,18 +87,15 @@ final internal class TrackCell: UICollectionViewCell {
         if let track = track,
             let url = URL(string: track.artworkUrl) {
             albumArtView.downloadImage(url: url)
-            self.downloaded = track.downloaded
+            downloaded = track.downloaded
+            trackNameLabel.text = track.trackName
         }
-       
-        
-        self.trackNameLabel.text = track?.trackName
         playButton.isEnabled = false
         pauseButton.isEnabled = false
         playButton.alpha = 0
         pauseButton.alpha = 0
         downloadButton.alpha = 0.6
         layoutSubviews()
-        
     }
     
     func playButtonTapped(tap: Bool, index: Int) {
@@ -131,12 +103,9 @@ final internal class TrackCell: UICollectionViewCell {
         pauseButton.alpha = 0.6
         sendSubview(toBack: downloadOverlayView)
         contentView.sendSubview(toBack: progressLabel)
-        
         if let download = self.download {
             delegate?.playButtonTapped(tapped: true, download: download)
-            
         }
-        
         playButton.isEnabled = false
         pauseButton.isEnabled = true
         bringSubview(toFront: pauseButton)
@@ -150,28 +119,46 @@ final internal class TrackCell: UICollectionViewCell {
         delegate?.pauseButtonTapped(tapped: tap)
     }
     
+    func downloadTapped(tap: Bool, index: Int) {
+        downloadButton.alpha = 0
+        contentView.bringSubview(toFront: downloadOverlayView)
+        downloadOverlayView.alpha = 0.2
+        progressLabel.alpha = 1
+        
+        if var track = track {
+            download = Download(url: track.previewUrl)
+            download?.delegate = self
+            if let download = self.download {
+                contentView.bringSubview(toFront: progressLabel)
+                delegate?.downloadButtonTapped(tapped: true, download: download)
+                downloadButton.isEnabled = false
+                track.downloaded = true
+            }
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupViews()
+        viewConfigurations()
         downloadOverlayView.layer.masksToBounds = true
     }
     
-    func setupViews() {
-        viewConfigurations()
-        setShadow()
-    }
-    
-    func viewConfigurations() {
-        setupAlbumArt()
-        setupOverlay()
-        setupProgressLabel()
-        setupDownloadButton()
-        setupPlaybutton()
-        setupPauseButton()
-        setupTrackInfoLabel()
+    func addButtonTargets() {
         downloadButton.addTarget(self, action: #selector(downloadTapped(tap:index:)), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped(tap:index:)), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped(tap:)), for: .touchUpInside)
+    }
+    
+    func viewConfigurations() {
+        setShadow()
+        setupAlbumArt()
+        addButtonTargets()
+        setupPauseButton()
+        setupTrackInfoLabel()
+        fullSizeConstraints(view: downloadOverlayView)
+        fullSizeConstraints(view: progressLabel)
+        setupThreeQuartersConstraints(view: downloadButton)
+        setupThreeQuartersConstraints(view: playButton)
     }
     
     func setupAlbumArt() {
@@ -182,47 +169,29 @@ final internal class TrackCell: UICollectionViewCell {
         albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
-    func setupProgressLabel() {
-        contentView.addSubview(progressLabel)
-        progressLabel.translatesAutoresizingMaskIntoConstraints = false
-        progressLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
-        progressLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        progressLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        progressLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+    func fullSizeConstraints(view: UIView) {
+        contentView.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
+        view.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
     
-    func setupOverlay() {
-        contentView.addSubview(downloadOverlayView)
-        downloadOverlayView.translatesAutoresizingMaskIntoConstraints = false
-        downloadOverlayView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
-        downloadOverlayView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        downloadOverlayView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        downloadOverlayView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-    }
-    
-    func setupDownloadButton() {
-        contentView.addSubview(downloadButton)
-        downloadButton.translatesAutoresizingMaskIntoConstraints = false
-        downloadButton.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
-        downloadButton.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        downloadButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        downloadButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-    }
-    
-    func setupPlaybutton() {
-        contentView.addSubview(playButton)
-        playButton.translatesAutoresizingMaskIntoConstraints = false
-        playButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.86).isActive = true
-        playButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1).isActive = true
-        playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        playButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+    func setupThreeQuartersConstraints(view: UIView) {
+        contentView.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6).isActive = true
+        view.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.7).isActive = true
+        view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
     }
     
     func setupPauseButton() {
         contentView.addSubview(pauseButton)
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
-        pauseButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1).isActive = true
-        pauseButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1).isActive = true
+        pauseButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.75).isActive = true
+        pauseButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.86).isActive = true
         pauseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         pauseButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
     }
@@ -234,33 +203,23 @@ final internal class TrackCell: UICollectionViewCell {
         trackNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
     }
-    
 }
 
 extension TrackCell: DownloadDelegate {
     
     func downloadProgressUpdated(for progress: Float, for url: String, task: URLSessionDownloadTask) {
-        
         contentView.bringSubview(toFront: downloadOverlayView)
-        
         DispatchQueue.main.async { [unowned self] in
             self.progressLabel.text = String(format: "%.1f%%",  progress * 100)
             
             if progress == 1 {
                 self.downloadOverlayView.alpha = 0
                 self.downloadButton.isEnabled = false
+                self.progressLabel.alpha = 0
                 self.playButton.isEnabled = true
                 self.playButton.alpha = 0.6
                 self.track?.downloaded = true
             }
         }
     }
-}
-
-extension TrackCell: iTrackDelegate {
-    func downloadIsComplete(downloaded: Bool) {
-        print("DOWNLOAFFD \(downloaded)")
-    }
-
-    
 }

@@ -30,7 +30,7 @@ final class Download: Operation {
         }
     }
     
-    func updateProgress() {
+    private func updateProgress() {
         if let task = downloadTask,
             let url = url {
             delegate?.downloadProgressUpdated(for: progress, for: url, task: task)

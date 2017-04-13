@@ -10,23 +10,22 @@
  import AVFoundation
  
  private let reuseIdentifier = "trackCell"
- let headerIdentifier = "headerView"
- fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+ private let headerIdentifier = "headerView"
  
  final class TracksViewController: UIViewController {
     
-    let searchController = UISearchController(searchResultsController: nil)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
+    let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore?
     var tracks: [iTrack?]?
     var downloads: [String: Download?]?
     var collections: [String] = [String]()
+    var searchBarActive: Bool = false
     
     lazy var player: AVPlayer = {
         return AVPlayer()
     }()
-    
-    var searchBarActive: Bool = false
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -51,18 +50,13 @@
         return infoLabel
     }()
     
-    
     var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.delegate = self
-        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .lightGray
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for songs...", attributes: [NSForegroundColorAttributeName: UIColor.black])
-        
-        store = iTrackDataStore(searchTerm: "new")
+        setupDefaultUI()
+        store = iTrackDataStore(searchTerm: "")
         edgesForExtendedLayout = [.all]
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         setupCollectionView()
@@ -82,27 +76,21 @@
         collectionView.delegate = self
         collectionView.frame = UIScreen.main.bounds
         collectionView.backgroundColor = CollectionViewAttributes.backgroundColor
-        
         view.addSubview(collectionView)
+        setupInfoLabel()
+        collectionViewRegister()
+    }
+    
+    private func setupInfoLabel() {
         collectionView.addSubview(infoLabel)
-        
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.5).isActive = true
         infoLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1.0).isActive = true
         infoLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
         infoLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
-        
-        collectionViewRegister()
     }
     
-    func setupPlayer(url: URL) {
-        let playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-        player.rate = PlayerAttributes.playerRate
-    }
-    
-    
-    func collectionViewRegister() {
+    private func collectionViewRegister() {
         collectionView.register(TrackCell.self,
                                 forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(HeaderReusableView.self,
@@ -118,12 +106,10 @@
     }
     
     fileprivate func setupLayout(layout: UICollectionViewFlowLayout) {
-        
         layout.sectionInset = EdgeAttributes.sectionInset
         layout.minimumInteritemSpacing = 5.0
         layout.minimumLineSpacing = 5.0
         layout.itemSize = RowSize.item.rawValue
-        
         collectionView.collectionViewLayout = layout
         setCollectionView()
     }
@@ -131,18 +117,11 @@
     fileprivate func setupCollectionView() {
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            
             setupFlow(flowLayout: flowLayout)
-            
             collectionView.collectionViewLayout.invalidateLayout()
             collectionView.layoutIfNeeded()
             setupLayout(layout: newLayout)
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
         }
-        
         collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
         view.addSubview(collectionView)
     }
@@ -167,28 +146,24 @@
  
  extension TracksViewController: UICollectionViewDataSource {
     
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let tracks = tracks {
-            return tracks.count - 10
+            return TrackCounter().getCount(for: tracks)
         }
         return 0
     }
-    
  }
  
  extension TracksViewController: iTrackDelegate {
     
     func downloadIsComplete(downloaded: Bool) {
-        print("DOWNLOADED \(downloaded)")
+        print("COMPLETED")
     }
-
     
- 
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         if let index = indexPath,
             var track = tracks?[index.row] {
@@ -196,7 +171,6 @@
             cell.delegate = self
             track.delegate = self
             collections.append(track.collectionName)
-            print(track.downloaded)
         }
     }
     
@@ -234,19 +208,21 @@
         player.pause()
     }
     
+    private func setupPlayer(url: URL) {
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        player.rate = PlayerAttributes.playerRate
+    }
+    
     @objc internal func playButtonTapped(tapped: Bool, download: Download?) {
         if let urlString = download?.url, let url = URL(string: urlString) {
             print(url)
             setupPlayer(url: url)
             player.play()
         }
-//        if let url = getLocalURL(from: download) {
-//            setupPlayer(url: url)
-//            player.play()
-//        }
     }
     
-    func getLocalURL(from newTrack: Download?) -> URL? {
+    private func getLocalURL(from newTrack: Download?) -> URL? {
         if let newTrack = newTrack,
             let url = newTrack.url,
             let localUrl = LocalStorageManager.localFilePathForUrl(url) {
@@ -255,7 +231,7 @@
         return nil
     }
     
-    func getDownloadURL(from download: Download?) {
+    private func getDownloadURL(from download: Download?) {
         if let url = download?.url {
             downloads?[url] = download
         }
@@ -278,22 +254,18 @@
     }
  }
  
- 
  extension TracksViewController: UISearchControllerDelegate {
-
+    
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBarActive = true
-        print("edit")
         searchBar.setShowsCancelButton(true, animated: true)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBarActive = false
-        UIApplication.shared.isStatusBarHidden = false
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("click")
         searchBarActive = false
     }
     
@@ -307,32 +279,23 @@
         collectionView.backgroundView?.isHidden = true
         tracks?.removeAll()
         infoLabel.isHidden = true
-        
         store?.searchForTracks { tracks, error in
             self.tracks = tracks
-            DispatchQueue.main.async {
-               
-                self.collectionView.collectionViewLayout.invalidateLayout()
-                self.collectionView.updateLayout(newLayout: self.small)
-                self.collectionView.layoutIfNeeded()
-                
-            }
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.updateLayout(newLayout: self.small)
+            self.collectionView.reloadData()
         }
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchBarActive = true
         let barText = searchBar.getTextFromBar()
-        store = nil
-        self.store = iTrackDataStore(searchTerm: barText)
+        store = iTrackDataStore(searchTerm: barText)
         barText == "" ? noSearchBarInput() : searchBarHasInput()
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
-        self.searchController.isActive = true
     }
     
     func cancelSearching(_ searchBar: UISearchBar, searchBarActive: Bool) -> Bool {
-        print("Cancel")
         return false
     }
  }
@@ -344,13 +307,11 @@
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        print("update")
         self.searchController.isActive = true
     }
     
     public func updateSearchResults(for searchController: UISearchController) {
         searchBarActive = true
-        
     }
  }
  
@@ -362,7 +323,6 @@
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("Cancel")
         searchBarActive = false
         noSearchBarInput()
     }
@@ -384,7 +344,6 @@
             fatalError("Unexpected element kind")
         }
     }
- 
     
     func setupResuableView(_ reuseableView: HeaderReusableView) {
         reuseableView.searchBar = searchController.searchBar
