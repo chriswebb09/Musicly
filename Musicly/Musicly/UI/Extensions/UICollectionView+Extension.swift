@@ -17,12 +17,12 @@ extension UICollectionView {
         return reusableView
     }
 
-    func updateLayout(newLayout: UICollectionViewLayout) {
-        DispatchQueue.main.async {
-            self.reloadData()
-            self.setCollectionViewLayout(newLayout, animated: true)
-        }
-    }
+//    func updateLayout(newLayout: UICollectionViewLayout) {
+//        DispatchQueue.main.async {
+//            self.reloadData()
+//            self.setCollectionViewLayout(newLayout, animated: true)
+//        }
+//    }
     
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)

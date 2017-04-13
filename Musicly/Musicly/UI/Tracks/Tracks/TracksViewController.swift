@@ -14,9 +14,9 @@
  final class TracksViewController: UIViewController {
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    
+    var searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
-    weak var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
+    var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
     var searchBarActive: Bool = false
     
@@ -43,10 +43,24 @@
         super.viewDidLoad()
         searchController.delegate = self
         setupDefaultUI()
+        loadData()
         edgesForExtendedLayout = [.all]
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         setupCollectionView()
         title = "Music.ly"
+        collectionView?.isHidden = true
+        searchBar = searchController.searchBar
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
+        setup()
+        searchController.hidesNavigationBarDuringPresentation = false
+    }
+    
+    func loadData() {
+        self.store?.setSearch(string: "Test")
+        self.store?.searchForTracks { tracks, errors in
+            self.tracks = tracks
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -55,23 +69,42 @@
         collectionView?.layoutIfNeeded()
     }
     
+    func setupMusicIcon(icon: UIView) {
+        view.addSubview(icon)
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.18).isActive = true
+        icon.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35).isActive = true
+        icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * -0.13).isActive = true
+    }
+    
+    func setupInfoLabel(infoLabel: UILabel) {
+        view.addSubview(infoLabel)
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
+        infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
+    }
+    
     func setCollectionView() {
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.frame = UIScreen.main.bounds
         collectionView?.backgroundColor = CollectionViewAttributes.backgroundColor
+        view.backgroundColor = CollectionViewAttributes.backgroundColor
         view.addSubview(collectionView!)
-        collectionView?.setupMusicIcon(icon: musicIcon)
-        collectionView?.setupInfoLabel(infoLabel: infoLabel)
+        setupMusicIcon(icon: musicIcon)
+        setupInfoLabel(infoLabel: infoLabel)
         collectionViewRegister()
     }
     
     private func collectionViewRegister() {
         collectionView?.register(TrackCell.self,
-                                forCellWithReuseIdentifier: reuseIdentifier)
+                                 forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.register(HeaderReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                withReuseIdentifier: headerIdentifier)
+                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                 withReuseIdentifier: headerIdentifier)
         collectionView?.dataSource = self
         collectionView?.delegate = self
     }
@@ -125,7 +158,7 @@
         if let tracks = tracks {
             return TrackCounter().getCount(for: tracks)
         }
-        return 0
+        return 50
     }
  }
  
@@ -207,7 +240,25 @@
         musicIcon.isHidden = false
         infoLabel.isHidden = false
         tracks?.removeAll()
-        collectionView?.updateLayout(newLayout: small)
+        updateLayout(newLayout: small)
+    }
+    
+    func updateLayout(newLayout: UICollectionViewLayout) {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+            self.collectionView?.setCollectionViewLayout(newLayout, animated: true)
+        }
+    }
+    
+    func setup() {
+        setSearchBarColor(searchBar: searchBar)
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.definesPresentationContext = true
+        searchBar.barTintColor = .white
     }
     
     func searchBarHasInput() {
@@ -217,16 +268,24 @@
         musicIcon.isHidden = true
         store?.searchForTracks { tracks, error in
             self.tracks = tracks
-            self.collectionView?.collectionViewLayout.invalidateLayout()
-            self.collectionView?.updateLayout(newLayout: self.small)
-            self.collectionView?.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+            self.collectionView?.performBatchUpdates ({
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadItems(at: (self.collectionView?.indexPathsForVisibleItems)!)
+                    self.collectionView?.isHidden = false
+                }
+            }, completion: { finished in
+                print(finished)
+            })
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchBarActive = true
         let barText = searchBar.getTextFromBar()
-        store = iTrackDataStore(searchTerm: barText)
+        store?.setSearch(string: barText)
         barText == "" ? noSearchBarInput() : searchBarHasInput()
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
     }
@@ -244,7 +303,6 @@
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
-        
         if searchString != nil {
             store?.setSearch(string: searchString!)
             store?.searchForTracks { tracks, error in
@@ -268,32 +326,4 @@
         noSearchBarInput()
     }
     
-    func setHeader(headerView: HeaderReusableView) {
-        headerView.frame = HeaderViewProperties.frame
-        setupResuableView(headerView)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-            
-        case UICollectionElementKindSectionHeader:
-            let reusableView = collectionView.getHeader(indexPath: indexPath, identifier: headerIdentifier)
-            setHeader(headerView: reusableView)
-            return reusableView
-            
-        default:
-            fatalError("Unexpected element kind")
-        }
-    }
-    
-    func setupResuableView(_ reuseableView: HeaderReusableView) {
-        reuseableView.searchBar = searchController.searchBar
-        reuseableView.searchBar.delegate = self
-        setSearchBarColor(searchBar: reuseableView.searchBar)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        reuseableView.searchBar.delegate = self
-        reuseableView.searchBar.barTintColor = .white
-    }
  }
