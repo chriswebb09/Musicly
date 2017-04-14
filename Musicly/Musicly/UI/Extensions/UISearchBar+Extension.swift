@@ -10,6 +10,8 @@ import UIKit
 
 extension UISearchBar {
     
+    // TODO: - This can be implemented better / Possibly unnecessary
+    
     func getTextFromBar() -> String {
         let bar = self
         if let barText = bar.text {

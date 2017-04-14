@@ -152,6 +152,8 @@ final class PlayerView: UIView {
         addSelectors()
     }
     
+    // TODO: - Adds functionality to buttons
+    
     private func addSelectors() {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
@@ -204,6 +206,7 @@ final class PlayerView: UIView {
     }
     
     // MARK: - Preferences setup
+    // TODO: - Consolidate
     
     private func setupArtistBioButton() {
         preferencesView.addSubview(artistInfoButton)
@@ -332,6 +335,8 @@ final class PlayerView: UIView {
         totalPlayLengthLabel.text = totalTime
     }
     
+    // TODO: - This can be implemented better
+    
     func updateTime() {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
             if let playState = playState {
@@ -423,6 +428,7 @@ final class PlayerView: UIView {
         currentPlayLengthLabel.text = timerString
     }
     
+    // TODO: - This can be implemented better
     
     @objc private func playButtonTapped() {
         

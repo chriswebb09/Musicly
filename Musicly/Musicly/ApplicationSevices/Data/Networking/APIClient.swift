@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - JSON type
+
 typealias JSON = [String: Any]
 
 @objc(iTunesAPIClient)
@@ -16,6 +18,8 @@ final class iTunesAPIClient: NSObject {
     var tracks: [iTrack]?
     var activeDownloads: [String: Download]?
     weak var defaultSession: URLSession? = URLSession(configuration: .default)
+    
+    // MARK: - Main session used
     
     weak var downloadsSession : URLSession? {
         get {
@@ -29,6 +33,8 @@ final class iTunesAPIClient: NSObject {
         activeDownloads = [String: Download]()
         tracks = [iTrack]()
     }
+    
+    // MARK: - Main search functionality
     
     static func search(for query: String, completion: @escaping (_ responseObject: JSON?, _ error: Error?) -> Void) {
         if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
@@ -50,11 +56,15 @@ final class iTunesAPIClient: NSObject {
         }
     }
     
-    static func downloadData(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+    // MARK: - Transitory session
+    
+    internal static func downloadData(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
         URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
             completion(data, response, error)
             }.resume()
     }
+    
+    // MARK: - Turns data into JSON - JSON is typealias
     
     fileprivate static func convertToJSON(with data: Data) -> JSON? {
         do {
@@ -91,23 +101,28 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
                 }
             }
         }
-        
-        func trackIndexForDownloadTask(_ downloadTask: URLSessionDownloadTask) -> Int? {
-            if let url = downloadTask.originalRequest?.url?.absoluteString,
-                let tracks = tracks {
-                for (index, track) in tracks.enumerated() {
-                    if url == track.previewUrl {
-                        return index
-                    }
-                }
-            }
-            return nil
-        }
     }
     
+    // MARK: - Keeps track of download index - for collectionView
+    // TODO: - Figure out if this is necessary
+    
+    func trackIndexForDownloadTask(_ downloadTask: URLSessionDownloadTask) -> Int? {
+        if let url = downloadTask.originalRequest?.url?.absoluteString,
+            let tracks = tracks {
+            for (index, track) in tracks.enumerated() {
+                if url == track.previewUrl {
+                    return index
+                }
+            }
+        }
+        return nil
+    }
 }
 
+
+
 // MARK: - URLSessionDelegate
+// TODO: - Figure out downloads situation
 
 extension iTunesAPIClient: URLSessionDelegate {
     
@@ -121,6 +136,8 @@ extension iTunesAPIClient: URLSessionDelegate {
         }
     }
     
+    // TODO: - Possibly unneeded
+    
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64) {
         if let downloadUrl = downloadTask.originalRequest?.url?.absoluteString,
             let download = activeDownloads?[downloadUrl] {
@@ -130,6 +147,8 @@ extension iTunesAPIClient: URLSessionDelegate {
 }
 
 extension iTunesAPIClient {
+    
+    // TODO: - Possibly unneeded
     
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
@@ -159,6 +178,8 @@ extension iTunesAPIClient {
             download.isDownloading = false
         }
     }
+    
+    // TODO: - Probably unneeded
     
     func URLSessionDidFinishEventsForBackgroundURLSession(session: URLSession) {
         print("Session: \(session)")

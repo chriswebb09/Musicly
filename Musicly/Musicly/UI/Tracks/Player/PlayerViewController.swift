@@ -61,6 +61,7 @@ final class PlayerViewController: UIViewController {
 extension PlayerViewController: PlayerViewDelegate {
     
     // TODO: - This can be implemented better
+    // Resets song to beginning when player reaches end
     
     func resetPlayerAndSong() {
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
@@ -72,6 +73,7 @@ extension PlayerViewController: PlayerViewDelegate {
         player.pause()
     }
     
+    // MARK: - Thumbs
     
     func thumbsDownTapped() {
         track?.thumbs = .down
@@ -83,6 +85,8 @@ extension PlayerViewController: PlayerViewDelegate {
         print("thumbs up")
     }
     
+    // MARK: - Player controlers
+    
     func pauseButtonTapped() {
         print("pause")
         player.pause()
@@ -91,6 +95,8 @@ extension PlayerViewController: PlayerViewDelegate {
     func playButtonTapped() {
         player.play()
     }
+    
+    // TODO: Might be deleted
     
     func downloadButtonTapped() {
         print("Downloading")
