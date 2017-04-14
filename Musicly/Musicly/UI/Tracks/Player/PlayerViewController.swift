@@ -14,7 +14,7 @@ final class PlayerViewController: UIViewController {
     var playerView: PlayerView = PlayerView()
     var track: iTrack?
     
-    lazy var player: AVPlayer = {
+    lazy var player: AVPlayer? = {
         return AVPlayer()
     }()
     
@@ -34,7 +34,7 @@ final class PlayerViewController: UIViewController {
             setupPlayer(url: url)
             
         }
-        if let currentItem = player.currentItem {
+        if let currentItem = player?.currentItem {
             playerView.setupTime(time: currentItem.duration)
         }
     }
@@ -43,8 +43,8 @@ final class PlayerViewController: UIViewController {
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
         
-        player.rate = PlayerAttributes.playerRate
-        player.pause()
+        player?.rate = PlayerAttributes.playerRate
+        player?.pause()
     }
 }
 
@@ -63,11 +63,11 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
         print("pause")
-        player.pause()
+        player?.pause()
     }
     
     func playButtonTapped() {
-        player.play()
+        player?.play()
     }
     
     func downloadButtonTapped() {

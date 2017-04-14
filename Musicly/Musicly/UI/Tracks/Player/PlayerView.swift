@@ -137,6 +137,10 @@ final class PlayerView: UIView {
         albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
         trackTitleView.layer.setCellShadow(contentView: trackTitleView)
         playButton.layer.setViewShadow(view: playButton)
+        addSelectors()
+    }
+    
+    private func addSelectors() {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
         thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
@@ -202,20 +206,16 @@ final class PlayerView: UIView {
     private func setupThumbsUpButton() {
         thumbsButtonSetup(thumbs: thumbsUpButton)
         thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.06).isActive = true
-        //thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
-                                                //constant: UIScreen.main.bounds.width * 0.1).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
     private func setupThumbsDownButton() {
         thumbsButtonSetup(thumbs: thumbsDownButton)
         thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.21).isActive = true
-       // thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
-                                                 // constant: UIScreen.main.bounds.width * -0.1).isActive = true
         thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
-    func thumbsButtonSetup(thumbs: UIButton) {
+    private func thumbsButtonSetup(thumbs: UIButton) {
         preferencesView.addSubview(thumbs)
         thumbs.translatesAutoresizingMaskIntoConstraints = false
         thumbs.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.07).isActive = true
@@ -235,18 +235,16 @@ final class PlayerView: UIView {
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor, multiplier: 1).isActive = true
         trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
-        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor,
-                                                 constant: controlsView.bounds.height * 0.5).isActive = true
+        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
     }
     
-    func setupTrackButtons(button: UIButton) {
+    private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.16).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor,
-                                            constant: UIScreen.main.bounds.height * -0.06).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
     }
     
     private func setupPlayButton() {
@@ -263,8 +261,7 @@ final class PlayerView: UIView {
         progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.6).isActive = true
         progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
         progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor,
-                                              constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
     }
     
     private func setupTotalPlayLengthLabel() {
@@ -272,10 +269,8 @@ final class PlayerView: UIView {
         totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
         totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor,
-                                                    constant: UIScreen.main.bounds.width * -0.07).isActive = true
-        totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor,
-                                                      constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.07).isActive = true
+        totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
     }
     
     private func setupCurrentPlayLength() {
@@ -283,10 +278,8 @@ final class PlayerView: UIView {
         currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
         currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
         currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor,
-                                                constant: UIScreen.main.bounds.width * 0.07).isActive = true
-        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor,
-                                                   constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
+        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
     }
     
     fileprivate func setupView() {

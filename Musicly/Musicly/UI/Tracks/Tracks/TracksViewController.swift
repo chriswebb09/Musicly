@@ -280,13 +280,13 @@
         tracks?.removeAll()
         infoLabel.isHidden = true
         musicIcon.isHidden = true
-        store?.searchForTracks { tracks, error in
-            self.tracks = tracks
-            self.collectionView?.performBatchUpdates ({
+        store?.searchForTracks { [weak self] tracks, error in
+            self?.tracks = tracks
+            self?.collectionView?.performBatchUpdates ({
                 DispatchQueue.main.async {
-                    if let collectionView = self.collectionView {
+                    if let collectionView = self?.collectionView {
                         collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-                        self.collectionView?.isHidden = false
+                        self?.collectionView?.isHidden = false
                     }
                 }
             }, completion: { finished in
