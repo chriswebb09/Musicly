@@ -16,12 +16,17 @@
                                                  left: 20.0,
                                                  bottom: 50.0,
                                                  right: 20.0)
-    var searchBar = UISearchBar()
+    var searchBar = UISearchBar() {
+        didSet {
+              searchBar.returnKeyType = .done
+        }
+    }
     let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
     var searchBarActive: Bool = false {
         didSet {
+            
             if searchBarActive == true {
                 navigationItem.rightBarButtonItems = []
             } else {
@@ -53,6 +58,7 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
@@ -61,6 +67,7 @@
     }
     
     override func viewWillAppear(_ animated: Bool) {
+      
         super.viewWillAppear(animated)
         if let searchBarText = searchBar.text {
             if searchBarText.characters.count > 0 {
@@ -111,6 +118,7 @@
     }
     
     func setupSearchButton() {
+        
         navigationItem.setRightBarButton(buttonItem, animated: false)
     }
     

@@ -40,20 +40,18 @@ final class PlayerViewController: UIViewController {
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {
-//            if let player = player {
-                let audioDuration = asset.duration
-                let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-                let minutes = Int(audioDurationSeconds / 60)
-                let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-                return "\(minutes):\(rem)"
-           // }
+            let audioDuration = asset.duration
+            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+            let minutes = Int(audioDurationSeconds / 60)
+            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+            return "\(minutes):\(rem)"
         }
         return nil
     }
     
     
     
-    private func setupPlayer(url: URL) {
+    fileprivate func setupPlayer(url: URL) {
         
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
@@ -61,21 +59,18 @@ final class PlayerViewController: UIViewController {
         player.rate = PlayerAttributes.playerRate
         player.pause()
     }
-    //        avUrlAsset = AVURLAsset(url: url)
-    //        let item = AVPlayerItem(asset: avUrlAsset!)
-    //        player = AVPlayer(playerItem: item)
-    //        if let player = player {
-    //            player.rate = PlayerAttributes.playerRate
-    //            player.pause()
-    //        }
-    //    }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
     
     func resetPlayerAndSong() {
-        player.pause()
+        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
+            setupPlayer(url: url)
+            playerView.setupTimeLabels(totalTime: fileTime)
+        }
         player.currentItem?.seek(to: kCMTimeZero)
+        player.rate = PlayerAttributes.playerRate
+        player.pause()
     }
     
     
@@ -96,9 +91,7 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func playButtonTapped() {
-//        if let player = player {
-            player.play()
-     //   }
+        player.play()
     }
     
     func downloadButtonTapped() {
