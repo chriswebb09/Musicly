@@ -24,20 +24,16 @@ final internal class TrackCell: UICollectionViewCell {
         return album
     }()
     
-    var track: iTrack?
-    
     func setShadow() {
         layer.setCellShadow(contentView: contentView)
         let path =  UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius)
         layer.shadowPath = path.cgPath
     }
     
-    func configureWith(_ track: iTrack?) {
-        self.track = track
-        if let track = track,
-            let url = URL(string: track.artworkUrl) {
+    func configureCell(with trackName: String, with artworkUrl: String) {
+        if let url = URL(string: artworkUrl) {
             albumArtView.downloadImage(url: url)
-            trackNameLabel.text = track.trackName
+            trackNameLabel.text = trackName
         }
         layoutSubviews()
     }

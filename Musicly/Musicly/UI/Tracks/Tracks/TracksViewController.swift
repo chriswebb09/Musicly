@@ -208,7 +208,7 @@
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         if let index = indexPath,
             let track = tracks?[index.row] {
-            cell.configureWith(track)
+            cell.configureCell(with: track.trackName, with: track.artworkUrl)
         }
     }
     

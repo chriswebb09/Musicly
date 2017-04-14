@@ -8,11 +8,18 @@
 
 import UIKit
 
+enum FileState {
+    case playing, done, paused
+}
+
+
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     var timer: Timer?
     var track: iTrack?
+    var playState: FileState?
+    
     
     private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
@@ -306,18 +313,35 @@ final class PlayerView: UIView {
     
     func updateTime() {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
-            if let count = timerDic["count"] as? Int {
-                // Increment time for label
-                timerDic["count"] = count + 1
-                // Update progress bar
-                progressView.progress += 0.0342
-                dump(progressView.observedProgress)
-                time = count
-                constructTimeString()
+            if let playState = playState {
+                switch playState {
+                case .playing:
+                    if let count = timerDic["count"] as? Int {
+                        
+                        // Increment time for label
+                        timerDic["count"] = count + 1
+                        
+                        // Update progress bar
+                        progressView.progress += 0.0342
+                        
+                        if progressView.progress == 1 {
+                            self.playState = .done
+                        }
+                        
+                        dump(progressView.observedProgress)
+                        time = count
+                        constructTimeString()
+                    }
+                case .done:
+                    return
+                case .paused:
+                    return
+
+                }
             }
         }
     }
-
+    
     func pauseTime() {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
             if let count = timerDic["count"] as? Int {
@@ -327,7 +351,7 @@ final class PlayerView: UIView {
             }
         }
     }
-
+    
     @objc private func thumbsUpTapped() {
         if self.track?.thumbs == .up {
             self.track?.thumbs = .none
@@ -362,7 +386,8 @@ final class PlayerView: UIView {
     
     
     @objc private func playButtonTapped() {
-        timer?.invalidate() 
+        playState = .playing
+        timer?.invalidate()
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
             if let count = timerDic["count"] as? Int {
                 timerDic["count"] = count + 1
