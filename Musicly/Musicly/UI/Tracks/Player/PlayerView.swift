@@ -201,15 +201,17 @@ final class PlayerView: UIView {
     
     private func setupThumbsUpButton() {
         thumbsButtonSetup(thumbs: thumbsUpButton)
-        thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
-                                                constant: UIScreen.main.bounds.width * 0.1).isActive = true
+        thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.06).isActive = true
+        //thumbsUpButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
+                                                //constant: UIScreen.main.bounds.width * 0.1).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
     private func setupThumbsDownButton() {
         thumbsButtonSetup(thumbs: thumbsDownButton)
-        thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
-                                                  constant: UIScreen.main.bounds.width * -0.1).isActive = true
+        thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.21).isActive = true
+       // thumbsDownButton.centerXAnchor.constraint(equalTo: preferencesView.centerXAnchor,
+                                                 // constant: UIScreen.main.bounds.width * -0.1).isActive = true
         thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
@@ -254,7 +256,6 @@ final class PlayerView: UIView {
     private func setupPauseButton() {
         setupTrackButtons(button: pauseButton)
     }
-    
     
     private func setupProgressView() {
         controlsView.addSubview(progressView)

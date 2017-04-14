@@ -12,14 +12,16 @@
  
  final class TracksViewController: UIViewController {
     
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0,
+                                                 left: 20.0,
+                                                 bottom: 50.0,
+                                                 right: 20.0)
     
     var searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
     var searchBarActive: Bool = false
-    //let searchButton = UIButton()
     var image = #imageLiteral(resourceName: "search-button3")
     var buttonItem: UIBarButtonItem?
     
@@ -52,7 +54,10 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
+        buttonItem = UIBarButtonItem(image: image,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()
@@ -65,7 +70,7 @@
     func navigationBarSetup() {
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
-        if(searchBarActive == true) {
+        if searchBarActive == true {
             navigationItem.rightBarButtonItems = []
             searchBarActive = false
         } else {
@@ -148,7 +153,10 @@
             collectionView?.layoutIfNeeded()
             setupLayout(layout: newLayout)
         }
-        collectionView?.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+        collectionView?.backgroundColor = UIColor(red: 0.97,
+                                                  green: 0.97,
+                                                  blue: 0.97,
+                                                  alpha: 1.0)
         view.addSubview(collectionView!)
     }
     
@@ -205,7 +213,8 @@
  
  extension TracksViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return RowSize.header.rawValue
     }
     

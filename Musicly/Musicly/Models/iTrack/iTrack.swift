@@ -12,6 +12,7 @@ import Foundation
 struct iTrack {
     
     weak var delegate: iTrackDelegate?
+    
     let trackName: String
     let artistName: String
     let artistId: Int
