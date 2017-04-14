@@ -16,12 +16,19 @@
                                                  left: 20.0,
                                                  bottom: 50.0,
                                                  right: 20.0)
-    
     var searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
-    var searchBarActive: Bool = false
+    var searchBarActive: Bool = false {
+        didSet {
+            if searchBarActive == true {
+                navigationItem.rightBarButtonItems = []
+            } else {
+                navigationItem.rightBarButtonItems = [buttonItem!]
+            }
+        }
+    }
     var image = #imageLiteral(resourceName: "search-button3")
     var buttonItem: UIBarButtonItem?
     
@@ -53,6 +60,22 @@
         setSearchBarColor(searchBar: searchBar)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let searchBarText = searchBar.text {
+            if searchBarText.characters.count > 0 {
+                searchBarActive = true
+            }
+        }
+        
+        if searchBarActive == true {
+            navigationItem.rightBarButtonItems = []
+            title = "Music.ly"
+        } else {
+            navigationItem.rightBarButtonItems = [buttonItem!]
+        }
+    }
+    
     func commonInit() {
         buttonItem = UIBarButtonItem(image: image,
                                      style: .plain,
@@ -70,13 +93,6 @@
     func navigationBarSetup() {
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
-        if searchBarActive == true {
-            navigationItem.rightBarButtonItems = []
-            searchBarActive = false
-        } else {
-            navigationItem.rightBarButtonItems = [buttonItem!]
-            searchBarActive = true
-        }
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
         searchBar.delegate = self
@@ -89,7 +105,7 @@
     func searchIconTapped() {
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
-        navigationItem.titleView = searchBar
+        navigationItem.titleView?.addSubview(searchBar)
         searchBar.delegate = self
         title = "Music.ly"
     }
@@ -120,7 +136,7 @@
         collectionView?.dataSource = self
         collectionView?.delegate = self
         if let collectionView = collectionView {
-             view.addSubview(collectionView)
+            view.addSubview(collectionView)
         }
         collectionViewRegister()
     }

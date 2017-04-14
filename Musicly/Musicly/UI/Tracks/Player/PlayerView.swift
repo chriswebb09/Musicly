@@ -13,7 +13,8 @@ import AVFoundation
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
-    
+    var timer: Timer?
+//    var timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     var track: iTrack?
     
     private var albumArtworkView: UIImageView = {
@@ -24,8 +25,9 @@ final class PlayerView: UIView {
     
     private var progressView: UIProgressView = {
         var progressView = UIProgressView()
-        progressView.observedProgress = Progress(totalUnitCount: 100)
-        
+      //  progressView.observedProgress = Progress(totalUnitCount: 100)
+        progressView.progress = 0.0
+        progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
     }()
     
@@ -53,7 +55,7 @@ final class PlayerView: UIView {
     
     private var currentPlayLength: UILabel = {
         let label = UILabel()
-        label.text = "0:07"
+        label.text = "0:00"
         label.textAlignment = .left
         if let font = UIFont(name: "Avenir-Book", size: 18) {
             label.font = font
@@ -121,6 +123,8 @@ final class PlayerView: UIView {
         setupView()
         pauseButton.alpha = 0
     }
+    
+    var time: Int?
     
     func configure(with track: iTrack) {
         self.track = track
@@ -257,7 +261,7 @@ final class PlayerView: UIView {
     private func setupCurrentPlayLength() {
         controlsView.addSubview(currentPlayLength)
         currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
-        currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
+        currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
         currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
         currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
         currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
@@ -298,7 +302,34 @@ final class PlayerView: UIView {
             }
         }
     }
+    var timerDic:NSMutableDictionary = ["count": 0]
     
+    func setupTimeLabels(totalTime: String) {
+        totalPlayLengthLabel.text = totalTime
+    }
+    
+    func updateTime() {
+        if let timerDic = timer?.userInfo as? NSMutableDictionary {
+            if let count = timerDic["count"] as? Int {
+                timerDic["count"] = count + 1
+                progressView.progress += 0.0342
+                dump(progressView.observedProgress)
+                time = count
+                constructTimeString()
+            }
+        }
+    }
+
+    func pauseTime() {
+        if let timerDic = timer?.userInfo as? NSMutableDictionary {
+            if let count = timerDic["count"] as? Int {
+                timerDic["count"] = count
+                
+                currentPlayLength.text = String(describing: count)
+            }
+        }
+    }
+
     @objc private func thumbsUpTapped() {
         if self.track?.thumbs == .up {
             self.track?.thumbs = .none
@@ -319,7 +350,29 @@ final class PlayerView: UIView {
         delegate?.thumbsDownTapped()
     }
     
+    func constructTimeString() {
+        var timeString = String(describing: time!)
+        var timerString = ""
+        print(timeString)
+        if timeString.characters.count < 2 {
+            timerString = "0:0\(timeString)"
+        } else if timeString.characters.count <= 2 {
+            timerString = "0:\(timeString)"
+        }
+        currentPlayLength.text = timerString
+    }
+    
+    
     @objc private func playButtonTapped() {
+        timer?.invalidate() 
+        if let timerDic = timer?.userInfo as? NSMutableDictionary {
+            if let count = timerDic["count"] as? Int {
+                timerDic["count"] = count + 1
+                currentPlayLength.text = String(describing: count)
+            }
+        }
+        // start the timer
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
         delegate?.playButtonTapped()
         playButton.isEnabled = false
         playButton.alpha = 0
@@ -330,6 +383,8 @@ final class PlayerView: UIView {
     }
     
     @objc private func pauseButtonTapped() {
+        timer?.invalidate()
+      //  pauseTime()
         delegate?.pauseButtonTapped()
         controlsView.bringSubview(toFront: playButton)
         controlsView.sendSubview(toBack: pauseButton)

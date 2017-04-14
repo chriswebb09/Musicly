@@ -16,6 +16,8 @@ final class PlayerViewController: UIViewController {
     
     var player: AVPlayer?
     
+    var avUrlAsset: AVURLAsset?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         player = AVPlayer()
@@ -30,18 +32,38 @@ final class PlayerViewController: UIViewController {
         title = track?.artistName
         
         if let urlString = track?.previewUrl, let url = URL(string: urlString) {
-            setupPlayer(url: url)
             
-        }
-        if let currentItem = player?.currentItem {
-           // playerView.setupTime(time: currentItem.duration)
+            playerView.setupTimeLabels(totalTime: getFileTime(url: url)!)
+            //setupPlayer(url: url)
+            //let item = AVPlayerItem(asset: avUrlAsset!)
         }
     }
     
+    
+    func getFileTime(url: URL) -> String? {
+        avUrlAsset = AVURLAsset(url: url)
+        if let asset = avUrlAsset {
+            //avUrlAsset = asset
+            
+            if let player = player {
+                let audioDuration = asset.duration
+                let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+                let minutes = Int(audioDurationSeconds / 60)
+                let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+                return "\(minutes):\(rem)"
+            }
+        }
+        return nil
+    }
+    
+    
+    
     private func setupPlayer(url: URL) {
         
-        let playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
+        //  let playerItem = AVPlayerItem(url: url)
+        avUrlAsset = AVURLAsset(url: url)
+        let item = AVPlayerItem(asset: avUrlAsset!)
+        player = AVPlayer(playerItem: item)
         if let player = player {
             player.rate = PlayerAttributes.playerRate
             player.pause()
@@ -53,14 +75,14 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func thumbsDownTapped() {
         track?.thumbs = .down
-         print("thumbs down")
+        print("thumbs down")
     }
-
+    
     func thumbsUpTapped() {
         track?.thumbs = .up
         print("thumbs up")
     }
-
+    
     
     func pauseButtonTapped() {
         print("pause")
@@ -69,12 +91,30 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func playButtonTapped() {
         if let player = player {
+            let audioDuration = avUrlAsset!.duration
+            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+            let minutes = Int(audioDurationSeconds / 60)
+            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+            playerView.setupTimeLabels(totalTime: "\(minutes):\(rem)")
             player.play()
         }
-        //player?.play()
     }
     
     func downloadButtonTapped() {
         print("Downloading")
     }
 }
+
+
+//    func setupTime(time: CMTime) {
+//        if let track = track, let url = URL(string: track.previewUrl) {
+//            let asset = AVAsset(url:url)
+//            let audioDuration = asset.duration
+//            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+//            let minutes = Int(audioDurationSeconds / 60)
+//            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+//            DispatchQueue.main.async {
+//                self.totalPlayLengthLabel.text = "\(minutes):\(rem)"
+//            }
+//        }
+//    }
