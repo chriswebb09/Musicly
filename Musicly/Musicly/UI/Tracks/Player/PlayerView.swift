@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import CoreMedia
-import AVFoundation
 
 final class PlayerView: UIView {
     
@@ -309,7 +307,9 @@ final class PlayerView: UIView {
     func updateTime() {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
             if let count = timerDic["count"] as? Int {
+                // Increment time for label
                 timerDic["count"] = count + 1
+                // Update progress bar
                 progressView.progress += 0.0342
                 dump(progressView.observedProgress)
                 time = count
