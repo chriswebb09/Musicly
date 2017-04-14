@@ -14,12 +14,11 @@ final class PlayerViewController: UIViewController {
     var playerView: PlayerView = PlayerView()
     var track: iTrack?
     
-    lazy var player: AVPlayer? = {
-        return AVPlayer()
-    }()
+    var player: AVPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        player = AVPlayer()
         edgesForExtendedLayout = []
         view.addSubview(playerView)
         playerView.frame = UIScreen.main.bounds
@@ -35,16 +34,18 @@ final class PlayerViewController: UIViewController {
             
         }
         if let currentItem = player?.currentItem {
-            playerView.setupTime(time: currentItem.duration)
+           // playerView.setupTime(time: currentItem.duration)
         }
     }
     
     private func setupPlayer(url: URL) {
+        
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
-        
-        player?.rate = PlayerAttributes.playerRate
-        player?.pause()
+        if let player = player {
+            player.rate = PlayerAttributes.playerRate
+            player.pause()
+        }
     }
 }
 
@@ -67,7 +68,10 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func playButtonTapped() {
-        player?.play()
+        if let player = player {
+            player.play()
+        }
+        //player?.play()
     }
     
     func downloadButtonTapped() {
