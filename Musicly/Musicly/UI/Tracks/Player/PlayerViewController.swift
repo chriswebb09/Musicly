@@ -14,13 +14,13 @@ final class PlayerViewController: UIViewController {
     var playerView: PlayerView = PlayerView()
     var track: iTrack?
     
-    var player: AVPlayer?
+    var player: AVPlayer = AVPlayer()
     
     var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        player = AVPlayer()
+        //player = AVPlayer()
         edgesForExtendedLayout = []
         view.addSubview(playerView)
         playerView.frame = UIScreen.main.bounds
@@ -30,8 +30,8 @@ final class PlayerViewController: UIViewController {
             playerView.configure(with: track)
         }
         title = track?.artistName
-        
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
+            setupPlayer(url: url)
             playerView.setupTimeLabels(totalTime: fileTime)
         }
     }
@@ -40,13 +40,13 @@ final class PlayerViewController: UIViewController {
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {
-            if let player = player {
+//            if let player = player {
                 let audioDuration = asset.duration
                 let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
                 let minutes = Int(audioDurationSeconds / 60)
                 let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
                 return "\(minutes):\(rem)"
-            }
+           // }
         }
         return nil
     }
@@ -54,17 +54,30 @@ final class PlayerViewController: UIViewController {
     
     
     private func setupPlayer(url: URL) {
-        avUrlAsset = AVURLAsset(url: url)
-        let item = AVPlayerItem(asset: avUrlAsset!)
-        player = AVPlayer(playerItem: item)
-        if let player = player {
-            player.rate = PlayerAttributes.playerRate
-            player.pause()
-        }
+        
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        player.rate = PlayerAttributes.playerRate
+        player.pause()
     }
+    //        avUrlAsset = AVURLAsset(url: url)
+    //        let item = AVPlayerItem(asset: avUrlAsset!)
+    //        player = AVPlayer(playerItem: item)
+    //        if let player = player {
+    //            player.rate = PlayerAttributes.playerRate
+    //            player.pause()
+    //        }
+    //    }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    
+    func resetPlayerAndSong() {
+        player.pause()
+        player.currentItem?.seek(to: kCMTimeZero)
+    }
+    
     
     func thumbsDownTapped() {
         track?.thumbs = .down
@@ -79,18 +92,13 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
         print("pause")
-        player?.pause()
+        player.pause()
     }
     
     func playButtonTapped() {
-        if let player = player {
-            let audioDuration = avUrlAsset!.duration
-            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-            let minutes = Int(audioDurationSeconds / 60)
-            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-            playerView.setupTimeLabels(totalTime: "\(minutes):\(rem)")
+//        if let player = player {
             player.play()
-        }
+     //   }
     }
     
     func downloadButtonTapped() {

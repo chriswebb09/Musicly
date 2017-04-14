@@ -12,7 +12,6 @@ enum FileState {
     case playing, done, paused
 }
 
-
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
@@ -30,6 +29,7 @@ final class PlayerView: UIView {
     private var progressView: UIProgressView = {
         var progressView = UIProgressView()
         progressView.progress = 0.0
+        progressView.progressTintColor = .orange
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
     }()
@@ -56,7 +56,7 @@ final class PlayerView: UIView {
         return label
     }()
     
-    private var currentPlayLength: UILabel = {
+    private var currentPlayLengthLabel: UILabel = {
         let label = UILabel()
         label.text = "0:00"
         label.textAlignment = .left
@@ -123,7 +123,7 @@ final class PlayerView: UIView {
     
     override func layoutSubviews() {
         backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
-        setupView()
+        setupViews()
         pauseButton.alpha = 0
     }
     
@@ -262,15 +262,17 @@ final class PlayerView: UIView {
     }
     
     private func setupCurrentPlayLength() {
-        controlsView.addSubview(currentPlayLength)
-        currentPlayLength.translatesAutoresizingMaskIntoConstraints = false
-        currentPlayLength.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
-        currentPlayLength.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
-        currentPlayLength.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
-        currentPlayLength.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        controlsView.addSubview(currentPlayLengthLabel)
+        currentPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
+        currentPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
+        currentPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
+        currentPlayLengthLabel.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
+        currentPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
     }
     
-    fileprivate func setupView() {
+    // Configures all subview
+    
+    fileprivate func setupViews() {
         setupTrackTitleView()
         setupArtworkView()
         setupAlbumArtworkView()
@@ -290,6 +292,8 @@ final class PlayerView: UIView {
     func downloadButtonTapped() {
         delegate?.downloadButtonTapped()
     }
+    
+    // Changes thumb button images depending on selection
     
     func switchThumbs() {
         if let track = track {
@@ -319,13 +323,27 @@ final class PlayerView: UIView {
                     if let count = timerDic["count"] as? Int {
                         
                         // Increment time for label
+                        
                         timerDic["count"] = count + 1
                         
                         // Update progress bar
-                        progressView.progress += 0.0342
+                        
+                        progressView.progress += 0.034
                         
                         if progressView.progress == 1 {
+                            currentPlayLengthLabel.textColor = .white
+                            totalPlayLengthLabel.textColor = .orange
                             self.playState = .done
+                            timerDic["count"] = 0
+                            delegate?.resetPlayerAndSong()
+                            controlsView.bringSubview(toFront: playButton)
+                            controlsView.sendSubview(toBack: pauseButton)
+                            playButton.isEnabled = true
+                            playButton.alpha = 1
+                            pauseButton.isEnabled = false
+                            pauseButton.alpha = 0
+                            timer = nil
+                            progressView.progress = 0
                         }
                         
                         dump(progressView.observedProgress)
@@ -347,7 +365,7 @@ final class PlayerView: UIView {
             if let count = timerDic["count"] as? Int {
                 timerDic["count"] = count
                 
-                currentPlayLength.text = String(describing: count)
+                currentPlayLengthLabel.text = String(describing: count)
             }
         }
     }
@@ -381,20 +399,21 @@ final class PlayerView: UIView {
         } else if timeString.characters.count <= 2 {
             timerString = "0:\(timeString)"
         }
-        currentPlayLength.text = timerString
+        currentPlayLengthLabel.text = timerString
     }
     
     
     @objc private func playButtonTapped() {
-        playState = .playing
+        
+        
         timer?.invalidate()
-        if let timerDic = timer?.userInfo as? NSMutableDictionary {
-            if let count = timerDic["count"] as? Int {
-                timerDic["count"] = count + 1
-                currentPlayLength.text = String(describing: count)
-            }
+        if playState == .done {
+            currentPlayLengthLabel.textColor = .orange
+            totalPlayLengthLabel.textColor = .white
         }
+        playState = .playing
         // Timer begin
+        
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
         delegate?.playButtonTapped()
         playButton.isEnabled = false
@@ -414,5 +433,6 @@ final class PlayerView: UIView {
         playButton.alpha = 1
         pauseButton.isEnabled = false
         pauseButton.alpha = 0
+        timer = nil
     }
 }

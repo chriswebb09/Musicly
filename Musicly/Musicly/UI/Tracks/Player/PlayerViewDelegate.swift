@@ -14,4 +14,5 @@ protocol PlayerViewDelegate: class {
     func pauseButtonTapped()
     func thumbsUpTapped()
     func thumbsDownTapped()
+    func resetPlayerAndSong()
 }
