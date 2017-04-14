@@ -100,12 +100,6 @@ final class PlayerView: UIView {
         return trackTitleLabel
     }()
     
-//    private var downloadButton: UIButton = {
-//        var downloadButton = UIButton()
-//        downloadButton.setImage(#imageLiteral(resourceName: "download200x"), for: .normal)
-//        return downloadButton
-//    }()
-//    
     private var playButton: UIButton = {
         var playButton = UIButton()
         playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
@@ -146,19 +140,6 @@ final class PlayerView: UIView {
         thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
         thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
     }
-    
-//    func setupTime(time: CMTime) {
-//        if let track = track, let url = URL(string: track.previewUrl) {
-//            let asset = AVAsset(url:url)
-//            let audioDuration = asset.duration
-//            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-//            let minutes = Int(audioDurationSeconds / 60)
-//            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-//            DispatchQueue.main.async {
-//                self.totalPlayLengthLabel.text = "\(minutes):\(rem)"
-//            }
-//        }
-//    }
     
     private func setupTrackTitleView() {
         addSubview(trackTitleView)
