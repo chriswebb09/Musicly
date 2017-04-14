@@ -8,7 +8,7 @@
 <br><br>
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/search.png">
 <br><br>
-<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/play.png">
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/progressplay.png">
 </p>
 
 ___
