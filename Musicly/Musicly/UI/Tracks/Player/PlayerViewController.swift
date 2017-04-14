@@ -31,11 +31,8 @@ final class PlayerViewController: UIViewController {
         }
         title = track?.artistName
         
-        if let urlString = track?.previewUrl, let url = URL(string: urlString) {
-            
-            playerView.setupTimeLabels(totalTime: getFileTime(url: url)!)
-            //setupPlayer(url: url)
-            //let item = AVPlayerItem(asset: avUrlAsset!)
+        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
+            playerView.setupTimeLabels(totalTime: fileTime)
         }
     }
     
@@ -43,8 +40,6 @@ final class PlayerViewController: UIViewController {
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {
-            //avUrlAsset = asset
-            
             if let player = player {
                 let audioDuration = asset.duration
                 let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
@@ -59,8 +54,6 @@ final class PlayerViewController: UIViewController {
     
     
     private func setupPlayer(url: URL) {
-        
-        //  let playerItem = AVPlayerItem(url: url)
         avUrlAsset = AVURLAsset(url: url)
         let item = AVPlayerItem(asset: avUrlAsset!)
         player = AVPlayer(playerItem: item)
@@ -104,17 +97,3 @@ extension PlayerViewController: PlayerViewDelegate {
         print("Downloading")
     }
 }
-
-
-//    func setupTime(time: CMTime) {
-//        if let track = track, let url = URL(string: track.previewUrl) {
-//            let asset = AVAsset(url:url)
-//            let audioDuration = asset.duration
-//            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-//            let minutes = Int(audioDurationSeconds / 60)
-//            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-//            DispatchQueue.main.async {
-//                self.totalPlayLengthLabel.text = "\(minutes):\(rem)"
-//            }
-//        }
-//    }

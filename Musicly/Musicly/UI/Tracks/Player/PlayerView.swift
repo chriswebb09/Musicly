@@ -14,7 +14,6 @@ final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     var timer: Timer?
-//    var timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     var track: iTrack?
     
     private var albumArtworkView: UIImageView = {
@@ -25,7 +24,6 @@ final class PlayerView: UIView {
     
     private var progressView: UIProgressView = {
         var progressView = UIProgressView()
-      //  progressView.observedProgress = Progress(totalUnitCount: 100)
         progressView.progress = 0.0
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
@@ -371,7 +369,7 @@ final class PlayerView: UIView {
                 currentPlayLength.text = String(describing: count)
             }
         }
-        // start the timer
+        // Timer begin
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
         delegate?.playButtonTapped()
         playButton.isEnabled = false
@@ -384,7 +382,6 @@ final class PlayerView: UIView {
     
     @objc private func pauseButtonTapped() {
         timer?.invalidate()
-      //  pauseTime()
         delegate?.pauseButtonTapped()
         controlsView.bringSubview(toFront: playButton)
         controlsView.sendSubview(toBack: pauseButton)
