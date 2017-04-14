@@ -66,6 +66,8 @@ final class iTunesAPIClient: NSObject {
     
 }
 
+// MARK: - URLSessionDownloadDelegate
+
 extension iTunesAPIClient: URLSessionDownloadDelegate {
     
     func downloadTrackPreview(for download: Download?) {
@@ -163,8 +165,3 @@ extension iTunesAPIClient {
     }
 }
 
-extension NSError {
-    static func generalParsingError(domain: String) -> Error {
-        return NSError(domain: domain, code: 400, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Error retrieving data", comment: "General Parsing Error Description")])
-    }
-}

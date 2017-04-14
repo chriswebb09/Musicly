@@ -33,6 +33,8 @@ final class PlayerViewController: UIViewController {
         }
     }
     
+    // Gets total time length for song 
+    
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {

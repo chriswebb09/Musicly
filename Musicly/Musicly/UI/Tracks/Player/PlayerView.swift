@@ -21,10 +21,42 @@ final class PlayerView: UIView {
     var playState: FileState?
     var time: Int?
     
+    // MARK: - Cover art
+    
     private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
         albumArtworkView.backgroundColor = .white
         return albumArtworkView
+    }()
+    
+    private var artworkView: UIView = {
+        var artworkView = UIView()
+        artworkView.backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
+        return artworkView
+    }()
+    
+    // MARK: - Music controls
+    
+    private var controlsView: UIView = {
+        let controlsView = UIView()
+        controlsView.backgroundColor = .textColor
+        return controlsView
+    }()
+    
+    private var playButton: UIButton = {
+        var playButton = UIButton()
+        playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
+        if let imageView = playButton.imageView {
+            imageView.layer.setViewShadow(view: imageView)
+            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
+        }
+        return playButton
+    }()
+    
+    private var pauseButton: UIButton = {
+        var pauseButton = UIButton()
+        pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-2white"), for: .normal)
+        return pauseButton
     }()
     
     private var progressView: UIProgressView = {
@@ -34,19 +66,7 @@ final class PlayerView: UIView {
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
     }()
-    
-    private var artworkView: UIView = {
-        var artworkView = UIView()
-        artworkView.backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
-        return artworkView
-    }()
-    
-    private var trackTitleView: UIView = {
-        let trackTitleView = UIView()
-        trackTitleView.backgroundColor = .white
-        return trackTitleView
-    }()
-    
+
     private var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
         if let font = AppConstants.mainFont {
@@ -68,6 +88,29 @@ final class PlayerView: UIView {
         return label
     }()
     
+    // MARK: - Track title
+    
+    private var trackTitleView: UIView = {
+        let trackTitleView = UIView()
+        trackTitleView.backgroundColor = .white
+        return trackTitleView
+    }()
+    
+    private  var trackTitleLabel: UILabel = {
+        var trackTitleLabel = UILabel()
+        trackTitleLabel.textColor = .textColor
+        trackTitleLabel.textAlignment = .center
+        return trackTitleLabel
+    }()
+    
+    // MARK: - Preferences
+    
+    private var preferencesView: UIView = {
+        let preferencesView = UIView()
+        preferencesView.backgroundColor = .white
+        return preferencesView
+    }()
+  
     private var thumbsUpButton: UIButton = {
         let thumbsUpButton = UIButton()
         thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
@@ -85,41 +128,6 @@ final class PlayerView: UIView {
         infoButton.setTitle("Artist Bio", for: .normal)
         infoButton.setTitleColor(.textColor, for: .normal)
         return infoButton
-    }()
-    
-    private var controlsView: UIView = {
-        let controlsView = UIView()
-        controlsView.backgroundColor = .textColor
-        return controlsView
-    }()
-    
-    private var preferencesView: UIView = {
-        let preferencesView = UIView()
-        preferencesView.backgroundColor = .white
-        return preferencesView
-    }()
-    
-    private  var trackTitleLabel: UILabel = {
-        var trackTitleLabel = UILabel()
-        trackTitleLabel.textColor = .textColor
-        trackTitleLabel.textAlignment = .center
-        return trackTitleLabel
-    }()
-    
-    private var playButton: UIButton = {
-        var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
-        if let imageView = playButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
-        return playButton
-    }()
-    
-    private var pauseButton: UIButton = {
-        var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-2white"), for: .normal)
-        return pauseButton
     }()
     
     override func layoutSubviews() {
@@ -155,6 +163,16 @@ final class PlayerView: UIView {
         trackTitleView.topAnchor.constraint(equalTo: topAnchor).isActive = true
     }
     
+    private func setupTrackTitleLabel() {
+        trackTitleView.addSubview(trackTitleLabel)
+        trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
+        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
+        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
+    }
+    
+    // MARK: - Cover art setup
+    
     private func setupArtworkView() {
         addSubview(artworkView)
         artworkView.translatesAutoresizingMaskIntoConstraints = false
@@ -180,6 +198,8 @@ final class PlayerView: UIView {
         preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.06).isActive = true
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
     }
+    
+    // MARK: - Preferences setup
     
     private func setupArtistBioButton() {
         preferencesView.addSubview(artistInfoButton)
@@ -209,20 +229,14 @@ final class PlayerView: UIView {
         thumbs.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
     }
     
+    // MARK: - Music controls setup
+    
     private func setupControlsView() {
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.55).isActive = true
         controlsView.topAnchor.constraint(equalTo: preferencesView.bottomAnchor).isActive = true
-    }
-    
-    private func setupTrackTitleLabel() {
-        trackTitleView.addSubview(trackTitleLabel)
-        trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
-        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
-        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
     }
     
     private func setupTrackButtons(button: UIButton) {
@@ -369,6 +383,8 @@ final class PlayerView: UIView {
         }
     }
     
+    // Toggles thumbs
+    
     @objc private func thumbsUpTapped() {
         if self.track?.thumbs == .up {
             self.track?.thumbs = .none
@@ -389,6 +405,8 @@ final class PlayerView: UIView {
         delegate?.thumbsDownTapped()
     }
     
+    // Sets current play time
+    
     func constructTimeString() {
         var timeString = String(describing: time!)
         var timerString = ""
@@ -404,13 +422,13 @@ final class PlayerView: UIView {
     
     @objc private func playButtonTapped() {
         
-        
         timer?.invalidate()
         if playState == .done {
             currentPlayLengthLabel.textColor = .orange
             totalPlayLengthLabel.textColor = .white
         }
         playState = .playing
+        
         // Timer begin
         
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)

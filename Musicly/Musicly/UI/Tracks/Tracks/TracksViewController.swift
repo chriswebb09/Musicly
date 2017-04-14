@@ -118,9 +118,10 @@
     }
     
     func setupSearchButton() {
-        
         navigationItem.setRightBarButton(buttonItem, animated: false)
     }
+    
+    // Loads dummy data
     
     func loadData() {
         store?.setSearch(string: "Test")
@@ -197,6 +198,8 @@
     }
  }
  
+ // MARK: - UICollectionViewDataSource
+ 
  extension TracksViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -209,9 +212,6 @@
         }
         return 50
     }
- }
- 
- extension TracksViewController {
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         if let index = indexPath,
@@ -235,6 +235,8 @@
     }
  }
  
+ // MARK: - UICollectionViewDelegate
+ 
  extension TracksViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView,
@@ -257,6 +259,8 @@
         return 5
     }
  }
+ 
+ // MARK: - UISearchController Delegate
  
  extension TracksViewController: UISearchControllerDelegate {
     
@@ -332,6 +336,8 @@
     }
  }
  
+ // MARK: - UISearchResultsUpdating
+ 
  extension TracksViewController: UISearchResultsUpdating {
     
     func filterContentForSearchText(searchText: String) {
@@ -357,6 +363,8 @@
         searchBarActive = true
     }
  }
+ 
+ // MARK: - UISearchBarDelegate
  
  extension TracksViewController: UISearchBarDelegate {
     

@@ -50,6 +50,8 @@ struct iTrack {
     }
 }
 
+// MARK: - Hashable
+
 extension iTrack: Hashable {
     
     var hashValue: Int {

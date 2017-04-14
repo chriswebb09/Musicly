@@ -27,6 +27,8 @@ final class Download: Operation {
         }
     }
     
+    // Gives float for download progress - for delegate
+    
     private func updateProgress() {
         if let task = downloadTask,
             let url = url {
