@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let viewController = TracksViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
+        let placeholderAttributes: [String : AnyObject] = [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.systemFontSize)]
+        let attributedPlaceholder: NSAttributedString = NSAttributedString(string: "Search", attributes: placeholderAttributes)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = attributedPlaceholder
+       // UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).attributedPlaceholder = attributedPlaceholder
         window?.rootViewController = UINavigationController(rootViewController: viewController)
         UINavigationBar.appearance().tintColor = NavigationBarAttributes.navBarTint
         UINavigationBar.appearance().titleTextAttributes = [

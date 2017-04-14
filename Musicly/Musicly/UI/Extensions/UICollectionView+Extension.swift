@@ -10,20 +10,6 @@ import UIKit
 
 extension UICollectionView {
     
-    func getHeader(indexPath: IndexPath, identifier: String) -> HeaderReusableView {
-        let reusableView = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                            withReuseIdentifier: identifier,
-                                                            for: indexPath) as! HeaderReusableView
-        return reusableView
-    }
-
-//    func updateLayout(newLayout: UICollectionViewLayout) {
-//        DispatchQueue.main.async {
-//            self.reloadData()
-//            self.setCollectionViewLayout(newLayout, animated: true)
-//        }
-//    }
-    
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false

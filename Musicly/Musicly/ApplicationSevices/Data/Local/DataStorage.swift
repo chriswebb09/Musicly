@@ -12,8 +12,9 @@ final class LocalStorageManager {
     
     static func localFilePathForUrl(_ previewUrl: String) -> URL? {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        
         let fullPath = documentsPath.appendingPathComponent((URL(string: previewUrl)?.lastPathComponent)!)
-        return URL(fileURLWithPath:fullPath)
+        return URL(fileURLWithPath: fullPath)
     }
     
     static func localFileExistsForImage(_ track: iTrack) -> Bool {

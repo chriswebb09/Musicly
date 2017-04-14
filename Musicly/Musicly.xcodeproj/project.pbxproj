@@ -17,7 +17,6 @@
 		A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CD1E9EA6DF004826EE /* DataStorage.swift */; };
 		A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */; };
 		A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D31E9EA6DF004826EE /* Filter.swift */; };
-		A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */; };
 		A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */; };
 		A7C995EB1E9EA6F6004826EE /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E01E9EA6F6004826EE /* Search.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
@@ -75,7 +74,6 @@
 		A7C995CD1E9EA6DF004826EE /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDataStore.swift; sourceTree = "<group>"; };
 		A7C995D31E9EA6DF004826EE /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
-		A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		A7C995DE1E9EA6F6004826EE /* TrackCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCounter.swift; sourceTree = "<group>"; };
 		A7C995E01E9EA6F6004826EE /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
@@ -203,19 +201,10 @@
 			isa = PBXGroup;
 			children = (
 				A73268C61E9EB61500B48CD9 /* Extensions */,
-				A73268CA1E9ECB1400B48CD9 /* HeaderReusableView */,
 				A7CBC3EE1E9FBAEB00C95A50 /* Player */,
 				A73268C51E9EB60B00B48CD9 /* Tracks */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		A73268CA1E9ECB1400B48CD9 /* HeaderReusableView */ = {
-			isa = PBXGroup;
-			children = (
-				A7C995D41E9EA6DF004826EE /* HeaderReusableView.swift */,
-			);
-			path = HeaderReusableView;
 			sourceTree = "<group>";
 		};
 		A73268CB1E9ECB5100B48CD9 /* ApplicationSevices */ = {
@@ -450,7 +439,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */,
-				A7C995DD1E9EA6DF004826EE /* HeaderReusableView.swift in Sources */,
 				A7CBC3EC1E9FBAE000C95A50 /* PlayerView.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,

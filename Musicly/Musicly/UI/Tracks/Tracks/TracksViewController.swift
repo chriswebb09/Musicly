@@ -9,17 +9,17 @@
  import UIKit
  
  private let reuseIdentifier = "trackCell"
- private let headerIdentifier = "headerView"
  
  final class TracksViewController: UIViewController {
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    
     var searchBar = UISearchBar()
     let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     var tracks: [iTrack?]?
     var searchBarActive: Bool = false
-    let searchButton = UIButton()
+    //let searchButton = UIButton()
     var image = #imageLiteral(resourceName: "search-button3")
     var buttonItem: UIBarButtonItem?
     
@@ -48,6 +48,7 @@
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
         commonInit()
+        setSearchBarColor(searchBar: searchBar)
     }
     
     func commonInit() {
@@ -64,18 +65,28 @@
     func navigationBarSetup() {
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.rightBarButtonItems?.remove(at: 0)
+        if(searchBarActive == true) {
+            navigationItem.rightBarButtonItems = []
+            searchBarActive = false
+        } else {
+            navigationItem.rightBarButtonItems = [buttonItem!]
+            searchBarActive = true
+        }
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
         searchBar.delegate = self
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = .white
+        navigationItem.rightBarButtonItem?.tintColor = .white
+        searchBar.becomeFirstResponder()
     }
     
     func searchIconTapped() {
-        title = "Music.ly"
-        searchBar = searchController.searchBar
-        searchBar.delegate = self
-        navigationItem.titleView = searchBar
         searchController.hidesNavigationBarDuringPresentation = false
+        searchBar = searchController.searchBar
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        title = "Music.ly"
     }
     
     func setupSearchButton() {
@@ -103,16 +114,14 @@
         setupMusicIcon(icon: musicIcon)
         collectionView?.dataSource = self
         collectionView?.delegate = self
-        view.addSubview(collectionView!)
+        if let collectionView = collectionView {
+             view.addSubview(collectionView)
+        }
         collectionViewRegister()
     }
     
     private func collectionViewRegister() {
-        collectionView?.register(TrackCell.self,
-                                 forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.register(HeaderReusableView.self,
-                                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                 withReuseIdentifier: headerIdentifier)
+        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.dataSource = self
         collectionView?.delegate = self
     }
@@ -244,18 +253,11 @@
     }
     
     fileprivate func noSearchBarInput() {
-        updateLayout(newLayout: small)
-    }
-    
-    func updateLayout(newLayout: UICollectionViewLayout) {
-        DispatchQueue.main.async {
-            
-        }
+        
     }
     
     func setup() {
         setSearchBarColor(searchBar: searchBar)
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
         searchController.searchResultsUpdater = self
@@ -273,8 +275,10 @@
             self.tracks = tracks
             self.collectionView?.performBatchUpdates ({
                 DispatchQueue.main.async {
-                    self.collectionView?.reloadItems(at: (self.collectionView?.indexPathsForVisibleItems)!)
-                    self.collectionView?.isHidden = false
+                    if let collectionView = self.collectionView {
+                        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+                        self.collectionView?.isHidden = false
+                    }
                 }
             }, completion: { finished in
                 print(finished)
@@ -304,10 +308,12 @@
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
         if searchString != nil {
-            store?.setSearch(string: searchString!)
-            store?.searchForTracks { tracks, error in
-                self.store?.searchForTracks { tracks, error in
-                    self.tracks = tracks
+            if let searchString = searchString {
+                store?.setSearch(string: searchString)
+                store?.searchForTracks { tracks, error in
+                    self.store?.searchForTracks { tracks, error in
+                        self.tracks = tracks
+                    }
                 }
             }
         }

@@ -28,8 +28,8 @@ final internal class TrackCell: UICollectionViewCell {
     
     func setShadow() {
         layer.setCellShadow(contentView: contentView)
-        layer.shadowPath = UIBezierPath(roundedRect: bounds,
-                                        cornerRadius: contentView.layer.cornerRadius).cgPath
+        let path =  UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius)
+        layer.shadowPath = path.cgPath
     }
     
     func configureWith(_ track: iTrack?) {
@@ -66,6 +66,6 @@ final internal class TrackCell: UICollectionViewCell {
         trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
         trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
         trackNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
+        trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
 }

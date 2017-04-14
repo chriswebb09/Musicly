@@ -15,6 +15,8 @@ extension UIViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for tracks...", attributes: [NSForegroundColorAttributeName: UIColor.white])
+        UISearchBar.appearance().tintColor = .white
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
     }
     
     func setSearchBarColor(searchBar: UISearchBar) {
@@ -28,7 +30,7 @@ extension UIViewController {
         icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.18).isActive = true
         icon.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35).isActive = true
         icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * -0.13).isActive = true
+        icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * -0.04).isActive = true
     }
     
     func setupInfoLabel(infoLabel: UILabel) {
@@ -37,7 +39,7 @@ extension UIViewController {
         infoLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
         infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.12).isActive = true
     }
     
 }

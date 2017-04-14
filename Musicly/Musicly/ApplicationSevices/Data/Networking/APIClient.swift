@@ -142,7 +142,10 @@ extension iTunesAPIClient {
             }
             
             do {
-                try fileManager.copyItem(at: location, to: destinationURL!)
+                if let destinationURL = destinationURL {
+                    try fileManager.copyItem(at: location, to: destinationURL)
+                }
+                
             } catch let error {
                 print("Could not copy file to disk: \(error.localizedDescription)")
             }

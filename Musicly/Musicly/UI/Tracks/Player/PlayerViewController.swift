@@ -49,6 +49,7 @@ final class PlayerViewController: UIViewController {
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    
     func thumbsDownTapped() {
         track?.thumbs = .down
          print("thumbs down")
