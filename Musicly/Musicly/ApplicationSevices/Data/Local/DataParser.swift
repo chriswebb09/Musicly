@@ -10,6 +10,8 @@ import Foundation
 
 final class DataParser {
     
+    // TODO: - Figure out if this is necessary
+    
     static func parseDataForTrack(json: JSON) -> iTrack?{
         if let track = iTrack(json: json) {
             return track

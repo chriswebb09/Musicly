@@ -10,6 +10,8 @@ import UIKit
 
 extension UIViewController {
     
+    // TODO: - This can be implemented better
+    
     func setupDefaultUI() {
         let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)

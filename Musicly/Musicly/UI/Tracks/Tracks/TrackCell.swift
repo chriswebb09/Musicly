@@ -10,7 +10,7 @@ import UIKit
 
 final internal class TrackCell: UICollectionViewCell {
     
-    fileprivate var trackNameLabel: UILabel = {
+    private var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
         trackName.font = UIFont(name: "Avenir-Book", size: 10)
@@ -19,12 +19,14 @@ final internal class TrackCell: UICollectionViewCell {
         return trackName
     }()
     
-    fileprivate var albumArtView: UIImageView = {
+    private var albumArtView: UIImageView = {
         var album = UIImageView()
         return album
     }()
     
-    func setShadow() {
+    // TODO: - This can be implemented better
+    
+    private func setShadow() {
         layer.setCellShadow(contentView: contentView)
         let path =  UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius)
         layer.shadowPath = path.cgPath
@@ -43,13 +45,15 @@ final internal class TrackCell: UICollectionViewCell {
         viewConfigurations()
     }
     
-    func viewConfigurations() {
+    // MARK: View setup methods
+    
+    private func viewConfigurations() {
         setShadow()
         setupAlbumArt()
         setupTrackInfoLabel()
     }
     
-    func setupAlbumArt() {
+    private func setupAlbumArt() {
         contentView.addSubview(albumArtView)
         albumArtView.translatesAutoresizingMaskIntoConstraints = false
         albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
@@ -57,7 +61,7 @@ final internal class TrackCell: UICollectionViewCell {
         albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
-    func setupTrackInfoLabel() {
+    private func setupTrackInfoLabel() {
         contentView.addSubview(trackNameLabel)
         trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
         trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true

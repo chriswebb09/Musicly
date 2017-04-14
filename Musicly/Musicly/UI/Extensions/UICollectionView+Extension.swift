@@ -10,6 +10,8 @@ import UIKit
 
 extension UICollectionView {
     
+    // TODO: - This can be implemented better
+    
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false

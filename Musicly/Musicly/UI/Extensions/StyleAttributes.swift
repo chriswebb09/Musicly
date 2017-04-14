@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: - Cleanup and consolidate
+
 struct AppConstants {
     static let mainFont = UIFont(name: "Avenir-Book", size: 18)
 }

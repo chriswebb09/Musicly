@@ -130,11 +130,15 @@ final class PlayerView: UIView {
         return infoButton
     }()
     
+    // MARK: - View logic
+    
     override func layoutSubviews() {
         backgroundColor = .appBlue
         setupViews()
         pauseButton.alpha = 0
     }
+    
+    // TODO: - Separate view from iTrack, pass in needed parameters instead of object
     
     func configure(with track: iTrack) {
         self.track = track

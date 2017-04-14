@@ -34,6 +34,7 @@ final class PlayerViewController: UIViewController {
     }
     
     // Gets total time length for song 
+    // TODO: - This can be implemented better
     
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
@@ -47,6 +48,8 @@ final class PlayerViewController: UIViewController {
         return nil
     }
     
+    // TODO: - This can be implemented better
+    
     fileprivate func setupPlayer(url: URL) {
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
@@ -56,6 +59,8 @@ final class PlayerViewController: UIViewController {
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    
+    // TODO: - This can be implemented better
     
     func resetPlayerAndSong() {
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {

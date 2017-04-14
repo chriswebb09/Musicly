@@ -16,15 +16,18 @@
                                                  left: 20.0,
                                                  bottom: 50.0,
                                                  right: 20.0)
-    var searchBar = UISearchBar() {
+    
+    fileprivate var searchBar = UISearchBar() {
         didSet {
-              searchBar.returnKeyType = .done
+            searchBar.returnKeyType = .done
         }
     }
-    let searchController = UISearchController(searchResultsController: nil)
-    var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
-    var tracks: [iTrack?]?
-    var searchBarActive: Bool = false {
+    
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
+    fileprivate var tracks: [iTrack?]?
+    
+    fileprivate var searchBarActive: Bool = false {
         didSet {
             
             if searchBarActive == true {
@@ -34,7 +37,8 @@
             }
         }
     }
-    var image = #imageLiteral(resourceName: "search-button3")
+    
+    private var image = #imageLiteral(resourceName: "search-button3")
     var buttonItem: UIBarButtonItem?
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
@@ -67,7 +71,7 @@
     }
     
     override func viewWillAppear(_ animated: Bool) {
-      
+        
         super.viewWillAppear(animated)
         if let searchBarText = searchBar.text {
             if searchBarText.characters.count > 0 {
@@ -82,6 +86,8 @@
             navigationItem.rightBarButtonItems = [buttonItem!]
         }
     }
+    
+    // TODO: - Consolidate navigation bar and buttonItem methods
     
     func commonInit() {
         buttonItem = UIBarButtonItem(image: image,
@@ -109,6 +115,8 @@
         searchBar.becomeFirstResponder()
     }
     
+    // MARK: - Figure out if this is needed
+    
     func searchIconTapped() {
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
@@ -117,13 +125,15 @@
         title = "Music.ly"
     }
     
+    // MARK: - Adds searchButton to navigation bar
+    
     func setupSearchButton() {
         navigationItem.setRightBarButton(buttonItem, animated: false)
     }
     
     // Loads dummy data
     
-    func loadData() {
+    private func loadData() {
         store?.setSearch(string: "Test")
         store?.searchForTracks { tracks, errors in
             self.tracks = tracks
@@ -205,6 +215,8 @@
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
+    // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let tracks = tracks {
@@ -289,11 +301,13 @@
         searchController.searchBar.resignFirstResponder()
     }
     
+    // TODO: - Handle searchbar without text
+    
     fileprivate func noSearchBarInput() {
         
     }
     
-    func setup() {
+    fileprivate func setup() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
@@ -302,6 +316,8 @@
         definesPresentationContext = true
         searchBar.barTintColor = .white
     }
+    
+    // TODO: - Cleanup logic
     
     func searchBarHasInput() {
         collectionView?.backgroundView?.isHidden = true

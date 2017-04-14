@@ -10,6 +10,8 @@ import UIKit
 
 extension CALayer {
     
+    // TODO: - This can be implemented better
+    
     func setCellShadow(contentView: UIView) {
         let shadowOffsetWidth: CGFloat = contentView.bounds.height * 0.00001
         let shadowOffsetHeight: CGFloat = contentView.bounds.width * 0.0002
