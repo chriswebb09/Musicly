@@ -15,10 +15,11 @@ enum FileState {
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
+    
     var timer: Timer?
     var track: iTrack?
     var playState: FileState?
-    
+    var time: Int?
     
     private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
@@ -48,7 +49,7 @@ final class PlayerView: UIView {
     
     private var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
-        if let font = UIFont(name: "Avenir-Book", size: 18) {
+        if let font = AppConstants.mainFont {
             label.font = font
         }
         label.textColor = .white
@@ -60,7 +61,7 @@ final class PlayerView: UIView {
         let label = UILabel()
         label.text = "0:00"
         label.textAlignment = .left
-        if let font = UIFont(name: "Avenir-Book", size: 18) {
+        if let font = AppConstants.mainFont {
             label.font = font
         }
         label.textColor = .orange
@@ -82,13 +83,13 @@ final class PlayerView: UIView {
     private var artistInfoButton: UIButton = {
         var infoButton = UIButton()
         infoButton.setTitle("Artist Bio", for: .normal)
-        infoButton.setTitleColor(UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0), for: .normal)
+        infoButton.setTitleColor(.textColor, for: .normal)
         return infoButton
     }()
     
     private var controlsView: UIView = {
         let controlsView = UIView()
-        controlsView.backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        controlsView.backgroundColor = .textColor
         return controlsView
     }()
     
@@ -100,7 +101,7 @@ final class PlayerView: UIView {
     
     private  var trackTitleLabel: UILabel = {
         var trackTitleLabel = UILabel()
-        trackTitleLabel.textColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        trackTitleLabel.textColor = .textColor
         trackTitleLabel.textAlignment = .center
         return trackTitleLabel
     }()
@@ -122,12 +123,10 @@ final class PlayerView: UIView {
     }()
     
     override func layoutSubviews() {
-        backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
+        backgroundColor = .appBlue
         setupViews()
         pauseButton.alpha = 0
     }
-    
-    var time: Int?
     
     func configure(with track: iTrack) {
         self.track = track
@@ -213,7 +212,7 @@ final class PlayerView: UIView {
     private func setupControlsView() {
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
-        controlsView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        controlsView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.55).isActive = true
         controlsView.topAnchor.constraint(equalTo: preferencesView.bottomAnchor).isActive = true
     }
@@ -221,7 +220,7 @@ final class PlayerView: UIView {
     private func setupTrackTitleLabel() {
         trackTitleView.addSubview(trackTitleLabel)
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor, multiplier: 1).isActive = true
+        trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
         trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
         trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
     }
@@ -354,7 +353,7 @@ final class PlayerView: UIView {
                     return
                 case .paused:
                     return
-
+                    
                 }
             }
         }

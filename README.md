@@ -1,5 +1,14 @@
 # Musicly
 
+___
+
+<h2 align="center">Todo</h2>
+
+* Debug
+
+
+---
+
 <h2 align="center">App Screens</h2>
 
 <p align="center">

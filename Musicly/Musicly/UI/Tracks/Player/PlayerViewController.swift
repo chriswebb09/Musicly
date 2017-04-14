@@ -13,14 +13,11 @@ final class PlayerViewController: UIViewController {
     
     var playerView: PlayerView = PlayerView()
     var track: iTrack?
-    
     var player: AVPlayer = AVPlayer()
-    
     var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //player = AVPlayer()
         edgesForExtendedLayout = []
         view.addSubview(playerView)
         playerView.frame = UIScreen.main.bounds
@@ -36,7 +33,6 @@ final class PlayerViewController: UIViewController {
         }
     }
     
-    
     func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {
@@ -49,13 +45,9 @@ final class PlayerViewController: UIViewController {
         return nil
     }
     
-    
-    
     fileprivate func setupPlayer(url: URL) {
-        
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
-        
         player.rate = PlayerAttributes.playerRate
         player.pause()
     }
@@ -83,7 +75,6 @@ extension PlayerViewController: PlayerViewDelegate {
         track?.thumbs = .up
         print("thumbs up")
     }
-    
     
     func pauseButtonTapped() {
         print("pause")
