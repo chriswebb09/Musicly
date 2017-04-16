@@ -33,4 +33,26 @@ class MusiclyTests: XCTestCase {
         }
     }
     
+    func testForPlayer() {
+        var playerViewController: PlayerViewController? = PlayerViewController()
+        playerViewController?.viewDidLoad()
+        playerViewController = nil
+        XCTAssert(playerViewController?.playerView == nil)
+    }
+    
+    func testForEqualizer() {
+        var playerViewController: PlayerViewController? = PlayerViewController()
+        var playerView: PlayerView? = PlayerView()
+        
+        playerViewController?.playerView = playerView
+        
+        playerViewController?.playButtonTapped()
+//        var playerView: PlayerView? = PlayerView()
+//        playerView?.configure(with: "http://is3.mzstatic.com/image/thumb/Music2/v4/a2/66/32/a2663205-663c-8301-eec7-57937c2d0878/source/60x60bb.jpg", trackName: "new")
+//    
+       playerViewController?.playerView = nil
+        
+        XCTAssert(playerViewController?.playerView?.equalView == nil)
+        XCTAssert(playerViewController?.playerView?.equal == nil)
+    }
 }

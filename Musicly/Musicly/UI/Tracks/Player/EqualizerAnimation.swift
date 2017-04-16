@@ -12,12 +12,14 @@ class AudioEqualizer {
     
     var size: CGSize?
     
-    init(size: CGSize?) {
-        self.size = size
+    deinit {
+        size = nil
+        print("equalizer deallocated")
+        dump(self)
     }
     
-    deinit {
-        print("equalizer deallocated")
+    init(size: CGSize?) {
+        self.size = size
     }
     
     func createLayer(for size: CGSize?, with color: UIColor?) -> CALayer? {
@@ -94,7 +96,10 @@ final class IndicatorView: UIView {
     private(set) public var isAnimating: Bool = false
     
     deinit {
+        color = nil
+        
         print("indicator deallocated")
+        dump(self)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -38,7 +38,7 @@
         }
     }
     
-    private var image = #imageLiteral(resourceName: "search-button3")
+    private var image = #imageLiteral(resourceName: "search-button")
     var buttonItem: UIBarButtonItem?
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
@@ -236,10 +236,14 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let track = tracks?[indexPath.row] {
-            let destinationVC = PlayerViewController()
-            destinationVC.track = track
-            navigationController?.pushViewController(destinationVC, animated: false)
+        if let track = tracks?[indexPath.row] as? iTrack {
+            let destinationVC: PlayerViewController? = PlayerViewController()
+            
+            if let destinationView = destinationVC {
+                destinationVC?.track = track
+                navigationController?.pushViewController(destinationVC!, animated: false)
+            }
+            
         }
     }
     

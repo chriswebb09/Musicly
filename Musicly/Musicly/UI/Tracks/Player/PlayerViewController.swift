@@ -9,12 +9,9 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
-    //let trackPlayer = TrackPlayer()
-    
     var player: AVPlayer?
     var playerView: PlayerView? = PlayerView()
     var track: iTrack?
-//    weak var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +29,12 @@ final class PlayerViewController: UIViewController {
         }
     }
     
-        deinit {
-            playerView = nil
-        }
+    deinit {
+        playerView = nil
+        track = nil
+        dump(self)
+    }
     // Gets total time length for song
-    // TODO: - This can be implemented better
     
     func getFileTime(url: URL) -> String? {
         
@@ -46,9 +44,20 @@ final class PlayerViewController: UIViewController {
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
             let minutes = Int(audioDurationSeconds / 60)
             let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+            
+            avUrlAsset = nil
             return "\(minutes):\(rem)"
         }
         return nil
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopPlayer()
+        dump(playerView)
+        playerView?.removeFromSuperview()
+        playerView = nil
+        dump(playerView)
     }
     
     func initPlayer(url: URL)  {
@@ -73,12 +82,6 @@ final class PlayerViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopPlayer()
-    }
-    
 }
 
 extension PlayerViewController: PlayerViewDelegate {
@@ -92,7 +95,6 @@ extension PlayerViewController: PlayerViewDelegate {
         print("reset")
         stopPlayer()
     }
-
     
     // MARK: - Thumbs
     
