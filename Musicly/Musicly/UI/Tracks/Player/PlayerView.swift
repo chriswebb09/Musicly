@@ -118,6 +118,7 @@ final class PlayerView: UIView {
     }()
     
     weak var equal: AudioEqualizer? = AudioEqualizer(size: CGSize(width: 20, height: 20))
+    
     var equalView: IndicatorView?
     
     private var thumbsUpButton: UIButton = {
@@ -147,8 +148,6 @@ final class PlayerView: UIView {
         pauseButton.alpha = 0
     }
     
-    // TODO: - Separate view from iTrack, pass in needed parameters instead of object
-    
     func configure(with artworkUrl: String?, trackName: String?) {
         if let artworkUrl = artworkUrl, let url = URL(string: artworkUrl), let trackName = trackName {
             albumArtworkView.downloadImage(url: url)
@@ -159,8 +158,6 @@ final class PlayerView: UIView {
         playButton.layer.setViewShadow(view: playButton)
         addSelectors()
     }
-    
-    // TODO: - Adds functionality to buttons
     
     private func addSelectors() {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
@@ -203,7 +200,6 @@ final class PlayerView: UIView {
         albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.6).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
-        //print(albumArtworkView.frame.size)
     }
     
     private func setupPreferencesView() {
@@ -215,7 +211,6 @@ final class PlayerView: UIView {
     }
     
     // MARK: - Preferences setup
-    // TODO: - Consolidate
     
     private func setupArtistBioButton() {
         preferencesView.addSubview(artistInfoButton)
@@ -434,7 +429,7 @@ final class PlayerView: UIView {
     func constructTimeString() {
         var timeString = String(describing: time!)
         var timerString = ""
-        //print(timeString)
+       
         if timeString.characters.count < 2 {
             timerString = "0:0\(timeString)"
         } else if timeString.characters.count <= 2 {
@@ -442,8 +437,7 @@ final class PlayerView: UIView {
         }
         currentPlayLengthLabel.text = timerString
     }
-    
-    // TODO: - This can be implemented better
+
     
     @objc private func playButtonTapped() {
         let size: CGSize? = CGSize(width: 100, height: 106)

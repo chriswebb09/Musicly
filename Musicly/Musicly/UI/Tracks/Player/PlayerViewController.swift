@@ -14,7 +14,7 @@ final class PlayerViewController: UIViewController {
     var player: AVPlayer?
     var playerView: PlayerView? = PlayerView()
     var track: iTrack?
-    weak var avUrlAsset: AVURLAsset?
+//    weak var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,8 @@ final class PlayerViewController: UIViewController {
     // TODO: - This can be implemented better
     
     func getFileTime(url: URL) -> String? {
-        avUrlAsset = AVURLAsset(url: url)
+        
+        var avUrlAsset: AVURLAsset? = AVURLAsset(url: url)
         if let asset = avUrlAsset {
             let audioDuration = asset.duration
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
@@ -63,8 +64,6 @@ final class PlayerViewController: UIViewController {
     }
     
     func initPlayer(nsURL: URL)  {
-        
-        
         do {
             player = try AVPlayer(url: nsURL)
             guard let player = player else { return }
@@ -110,22 +109,20 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Player controlers
     
     func stopPlayer() {
-        if let play = player {
-            print("stopped")
-            play.pause()
-            player = nil
-            if player == nil {
-                print("player deallocated")
-            }
+        
+        
+        do {
             
-        } else {
-            print("player was already deallocated")
+            player = nil
+            guard player == nil else { return }
+
         }
+
     }
+    
     func playButtonTapped() {
         if let urlString = track?.previewUrl {
-            //trackPlayer.playSound(soundName: urlString)
-            //  trackPlayer.
+      
             initPlayer(nsURL: URL(string: urlString)!)
         }
     }
