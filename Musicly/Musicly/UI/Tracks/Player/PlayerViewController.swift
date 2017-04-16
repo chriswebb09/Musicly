@@ -8,34 +8,34 @@ import UIKit
 import AVFoundation
 
 final class PlayerViewController: UIViewController {
-    var player: AVPlayer!
-    var playerView: PlayerView! = PlayerView()
+    
+    //let trackPlayer = TrackPlayer()
+    
+    var player: AVPlayer?
+    var playerView: PlayerView? = PlayerView()
     var track: iTrack?
-    //var player: AVPlayer = AVPlayer()
-    var avUrlAsset: AVURLAsset?
+    weak var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-        view.addSubview(playerView)
-        playerView.frame = UIScreen.main.bounds
-        playerView.layoutSubviews()
-        playerView.delegate = self
+        view.addSubview(playerView!)
+        playerView?.frame = UIScreen.main.bounds
+        playerView?.layoutSubviews()
+        playerView?.delegate = self
         if let track = track {
-            playerView.configure(with: track)
+            playerView?.configure(with: track.artworkUrl, trackName: track.trackName)
         }
         title = track?.artistName
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-           //initPlayer(nsURL: NSURL(string: urlString)!)
-            //player.setupWithItem(itemUrl: url)
-            playerView.setupTimeLabels(totalTime: fileTime)
+            playerView?.setupTimeLabels(totalTime: fileTime)
         }
     }
     
-    deinit {
-        player = nil
-    }
-    // Gets total time length for song 
+        deinit {
+            playerView = nil
+        }
+    // Gets total time length for song
     // TODO: - This can be implemented better
     
     func getFileTime(url: URL) -> String? {
@@ -50,15 +50,28 @@ final class PlayerViewController: UIViewController {
         return nil
     }
     
-    func initPlayer(nsURL: NSURL)  {
+    func initPlayer(url: URL)  {
         if let play = player {
             print("playing")
             play.play()
         } else {
             print("player allocated")
-            player = AVPlayer(url: nsURL as URL)
+            player = AVPlayer(url: url)
             print("playing")
             player!.play()
+        }
+    }
+    
+    func initPlayer(nsURL: URL)  {
+        
+        
+        do {
+            player = try AVPlayer(url: nsURL)
+            guard let player = player else { return }
+            player.rate = 1
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
@@ -66,7 +79,7 @@ final class PlayerViewController: UIViewController {
         super.viewWillDisappear(animated)
         stopPlayer()
     }
-
+    
 }
 
 extension PlayerViewController: PlayerViewDelegate {
@@ -74,24 +87,13 @@ extension PlayerViewController: PlayerViewDelegate {
         stopPlayer()
         print("pause")
     }
-
+    
     
     func resetPlayerAndSong() {
         print("reset")
+        stopPlayer()
     }
-    
-    // TODO: - This can be implemented better
-    // Resets song to beginning when player reaches end
-    
-//    func resetPlayerAndSong() {
-//        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-//            player.setupWithItem(itemUrl: url)
-//            playerView.setupTimeLabels(totalTime: fileTime)
-//        }
-//        player.currentItem?.seek(to: kCMTimeZero)
-//        player.rate = PlayerAttributes.playerRate
-//        player.pause()
-//    }
+
     
     // MARK: - Thumbs
     
@@ -120,15 +122,12 @@ extension PlayerViewController: PlayerViewDelegate {
             print("player was already deallocated")
         }
     }
-    
-//    func pauseButtonTapped() {
-//        print("pause")
-//        player.pause()
-//    }
-//    
     func playButtonTapped() {
         if let urlString = track?.previewUrl {
-            initPlayer(nsURL: NSURL(string: urlString)!)
+            //trackPlayer.playSound(soundName: urlString)
+            //  trackPlayer.
+            initPlayer(nsURL: URL(string: urlString)!)
         }
     }
 }
+

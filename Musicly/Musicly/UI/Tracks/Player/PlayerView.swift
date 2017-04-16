@@ -12,9 +12,11 @@ enum FileState {
     case playing, done, paused
 }
 
-// TODO: - Fix memory leak
-
 final class PlayerView: UIView {
+    
+    deinit {
+        print("Player view deallocated")
+    }
     
     weak var delegate: PlayerViewDelegate?
     
@@ -61,7 +63,7 @@ final class PlayerView: UIView {
         return pauseButton
     }()
     
-    private var progressView: UIProgressView = {
+    private var progressView: UIProgressView? = {
         var progressView = UIProgressView()
         progressView.progress = 0.0
         progressView.progressTintColor = .orange
@@ -115,7 +117,7 @@ final class PlayerView: UIView {
         return preferencesView
     }()
     
-    let equal: AudioEqualizer? = AudioEqualizer(size: CGSize(width: 20, height: 20))
+    weak var equal: AudioEqualizer? = AudioEqualizer(size: CGSize(width: 20, height: 20))
     var equalView: IndicatorView?
     
     private var thumbsUpButton: UIButton = {
@@ -147,12 +149,10 @@ final class PlayerView: UIView {
     
     // TODO: - Separate view from iTrack, pass in needed parameters instead of object
     
-    func configure(with track: iTrack) {
-        //self.equalView =)
-        self.track = track
-        if let url = URL(string: track.artworkUrl) {
+    func configure(with artworkUrl: String?, trackName: String?) {
+        if let artworkUrl = artworkUrl, let url = URL(string: artworkUrl), let trackName = trackName {
             albumArtworkView.downloadImage(url: url)
-            trackTitleLabel.text = track.trackName
+            trackTitleLabel.text = trackName
         }
         albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
         trackTitleView.layer.setCellShadow(contentView: trackTitleView)
@@ -273,12 +273,14 @@ final class PlayerView: UIView {
     }
     
     private func setupProgressView() {
-        controlsView.addSubview(progressView)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.6).isActive = true
-        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
-        progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        if let progressView = progressView {
+            controlsView.addSubview(progressView)
+            progressView.translatesAutoresizingMaskIntoConstraints = false
+            progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.6).isActive = true
+            progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
+            progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
+            progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
+        }
     }
     
     private func setupTotalPlayLengthLabel() {
@@ -334,10 +336,13 @@ final class PlayerView: UIView {
             }
         }
     }
-    var timerDic:NSMutableDictionary = ["count": 0]
+    var timerDic: NSMutableDictionary = ["count": 0]
     
-    func setupTimeLabels(totalTime: String) {
-        totalPlayLengthLabel.text = totalTime
+    func setupTimeLabels(totalTime: String?) {
+        if let totalTime = totalTime {
+            totalPlayLengthLabel.text = totalTime
+        }
+        
     }
     
     // TODO: - This can be implemented better
@@ -348,7 +353,8 @@ final class PlayerView: UIView {
             if let playState = playState {
                 switch playState {
                 case .playing:
-                    if let count = timerDic["count"] as? Int {
+                    if let count = timerDic["count"] as? Int,
+                        let progressView = progressView {
                         
                         // Increment time for label
                         
@@ -372,15 +378,13 @@ final class PlayerView: UIView {
                             pauseButton.alpha = 0
                             timer = nil
                             progressView.progress = 0
-                            UIView.animate(withDuration: 0.5) { [unowned self] in
+                            UIView.animate(withDuration: 0.5) {
                                 self.playButton.alpha = 1
                                 self.equalView?.alpha = 0
                                 self.equalView?.stopAnimating()
                             }
                             
                         }
-                        
-                        dump(progressView.observedProgress)
                         time = count
                         constructTimeString()
                     }
@@ -388,7 +392,6 @@ final class PlayerView: UIView {
                     return
                 case .paused:
                     return
-                    
                 }
             }
         }
@@ -398,10 +401,10 @@ final class PlayerView: UIView {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
             if let count = timerDic["count"] as? Int {
                 timerDic["count"] = count
-                
                 currentPlayLengthLabel.text = String(describing: count)
             }
         }
+        print(timerDic)
     }
     
     // Toggles thumbs
@@ -443,14 +446,16 @@ final class PlayerView: UIView {
     // TODO: - This can be implemented better
     
     @objc private func playButtonTapped() {
-        let size = CGSize(width: 100, height: 106)
-        var newFrame = CGRect(origin: CGPoint(x: artworkView.frame.minX, y: artworkView.frame.minY), size: size)
-        self.equalView = IndicatorView(frame: frame, color: UIColor.gray, padding: 0, animationRect: newFrame)
-        self.equalView?.alpha = 0.9
-        equalView!.frame.size = artworkView.frame.size
-        equal?.setUpAnimation(in: equalView!.layer, color: .blue)
-        artworkView.addSubview(equalView!)
-        equalView!.startAnimating()
+        let size: CGSize? = CGSize(width: 100, height: 106)
+        if let size = size {
+            var newFrame: CGRect? = CGRect(origin: CGPoint(x: artworkView.frame.minX, y: artworkView.frame.minY), size: size)
+            self.equalView = IndicatorView(frame: frame, color: UIColor.gray, padding: 0, animationRect: newFrame)
+            self.equalView?.alpha = 0.9
+            equalView!.frame.size = artworkView.frame.size
+            equal?.setUpAnimation(in: equalView!.layer, color: .blue)
+            artworkView.addSubview(equalView!)
+        }
+        equalView?.startAnimating()
         timer?.invalidate()
         if playState == .done {
             currentPlayLengthLabel.textColor = .orange
