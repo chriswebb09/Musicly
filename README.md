@@ -13,6 +13,8 @@ ___
 
 <p align="center">
 <br><br>
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/iphonerecording.gif">
+<br><br>
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/start.png">
 <br><br>
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/search.png">
