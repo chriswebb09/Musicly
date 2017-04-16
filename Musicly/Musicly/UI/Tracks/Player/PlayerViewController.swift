@@ -1,8 +1,7 @@
 //
 //  PlayerViewController.swift
 //  Musicly
-//
-// Credit: https://github.com/ninjaprox/NVActivityIndicatorView
+
 
 import UIKit
 import AVFoundation

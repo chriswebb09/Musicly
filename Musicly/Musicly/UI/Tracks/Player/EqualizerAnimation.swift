@@ -2,21 +2,13 @@
 //  EqualizerAnimation.swift
 //  Musicly
 //
-//  Created by Christopher Webb-Orenstein on 4/15/17.
-//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
-//
+// Credit: https://github.com/ninjaprox/NVActivityIndicatorView
 
 import UIKit
 
 class AudioEqualizer {
     
     var size: CGSize?
-    
-    deinit {
-        size = nil
-        print("equalizer deallocated")
-        dump(self)
-    }
     
     init(size: CGSize?) {
         self.size = size
