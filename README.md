@@ -1,7 +1,4 @@
-# Musicly
 
-___
-<br><br>'
 <p align="center">
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/iphonerecording.gif">
 </p>
