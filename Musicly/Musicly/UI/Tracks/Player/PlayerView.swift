@@ -25,13 +25,13 @@ final class PlayerView: UIView {
     
     private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
-        albumArtworkView.backgroundColor = .white
+        albumArtworkView.backgroundColor = .clear
         return albumArtworkView
     }()
     
     private var artworkView: UIView = {
         var artworkView = UIView()
-        artworkView.backgroundColor = UIColor(red:0.86, green:0.87, blue:0.90, alpha:1.0)
+        artworkView.backgroundColor = .appBlue
         return artworkView
     }()
     
@@ -66,7 +66,7 @@ final class PlayerView: UIView {
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
     }()
-
+    
     private var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
         if let font = AppConstants.mainFont {
@@ -76,6 +76,8 @@ final class PlayerView: UIView {
         label.textAlignment = .right
         return label
     }()
+    
+    // Time since player started playing
     
     private var currentPlayLengthLabel: UILabel = {
         let label = UILabel()
@@ -110,7 +112,10 @@ final class PlayerView: UIView {
         preferencesView.backgroundColor = .white
         return preferencesView
     }()
-  
+    
+    let equal = AudioEqualizer(size: CGSize(width: 20, height: 20))
+    var equalView: IndicatorView?
+    
     private var thumbsUpButton: UIButton = {
         let thumbsUpButton = UIButton()
         thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
@@ -141,6 +146,7 @@ final class PlayerView: UIView {
     // TODO: - Separate view from iTrack, pass in needed parameters instead of object
     
     func configure(with track: iTrack) {
+        //self.equalView =)
         self.track = track
         if let url = URL(string: track.artworkUrl) {
             albumArtworkView.downloadImage(url: url)
@@ -192,9 +198,10 @@ final class PlayerView: UIView {
         artworkView.addSubview(albumArtworkView)
         albumArtworkView.translatesAutoresizingMaskIntoConstraints = false
         albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.5).isActive = true
-        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.7).isActive = true
+        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.6).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
+        //print(albumArtworkView.frame.size)
     }
     
     private func setupPreferencesView() {
@@ -309,10 +316,6 @@ final class PlayerView: UIView {
         setupCurrentPlayLength()
     }
     
-    func downloadButtonTapped() {
-        delegate?.downloadButtonTapped()
-    }
-    
     // Changes thumb button images depending on selection
     
     func switchThumbs() {
@@ -339,6 +342,7 @@ final class PlayerView: UIView {
     
     func updateTime() {
         if let timerDic = timer?.userInfo as? NSMutableDictionary {
+            
             if let playState = playState {
                 switch playState {
                 case .playing:
@@ -361,11 +365,17 @@ final class PlayerView: UIView {
                             controlsView.bringSubview(toFront: playButton)
                             controlsView.sendSubview(toBack: pauseButton)
                             playButton.isEnabled = true
-                            playButton.alpha = 1
+                            
                             pauseButton.isEnabled = false
                             pauseButton.alpha = 0
                             timer = nil
                             progressView.progress = 0
+                            UIView.animate(withDuration: 0.5) {
+                                self.playButton.alpha = 1
+                                self.equalView?.alpha = 0
+                                self.equalView?.stopAnimating()
+                            }
+                            
                         }
                         
                         dump(progressView.observedProgress)
@@ -419,7 +429,7 @@ final class PlayerView: UIView {
     func constructTimeString() {
         var timeString = String(describing: time!)
         var timerString = ""
-        print(timeString)
+        //print(timeString)
         if timeString.characters.count < 2 {
             timerString = "0:0\(timeString)"
         } else if timeString.characters.count <= 2 {
@@ -431,7 +441,14 @@ final class PlayerView: UIView {
     // TODO: - This can be implemented better
     
     @objc private func playButtonTapped() {
-        
+        let size = CGSize(width: 100, height: 106)
+        var newFrame = CGRect(origin: CGPoint(x: artworkView.frame.minX, y: artworkView.frame.minY), size: size)
+        self.equalView = IndicatorView(frame: frame, color: UIColor.gray, padding: 0, animationRect: newFrame)
+        self.equalView?.alpha = 0.9
+        equalView!.frame.size = artworkView.frame.size
+        equal.setUpAnimation(in: equalView!.layer, color: .blue)
+        artworkView.addSubview(equalView!)
+        equalView!.startAnimating()
         timer?.invalidate()
         if playState == .done {
             currentPlayLengthLabel.textColor = .orange
@@ -452,6 +469,7 @@ final class PlayerView: UIView {
     }
     
     @objc private func pauseButtonTapped() {
+        equalView!.stopAnimating()
         timer?.invalidate()
         delegate?.pauseButtonTapped()
         controlsView.bringSubview(toFront: playButton)

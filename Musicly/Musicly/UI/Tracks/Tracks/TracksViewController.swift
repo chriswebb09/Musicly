@@ -115,7 +115,7 @@
         searchBar.becomeFirstResponder()
     }
     
-    // MARK: - Figure out if this is needed
+    
     
     func searchIconTapped() {
         searchController.hidesNavigationBarDuringPresentation = false
@@ -192,7 +192,10 @@
                                                   green: 0.97,
                                                   blue: 0.97,
                                                   alpha: 1.0)
-        view.addSubview(collectionView!)
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
+        }
+        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -324,8 +327,10 @@
         tracks?.removeAll()
         infoLabel.isHidden = true
         musicIcon.isHidden = true
+        collectionView?.reloadData()
         store?.searchForTracks { [weak self] tracks, error in
             self?.tracks = tracks
+            self?.collectionView?.reloadData()
             self?.collectionView?.performBatchUpdates ({
                 DispatchQueue.main.async {
                     if let collectionView = self?.collectionView {

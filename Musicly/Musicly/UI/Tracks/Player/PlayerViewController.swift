@@ -28,7 +28,7 @@ final class PlayerViewController: UIViewController {
         }
         title = track?.artistName
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-            setupPlayer(url: url)
+            player.setupWithItem(itemUrl: url)
             playerView.setupTimeLabels(totalTime: fileTime)
         }
     }
@@ -47,15 +47,6 @@ final class PlayerViewController: UIViewController {
         }
         return nil
     }
-    
-    // TODO: - This can be implemented better
-    
-    fileprivate func setupPlayer(url: URL) {
-        let playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-        player.rate = PlayerAttributes.playerRate
-        player.pause()
-    }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
@@ -65,7 +56,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func resetPlayerAndSong() {
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-            setupPlayer(url: url)
+            player.setupWithItem(itemUrl: url)
             playerView.setupTimeLabels(totalTime: fileTime)
         }
         player.currentItem?.seek(to: kCMTimeZero)
@@ -94,11 +85,5 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func playButtonTapped() {
         player.play()
-    }
-    
-    // TODO: Might be deleted
-    
-    func downloadButtonTapped() {
-        print("Downloading")
     }
 }

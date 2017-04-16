@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A71739D41EA1912600C28A41 /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71739D31EA1912600C28A41 /* NSError+Extension.swift */; };
+		A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
 		A7C995A61E9EA6CF004826EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A51E9EA6CF004826EE /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */; };
 		A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4061E9FE62300C95A50 /* Thumbs.swift */; };
 		A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC40A1E9FE63000C95A50 /* Playlist.swift */; };
+		A7F8B0511EA2E04900B333F9 /* EqualizerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F8B0501EA2E04900B333F9 /* EqualizerAnimation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		A71739D31EA1912600C28A41 /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSError+Extension.swift"; path = "Musicly/ApplicationSevices/Data/NSError+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extension.swift"; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +98,7 @@
 		A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iTrackDelegate.swift; path = iTrack/iTrackDelegate.swift; sourceTree = "<group>"; };
 		A7CBC4061E9FE62300C95A50 /* Thumbs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Thumbs.swift; path = iTrack/Thumbs.swift; sourceTree = "<group>"; };
 		A7CBC40A1E9FE63000C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Playlist/Playlist.swift; sourceTree = "<group>"; };
+		A7F8B0501EA2E04900B333F9 /* EqualizerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EqualizerAnimation.swift; path = Tracks/Player/EqualizerAnimation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +181,7 @@
 				A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */,
 				A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */,
 				A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */,
+				A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */,
 				A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
@@ -278,6 +283,7 @@
 				A7CBC3EA1E9FBAE000C95A50 /* PlayerView.swift */,
 				A7CBC3F11E9FD14500C95A50 /* PlayerViewDelegate.swift */,
 				A7CBC3EB1E9FBAE000C95A50 /* PlayerViewController.swift */,
+				A7F8B0501EA2E04900B333F9 /* EqualizerAnimation.swift */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* iTrack.swift in Sources */,
+				A7F8B0511EA2E04900B333F9 /* EqualizerAnimation.swift in Sources */,
 				A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */,
 				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
@@ -461,6 +468,7 @@
 				A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */,
 				A7CBC3ED1E9FBAE000C95A50 /* PlayerViewController.swift in Sources */,
 				A7CBC3F21E9FD14500C95A50 /* PlayerViewDelegate.swift in Sources */,
+				A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A7C995D61E9EA6DF004826EE /* DataStorage.swift in Sources */,
 				A7C995E91E9EA6F6004826EE /* TrackCounter.swift in Sources */,

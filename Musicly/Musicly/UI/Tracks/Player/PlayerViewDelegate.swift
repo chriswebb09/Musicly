@@ -9,7 +9,6 @@
 import Foundation
 
 protocol PlayerViewDelegate: class {
-    func downloadButtonTapped()
     func playButtonTapped()
     func pauseButtonTapped()
     func thumbsUpTapped()

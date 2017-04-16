@@ -13,11 +13,10 @@ extension UIViewController {
     // TODO: - This can be implemented better
     
     func setupDefaultUI() {
-        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)]
-        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: UIControlState.normal)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.textColor]
+        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: .normal)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.textColor
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for tracks...", attributes: [NSForegroundColorAttributeName: UIColor.white])
-        UISearchBar.appearance().tintColor = .white
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
     }
     
@@ -39,7 +38,7 @@ extension UIViewController {
         view.addSubview(infoLabel)
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
-        infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.12).isActive = true
     }
