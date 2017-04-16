@@ -75,12 +75,7 @@ class AudioEqualizer {
 final class IndicatorView: UIView {
     
     var color: UIColor = .white
-    //    var animationRect: CGRect = CGRect(x: 0, y: 0, width: 20, height: 50)
-    
     var animationRect: CGRect?
-    
-    ///CGRect(x: s, y: 0, width: 207, height: 206)
-    
     var animating: Bool { return isAnimating }
     private(set) public var isAnimating: Bool = false
     
@@ -93,8 +88,10 @@ final class IndicatorView: UIView {
     init(frame: CGRect, color: UIColor? = nil, padding: CGFloat? = nil, animationRect: CGRect? = nil) {
         super.init(frame: frame)
   
-        self.animationRect = CGRect(x: self.frame.width * 0.01, y: self.frame.height / 1.6, width: frame.size.width * 0.3, height: frame.height / 1.8)
-
+        self.animationRect = CGRect(x: self.frame.width * 0.01,
+                                    y: self.frame.height / 1.6,
+                                    width: frame.size.width * 0.3,
+                                    height: frame.height / 1.8)
         self.color = .white
         layer.borderWidth = 2
         isHidden = true
@@ -108,8 +105,6 @@ final class IndicatorView: UIView {
             let animation = AudioEqualizer(size: animationRect.size)
             setUpAnimation(animation: animation)
         }
-        
-        
     }
     
     final func stopAnimating() {

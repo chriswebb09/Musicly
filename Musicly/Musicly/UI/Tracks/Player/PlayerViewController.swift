@@ -2,18 +2,16 @@
 //  PlayerViewController.swift
 //  Musicly
 //
-//  Created by Christopher Webb-Orenstein on 4/12/17.
-//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
-//
+// Credit: https://github.com/ninjaprox/NVActivityIndicatorView
 
 import UIKit
 import AVFoundation
 
 final class PlayerViewController: UIViewController {
-    
-    var playerView: PlayerView = PlayerView()
+    var player: AVPlayer!
+    var playerView: PlayerView! = PlayerView()
     var track: iTrack?
-    var player: AVPlayer = AVPlayer()
+    //var player: AVPlayer = AVPlayer()
     var avUrlAsset: AVURLAsset?
     
     override func viewDidLoad() {
@@ -28,11 +26,15 @@ final class PlayerViewController: UIViewController {
         }
         title = track?.artistName
         if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-            player.setupWithItem(itemUrl: url)
+           //initPlayer(nsURL: NSURL(string: urlString)!)
+            //player.setupWithItem(itemUrl: url)
             playerView.setupTimeLabels(totalTime: fileTime)
         }
     }
     
+    deinit {
+        player = nil
+    }
     // Gets total time length for song 
     // TODO: - This can be implemented better
     
@@ -47,22 +49,49 @@ final class PlayerViewController: UIViewController {
         }
         return nil
     }
+    
+    func initPlayer(nsURL: NSURL)  {
+        if let play = player {
+            print("playing")
+            play.play()
+        } else {
+            print("player allocated")
+            player = AVPlayer(url: nsURL as URL)
+            print("playing")
+            player!.play()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopPlayer()
+    }
+
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    func pauseButtonTapped() {
+        stopPlayer()
+        print("pause")
+    }
+
+    
+    func resetPlayerAndSong() {
+        print("reset")
+    }
     
     // TODO: - This can be implemented better
     // Resets song to beginning when player reaches end
     
-    func resetPlayerAndSong() {
-        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-            player.setupWithItem(itemUrl: url)
-            playerView.setupTimeLabels(totalTime: fileTime)
-        }
-        player.currentItem?.seek(to: kCMTimeZero)
-        player.rate = PlayerAttributes.playerRate
-        player.pause()
-    }
+//    func resetPlayerAndSong() {
+//        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
+//            player.setupWithItem(itemUrl: url)
+//            playerView.setupTimeLabels(totalTime: fileTime)
+//        }
+//        player.currentItem?.seek(to: kCMTimeZero)
+//        player.rate = PlayerAttributes.playerRate
+//        player.pause()
+//    }
     
     // MARK: - Thumbs
     
@@ -78,12 +107,28 @@ extension PlayerViewController: PlayerViewDelegate {
     
     // MARK: - Player controlers
     
-    func pauseButtonTapped() {
-        print("pause")
-        player.pause()
+    func stopPlayer() {
+        if let play = player {
+            print("stopped")
+            play.pause()
+            player = nil
+            if player == nil {
+                print("player deallocated")
+            }
+            
+        } else {
+            print("player was already deallocated")
+        }
     }
     
+//    func pauseButtonTapped() {
+//        print("pause")
+//        player.pause()
+//    }
+//    
     func playButtonTapped() {
-        player.play()
+        if let urlString = track?.previewUrl {
+            initPlayer(nsURL: NSURL(string: urlString)!)
+        }
     }
 }

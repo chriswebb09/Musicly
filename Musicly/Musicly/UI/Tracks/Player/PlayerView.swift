@@ -12,6 +12,8 @@ enum FileState {
     case playing, done, paused
 }
 
+// TODO: - Fix memory leak
+
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
@@ -113,7 +115,7 @@ final class PlayerView: UIView {
         return preferencesView
     }()
     
-    let equal = AudioEqualizer(size: CGSize(width: 20, height: 20))
+    let equal: AudioEqualizer? = AudioEqualizer(size: CGSize(width: 20, height: 20))
     var equalView: IndicatorView?
     
     private var thumbsUpButton: UIButton = {
@@ -370,7 +372,7 @@ final class PlayerView: UIView {
                             pauseButton.alpha = 0
                             timer = nil
                             progressView.progress = 0
-                            UIView.animate(withDuration: 0.5) {
+                            UIView.animate(withDuration: 0.5) { [unowned self] in
                                 self.playButton.alpha = 1
                                 self.equalView?.alpha = 0
                                 self.equalView?.stopAnimating()
@@ -446,7 +448,7 @@ final class PlayerView: UIView {
         self.equalView = IndicatorView(frame: frame, color: UIColor.gray, padding: 0, animationRect: newFrame)
         self.equalView?.alpha = 0.9
         equalView!.frame.size = artworkView.frame.size
-        equal.setUpAnimation(in: equalView!.layer, color: .blue)
+        equal?.setUpAnimation(in: equalView!.layer, color: .blue)
         artworkView.addSubview(equalView!)
         equalView!.startAnimating()
         timer?.invalidate()
