@@ -109,20 +109,14 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Player controlers
     
     func stopPlayer() {
-        
-        
         do {
-            
             player = nil
-            guard player == nil else { return }
-
+            guard player == nil else { fatalError("Player is not nil") }
         }
-
     }
     
     func playButtonTapped() {
         if let urlString = track?.previewUrl {
-      
             initPlayer(nsURL: URL(string: urlString)!)
         }
     }
