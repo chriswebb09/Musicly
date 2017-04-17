@@ -13,7 +13,7 @@ final internal class TrackCell: UICollectionViewCell {
     private var trackNameLabel: UILabel? = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
-        trackName.font = UIFont(name: "Avenir-Book", size: 10)
+        trackName.font = TrackCellConstants.smallFont
         trackName.textAlignment = .center
         trackName.numberOfLines = 0
         return trackName
@@ -58,7 +58,7 @@ final internal class TrackCell: UICollectionViewCell {
             contentView.addSubview(albumArtView)
             albumArtView.translatesAutoresizingMaskIntoConstraints = false
             albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-            albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.86).isActive = true
+            albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: TrackCellConstants.albumHeightMultiplier).isActive = true
             albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         }
     }
@@ -67,9 +67,15 @@ final internal class TrackCell: UICollectionViewCell {
         if let trackNameLabel = trackNameLabel {
             contentView.addSubview(trackNameLabel)
             trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
-            trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
+            trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: TrackCellConstants.labelHeightMultiplier).isActive = true
             trackNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
             trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         }
     }
+}
+
+struct TrackCellConstants {
+    static let smallFont = UIFont(name: "Avenir-Book", size: 10)
+    static let albumHeightMultiplier: CGFloat =  0.86
+    static let labelHeightMultiplier: CGFloat = 0.2
 }

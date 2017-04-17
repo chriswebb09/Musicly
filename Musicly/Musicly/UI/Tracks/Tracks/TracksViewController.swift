@@ -12,11 +12,6 @@
  
  final class TracksViewController: UIViewController {
     
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0,
-                                                 left: 20.0,
-                                                 bottom: 50.0,
-                                                 right: 20.0)
-    
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
@@ -62,7 +57,6 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
@@ -71,17 +65,12 @@
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        if let searchBarText = searchBar.text {
-            if searchBarText.characters.count > 0 {
-                searchBarActive = true
-            }
+        if let searchBarText = searchBar.text, searchBarText.characters.count > 0 {
+            searchBarActive = true
         }
-        
         if searchBarActive == true {
             navigationItem.rightBarButtonItems = []
-            title = "Music.ly"
         } else {
             navigationItem.rightBarButtonItems = [buttonItem!]
         }
@@ -166,17 +155,12 @@
         collectionView?.delegate = self
     }
     
-    fileprivate func setupFlow(flowLayout: UICollectionViewFlowLayout) {
-        flowLayout.scrollDirection = .vertical
-        flowLayout.minimumLineSpacing = 0
-    }
-    
     fileprivate func setupLayout(layout: UICollectionViewFlowLayout) {
         layout.sectionInset = EdgeAttributes.sectionInset
         collectionView?.collectionViewLayout = layout
         layout.itemSize = RowSize.item.rawValue
-        layout.minimumInteritemSpacing = 5.0
-        layout.minimumLineSpacing = 5.0
+        layout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
+        layout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
         setCollectionView()
     }
     
@@ -184,18 +168,14 @@
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
             collectionView?.collectionViewLayout.invalidateLayout()
-            setupFlow(flowLayout: flowLayout)
+            flowLayout.scrollDirection = .vertical
             collectionView?.layoutIfNeeded()
             setupLayout(layout: newLayout)
         }
-        collectionView?.backgroundColor = UIColor(red: 0.97,
-                                                  green: 0.97,
-                                                  blue: 0.97,
-                                                  alpha: 1.0)
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         if let collectionView = collectionView {
             view.addSubview(collectionView)
         }
-        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
