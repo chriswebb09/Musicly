@@ -33,19 +33,16 @@ final class PlayerViewController: UIViewController {
     
     // Gets total time length for song
     
-    func getFileTime(url: URL) -> String? {
+    private func getFileTime(url: URL) -> String? {
         var avUrlAsset: AVURLAsset? = AVURLAsset(url: url)
         if let asset = avUrlAsset {
-            let audioDuration: CMTime? = asset.duration
-            if let audioDuration = audioDuration {
-                let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
-                if let secondsDuration = audioDurationSeconds {
-                    let minutes = Int(secondsDuration / 60)
-                    let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
-                    
-                    avUrlAsset = nil
-                    return "\(minutes):\(rem)"
-                }
+            let audioDuration: CMTime = asset.duration
+            let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+            if let secondsDuration = audioDurationSeconds {
+                let minutes = Int(secondsDuration / 60)
+                let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
+                avUrlAsset = nil
+                return "\(minutes):\(rem)"
             }
         }
         return nil
@@ -64,26 +61,19 @@ final class PlayerViewController: UIViewController {
     }
     
     func initPlayer(url: URL)  {
-        if let play = player {
+        if let player = player {
             print("playing")
-            play.play()
+            player.play()
         } else {
-            print("player allocated")
             player = AVPlayer(url: url)
-            print("playing")
-            player!.play()
+            guard let player = player else { return }
+            player.play()
         }
-    }
-    
-    func initPlayer(nsURL: URL)  {
-        player = try AVPlayer(url: nsURL)
-        guard let player = player else { return }
-        player.rate = 1
-        player.play()
     }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
+    
     func pauseButtonTapped() {
         stopPlayer()
         print("pause")
@@ -118,7 +108,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func playButtonTapped() {
         if let urlString = track?.previewUrl {
-            initPlayer(nsURL: URL(string: urlString)!)
+            initPlayer(url: URL(string: urlString)!)
         }
     }
 }

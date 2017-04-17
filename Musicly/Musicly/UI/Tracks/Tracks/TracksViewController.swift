@@ -17,16 +17,19 @@
             searchBar.returnKeyType = .done
         }
     }
+    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     fileprivate var tracks: [iTrack?]?
+    
     fileprivate var searchBarActive: Bool = false {
         didSet {
-            
             if searchBarActive == true {
                 navigationItem.rightBarButtonItems = []
             } else {
-                navigationItem.rightBarButtonItems = [buttonItem!]
+                if let buttonItem = buttonItem {
+                    navigationItem.rightBarButtonItems = [buttonItem]
+                }
             }
         }
     }
@@ -102,14 +105,6 @@
         searchBar.becomeFirstResponder()
     }
     
-    func searchIconTapped() {
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchBar = searchController.searchBar
-        navigationItem.titleView?.addSubview(searchBar)
-        searchBar.delegate = self
-        title = "Music.ly"
-    }
-    
     // MARK: - Adds searchButton to navigation bar
     
     func setupSearchButton() {
@@ -131,42 +126,30 @@
         collectionView?.layoutIfNeeded()
     }
     
-    func setCollectionView() {
-        collectionView?.backgroundColor = CollectionViewAttributes.backgroundColor
-        view.backgroundColor = CollectionViewAttributes.backgroundColor
-        collectionView?.frame = UIScreen.main.bounds
-        setupInfoLabel(infoLabel: infoLabel)
-        setupMusicIcon(icon: musicIcon)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-        }
-        collectionViewRegister()
-    }
-    
     private func collectionViewRegister() {
         collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.dataSource = self
         collectionView?.delegate = self
     }
     
-    fileprivate func setupLayout(layout: UICollectionViewFlowLayout) {
-        layout.sectionInset = EdgeAttributes.sectionInset
-        collectionView?.collectionViewLayout = layout
-        layout.itemSize = RowSize.item.rawValue
-        layout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
-        layout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
-        setCollectionView()
-    }
-    
     fileprivate func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            collectionView?.collectionViewLayout.invalidateLayout()
             flowLayout.scrollDirection = .vertical
             collectionView?.layoutIfNeeded()
-            setupLayout(layout: newLayout)
+            newLayout.sectionInset = EdgeAttributes.sectionInset
+            collectionView?.collectionViewLayout = newLayout
+            newLayout.itemSize = RowSize.item.rawValue
+            newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
+            newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
+            view.backgroundColor = CollectionViewAttributes.backgroundColor
+            collectionView?.frame = UIScreen.main.bounds
+            setupInfoLabel(infoLabel: infoLabel)
+            setupMusicIcon(icon: musicIcon)
+            if let collectionView = collectionView {
+                view.addSubview(collectionView)
+            }
+            collectionViewRegister()
         }
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         if let collectionView = collectionView {
@@ -208,14 +191,13 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let track = tracks?[indexPath.row] as? iTrack {
+        if let track = tracks?[indexPath.row] {
             let destinationVC: PlayerViewController? = PlayerViewController()
             
             if let destinationViewController = destinationVC {
                 destinationViewController.track = track
                 navigationController?.pushViewController(destinationViewController, animated: true)
             }
-            
         }
     }
     
@@ -254,7 +236,7 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return CollectionViewConstants.layoutSpacingMinItem
     }
  }
  
