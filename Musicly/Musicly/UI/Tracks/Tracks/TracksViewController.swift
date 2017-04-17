@@ -17,11 +17,9 @@
             searchBar.returnKeyType = .done
         }
     }
-    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     fileprivate var tracks: [iTrack?]?
-    
     fileprivate var searchBarActive: Bool = false {
         didSet {
             
@@ -103,8 +101,6 @@
         navigationItem.rightBarButtonItem?.tintColor = .white
         searchBar.becomeFirstResponder()
     }
-    
-    
     
     func searchIconTapped() {
         searchController.hidesNavigationBarDuringPresentation = false
@@ -300,10 +296,6 @@
     
     // TODO: - Handle searchbar without text
     
-    fileprivate func noSearchBarInput() {
-        
-    }
-    
     fileprivate func setup() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
@@ -341,10 +333,11 @@
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let barText = searchBar.getTextFromBar()
-        //collectionView?.alpha = 0
         store?.setSearch(string: barText)
         searchBarActive = true
-        barText == "" ? noSearchBarInput() : searchBarHasInput()
+        if barText != "" {
+            searchBarHasInput()
+        }
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
         
         UIView.animate(withDuration: 1.8) {
@@ -392,7 +385,6 @@
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
-        noSearchBarInput()
     }
     
  }
