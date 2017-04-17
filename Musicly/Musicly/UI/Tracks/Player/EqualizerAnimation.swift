@@ -19,9 +19,8 @@ class AudioEqualizer {
         
         if let size = size, let color = color, let layer = layer {
             
-            let path: UIBezierPath? = UIBezierPath(roundedRect: CGRect(x: size.width * 2,
-                                                                       y: size.height / 1.2,
-                                                                       width: size.width / 2, height: size.height),
+            let path: UIBezierPath? = UIBezierPath(roundedRect: CGRect(x: size.width, y: size.height,
+                                                                       width: size.width, height: size.height),
                                                    byRoundingCorners: [.allCorners],
                                                    cornerRadii: CGSize(width: 10.0, height: 10.0))
             layer.fillColor = color.cgColor
@@ -31,18 +30,23 @@ class AudioEqualizer {
     }
     
     func setUpAnimation(in layer: CALayer?, color: UIColor?) {
-        if let size = size, let layer = layer, let color = color {
+        if let size = size,
+            let layer = layer,
+            let color = color {
+            let lineSize: CGFloat? = size.width / 20
             
-            
-            let lineSize: CGFloat? = size.width / 10
             if let lineSize = lineSize {
-                let x: CGFloat? = (layer.bounds.size.width - lineSize * 6.5) / 1.8
-                let y: CGFloat? = (layer.bounds.size.height - size.height) * 5
-                let duration: [CFTimeInterval] = [1.6, 1.5, 1.4, 2]
-                let values = [0, 0.2, 0.25, 0.05, 0.2, 0.3, 0.15]
+                let lineDimensions: CGSize? = CGSize(width: lineSize, height: size.height)
+                let x: CGFloat? = layer.bounds.size.width - (lineSize / 0.043)
+                let y: CGFloat? = (layer.bounds.size.height - size.height) * 5.5
+                
+                let duration: [CFTimeInterval?] = [1.4, 1, 1.7, 2, 1.2]
+                let values = [0.05, 0.35, 0.12, 0.4, 0.2, 0.3, 0.15]
                 
                 for i in 0 ..< 4 {
+                    
                     let animation: CAKeyframeAnimation? = CAKeyframeAnimation()
+                    
                     if let animation = animation {
                         animation.keyPath = "path"
                         animation.isAdditive = true
@@ -51,11 +55,12 @@ class AudioEqualizer {
                         for value in 0 ..< values.count {
                             let heightFactor: Double? = values[value]
                             if let heightFactor = heightFactor {
-                                let height: CGFloat? = size.height * (CGFloat(heightFactor) / 1.5)
+                                let height: CGFloat? = size.height * (CGFloat(heightFactor) / 1.9)
                                 if let height = height {
                                     let point: CGPoint? = CGPoint(x: 0, y: size.height - (height * 0.8))
                                     if let point = point {
-                                        let path: UIBezierPath? =  UIBezierPath(roundedRect: CGRect(origin: point, size: CGSize(width: lineSize, height: height / 2)), byRoundingCorners: [.allCorners], cornerRadii: CGSize(width: 12.0, height: 10.0))
+                                        let path: UIBezierPath? =  UIBezierPath(roundedRect: CGRect(origin: point,
+                                                                                                    size: CGSize(width: lineSize, height: height * 1.45)), byRoundingCorners: [.allCorners], cornerRadii: CGSize(width: 12.0, height: 10.0))
                                         if let path = path {
                                             animation.values?.append(path.cgPath)
                                         }
@@ -64,23 +69,28 @@ class AudioEqualizer {
                             }
                         }
                         
-                        animation.duration = duration[i]
+                        if let timeDuration = duration[i] {
+                            animation.duration = timeDuration * 1.1
+                        }
                         animation.repeatCount = HUGE
                         animation.isRemovedOnCompletion = false
                         
-                        let lineDimensions = CGSize(width: lineSize, height: size.height)
-                        let line = createLayer(for: lineDimensions, with: color)
-                        if let x = x, let y = y {
-                            
-                            
-                            let frame: CGRect? = CGRect(x: x + lineSize * 1.1 * CGFloat(i),
-                                                        y: y * 0.4,
-                                                        width: lineSize,
-                                                        height: size.height * 7)
-                            if let line = line, let frame = frame {
-                                line.frame = frame
-                                line.add(animation, forKey: "animation")
-                                layer.addSublayer(line)
+                        if let lineDimensions = lineDimensions {
+                            let line = createLayer(for: lineDimensions, with: color)
+                            if let x = x, let y = y {
+                                let xVal = x + lineSize * 1.9 * CGFloat(i)
+                                let yVal = y * 0.45
+                                let widthVal = lineSize * 2
+                                let heightVal = size.height / 0.1
+                                let frame: CGRect? = CGRect(x: xVal,
+                                                            y: yVal,
+                                                            width: widthVal,
+                                                            height: heightVal)
+                                if let line = line, let frame = frame {
+                                    line.frame = frame
+                                    line.add(animation, forKey: "animation")
+                                    layer.addSublayer(line)
+                                }
                             }
                         }
                     }
@@ -102,7 +112,6 @@ final class IndicatorView: UIView {
     
     deinit {
         color = nil
-        
         print("indicator deallocated")
         dump(self)
     }
@@ -116,15 +125,15 @@ final class IndicatorView: UIView {
     init(frame: CGRect?, color: UIColor? = nil, padding: CGFloat? = nil, animationRect: CGRect? = nil) {
         super.init(frame: frame!)
         if let frame = frame {
-            self.animationRect = CGRect(x: self.frame.width * 0.01,
-                                        y: self.frame.height / 1.6,
-                                        width: frame.size.width * 0.3,
-                                        height: frame.height / 1.8)
+            
+            self.animationRect = CGRect(x: frame.width, y: frame.height,
+                                        width: frame.size.width * 0.5,
+                                        height: frame.height / 1.9)
             self.color = .white
             isHidden = true
         }
-        
     }
+    
     
     final func startAnimating() {
         isHidden = false
@@ -156,7 +165,6 @@ final class IndicatorView: UIView {
                 }
             }
         }
-        
     }
 }
 

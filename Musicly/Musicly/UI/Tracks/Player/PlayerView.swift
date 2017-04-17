@@ -14,38 +14,13 @@ enum FileState {
 
 final class PlayerView: UIView {
     
-    deinit {
-        equalView = nil
-        albumArtworkView = nil
-        trackTitleView = nil
-        trackTitleLabel = nil
-        thumbsDownButton = nil
-        thumbsUpButton = nil
-        playState = nil
-        controlsView = nil
-        playButton = nil
-        pauseButton = nil
-        time = nil
-        artworkView = nil
-        progressView = nil
-        totalPlayLengthLabel = nil
-        currentPlayLengthLabel = nil
-        preferencesView = nil
-        artistInfoButton = nil
-        equalView = nil
-        equal = nil
-        
-        dump(self)
-        print("Player view deallocated")
-        dump(equalView)
-    }
-    
     weak var delegate: PlayerViewDelegate?
     
     var timer: Timer?
     var track: iTrack?
     var playState: FileState?
     var time: Int?
+    var timerDic: NSMutableDictionary? = ["count": 0]
     
     // MARK: - Cover art
     
@@ -175,16 +150,17 @@ final class PlayerView: UIView {
     }
     
     func configure(with artworkUrl: String?, trackName: String?) {
-        if let artworkUrl = artworkUrl, let url = URL(string: artworkUrl), let trackName = trackName, let trackTitleLabel = trackTitleLabel {
-            albumArtworkView?.downloadImage(url: url)
+        if let artworkUrl = artworkUrl,
+            let url = URL(string: artworkUrl),
+            let trackName = trackName,
+            let trackTitleLabel = trackTitleLabel,
+            let albumArtworkView = albumArtworkView,
+            let trackTitleView =  trackTitleView,
+            let playButton = playButton {
+            
+            albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = trackName
-        }
-        if let albumArtworkView = albumArtworkView {
-            
-            
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
-        }
-        if let trackTitleView =  trackTitleView, let playButton = playButton {
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
             playButton.layer.setViewShadow(view: playButton)
             addSelectors()
@@ -192,11 +168,11 @@ final class PlayerView: UIView {
     }
     
     private func addSelectors() {
-        if let playButton = playButton, let thumbsUpButton = thumbsUpButton {
+        if let playButton = playButton, let thumbsUpButton = thumbsUpButton, let thumbsDownButton = thumbsDownButton, let pauseButton = pauseButton {
             playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
-            pauseButton?.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+            pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
             thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
-            thumbsDownButton?.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
+            thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
         }
     }
     
@@ -245,16 +221,12 @@ final class PlayerView: UIView {
     }
     
     private func setupPreferencesView() {
-        if let preferencesView = preferencesView {
+        if let preferencesView = preferencesView, let artworkView = artworkView {
             addSubview(preferencesView)
             preferencesView.translatesAutoresizingMaskIntoConstraints = false
             preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
             preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.06).isActive = true
-            if let artworkView = artworkView {
-                
-                
-                preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
-            }
+            preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
         }
     }
     
@@ -286,6 +258,7 @@ final class PlayerView: UIView {
             thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         }
     }
+    
     private func thumbsButtonSetup(thumbs: UIButton?) {
         if let preferencesView = preferencesView, let thumbs = thumbs {
             preferencesView.addSubview(thumbs)
@@ -385,89 +358,87 @@ final class PlayerView: UIView {
     // Changes thumb button images depending on selection
     
     func switchThumbs() {
-        if let thumbsDownButton = thumbsDownButton, let thumbsUpButton = thumbsUpButton {
-            if let track = track {
-                if track.thumbs == .down {
-                    thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
-                    thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
-                } else if track.thumbs == .up {
-                    thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
-                    thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
-                } else if track.thumbs == .none {
-                    thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
-                    thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
-                }
+        if let thumbsDownButton = thumbsDownButton, let thumbsUpButton = thumbsUpButton, let track = track {
+            if track.thumbs == .down {
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+            } else if track.thumbs == .up {
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
+            } else if track.thumbs == .none {
+                thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
+                thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
             }
         }
     }
-    var timerDic: NSMutableDictionary = ["count": 0]
     
     func setupTimeLabels(totalTime: String?) {
         if let totalTime = totalTime, let totalPlayLengthLabel = totalPlayLengthLabel {
             totalPlayLengthLabel.text = totalTime
         }
-        
     }
     
     // TODO: - This can be implemented better
     
     func updateTime() {
-        if let timerDic = timer?.userInfo as? NSMutableDictionary?, let controlsView =  controlsView, let playButton = playButton, let pauseButton = pauseButton {
-            
-            if let playState = playState {
-                switch playState {
-                case .playing:
-                    if let count = timerDic?["count"] as? Int,
-                        let progressView = progressView {
+        if let timerDic = timer?.userInfo as? NSMutableDictionary?,
+            let controlsView = controlsView,
+            let playButton = playButton,
+            let pauseButton = pauseButton,
+            let playState = playState {
+            switch playState {
+            case .playing:
+                if let count = timerDic?["count"] as? Int,
+                    let progressView = progressView {
+                    
+                    // Increment time for label
+                    
+                    timerDic?["count"] = count + 1
+                    
+                    // Update progress bar
+                    
+                    progressView.progress += 0.034
+                    
+                    if progressView.progress == 1,
+                        let currentPlayLengthLabel = currentPlayLengthLabel,
+                        let totalPlayLengthLabel = totalPlayLengthLabel {
                         
-                        // Increment time for label
+                        currentPlayLengthLabel.textColor = .white
+                        totalPlayLengthLabel.textColor = .orange
+                        self.playState = .done
+                        timerDic?["count"] = 0
+                        delegate?.resetPlayerAndSong()
+                        controlsView.bringSubview(toFront: playButton)
+                        controlsView.sendSubview(toBack: pauseButton)
+                        playButton.isEnabled = true
+                        pauseButton.isEnabled = false
+                        pauseButton.alpha = 0
+                        timer = nil
+                        progressView.progress = 0
                         
-                        timerDic?["count"] = count + 1
-                        
-                        // Update progress bar
-                        
-                        progressView.progress += 0.034
-                        
-                        if progressView.progress == 1, let currentPlayLengthLabel = currentPlayLengthLabel, let totalPlayLengthLabel = totalPlayLengthLabel {
-                            currentPlayLengthLabel.textColor = .white
-                            totalPlayLengthLabel.textColor = .orange
-                            self.playState = .done
-                            timerDic?["count"] = 0
-                            delegate?.resetPlayerAndSong()
-                            controlsView.bringSubview(toFront: playButton)
-                            controlsView.sendSubview(toBack: pauseButton)
-                            playButton.isEnabled = true
-                            
-                            pauseButton.isEnabled = false
-                            pauseButton.alpha = 0
-                            timer = nil
-                            progressView.progress = 0
-                            UIView.animate(withDuration: 0.5) {
-                                if let equalView = self.equalView {
-                                    self.playButton?.alpha = 1
-                                    self.equalView?.alpha = 0
-                                    self.equalView?.stopAnimating()
-                                }
+                        UIView.animate(withDuration: 0.5) {
+                            if let equalView = self.equalView {
+                                self.playButton?.alpha = 1
+                                self.equalView?.alpha = 0
+                                equalView.stopAnimating()
                             }
-                            
                         }
-                        time = count
-                        constructTimeString()
                     }
-                case .done:
-                    return
-                case .paused:
-                    return
+                    time = count
+                    constructTimeString()
                 }
+            case .done:
+                return
+            case .paused:
+                return
             }
         }
-        
     }
     
     func pauseTime() {
-        if let timerDic = timer?.userInfo as? NSMutableDictionary {
-            if let count = timerDic["count"] as? Int, let currentPlayLengthLabel = currentPlayLengthLabel {
-                timerDic["count"] = count
+        if let timerDic = timer?.userInfo as? NSMutableDictionary? {
+            if let count = timerDic?["count"] as? Int, let currentPlayLengthLabel = currentPlayLengthLabel {
+                timerDic?["count"] = count
                 currentPlayLengthLabel.text = String(describing: count)
             }
         }
@@ -499,28 +470,28 @@ final class PlayerView: UIView {
     // Sets current play time
     
     func constructTimeString() {
-        var timeString = String(describing: time!)
-        var timerString = ""
-        
-        if timeString.characters.count < 2 {
-            timerString = "0:0\(timeString)"
-        } else if timeString.characters.count <= 2 {
-            timerString = "0:\(timeString)"
-        }
-        if let currentPlayLengthLabel = currentPlayLengthLabel {
-            currentPlayLengthLabel.text = timerString
+        if let time = time {
+            var timeString = String(describing: time)
+            var timerString = ""
+            if timeString.characters.count < 2 {
+                timerString = "0:0\(timeString)"
+            } else if timeString.characters.count <= 2 {
+                timerString = "0:\(timeString)"
+            }
+            if let currentPlayLengthLabel = currentPlayLengthLabel {
+                currentPlayLengthLabel.text = timerString
+            }
         }
     }
-    
     
     @objc private func playButtonTapped() {
         let size: CGSize? = CGSize(width: 100, height: 106)
         if let artworkView = artworkView, let size = size {
             let origin: CGPoint? = CGPoint(x: artworkView.frame.minX, y: artworkView.frame.minY)
             if let origin = origin {
-                var newFrame: CGRect? = CGRect(origin: origin, size: size)
-                var testFrame: CGRect? = frame
-                var color: UIColor? = .gray
+                let newFrame: CGRect? = CGRect(origin: origin, size: size)
+                let testFrame: CGRect? = frame
+                let color: UIColor? = .gray
                 self.equalView = IndicatorView(frame: testFrame, color: color, padding: 0, animationRect: newFrame)
                 self.equalView?.alpha = 0.9
                 
@@ -529,17 +500,21 @@ final class PlayerView: UIView {
                 artworkView.addSubview(equalView!)
             }
         }
+        
         equalView?.startAnimating()
+        
         timer?.invalidate()
         if playState == .done, let currentPlayLengthLabel = currentPlayLengthLabel, let totalPlayLengthLabel = totalPlayLengthLabel {
             currentPlayLengthLabel.textColor = .orange
             totalPlayLengthLabel.textColor = .white
         }
+        
         playState = .playing
         
         // Timer begin
         
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
+        
         delegate?.playButtonTapped()
         if let playButton = playButton, let pauseButton = pauseButton, let controlsView = controlsView {
             playButton.isEnabled = false
@@ -552,17 +527,19 @@ final class PlayerView: UIView {
     }
     
     @objc private func pauseButtonTapped() {
-        equalView!.stopAnimating()
-        timer?.invalidate()
-        delegate?.pauseButtonTapped()
-        if let controlsView = controlsView, let playButton = playButton, let pauseButton = pauseButton {
-            controlsView.bringSubview(toFront: playButton)
-            controlsView.sendSubview(toBack: pauseButton)
-            playButton.isEnabled = true
-            playButton.alpha = 1
-            pauseButton.isEnabled = false
-            pauseButton.alpha = 0
-            timer = nil
+        if let equalView = equalView {
+            equalView.stopAnimating()
+            timer?.invalidate()
+            delegate?.pauseButtonTapped()
+            if let controlsView = controlsView, let playButton = playButton, let pauseButton = pauseButton {
+                controlsView.bringSubview(toFront: playButton)
+                controlsView.sendSubview(toBack: pauseButton)
+                playButton.isEnabled = true
+                playButton.alpha = 1
+                pauseButton.isEnabled = false
+                pauseButton.alpha = 0
+                timer = nil
+            }
         }
     }
 }

@@ -23,21 +23,20 @@ final class SplashViewController: UIViewController {
     
     func animateYSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.y")
-        animation.duration = 0.3
+        animation.duration = 0.22
         animation.fromValue = 1
-        animation.toValue = 1.4
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.toValue = 2.5
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.autoreverses = true
-        animation.repeatCount = 2
+        animation.repeatCount = 3
         return animation
     }
     
     func animateXSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.x")
-        animation.duration = 0.2
+        animation.duration = 0.22
         animation.fromValue = 1
-        animation.toValue = 1.6
-        //kCAMediaTimingFunctionLinear
+        animation.toValue = 1.5
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.autoreverses = true
         animation.repeatCount = 3
@@ -47,22 +46,19 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         CATransaction.begin()
-        var animationDuration: Double = 0.04
+        let animationDuration: Double = 0.004
         CATransaction.setCompletionBlock {
-            let duration: TimeInterval = animationDuration * 0.005
+            let duration: TimeInterval = animationDuration
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [unowned self] in
                 self.splashView.zoomAnimation() {
                     print("animating")
                 }
             }
         }
-        
-        
         let animateXSlow = self.animateXSlow()
         let animateYSlow = self.animateYSlow()
-        
-        self.splashView.layer.add(animateXSlow, forKey: nil)
-        self.splashView.layer.add(animateYSlow, forKey: nil)
+        splashView.layer.add(animateXSlow, forKey: nil)
+        splashView.layer.add(animateYSlow, forKey: nil)
         CATransaction.commit()
     }
     

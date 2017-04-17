@@ -15,48 +15,52 @@ final class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-        view.addSubview(playerView!)
-        playerView?.frame = UIScreen.main.bounds
-        playerView?.layoutSubviews()
-        playerView?.delegate = self
-        if let track = track {
-            playerView?.configure(with: track.artworkUrl, trackName: track.trackName)
-        }
-        title = track?.artistName
-        if let urlString = track?.previewUrl, let url = URL(string: urlString), let fileTime = getFileTime(url: url) {
-            playerView?.setupTimeLabels(totalTime: fileTime)
+        if let playerView = playerView, let track = track {
+            view.addSubview(playerView)
+            playerView.frame = UIScreen.main.bounds
+            playerView.layoutSubviews()
+            playerView.delegate = self
+            
+            playerView.configure(with: track.artworkUrl, trackName: track.trackName)
+            
+            title = track.artistName
+            if let url = URL(string: track.previewUrl), let fileTime = getFileTime(url: url) {
+                playerView.setupTimeLabels(totalTime: fileTime)
+            }
         }
     }
     
-    deinit {
-        playerView = nil
-        track = nil
-        dump(self)
-    }
+    
     // Gets total time length for song
     
     func getFileTime(url: URL) -> String? {
-        
         var avUrlAsset: AVURLAsset? = AVURLAsset(url: url)
         if let asset = avUrlAsset {
-            let audioDuration = asset.duration
-            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-            let minutes = Int(audioDurationSeconds / 60)
-            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-            
-            avUrlAsset = nil
-            return "\(minutes):\(rem)"
+            let audioDuration: CMTime? = asset.duration
+            if let audioDuration = audioDuration {
+                let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+                if let secondsDuration = audioDurationSeconds {
+                    let minutes = Int(secondsDuration / 60)
+                    let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
+                    
+                    avUrlAsset = nil
+                    return "\(minutes):\(rem)"
+                }
+            }
         }
         return nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        stopPlayer()
-        dump(playerView)
-        playerView?.removeFromSuperview()
+        if let playerView = playerView {
+            stopPlayer()
+            dump(playerView)
+            playerView.removeFromSuperview()
+        }
         playerView = nil
         dump(playerView)
+        dismiss(animated: true, completion: nil)
     }
     
     func initPlayer(url: URL)  {
@@ -72,14 +76,10 @@ final class PlayerViewController: UIViewController {
     }
     
     func initPlayer(nsURL: URL)  {
-        do {
-            player = try AVPlayer(url: nsURL)
-            guard let player = player else { return }
-            player.rate = 1
-            player.play()
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        player = try AVPlayer(url: nsURL)
+        guard let player = player else { return }
+        player.rate = 1
+        player.play()
     }
 }
 

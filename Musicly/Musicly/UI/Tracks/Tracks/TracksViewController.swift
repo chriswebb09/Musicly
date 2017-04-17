@@ -239,9 +239,9 @@
         if let track = tracks?[indexPath.row] as? iTrack {
             let destinationVC: PlayerViewController? = PlayerViewController()
             
-            if let destinationView = destinationVC {
-                destinationVC?.track = track
-                navigationController?.pushViewController(destinationVC!, animated: false)
+            if let destinationViewController = destinationVC {
+                destinationViewController.track = track
+                navigationController?.pushViewController(destinationViewController, animated: true)
             }
             
         }
@@ -250,10 +250,8 @@
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
-        //let finalFrame = cell.frame
         cell.alpha = 0
         let rowTime = Double(indexPath.row) / 8
-        //        cell.frame = CGRect(x: finalFrame.origin.x, y: finalFrame.origin.y, width: cell.bounds.width + 10, height: cell.bounds.height + 10)
         DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
             UIView.animate(withDuration: 0.75 + rowTime) {
                 cell.alpha = 1

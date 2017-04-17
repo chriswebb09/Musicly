@@ -12,7 +12,7 @@ typealias completion = () -> Void
 
 final class SplashView: UIView {
     
-    var animationDuration: Double = 0.8
+    var animationDuration: Double = 0.28
     
     var logoImageView: UIImageView = {
         let image = #imageLiteral(resourceName: "speakerblue")
@@ -43,13 +43,13 @@ final class SplashView: UIView {
     // MARK: - Animation
     
     func zoomAnimation(_ handler: completion? = nil) {
-        let duration: TimeInterval = animationDuration * 0.25
+        let duration: TimeInterval = animationDuration
+        self.alpha = 0.7
         UIView.animate(withDuration: duration, animations:{ [weak self] in
             if let zoom = self?.zoomOut() {
                 self?.logoImageView.transform = zoom
-            }
-            self?.alpha = 0 }, completion: { finished in
-                
+            }; self?.alpha = 0
+            }, completion: { finished in
                 DispatchQueue.main.async {
                     let appScreenVC = UINavigationController(rootViewController: TracksViewController())
                     weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -60,7 +60,7 @@ final class SplashView: UIView {
     }
     
     private func zoomOut() -> CGAffineTransform {
-        let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 05, y: 05)
+        let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 8, y: 18)
         return zoomOutTranform
     }
     
