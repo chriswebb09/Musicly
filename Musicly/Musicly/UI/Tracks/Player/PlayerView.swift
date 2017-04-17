@@ -19,7 +19,7 @@ final class PlayerView: UIView {
     private var track: iTrack?
     private var playState: FileState?
     private var time: Int?
-    private var timerDic: NSMutableDictionary? = ["count": 0]
+    //  weak var timerDic: NSMutableDictionary? = ["count": 0]
     
     // MARK: - Cover art
     
@@ -111,12 +111,6 @@ final class PlayerView: UIView {
         let preferencesView = UIView()
         preferencesView.backgroundColor = .white
         return preferencesView
-    }()
-    
-    
-    weak var equal: AudioEqualizer? = {
-        var size: CGSize? = CGSize(width: 20, height: 20)
-        return AudioEqualizer(size: size)
     }()
     
     private var equalView: IndicatorView?
@@ -401,7 +395,6 @@ final class PlayerView: UIView {
     // TODO: - This can be implemented better
     
     @objc private func updateTime() {
-        guard let timerDic = timerDic else { return }
         guard let controlsView = controlsView else { return }
         guard let playButton = playButton else { return }
         guard let pauseButton = pauseButton else { return }
@@ -409,12 +402,13 @@ final class PlayerView: UIView {
         
         switch playState {
         case .playing:
-            if let count = timerDic["count"] as? Int,
+            if let countDict = timer?.userInfo as? NSMutableDictionary?,
+                let count = countDict?["count"] as? Int,
                 let progressView = progressView {
                 
                 // Increment time for label
                 
-                timerDic["count"] = count + 1
+                countDict?["count"] = count + 1
                 
                 // Update progress bar
                 
@@ -427,7 +421,8 @@ final class PlayerView: UIView {
                     currentPlayLengthLabel.textColor = .white
                     totalPlayLengthLabel.textColor = .orange
                     self.playState = .done
-                    timerDic["count"] = 0
+                   
+                    countDict?["count"] = 0
                     delegate?.resetPlayerAndSong()
                     controlsView.bringSubview(toFront: playButton)
                     controlsView.sendSubview(toBack: pauseButton)
@@ -457,9 +452,9 @@ final class PlayerView: UIView {
     }
     
     func pauseTime() {
-        guard let timerDic = timerDic else { return }
-        if let count = timerDic["count"] as? Int, let currentPlayLengthLabel = currentPlayLengthLabel {
-            timerDic["count"] = count
+        if let countDict = timer?.userInfo as! NSMutableDictionary?,
+            let count = countDict["count"] as? Int, let currentPlayLengthLabel = currentPlayLengthLabel {
+            countDict["count"] = count
             currentPlayLengthLabel.text = String(describing: count)
         }
     }
@@ -516,7 +511,6 @@ final class PlayerView: UIView {
         guard let equalView = equalView else { return }
         equalView.alpha = 0.9
         equalView.frame.size = artworkView.frame.size
-        equal?.setUpAnimation(in: equalView.layer, color: .blue)
         artworkView.addSubview(equalView)
         equalView.startAnimating()
         
@@ -530,7 +524,7 @@ final class PlayerView: UIView {
         playState = .playing
         
         // Timer begin
-        
+        let timerDic: NSMutableDictionary? = ["count": 0]
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
         
         delegate?.playButtonTapped()
