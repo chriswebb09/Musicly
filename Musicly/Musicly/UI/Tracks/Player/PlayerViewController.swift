@@ -21,14 +21,10 @@ final class PlayerViewController: UIViewController {
             playerView.layoutSubviews()
             playerView.delegate = self
             playerView.configure(with: track.artworkUrl, trackName: track.trackName)
-            
             title = track.artistName
-            
             guard let url = URL(string: track.previewUrl) else { return }
             guard let fileTime = getFileTime(url: url) else { return }
-            
             playerView.setupTimeLabels(totalTime: fileTime)
-            
         }
     }
     

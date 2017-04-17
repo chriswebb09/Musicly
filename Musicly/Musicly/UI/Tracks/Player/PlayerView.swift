@@ -310,13 +310,11 @@ final class PlayerView: UIView {
     
     private func setupPlayButton() {
         guard let playButton = playButton else { return }
-        
         setupTrackButtons(button: playButton)
     }
     
     private func setupPauseButton() {
         guard let pauseButton = pauseButton else { return }
-        
         setupTrackButtons(button: pauseButton)
     }
     
@@ -509,6 +507,7 @@ final class PlayerView: UIView {
     @objc private func playButtonTapped() {
         
         guard let artworkView = artworkView else { return }
+        guard let currentPlayLengthLabel = currentPlayLengthLabel else { return }
         
         let testFrame: CGRect? = frame
         let color: UIColor? = .gray
@@ -523,7 +522,7 @@ final class PlayerView: UIView {
         
         timer?.invalidate()
         
-        if playState == .done, let currentPlayLengthLabel = currentPlayLengthLabel, let totalPlayLengthLabel = totalPlayLengthLabel {
+        if playState == .done, let totalPlayLengthLabel = totalPlayLengthLabel {
             currentPlayLengthLabel.textColor = .orange
             totalPlayLengthLabel.textColor = .white
         }
