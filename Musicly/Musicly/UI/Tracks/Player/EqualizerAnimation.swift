@@ -36,42 +36,53 @@ class AudioEqualizer {
             
             let lineSize: CGFloat? = size.width / 10
             if let lineSize = lineSize {
-                let x = (layer.bounds.size.width - lineSize * 6.5) / 1.8
-                let y = (layer.bounds.size.height - size.height) * 5
+                let x: CGFloat? = (layer.bounds.size.width - lineSize * 6.5) / 1.8
+                let y: CGFloat? = (layer.bounds.size.height - size.height) * 5
                 let duration: [CFTimeInterval] = [1.6, 1.5, 1.4, 2]
                 let values = [0, 0.2, 0.25, 0.05, 0.2, 0.3, 0.15]
                 
                 for i in 0 ..< 4 {
-                    let animation = CAKeyframeAnimation()
-                    
-                    animation.keyPath = "path"
-                    animation.isAdditive = true
-                    animation.values = []
-                    
-                    for value in 0 ..< values.count {
-                        let heightFactor = values[value]
-                        let height = size.height * (CGFloat(heightFactor) / 1.5)
-                        let point = CGPoint(x: 0, y: size.height - (height * 0.8))
+                    let animation: CAKeyframeAnimation? = CAKeyframeAnimation()
+                    if let animation = animation {
+                        animation.keyPath = "path"
+                        animation.isAdditive = true
+                        animation.values = []
                         
-                        let path =  UIBezierPath(roundedRect: CGRect(origin: point, size: CGSize(width: lineSize, height: height / 2)), byRoundingCorners: [.allCorners], cornerRadii: CGSize(width: 12.0, height: 10.0))
+                        for value in 0 ..< values.count {
+                            let heightFactor: Double? = values[value]
+                            if let heightFactor = heightFactor {
+                                let height: CGFloat? = size.height * (CGFloat(heightFactor) / 1.5)
+                                if let height = height {
+                                    let point: CGPoint? = CGPoint(x: 0, y: size.height - (height * 0.8))
+                                    if let point = point {
+                                        let path: UIBezierPath? =  UIBezierPath(roundedRect: CGRect(origin: point, size: CGSize(width: lineSize, height: height / 2)), byRoundingCorners: [.allCorners], cornerRadii: CGSize(width: 12.0, height: 10.0))
+                                        if let path = path {
+                                            animation.values?.append(path.cgPath)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         
-                        animation.values?.append(path.cgPath)
-                    }
-                    
-                    animation.duration = duration[i]
-                    animation.repeatCount = HUGE
-                    animation.isRemovedOnCompletion = false
-                    
-                    let lineDimensions = CGSize(width: lineSize, height: size.height)
-                    let line = createLayer(for: lineDimensions, with: color)
-                    let frame = CGRect(x: x + lineSize * 1.1 * CGFloat(i),
-                                       y: y * 0.4,
-                                       width: lineSize,
-                                       height: size.height * 7)
-                    if let line = line {
-                        line.frame = frame
-                        line.add(animation, forKey: "animation")
-                        layer.addSublayer(line)
+                        animation.duration = duration[i]
+                        animation.repeatCount = HUGE
+                        animation.isRemovedOnCompletion = false
+                        
+                        let lineDimensions = CGSize(width: lineSize, height: size.height)
+                        let line = createLayer(for: lineDimensions, with: color)
+                        if let x = x, let y = y {
+                            
+                            
+                            let frame: CGRect? = CGRect(x: x + lineSize * 1.1 * CGFloat(i),
+                                                        y: y * 0.4,
+                                                        width: lineSize,
+                                                        height: size.height * 7)
+                            if let line = line, let frame = frame {
+                                line.frame = frame
+                                line.add(animation, forKey: "animation")
+                                layer.addSublayer(line)
+                            }
+                        }
                     }
                 }
             }

@@ -10,7 +10,7 @@ import UIKit
 
 final internal class TrackCell: UICollectionViewCell {
     
-    private var trackNameLabel: UILabel = {
+    private var trackNameLabel: UILabel? = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
         trackName.font = UIFont(name: "Avenir-Book", size: 10)
@@ -19,7 +19,7 @@ final internal class TrackCell: UICollectionViewCell {
         return trackName
     }()
     
-    private var albumArtView: UIImageView = {
+    private var albumArtView: UIImageView? = {
         var album = UIImageView()
         return album
     }()
@@ -33,7 +33,7 @@ final internal class TrackCell: UICollectionViewCell {
     }
     
     func configureCell(with trackName: String, with artworkUrl: String) {
-        if let url = URL(string: artworkUrl) {
+        if let url = URL(string: artworkUrl), let trackNameLabel = trackNameLabel, let albumArtView = albumArtView {
             albumArtView.downloadImage(url: url)
             trackNameLabel.text = trackName
         }
@@ -54,18 +54,22 @@ final internal class TrackCell: UICollectionViewCell {
     }
     
     private func setupAlbumArt() {
-        contentView.addSubview(albumArtView)
-        albumArtView.translatesAutoresizingMaskIntoConstraints = false
-        albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.86).isActive = true
-        albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        if let albumArtView = albumArtView {
+            contentView.addSubview(albumArtView)
+            albumArtView.translatesAutoresizingMaskIntoConstraints = false
+            albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+            albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.86).isActive = true
+            albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        }
     }
     
     private func setupTrackInfoLabel() {
-        contentView.addSubview(trackNameLabel)
-        trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
-        trackNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        if let trackNameLabel = trackNameLabel {
+            contentView.addSubview(trackNameLabel)
+            trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
+            trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
+            trackNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+            trackNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        }
     }
 }

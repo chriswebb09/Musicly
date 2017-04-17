@@ -250,9 +250,20 @@
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
+        //let finalFrame = cell.frame
+        cell.alpha = 0
+        let rowTime = Double(indexPath.row) / 8
+        //        cell.frame = CGRect(x: finalFrame.origin.x, y: finalFrame.origin.y, width: cell.bounds.width + 10, height: cell.bounds.height + 10)
+        DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
+            UIView.animate(withDuration: 0.75 + rowTime) {
+                cell.alpha = 1
+            }
+        }
         return cell
     }
  }
+ 
+ 
  
  // MARK: - UICollectionViewDelegate
  
@@ -285,6 +296,7 @@
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
+        
         searchBarActive = true
     }
     
@@ -332,6 +344,7 @@
         infoLabel.isHidden = true
         musicIcon.isHidden = true
         collectionView?.reloadData()
+        
         store?.searchForTracks { [weak self] tracks, error in
             self?.tracks = tracks
             self?.collectionView?.reloadData()
@@ -350,10 +363,15 @@
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let barText = searchBar.getTextFromBar()
+        //collectionView?.alpha = 0
         store?.setSearch(string: barText)
         searchBarActive = true
         barText == "" ? noSearchBarInput() : searchBarHasInput()
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
+        
+        UIView.animate(withDuration: 1.8) {
+            self.collectionView?.alpha = 1
+        }
     }
     
     func cancelSearching(_ searchBar: UISearchBar, searchBarActive: Bool) -> Bool {
