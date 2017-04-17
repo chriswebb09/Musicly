@@ -15,7 +15,6 @@ typealias JSON = [String: Any]
 @objc(iTunesAPIClient)
 final class iTunesAPIClient: NSObject {
     
-    var tracks: [iTrack]?
     var activeDownloads: [String: Download]?
     weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
@@ -31,7 +30,6 @@ final class iTunesAPIClient: NSObject {
     
     func setup() {
         activeDownloads = [String: Download]()
-        tracks = [iTrack]()
     }
     
     // MARK: - Main search functionality
@@ -73,7 +71,6 @@ final class iTunesAPIClient: NSObject {
             return nil
         }
     }
-    
 }
 
 // MARK: - URLSessionDownloadDelegate
@@ -106,9 +103,8 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
     // MARK: - Keeps track of download index - for collectionView
     // TODO: - Figure out if this is necessary
     
-    func trackIndexForDownloadTask(_ downloadTask: URLSessionDownloadTask) -> Int? {
-        if let url = downloadTask.originalRequest?.url?.absoluteString,
-            let tracks = tracks {
+    func trackIndexForDownloadTask(_ tracks: [iTrack], _ downloadTask: URLSessionDownloadTask) -> Int? {
+        if let url = downloadTask.originalRequest?.url?.absoluteString {
             for (index, track) in tracks.enumerated() {
                 if url == track.previewUrl {
                     return index
@@ -118,8 +114,6 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
         return nil
     }
 }
-
-
 
 // MARK: - URLSessionDelegate
 // TODO: - Figure out downloads situation
@@ -160,7 +154,6 @@ extension iTunesAPIClient {
                 if let destinationURL = destinationURL {
                     try fileManager.copyItem(at: location, to: destinationURL)
                 }
-                
             } catch let error {
                 print("Could not copy file to disk: \(error.localizedDescription)")
             }

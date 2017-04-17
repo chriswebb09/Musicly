@@ -346,7 +346,6 @@ final class PlayerView: UIView {
         currentPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
         currentPlayLengthLabel.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
         currentPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.17).isActive = true
-        
     }
     
     // Configures all subview
@@ -398,15 +397,13 @@ final class PlayerView: UIView {
         guard let playButton = playButton else { return }
         guard let pauseButton = pauseButton else { return }
         guard let playState = playState else { return }
-        print(time)
         switch playState {
         case .playing:
             if let countDict = timer?.userInfo as? NSMutableDictionary?,
-                var count = countDict?["count"] as? Int,
+                let count = countDict?["count"] as? Int,
                 let progressView = progressView {
                 
                 // Increment time for label
-                
                 
                 time = count + 1
                 countDict?["count"] = time
@@ -528,7 +525,7 @@ final class PlayerView: UIView {
         
         // Timer begin
         let timerDic: NSMutableDictionary = ["count": time!]
-      
+        
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
         
         delegate?.playButtonTapped()
