@@ -70,7 +70,7 @@ final class PlayerView: UIView {
     
     private var totalPlayLengthLabel: UILabel? = {
         let label = UILabel()
-        if let font = AppConstants.mainFont {
+        if let font = ApplicationConstants.mainFont {
             label.font = font
         }
         label.textColor = .white
@@ -84,7 +84,7 @@ final class PlayerView: UIView {
         let label = UILabel()
         label.text = "0:00"
         label.textAlignment = .left
-        if let font = AppConstants.mainFont {
+        if let font = ApplicationConstants.mainFont {
             label.font = font
         }
         label.textColor = .orange

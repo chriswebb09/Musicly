@@ -191,17 +191,13 @@
  
  extension TracksViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
     // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let tracks = tracks {
             return TrackCounter().getCount(for: tracks)
         }
-        return 50
+        return CollectionViewConstants.defaultItemCount
     }
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
@@ -227,17 +223,15 @@
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
         cell.alpha = 0
-        let rowTime = Double(indexPath.row) / 8
+        let rowTime = Double(indexPath.row) / CollectionViewConstants.rowTimeDivider
         DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
-            UIView.animate(withDuration: 0.75 + rowTime) {
+            UIView.animate(withDuration: CollectionViewConstants.baseDuration + rowTime) {
                 cell.alpha = 1
             }
         }
         return cell
     }
  }
- 
- 
  
  // MARK: - UICollectionViewDelegate
  

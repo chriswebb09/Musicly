@@ -21,10 +21,14 @@ struct CollectionViewConstants {
                                                           left: 20.0,
                                                           bottom: 50.0,
                                                           right: 20.0)
+    static let rowTimeDivider: Double = 8
+    static let defaultItemCount = 50
+    static let baseDuration: Double = 0.75 
 }
 
-struct AppConstants {
+struct ApplicationConstants {
     static let mainFont = UIFont(name: "Avenir-Book", size: 18)
+    static let fontColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
 }
 
 extension UIColor {
