@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/iphonerecording.gif">
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/example.gif">
 </p>
 
 <h2 align="center">Todo</h2>
