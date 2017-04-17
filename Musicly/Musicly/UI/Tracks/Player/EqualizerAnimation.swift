@@ -55,9 +55,11 @@ class AudioEqualizer {
                     let height = size.height * heightOffset
                     let pointOffset =  height * EqualizerConstants.pointOffsetMultiplier
                     let point = CGPoint(x: 0, y: size.height - pointOffset)
+                    
                     let roundRect = CGRect(origin: point,
                                            size: CGSize(width: lineSize,
                                                         height: height * 1.45))
+                    
                     let path: UIBezierPath? =  UIBezierPath(roundedRect: roundRect,
                                                             byRoundingCorners: [.allCorners],
                                                             cornerRadii: EqualizerConstants.cornerRadii)
@@ -92,7 +94,7 @@ class AudioEqualizer {
 
 final class IndicatorView: UIView {
     
-    var color: UIColor? = .white
+    var color: UIColor? = .gray
     var animationRect: CGRect?
     
     var animating: Bool { return isAnimating }
@@ -116,9 +118,8 @@ final class IndicatorView: UIView {
         
         let animationWidth = frame.size.width * 0.5
         let animationHeight = frame.height / 1.9
-      
-        self.animationRect = CGRect(x: frame.width, y: frame.height, width: animationWidth, height: animationHeight)
-        self.color = .white
+        animationRect = CGRect(x: frame.width, y: frame.height, width: animationWidth, height: animationHeight)
+        self.color = .gray
         isHidden = true
     }
     

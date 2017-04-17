@@ -158,15 +158,6 @@ extension iTunesAPIClient {
             
             do {
                 if let destinationURL = destinationURL {
-                    try fileManager.removeItem(at: destinationURL)
-                }
-                
-            } catch {
-                print("Non fatal error, \(error.localizedDescription)")
-            }
-            
-            do {
-                if let destinationURL = destinationURL {
                     try fileManager.copyItem(at: location, to: destinationURL)
                 }
                 

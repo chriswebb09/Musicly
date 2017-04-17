@@ -31,7 +31,7 @@ final class PlayerViewController: UIViewController {
     
     // Gets total time length for song
     
-    private func getFileTime(url: URL) -> String? {
+    private final func getFileTime(url: URL) -> String? {
         var avUrlAsset: AVURLAsset? = AVURLAsset(url: url)
         if let asset = avUrlAsset {
             let audioDuration: CMTime = asset.duration
@@ -58,7 +58,7 @@ final class PlayerViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func initPlayer(url: URL)  {
+    final func initPlayer(url: URL)  {
         if let player = player {
             print("playing")
             player.play()
