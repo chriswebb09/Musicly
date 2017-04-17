@@ -20,13 +20,15 @@ final class PlayerViewController: UIViewController {
             playerView.frame = UIScreen.main.bounds
             playerView.layoutSubviews()
             playerView.delegate = self
-            
             playerView.configure(with: track.artworkUrl, trackName: track.trackName)
             
             title = track.artistName
-            if let url = URL(string: track.previewUrl), let fileTime = getFileTime(url: url) {
-                playerView.setupTimeLabels(totalTime: fileTime)
-            }
+            
+            guard let url = URL(string: track.previewUrl) else { return }
+            guard let fileTime = getFileTime(url: url) else { return }
+            
+            playerView.setupTimeLabels(totalTime: fileTime)
+            
         }
     }
     
@@ -78,7 +80,6 @@ extension PlayerViewController: PlayerViewDelegate {
         stopPlayer()
         print("pause")
     }
-    
     
     func resetPlayerAndSong() {
         print("reset")

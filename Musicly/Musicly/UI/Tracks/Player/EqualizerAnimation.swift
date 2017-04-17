@@ -110,16 +110,16 @@ final class IndicatorView: UIView {
         isHidden = true
     }
     
-    init(frame: CGRect?, color: UIColor? = nil, padding: CGFloat? = nil, animationRect: CGRect? = nil) {
+    init(frame: CGRect?, color: UIColor? = nil, padding: CGFloat? = nil) {
         super.init(frame: frame!)
-        if let frame = frame {
-            
-            self.animationRect = CGRect(x: frame.width, y: frame.height,
-                                        width: frame.size.width * 0.5,
-                                        height: frame.height / 1.9)
-            self.color = .white
-            isHidden = true
-        }
+        guard let frame = frame else { return }
+        
+        let animationWidth = frame.size.width * 0.5
+        let animationHeight = frame.height / 1.9
+      
+        self.animationRect = CGRect(x: frame.width, y: frame.height, width: animationWidth, height: animationHeight)
+        self.color = .white
+        isHidden = true
     }
     
     

@@ -167,16 +167,20 @@ final class PlayerView: UIView {
     }
     
     private func addSelectors() {
-        if let playButton = playButton, let thumbsUpButton = thumbsUpButton, let thumbsDownButton = thumbsDownButton, let pauseButton = pauseButton {
-            playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
-            pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
-            thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
-            thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
-        }
+        guard let playButton = playButton else { return }
+        guard let thumbsUpButton = thumbsUpButton else { return }
+        guard let thumbsDownButton = thumbsDownButton else { return }
+        guard let pauseButton = pauseButton else { return }
+        
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+        thumbsUpButton.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
+        thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
     }
     
     private func setupTrackTitleView() {
         guard let trackTitleView = trackTitleView else { return }
+        
         addSubview(trackTitleView)
         trackTitleView.translatesAutoresizingMaskIntoConstraints = false
         trackTitleView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -185,26 +189,29 @@ final class PlayerView: UIView {
     }
     
     private func setupTrackTitleLabel() {
-        if let trackTitleLabel = trackTitleLabel, let trackTitleView = trackTitleView, let controlsView = controlsView {
-            trackTitleView.addSubview(trackTitleLabel)
-            trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-            trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
-            trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
-            trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
-        }
+        guard let trackTitleLabel = trackTitleLabel else { return }
+        guard let trackTitleView = trackTitleView else { return }
+        guard let controlsView = controlsView  else { return }
+        
+        trackTitleView.addSubview(trackTitleLabel)
+        trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
+        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
+        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
     }
     
     // MARK: - Cover art setup
     
     private func setupArtworkView() {
-        if let artworkView = artworkView, let trackTitleView = trackTitleView {
-            addSubview(artworkView)
-            artworkView.translatesAutoresizingMaskIntoConstraints = false
-            artworkView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-            artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
-            artworkView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            artworkView.topAnchor.constraint(equalTo: trackTitleView.bottomAnchor).isActive = true
-        }
+        guard let artworkView = artworkView else { return }
+        guard let trackTitleView = trackTitleView else { return }
+        
+        addSubview(artworkView)
+        artworkView.translatesAutoresizingMaskIntoConstraints = false
+        artworkView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
+        artworkView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        artworkView.topAnchor.constraint(equalTo: trackTitleView.bottomAnchor).isActive = true
     }
     
     private func setupAlbumArtworkView() {
@@ -223,6 +230,7 @@ final class PlayerView: UIView {
     private func setupPreferencesView() {
         guard let preferencesView = preferencesView else { return }
         guard let artworkView = artworkView  else { return }
+        
         addSubview(preferencesView)
         preferencesView.translatesAutoresizingMaskIntoConstraints = false
         preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -249,6 +257,7 @@ final class PlayerView: UIView {
     private func setupThumbsUpButton() {
         guard let thumbsUpButton = thumbsUpButton else { return }
         guard let preferencesView = preferencesView else { return }
+        
         thumbsButtonSetup(thumbs: thumbsUpButton)
         thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.06).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
@@ -256,16 +265,18 @@ final class PlayerView: UIView {
     
     
     private func setupThumbsDownButton() {
-        if let thumbsDownButton = thumbsDownButton, let preferencesView = preferencesView {
-            thumbsButtonSetup(thumbs: thumbsDownButton)
-            thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.21).isActive = true
-            thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
-        }
+        guard let thumbsDownButton = thumbsDownButton else { return }
+        guard let preferencesView = preferencesView else { return }
+        
+        thumbsButtonSetup(thumbs: thumbsDownButton)
+        thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.21).isActive = true
+        thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
     private func thumbsButtonSetup(thumbs: UIButton?) {
         guard let preferencesView = preferencesView else { return }
         guard let thumbs = thumbs else { return }
+        
         preferencesView.addSubview(thumbs)
         thumbs.translatesAutoresizingMaskIntoConstraints = false
         thumbs.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.07).isActive = true
@@ -277,6 +288,7 @@ final class PlayerView: UIView {
     private func setupControlsView() {
         guard let controlsView = controlsView else { return }
         guard let preferencesView = preferencesView else { return }
+        
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -287,6 +299,7 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton?) {
         guard let controlsView = controlsView else { return }
         guard let button = button else { return }
+        
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
@@ -297,17 +310,20 @@ final class PlayerView: UIView {
     
     private func setupPlayButton() {
         guard let playButton = playButton else { return }
+        
         setupTrackButtons(button: playButton)
     }
     
     private func setupPauseButton() {
         guard let pauseButton = pauseButton else { return }
+        
         setupTrackButtons(button: pauseButton)
     }
     
     private func setupProgressView() {
         guard let progressView = progressView else { return }
         guard let controlsView = controlsView else { return }
+        
         controlsView.addSubview(progressView)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.6).isActive = true
@@ -320,6 +336,7 @@ final class PlayerView: UIView {
     private func setupTotalPlayLengthLabel() {
         guard let controlsView = controlsView else { return }
         guard let totalPlayLengthLabel = totalPlayLengthLabel  else { return }
+        
         controlsView.addSubview(totalPlayLengthLabel)
         totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
@@ -331,6 +348,7 @@ final class PlayerView: UIView {
     private func setupCurrentPlayLength() {
         guard let controlsView = controlsView else { return }
         guard let currentPlayLengthLabel = currentPlayLengthLabel else { return }
+        
         controlsView.addSubview(currentPlayLengthLabel)
         currentPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         currentPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
@@ -489,25 +507,22 @@ final class PlayerView: UIView {
     }
     
     @objc private func playButtonTapped() {
-        let size: CGSize? = CGSize(width: 100, height: 106)
-        if let artworkView = artworkView, let size = size {
-            let origin: CGPoint? = CGPoint(x: artworkView.frame.minX, y: artworkView.frame.minY)
-            if let origin = origin {
-                let newFrame: CGRect? = CGRect(origin: origin, size: size)
-                let testFrame: CGRect? = frame
-                let color: UIColor? = .gray
-                equalView = IndicatorView(frame: testFrame, color: color, padding: 0, animationRect: newFrame)
-                guard let equalView = equalView else { return }
-                equalView.alpha = 0.9
-                equalView.frame.size = artworkView.frame.size
-                equal?.setUpAnimation(in: equalView.layer, color: .blue)
-                artworkView.addSubview(equalView)
-            }
-        }
         
-        equalView?.startAnimating()
+        guard let artworkView = artworkView else { return }
+        
+        let testFrame: CGRect? = frame
+        let color: UIColor? = .gray
+        
+        equalView = IndicatorView(frame: testFrame, color: color, padding: 0)
+        guard let equalView = equalView else { return }
+        equalView.alpha = 0.9
+        equalView.frame.size = artworkView.frame.size
+        equal?.setUpAnimation(in: equalView.layer, color: .blue)
+        artworkView.addSubview(equalView)
+        equalView.startAnimating()
         
         timer?.invalidate()
+        
         if playState == .done, let currentPlayLengthLabel = currentPlayLengthLabel, let totalPlayLengthLabel = totalPlayLengthLabel {
             currentPlayLengthLabel.textColor = .orange
             totalPlayLengthLabel.textColor = .white
