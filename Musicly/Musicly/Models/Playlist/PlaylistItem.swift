@@ -9,9 +9,12 @@
 import UIKit
 
 class PlaylistItem {
+    
     var playListID: String? = ""
     var identifier: String? = ""
+    
     var track: iTrack?
+    
     var next: PlaylistItem? = nil
     weak var previous: PlaylistItem? = nil
     

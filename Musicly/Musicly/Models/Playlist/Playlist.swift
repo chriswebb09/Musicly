@@ -11,6 +11,7 @@ import UIKit
 class Playlist {
     
     private var head: PlaylistItem?
+    var itemCount: Int = 0
     
     var isEmpty: Bool {
         return head == nil
@@ -37,8 +38,6 @@ class Playlist {
             return nil
         }
     }
-    
-    var itemCount: Int = 0
     
     func append(value: iTrack?) {
         let newNode: PlaylistItem? = PlaylistItem(item: value!)
@@ -67,7 +66,7 @@ class Playlist {
         return nil
     }
     
-    public func reverse() {
+    func reverse() {
         var track = head
         while let currentTrack = track {
             track = currentTrack.next
@@ -76,7 +75,7 @@ class Playlist {
         }
     }
     
-    public func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack {
+    func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack {
         let previous = playlistItem?.previous
         let next = playlistItem?.next
         
