@@ -13,8 +13,8 @@ extension CALayer {
     // TODO: - This can be implemented better
     
     func setCellShadow(contentView: UIView) {
-        let shadowOffsetWidth: CGFloat = contentView.bounds.height * 0.00001
-        let shadowOffsetHeight: CGFloat = contentView.bounds.width * 0.0002
+        let shadowOffsetWidth: CGFloat = contentView.bounds.height * CALayerConstants.shadowWidthMultiplier
+        let shadowOffsetHeight: CGFloat = contentView.bounds.width * CALayerConstants.shadowHeightMultiplier
         shadowColor = UIColor.black.cgColor
         shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         shadowRadius = 1.5
@@ -22,11 +22,17 @@ extension CALayer {
     }
     
     func setViewShadow(view: UIView) {
-        let shadowOffsetWidth: CGFloat = view.bounds.height * 0.00001
-        let shadowOffsetHeight: CGFloat = view.bounds.width * 0.0002
+        let shadowOffsetWidth: CGFloat = view.bounds.height * CALayerConstants.shadowWidthMultiplier
+        let shadowOffsetHeight: CGFloat = view.bounds.width * CALayerConstants.shadowHeightMultiplier
         shadowColor = UIColor.black.cgColor
         shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         shadowRadius = 1.5
         shadowOpacity = 0.7
     }
+}
+
+
+struct CALayerConstants {
+    static let shadowWidthMultiplier: CGFloat = 0.00001
+    static let shadowHeightMultiplier: CGFloat = 0.0002
 }

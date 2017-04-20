@@ -36,7 +36,7 @@ final class iTunesAPIClient: NSObject {
     
     static func search(for query: String, completion: @escaping (_ responseObject: JSON?, _ error: Error?) -> Void) {
         if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let url = URL(string:"https://itunes.apple.com/search?media=music&entity=song&term=\(encodedQuery)") {
+            let url = URL(string: "https://itunes.apple.com/search?media=music&entity=song&term=\(encodedQuery)") {
             self.downloadData(url: url) { data, response, error in
                 if let error = error {
                     completion(nil, error)
@@ -101,7 +101,6 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
     }
     
     // MARK: - Keeps track of download index - for collectionView
-    // TODO: - Figure out if this is necessary
     
     func trackIndexForDownloadTask(_ tracks: [iTrack], _ downloadTask: URLSessionDownloadTask) -> Int? {
         if let url = downloadTask.originalRequest?.url?.absoluteString {
@@ -116,7 +115,6 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
 }
 
 // MARK: - URLSessionDelegate
-// TODO: - Figure out downloads situation
 
 extension iTunesAPIClient: URLSessionDelegate {
     
@@ -141,8 +139,7 @@ extension iTunesAPIClient: URLSessionDelegate {
 }
 
 extension iTunesAPIClient {
-    
-    // TODO: - Possibly unneeded
+
     
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
@@ -165,8 +162,6 @@ extension iTunesAPIClient {
             download.isDownloading = false
         }
     }
-    
-    // TODO: - Probably unneeded
     
     func URLSessionDidFinishEventsForBackgroundURLSession(session: URLSession) {
         print("Session: \(session)")

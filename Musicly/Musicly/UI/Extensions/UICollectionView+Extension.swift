@@ -8,9 +8,12 @@
 
 import UIKit
 
+
 extension UICollectionView {
     
-    // TODO: - This can be implemented better
+    func register<T: UICollectionViewCell>(_: T.Type) where T: Reusable {
+        register(T.self, forCellWithReuseIdentifier: NSStringFromClass(T.self))
+    }
     
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)

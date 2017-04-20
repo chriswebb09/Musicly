@@ -18,7 +18,10 @@ class AudioEqualizer {
         let layer: CAShapeLayer? = CAShapeLayer()
         
         if let size = size, let color = color, let layer = layer {
-            let roundedRect = CGRect(x: size.width, y: size.height, width: size.width, height: size.height)
+            let roundedRect = CGRect(x: size.width,
+                                     y: size.height,
+                                     width: size.width,
+                                     height: size.height)
             let path: UIBezierPath? = UIBezierPath(roundedRect: roundedRect,
                                                    byRoundingCorners: [.allCorners],
                                                    cornerRadii: EqualizerConstants.cornerRadii)
@@ -29,65 +32,69 @@ class AudioEqualizer {
     }
     
     func setUpAnimation(in layer: CALayer?, color: UIColor?) {
-        if let size = size,
-            let layer = layer,
-            let color = color {
-            let lineSize = size.width / EqualizerConstants.lineSizeDenominator
-            let lineDimensions = CGSize(width: lineSize, height: size.height)
-            let xOffset = lineSize / EqualizerConstants.xOffsetDenominator
-            let yOffset = layer.bounds.size.height - size.height
-            let x = layer.bounds.size.width - xOffset
-            let y = yOffset * EqualizerConstants.yMultiplier
-            let duration: [CFTimeInterval?] = [1.4, 1, 1.7, 2, 1.2]
-            let values = [0.05, 0.35, 0.12, 0.4, 0.2, 0.3, 0.15]
+        
+        guard let size = size else { return }
+        guard let layer = layer else { return }
+        guard let color = color else { return }
+        
+        let lineSize = size.width / EqualizerConstants.lineSizeDenominator
+        let lineDimensions = CGSize(width: lineSize, height: size.height)
+        let xOffset = lineSize / EqualizerConstants.xOffsetDenominator
+        let yOffset = layer.bounds.size.height - size.height
+        let x = layer.bounds.size.width - xOffset
+        let y = yOffset * EqualizerConstants.yMultiplier
+        
+        let duration: [CFTimeInterval?] = [1.4, 1, 1.7, 2, 1.2]
+        let values = [0.05, 0.35, 0.12, 0.4, 0.2, 0.3, 0.15]
+        
+        for i in 0 ..< 4 {
             
-            for i in 0 ..< 4 {
+            let animation = CAKeyframeAnimation()
+            animation.keyPath = "path"
+            animation.isAdditive = true
+            animation.values = []
+            
+            for value in 0 ..< values.count {
                 
-                let animation = CAKeyframeAnimation()
-                animation.keyPath = "path"
-                animation.isAdditive = true
-                animation.values = []
+                let heightFactor =  values[value]
+                let heightOffset = CGFloat(heightFactor) / EqualizerConstants.heightOffsetDenominator
+                let height = size.height * heightOffset
+                let pointOffset =  height * EqualizerConstants.pointOffsetMultiplier
+                let point = CGPoint(x: 0, y: size.height - pointOffset)
                 
-                for value in 0 ..< values.count {
-                    
-                    let heightFactor =  values[value]
-                    let heightOffset = CGFloat(heightFactor) / EqualizerConstants.heightOffsetDenominator
-                    let height = size.height * heightOffset
-                    let pointOffset =  height * EqualizerConstants.pointOffsetMultiplier
-                    let point = CGPoint(x: 0, y: size.height - pointOffset)
-                    
-                    let roundRect = CGRect(origin: point,
-                                           size: CGSize(width: lineSize,
-                                                        height: height * 1.45))
-                    
-                    let path: UIBezierPath? =  UIBezierPath(roundedRect: roundRect,
-                                                            byRoundingCorners: [.allCorners],
-                                                            cornerRadii: EqualizerConstants.cornerRadii)
-                    if let path = path {
-                        animation.values?.append(path.cgPath)
-                    }
-                }
-                if let timeDuration = duration[i] {
-                    animation.duration = timeDuration * EqualizerConstants.durationMultiplier
-                }
-                animation.repeatCount = HUGE
-                animation.isRemovedOnCompletion = false
-                let line = createLayer(for: lineDimensions, with: color)
-                let xVal = x + lineSize * EqualizerConstants.xValMultiplier * CGFloat(i)
-                let yVal = y * EqualizerConstants.yValMutliplier
-                let widthVal = lineSize * EqualizerConstants.widthValMultiplier
-                let heightVal = size.height / EqualizerConstants.heightValMultiplier
-                let frame = CGRect(x: xVal,
-                                   y: yVal,
-                                   width: widthVal,
-                                   height: heightVal)
-                if let line = line {
-                    line.frame = frame
-                    line.add(animation, forKey: "animation")
-                    layer.addSublayer(line)
+                let roundRect = CGRect(origin: point,
+                                       size: CGSize(width: lineSize,
+                                                    height: height * 1.45))
+                
+                let path: UIBezierPath? =  UIBezierPath(roundedRect: roundRect,
+                                                        byRoundingCorners: [.allCorners],
+                                                        cornerRadii: EqualizerConstants.cornerRadii)
+                if let path = path {
+                    animation.values?.append(path.cgPath)
                 }
             }
             
+            if let timeDuration = duration[i] {
+                animation.duration = timeDuration * EqualizerConstants.durationMultiplier
+            }
+            
+            animation.repeatCount = HUGE
+            animation.isRemovedOnCompletion = false
+            
+            let line = createLayer(for: lineDimensions, with: color)
+            let xVal = x + lineSize * EqualizerConstants.xValMultiplier * CGFloat(i)
+            let yVal = y * EqualizerConstants.yValMutliplier
+            let widthVal = lineSize * EqualizerConstants.widthValMultiplier
+            let heightVal = size.height / EqualizerConstants.heightValMultiplier
+            let frame = CGRect(x: xVal,
+                               y: yVal,
+                               width: widthVal,
+                               height: heightVal)
+            if let line = line {
+                line.frame = frame
+                line.add(animation, forKey: "animation")
+                layer.addSublayer(line)
+            }
         }
     }
 }
@@ -118,7 +125,11 @@ final class IndicatorView: UIView {
         
         let animationWidth = frame.size.width * 0.5
         let animationHeight = frame.height / 1.9
-        animationRect = CGRect(x: frame.width, y: frame.height, width: animationWidth, height: animationHeight)
+        
+        animationRect = CGRect(x: frame.width,
+                               y: frame.height,
+                               width: animationWidth,
+                               height: animationHeight)
         self.color = .gray
         isHidden = true
     }
@@ -133,7 +144,6 @@ final class IndicatorView: UIView {
             if let animation = animation {
                 setUpAnimation(animation: animation)
             }
-            
         }
     }
     

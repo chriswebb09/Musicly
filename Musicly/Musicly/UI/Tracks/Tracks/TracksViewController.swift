@@ -8,15 +8,30 @@
  
  import UIKit
  
+ 
+ protocol TracksViewControllerDelegate: class {
+    func getPrivousTrack(iTrack: iTrack)
+    func getNextTrack(iTrack: iTrack)
+    func getNextPlaylistItem(item: PlaylistItem)
+    func getPreviousPlaylistItem(item: PlaylistItem)
+ }
+ 
  private let reuseIdentifier = "trackCell"
  
  final class TracksViewController: UIViewController {
+    
+    weak var delegate: TracksViewControllerDelegate?
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
         }
     }
+    
+    var playlist = Playlist()
+    var selectedIndex: Int?
+    var selectedImage = UIImageView()
+    
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
@@ -57,6 +72,7 @@
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
@@ -73,7 +89,8 @@
         if searchBarActive == true {
             navigationItem.rightBarButtonItems = []
         } else {
-            navigationItem.rightBarButtonItems = [buttonItem!]
+            guard let buttonItem = buttonItem else { return }
+            navigationItem.rightBarButtonItems = [buttonItem]
         }
     }
     
@@ -117,6 +134,7 @@
         store?.setSearch(string: "Test")
         store?.searchForTracks { tracks, errors in
             self.tracks = tracks
+            tracks?.forEach { self.playlist.append(value: $0) }
         }
     }
     
@@ -134,18 +152,23 @@
     
     fileprivate func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            flowLayout.scrollDirection = .vertical
-            collectionView?.layoutIfNeeded()
             newLayout.sectionInset = EdgeAttributes.sectionInset
-            collectionView?.collectionViewLayout = newLayout
             newLayout.itemSize = RowSize.item.rawValue
             newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
             newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
+            
+            flowLayout.scrollDirection = .vertical
+            
+            collectionView?.layoutIfNeeded()
+            collectionView?.collectionViewLayout = newLayout
             view.backgroundColor = CollectionViewAttributes.backgroundColor
+            
             collectionView?.frame = UIScreen.main.bounds
             setupInfoLabel(infoLabel: infoLabel)
             setupMusicIcon(icon: musicIcon)
+            
             if let collectionView = collectionView {
                 view.addSubview(collectionView)
             }
@@ -178,7 +201,7 @@
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let tracks = tracks {
-            return TrackCounter().getCount(for: tracks)
+            return playlist.itemCount
         }
         return CollectionViewConstants.defaultItemCount
     }
@@ -189,14 +212,23 @@
             cell.configureCell(with: track.trackName, with: track.artworkUrl)
         }
     }
+ }
+ 
+ extension TracksViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
         if let track = tracks?[indexPath.row] {
             let destinationVC: PlayerViewController? = PlayerViewController()
             
             if let destinationViewController = destinationVC {
+                guard let selectedIndex = selectedIndex else { return }
+                destinationViewController.delegate = self
+                let item = playlist.playlistItem(at: selectedIndex - 1)
+                destinationViewController.playList = self.playlist
+                destinationViewController.setupPlayItem(item: item as! PlaylistItem)
                 destinationViewController.track = track
-                navigationController?.pushViewController(destinationViewController, animated: true)
+                navigationController?.pushViewController(destinationViewController, animated: false)
             }
         }
     }
@@ -205,7 +237,7 @@
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         setTrackCell(indexPath: indexPath, cell: cell)
         cell.alpha = 0
-        let rowTime = Double(indexPath.row) / CollectionViewConstants.rowTimeDivider
+        let rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
         DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
             UIView.animate(withDuration: CollectionViewConstants.baseDuration + rowTime) {
                 cell.alpha = 1
@@ -290,8 +322,12 @@
         infoLabel.isHidden = true
         musicIcon.isHidden = true
         collectionView?.reloadData()
-        
+        self.playlist.removeAll()
         store?.searchForTracks { [weak self] tracks, error in
+            tracks?.forEach {
+                self?.playlist.append(value: $0)
+            }
+            
             self?.tracks = tracks
             self?.collectionView?.reloadData()
             self?.collectionView?.performBatchUpdates ({
@@ -304,6 +340,7 @@
             }, completion: { finished in
                 print(finished)
             })
+            print(self?.playlist.itemCount)
         }
     }
     
@@ -362,5 +399,51 @@
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }
+    
+ }
+ 
+ extension TracksViewController: PlayerViewControllerDelegate {
+    func setPreviousPlaylistItem(newItem: Bool) {
+        if newItem {
+            guard var selectedIndex = selectedIndex else { return }
+            var currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
+            guard let previousPlayListItem = currentPlaylistItem?.previous else { return }
+            print("Getting previous playlist item \(previousPlayListItem.track.trackName)")
+            delegate?.getPreviousPlaylistItem(item: previousPlayListItem)
+        }
+    }
+    
+    func setNextPlaylistItem(newItem: Bool) {
+        if newItem {
+            guard var selectedIndex = selectedIndex else { return }
+            var currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
+            guard let nextPlayListItem = currentPlaylistItem?.next else { return }
+            print("Getting next playlist item \(nextPlayListItem.track.trackName)")
+            delegate?.getPreviousPlaylistItem(item: nextPlayListItem)
+        }
+        
+    }
+    
+    func setPreviousTrack(newTrack: Bool) {
+        if newTrack {
+            guard var selectedIndex = selectedIndex else { return }
+            guard let tracks = tracks else { return }
+            selectedIndex -= 1
+            guard let newTrack = tracks[selectedIndex] else { return }
+            delegate?.getNextTrack(iTrack: newTrack)
+        }
+    }
+    
+    func setNextTrack(newTrack: Bool) {
+        if newTrack {
+            guard var selectedIndex = selectedIndex else { return }
+            guard let tracks = tracks else { return }
+            let currentPlaylistItem = playlist.playlistItem(at: selectedIndex)
+            guard let newTrack = tracks[selectedIndex] else { return }
+            
+            delegate?.getNextTrack(iTrack: newTrack)
+        }
+    }
+    
     
  }
