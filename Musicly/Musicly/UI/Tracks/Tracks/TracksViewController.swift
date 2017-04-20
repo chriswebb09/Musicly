@@ -8,14 +8,6 @@
  
  import UIKit
  
- 
- protocol TracksViewControllerDelegate: class {
-    func getPrivousTrack(iTrack: iTrack)
-    func getNextTrack(iTrack: iTrack)
-    func getNextPlaylistItem(item: PlaylistItem)
-    func getPreviousPlaylistItem(item: PlaylistItem)
- }
- 
  private let reuseIdentifier = "trackCell"
  
  final class TracksViewController: UIViewController {

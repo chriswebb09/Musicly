@@ -6,13 +6,6 @@
 import UIKit
 import AVFoundation
 
-protocol PlayerViewControllerDelegate: class {
-    func setNextTrack(newTrack: Bool)
-    func setPreviousTrack(newTrack: Bool)
-    func setNextPlaylistItem(newItem: Bool)
-    func setPreviousPlaylistItem(newItem: Bool)
-}
-
 final class PlayerViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
     var player: AVPlayer?
