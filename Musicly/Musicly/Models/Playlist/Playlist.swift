@@ -8,24 +8,6 @@
 
 import UIKit
 
-class PlaylistItem {
-    var playListID: String? = ""
-    var identifier: String? = ""
-    var track: iTrack?
-    var next: PlaylistItem? = nil
-    weak var previous: PlaylistItem? = nil
-    
-    public init(item: iTrack?) {
-        self.track = item
-    }
-}
-
-extension PlaylistItem: Equatable {
-    static func ==(lhs: PlaylistItem, rhs: PlaylistItem) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-}
-
 class Playlist {
     
     private var head: PlaylistItem?
@@ -143,12 +125,6 @@ class Playlist {
     }
 }
 
-extension PlaylistItem: CustomStringConvertible {
-    public var description: String {
-        get {
-            return "Node(\(identifier))"
-        }
-    }
-}
+
 
 

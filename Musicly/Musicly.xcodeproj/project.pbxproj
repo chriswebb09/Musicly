@@ -14,6 +14,7 @@
 		A7322E061EA3EE330096E5DE /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7322E041EA3EE330096E5DE /* SplashView.swift */; };
 		A7322E071EA3EE330096E5DE /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7322E051EA3EE330096E5DE /* SplashViewController.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
+		A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B073721EA974E800DCC576 /* PlaylistItem.swift */; };
 		A7BB42FC1EA85E6000A205CA /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB42FA1EA85E6000A205CA /* PlaylistView.swift */; };
 		A7BB42FD1EA85E6000A205CA /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
@@ -73,6 +74,7 @@
 		A7322E041EA3EE330096E5DE /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashView.swift; path = Splash/SplashView.swift; sourceTree = "<group>"; };
 		A7322E051EA3EE330096E5DE /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Splash/SplashViewController.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		A7B073721EA974E800DCC576 /* PlaylistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItem.swift; path = Playlist/PlaylistItem.swift; sourceTree = "<group>"; };
 		A7BB42FA1EA85E6000A205CA /* PlaylistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistView.swift; path = Playlist/PlaylistView.swift; sourceTree = "<group>"; };
 		A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				A7CBC40A1E9FE63000C95A50 /* Playlist.swift */,
+				A7B073721EA974E800DCC576 /* PlaylistItem.swift */,
 			);
 			name = Playlist;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				A7F8B0511EA2E04900B333F9 /* EqualizerAnimation.swift in Sources */,
 				A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */,
 				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,
+				A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
 				A72240E41EA57F8F0071745D /* ApplicationServices.swift in Sources */,
