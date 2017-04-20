@@ -86,11 +86,11 @@ class Playlist {
     }
     
     public func reverse() {
-        var node = head
-        while let currentNode = node {
-            node = currentNode.next
-            swap(&currentNode.next, &currentNode.previous)
-            head = currentNode
+        var track = head
+        while let currentTrack = track {
+            track = currentTrack.next
+            swap(&currentTrack.next, &currentTrack.previous)
+            head = currentTrack
         }
     }
     
@@ -118,6 +118,8 @@ class Playlist {
     func contains(playlistItem item: PlaylistItem) -> Bool {
         guard let currentTrack = head else { return false }
         while currentTrack != item && currentTrack.next != nil {
+            print(currentTrack.track?.trackName)
+            print(item.track?.trackName)
             guard let currentTrack = currentTrack.next else { return false }
             if currentTrack == item {
                 return true

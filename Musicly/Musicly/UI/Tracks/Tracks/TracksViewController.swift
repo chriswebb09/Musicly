@@ -313,7 +313,6 @@
         collectionView.reloadData()
         self.playlist?.removeAll()
         store?.searchForTracks { [weak self] tracks, error in
-           // self?.playlist?.removeAll()
             tracks?.forEach {
                 self?.playlist?.append(value: $0)
             }
