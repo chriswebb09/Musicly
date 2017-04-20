@@ -11,7 +11,6 @@ import UIKit
 final internal class TrackCell: UICollectionViewCell, Reusable {
     
     var reuseID: String = "trackCell"
-    
     private var trackNameLabel: UILabel? = {
         var trackName = UILabel()
         trackName.backgroundColor = .white

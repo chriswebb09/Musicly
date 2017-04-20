@@ -37,8 +37,9 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     func setupPlayItem(index: Int) {
         playListItem = self.playList?.playlistItem(at: index)
-        self.track = playListItem?.track
-        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName)
+        guard let thumb = self.playListItem?.track?.thumbs else { return }
+        track = playListItem?.track
+        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName, thumbs: thumb)
         title = track?.artistName
         guard let track = track else { return }
         guard let previewUrl = track.previewUrl else { return }
@@ -70,13 +71,8 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         stopPlayer()
-        dump(playerView)
         playerView.removeFromSuperview()
-        
-        
-        dump(playerView)
         dismiss(animated: true, completion: nil)
     }
     
@@ -101,32 +97,35 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let previous = playListItem?.previous else { return }
         stopPlayer()
         playListItem = previous
+        //print(playListItem?.track?.thumbs)
         DispatchQueue.main.async {
             if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
                 self.title = track.artistName
                 self.initPlayer(url: url)
-                self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
+                guard let thumb = self.playListItem?.track?.thumbs else { return }
+                self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
             }
         }
         
     }
     
     func skipButtonTapped() {
-        
         playListItem = playListItem?.next
         stopPlayer()
+        //print(playListItem?.track?.thumbs)
         DispatchQueue.main.async {
             guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
             self.title = track.artistName
             self.initPlayer(url: url)
-            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
+            guard let thumb = self.playListItem?.track?.thumbs else { return }
+            print(thumb)
+            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
         }
     }
     
     
     func pauseButtonTapped() {
         stopPlayer()
-        print("pause")
     }
     
     func resetPlayerAndSong() {
@@ -136,15 +135,13 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Thumbs
     
     func thumbsDownTapped() {
-        dump(playListItem)
-        track?.thumbs = .down
-        print("thumbs down")
+        guard let item = playListItem else { return }
+        item.track?.thumbs = .down
     }
     
     func thumbsUpTapped() {
-        dump(track)
-        track?.thumbs = .up
-        print("thumbs up")
+        guard let item = playListItem else { return }
+        item.track?.thumbs = .up
     }
     
     // MARK: - Player controlers

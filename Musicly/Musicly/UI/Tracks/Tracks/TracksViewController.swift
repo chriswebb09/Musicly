@@ -325,9 +325,8 @@
                     }
                 }
             }, completion: { finished in
-                print(finished)
+               
             })
-            print(self?.playlist?.itemCount ?? "no count")
         }
     }
     

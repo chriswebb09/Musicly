@@ -19,6 +19,7 @@ final class PlayerView: UIView {
     private var track: iTrack?
     private var playState: FileState?
     private var time: Int? = 0
+    private var thumbs: Thumbs = .none
     
     deinit {
         time = nil
@@ -142,7 +143,7 @@ final class PlayerView: UIView {
     
     private var thumbsUpButton: UIButton? = {
         let thumbsUpButton = UIButton()
-        thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
+        thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
         return thumbsUpButton
     }()
     
@@ -167,7 +168,7 @@ final class PlayerView: UIView {
         pauseButton?.alpha = 0
     }
     
-    func configure(with artworkUrl: String?, trackName: String?) {
+    func configure(with artworkUrl: String?, trackName: String?, thumbs: Thumbs) {
         if let artworkUrl = artworkUrl,
             let url = URL(string: artworkUrl),
             let trackName = trackName,
@@ -182,6 +183,10 @@ final class PlayerView: UIView {
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
             playButton.layer.setViewShadow(view: playButton)
             addSelectors()
+            DispatchQueue.main.async {
+                self.switchThumbs()
+            }
+            
         }
     }
     
@@ -452,14 +457,14 @@ final class PlayerView: UIView {
     // Changes thumb button images depending on selection
     
     private func switchThumbs() {
-        if let thumbsDownButton = thumbsDownButton, let thumbsUpButton = thumbsUpButton, let track = track {
-            if track.thumbs == .down {
+        if let thumbsDownButton = thumbsDownButton, let thumbsUpButton = thumbsUpButton {
+            if thumbs == .down {
                 thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal)
                 thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
-            } else if track.thumbs == .up {
+            } else if thumbs == .up {
                 thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal)
                 thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
-            } else if track.thumbs == .none {
+            } else if thumbs == .none {
                 thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
                 thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
             }
@@ -542,21 +547,13 @@ final class PlayerView: UIView {
     // Toggles thumbs
     
     @objc private func thumbsUpTapped() {
-        if self.track?.thumbs == .up {
-            self.track?.thumbs = .none
-        } else {
-            self.track?.thumbs = .up
-        }
+        thumbs = .up
         switchThumbs()
         delegate?.thumbsUpTapped()
     }
     
     @objc private func thumbsDownTapped() {
-        if self.track?.thumbs == .down {
-            self.track?.thumbs = .none
-        } else {
-            self.track?.thumbs = .down
-        }
+        thumbs = .down
         switchThumbs()
         delegate?.thumbsDownTapped()
     }

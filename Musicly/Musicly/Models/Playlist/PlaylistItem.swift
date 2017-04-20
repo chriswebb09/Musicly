@@ -30,7 +30,7 @@ extension PlaylistItem: Equatable {
 }
 
 extension PlaylistItem: CustomStringConvertible {
-    public var description: String {
+    var description: String {
         get {
             return "Node(\(identifier))"
         }

@@ -109,7 +109,7 @@ final class IndicatorView: UIView {
     
     deinit {
         color = nil
-        dump(self)
+     
     }
     
     required init?(coder aDecoder: NSCoder) {

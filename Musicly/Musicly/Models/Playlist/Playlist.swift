@@ -99,8 +99,6 @@ class Playlist {
     func contains(playlistItem item: PlaylistItem) -> Bool {
         guard let currentTrack = head else { return false }
         while currentTrack != item && currentTrack.next != nil {
-            print(currentTrack.track?.trackName)
-            print(item.track?.trackName)
             guard let currentTrack = currentTrack.next else { return false }
             if currentTrack == item {
                 return true

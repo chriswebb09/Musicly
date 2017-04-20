@@ -15,7 +15,6 @@ extension UIImageView {
         iTunesAPIClient.downloadData(url: url) { data, response, error in
             
             if error != nil {
-                dump(error)
                 print(error?.localizedDescription ?? "Unknown error")
             }
             
