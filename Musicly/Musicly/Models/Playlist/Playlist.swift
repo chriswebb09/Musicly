@@ -42,13 +42,13 @@ struct TrackQueue {
 }
 
 class PlaylistItem {
-    var playListID: String = ""
-    var identifier: String = ""
-    var track: iTrack
+    var playListID: String? = ""
+    var identifier: String? = ""
+    var track: iTrack?
     var next: PlaylistItem? = nil
     weak var previous: PlaylistItem? = nil
     
-    public init(item: iTrack) {
+    public init(item: iTrack?) {
         print("Creating track \(item)")
         self.track = item
     }
@@ -92,11 +92,11 @@ class Playlist {
     
     var itemCount: Int = 0
     
-    func append(value: iTrack) {
-        let newNode: PlaylistItem = PlaylistItem(item: value)
+    func append(value: iTrack?) {
+        let newNode: PlaylistItem? = PlaylistItem(item: value!)
         itemCount += 1
         if let lastNode = tail {
-            newNode.previous = lastNode
+            newNode?.previous = lastNode
             lastNode.next = newNode
         } else if head == nil {
             head = newNode
@@ -108,16 +108,16 @@ class Playlist {
         if index >= 0 {
             var trackItem = head
             
-            print(trackItem?.next?.track.trackName ?? "no track item")
+            print(trackItem?.next?.track?.trackName ?? "no track item")
             var i = index
             while let trackAt = trackItem, trackItem != nil {
-                print("getting node \(String(describing: trackAt.next?.track.trackName))")
+                print("getting node \(String(describing: trackAt.next?.track?.trackName))")
                 if i == 0 {
-                    print(" return \(String(describing: trackItem?.track.trackName))")
+                    print(" return \(String(describing: trackItem?.track?.trackName))")
                     return trackAt
                 }
                 i -= 1
-                print("getting node \(String(describing: trackAt.next?.track.trackName))")
+                print("getting node \(String(describing: trackAt.next?.track?.trackName))")
                 trackItem = trackAt.next
             }
         }
@@ -133,9 +133,9 @@ class Playlist {
         }
     }
     
-    public func removeFromPlaylist(for playlistItem: PlaylistItem) -> iTrack {
-        let previous = playlistItem.previous
-        let next = playlistItem.next
+    public func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack {
+        let previous = playlistItem?.previous
+        let next = playlistItem?.next
         
         if let previous = previous {
             previous.next = next
@@ -144,9 +144,9 @@ class Playlist {
         }
         next?.previous = previous
         
-        playlistItem.previous = nil
-        playlistItem.next = nil
-        return playlistItem.track
+        playlistItem?.previous = nil
+        playlistItem?.next = nil
+        return playlistItem!.track!
     }
     
     public func removeAll() {
@@ -168,11 +168,11 @@ class Playlist {
     func playlistItem(with trackName: String, for artistName: String) -> PlaylistItem? {
         guard let currentTrack = head else { return nil }
         
-        while currentTrack.track.trackName != trackName  && currentTrack.track.artistName != artistName {
+        while currentTrack.track?.trackName != trackName  && currentTrack.track?.artistName != artistName {
             guard let currentTrack = currentTrack.next else { return nil }
-            print("checked track at \(currentTrack.track.trackName)")
-            if currentTrack.track.trackName == trackName {
-                print("Found track: \(currentTrack.track.trackName)")
+            print("checked track at \(currentTrack.track?.trackName)")
+            if currentTrack.track?.trackName == trackName {
+                print("Found track: \(currentTrack.track?.trackName)")
                 return currentTrack
             }
         }

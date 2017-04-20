@@ -29,13 +29,21 @@ final class iTrackDataStore {
     }
     
     func searchForTracks(completion: @escaping (_ downloads: [iTrack]?, _ error: Error?) -> Void) {
+        var returnData: [iTrack]? = [iTrack]()
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
+                    print(data)
                     if let parsedData = DataParser.parseDataForTracks(json: data) {
-                        completion(parsedData, nil)
+                        print(parsedData)
+                        for data in parsedData {
+                            print(data)
+                           // guard let data = data else { return }
+                            returnData?.append(data)
+                        }
+                        completion(returnData, nil)
                     } else {
                         completion(nil, NSError.generalParsingError(domain: ""))
                     }

@@ -64,7 +64,8 @@ final class iTunesAPIClient: NSObject {
     
     // MARK: - Turns data into JSON - JSON is typealias
     
-    fileprivate static func convertToJSON(with data: Data) -> JSON? {
+    fileprivate static func convertToJSON(with data: Data?) -> JSON? {
+        guard let data = data else { return nil }
         do {
             return try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSON
         } catch {

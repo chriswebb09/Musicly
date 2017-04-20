@@ -10,7 +10,11 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     var player: AVPlayer?
     var playerView: PlayerView = PlayerView()
-    var playListItem: PlaylistItem?
+    var playListItem: PlaylistItem? {
+        didSet  {
+            print(playListItem?.track?.trackName)
+        }
+    }
     var playList: Playlist?
     var track: iTrack?
     var rightButtonItem: UIBarButtonItem?
@@ -37,10 +41,11 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     func setupPlayItem(index: Int) {
         playListItem = self.playList?.playlistItem(at: index)
         self.track = playListItem?.track
-        playerView.configure(with: playListItem?.track.artworkUrl, trackName: playListItem?.track.trackName)
-           title = track?.artistName
+        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName)
+        title = track?.artistName
         guard let track = track else { return }
-        guard let url = URL(string: track.previewUrl) else { return }
+        guard let previewUrl = track.previewUrl else { return }
+        guard let url = URL(string: previewUrl) else { return }
         guard let fileTime = getFileTime(url: url) else { return }
         playerView.setupTimeLabels(totalTime: fileTime)
     }
@@ -96,21 +101,24 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
 extension PlayerViewController: PlayerViewDelegate {
     
     func backButtonTapped() {
+        guard let previous = playListItem?.previous else { return }
         stopPlayer()
-        playListItem = playListItem?.previous
+        playListItem = previous
         DispatchQueue.main.async {
-            guard let track = self.playListItem?.track, let url = URL(string: track.previewUrl) else { return }
-            self.initPlayer(url: url)
-            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
+            if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
+                self.initPlayer(url: url)
+                self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
+            }
         }
         
     }
     
     func skipButtonTapped() {
-        stopPlayer()
+        
         playListItem = playListItem?.next
+        stopPlayer()
         DispatchQueue.main.async {
-            guard let track = self.playListItem?.track, let url = URL(string: track.previewUrl) else { return }
+            guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
             self.initPlayer(url: url)
             self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
         }

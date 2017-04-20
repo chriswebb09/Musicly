@@ -18,12 +18,12 @@
         }
     }
     
-    fileprivate var playlist = Playlist()
+    fileprivate var playlist: Playlist? = Playlist()
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
-    fileprivate var tracks: [iTrack?]?
+    //  fileprivate var tracks: [iTrack?]?
     
     fileprivate var searchBarActive: Bool = false {
         didSet {
@@ -121,8 +121,11 @@
     private func loadData() {
         store?.setSearch(string: "Test")
         store?.searchForTracks { tracks, errors in
-            self.tracks = tracks
-            tracks?.forEach { self.playlist.append(value: $0) }
+            print(tracks)
+            // guard let tracks = tracks else { return }
+            if let tracks = tracks {
+                tracks.forEach { self.playlist?.append(value: $0) }
+            }
         }
     }
     
@@ -188,7 +191,8 @@
     // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if tracks != nil {
+        guard let playlist = playlist else { return CollectionViewConstants.defaultItemCount }
+        if playlist.itemCount > 0 {
             return playlist.itemCount
         }
         return CollectionViewConstants.defaultItemCount
@@ -196,8 +200,10 @@
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         if let index = indexPath,
-            let track = tracks?[index.row] {
-            cell.configureCell(with: track.trackName, with: track.artworkUrl)
+            let track = playlist?.playlistItem(at: index.row)?.track {
+            guard let artURL = track.artworkUrl else { return }
+            guard let trackName = track.trackName else { return }
+            cell.configureCell(with: trackName, with: artURL) 
         }
     }
  }
@@ -210,7 +216,7 @@
         if let destinationViewController = destinationVC {
             guard let selectedIndex = selectedIndex else { return }
             destinationViewController.playList = playlist
-            destinationViewController.index = selectedIndex - 1
+            destinationViewController.index = selectedIndex
             destinationViewController.setupPlayItem(index: selectedIndex)
             navigationController?.pushViewController(destinationViewController, animated: false)
         }
@@ -300,31 +306,31 @@
     // TODO: - Cleanup logic
     
     func searchBarHasInput() {
-        collectionView?.backgroundView?.isHidden = true
-        tracks?.removeAll()
+        
+        guard let collectionView = collectionView else { return }
+        collectionView.backgroundView?.isHidden = true
+        
         infoLabel.isHidden = true
         musicIcon.isHidden = true
-        collectionView?.reloadData()
-        self.playlist.removeAll()
+        collectionView.reloadData()
+        self.playlist?.removeAll()
         store?.searchForTracks { [weak self] tracks, error in
-            self?.playlist.removeAll()
+            self?.playlist?.removeAll()
             tracks?.forEach {
-                self?.playlist.append(value: $0)
+                self?.playlist?.append(value: $0)
             }
-            
-            self?.tracks = tracks
-            self?.collectionView?.reloadData()
-            self?.collectionView?.performBatchUpdates ({
+            collectionView.reloadData()
+            collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
                     if let collectionView = self?.collectionView {
                         collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-                        self?.collectionView?.isHidden = false
+                        collectionView.isHidden = false
                     }
                 }
             }, completion: { finished in
                 print(finished)
             })
-            print(self?.playlist.itemCount ?? "no count")
+            print(self?.playlist?.itemCount ?? "no count")
         }
     }
     
@@ -358,11 +364,19 @@
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
         if searchString != nil {
+            playlist?.removeAll()
             if let searchString = searchString {
                 store?.setSearch(string: searchString)
                 store?.searchForTracks { tracks, error in
                     self.store?.searchForTracks { tracks, error in
-                        self.tracks = tracks
+                        
+                        if let tracks = tracks {
+                            
+                            tracks.forEach {
+                                self.playlist?.append(value: $0)
+                            }
+                        }
+                        //    self.tracks = tracks
                     }
                 }
             }

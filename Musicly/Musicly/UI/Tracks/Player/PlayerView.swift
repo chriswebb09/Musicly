@@ -202,7 +202,7 @@ final class PlayerView: UIView {
         delegate?.resetPlayerAndSong()
         progressView?.progress = 0
         time = 0
-        delegate?.skipButtonTapped()
+        delegate?.backButtonTapped()
     }
     
     private func setupTrackTitleView() {
@@ -341,8 +341,8 @@ final class PlayerView: UIView {
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.16).isActive = true
-        button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.14).isActive = true
+        button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
     }
     
@@ -353,8 +353,8 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.1).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.08).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.08).isActive = true
         button.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.1).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
     }
@@ -366,8 +366,8 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.1).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.1).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.08).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.08).isActive = true
         button.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.1).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
     }

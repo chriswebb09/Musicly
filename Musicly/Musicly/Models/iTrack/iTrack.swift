@@ -13,11 +13,11 @@ struct iTrack {
     
     weak var delegate: iTrackDelegate?
     
-    let trackName: String
-    let artistName: String
+    let trackName: String?
+    let artistName: String?
     let artistId: Int
-    let previewUrl: String
-    let artworkUrl: String
+    let previewUrl: String?
+    let artworkUrl: String?
     let collectionName: String
     var thumbs: Thumbs
     
@@ -55,6 +55,7 @@ struct iTrack {
 extension iTrack: Hashable {
     
     var hashValue: Int {
+        guard let trackName = trackName else { return 0 }
         return trackName.hashValue
     }
     
