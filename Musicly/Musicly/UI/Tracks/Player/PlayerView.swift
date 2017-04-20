@@ -32,28 +32,6 @@ final class PlayerView: UIView {
         return albumArtworkView
     }()
     
-    private var skipButton: UIButton? = {
-        var skipButton = UIButton()
-        skipButton.setImage(#imageLiteral(resourceName: "skipiconwhite"), for: .normal)
-        if let imageView = skipButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
-
-        return skipButton
-    }()
-    
-    private var backButton: UIButton? = {
-        var backButton = UIButton()
-        backButton.setImage(#imageLiteral(resourceName: "backiconwhite"), for: .normal)
-        if let imageView = backButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
-
-        return backButton
-    }()
-    
     private var artworkView: UIView? = {
         var artworkView = UIView()
         artworkView.backgroundColor = .appBlue
@@ -90,6 +68,28 @@ final class PlayerView: UIView {
         progressView.progressTintColor = .orange
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
+    }()
+    
+    private var skipButton: UIButton? = {
+        var skipButton = UIButton()
+        skipButton.setImage(#imageLiteral(resourceName: "skipiconwhite"), for: .normal)
+        if let imageView = skipButton.imageView {
+            imageView.layer.setViewShadow(view: imageView)
+            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
+        }
+        
+        return skipButton
+    }()
+    
+    private var backButton: UIButton? = {
+        var backButton = UIButton()
+        backButton.setImage(#imageLiteral(resourceName: "backiconwhite"), for: .normal)
+        if let imageView = backButton.imageView {
+            imageView.layer.setViewShadow(view: imageView)
+            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
+        }
+        
+        return backButton
     }()
     
     private var totalPlayLengthLabel: UILabel? = {
@@ -230,9 +230,7 @@ final class PlayerView: UIView {
         guard let trackTitleLabel = trackTitleLabel else { return }
         guard let trackTitleView = trackTitleView else { return }
         guard let controlsView = controlsView  else { return }
-        
         trackTitleView.addSubview(trackTitleLabel)
-        
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
         trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true

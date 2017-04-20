@@ -91,7 +91,7 @@ class Playlist {
         return playlistItem!.track!
     }
     
-    public func removeAll() {
+    func removeAll() {
         head = nil
         itemCount = 0
     }
