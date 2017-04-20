@@ -228,7 +228,7 @@
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         cell.alpha = 0
-        let rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
+        let rowTime = (Double(indexPath.row % 5)) / CollectionViewConstants.rowTimeDivider
         setTrackCell(indexPath: indexPath, cell: cell, rowTime: rowTime)
         return cell
     }

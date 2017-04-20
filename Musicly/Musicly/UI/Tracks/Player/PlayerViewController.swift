@@ -23,7 +23,7 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
         navigationController?.isNavigationBarHidden = false
         view.addSubview(playerView)
         rightButtonItem = UIBarButtonItem.init(
-            title: "Title",
+            title: " ",
             style: .done,
             target: self,
             action: #selector(back)
@@ -103,6 +103,7 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = previous
         DispatchQueue.main.async {
             if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
+                self.title = track.artistName
                 self.initPlayer(url: url)
                 self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
             }
@@ -116,6 +117,7 @@ extension PlayerViewController: PlayerViewDelegate {
         stopPlayer()
         DispatchQueue.main.async {
             guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
+            self.title = track.artistName
             self.initPlayer(url: url)
             self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
         }
