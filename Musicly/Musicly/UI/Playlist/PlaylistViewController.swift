@@ -6,4 +6,11 @@
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class PlaylistViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}

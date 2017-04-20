@@ -6,4 +6,8 @@
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class PlaylistView: UIView {
+    
+}
