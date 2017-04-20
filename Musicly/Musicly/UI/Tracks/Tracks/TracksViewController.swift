@@ -20,11 +20,9 @@
         }
     }
     
-    var playlist = Playlist()
-    var selectedIndex: Int?
-    var selectedImage = UIImageView()
-    
-    
+    fileprivate var playlist = Playlist()
+    fileprivate var selectedIndex: Int?
+    fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     fileprivate var tracks: [iTrack?]?
@@ -192,7 +190,7 @@
     // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let tracks = tracks {
+        if tracks != nil {
             return playlist.itemCount
         }
         return CollectionViewConstants.defaultItemCount
@@ -216,9 +214,9 @@
             if let destinationViewController = destinationVC {
                 guard let selectedIndex = selectedIndex else { return }
                 destinationViewController.delegate = self
-                let item = playlist.playlistItem(at: selectedIndex - 1)
+                guard let item = playlist.playlistItem(at: selectedIndex - 1) else { return }
                 destinationViewController.playList = self.playlist
-                destinationViewController.setupPlayItem(item: item as! PlaylistItem)
+                destinationViewController.setupPlayItem(item: item)
                 destinationViewController.track = track
                 navigationController?.pushViewController(destinationViewController, animated: false)
             }
@@ -332,7 +330,7 @@
             }, completion: { finished in
                 print(finished)
             })
-            print(self?.playlist.itemCount)
+            print(self?.playlist.itemCount ?? "no count")
         }
     }
     
@@ -397,8 +395,8 @@
  extension TracksViewController: PlayerViewControllerDelegate {
     func setPreviousPlaylistItem(newItem: Bool) {
         if newItem {
-            guard var selectedIndex = selectedIndex else { return }
-            var currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
+            guard let selectedIndex = selectedIndex else { return }
+            let currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
             guard let previousPlayListItem = currentPlaylistItem?.previous else { return }
             print("Getting previous playlist item \(previousPlayListItem.track.trackName)")
             delegate?.getPreviousPlaylistItem(item: previousPlayListItem)
@@ -407,8 +405,8 @@
     
     func setNextPlaylistItem(newItem: Bool) {
         if newItem {
-            guard var selectedIndex = selectedIndex else { return }
-            var currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
+            guard let selectedIndex = selectedIndex else { return }
+            let currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
             guard let nextPlayListItem = currentPlaylistItem?.next else { return }
             print("Getting next playlist item \(nextPlayListItem.track.trackName)")
             delegate?.getPreviousPlaylistItem(item: nextPlayListItem)
@@ -428,7 +426,7 @@
     
     func setNextTrack(newTrack: Bool) {
         if newTrack {
-            guard var selectedIndex = selectedIndex else { return }
+            guard let selectedIndex = selectedIndex else { return }
             guard let tracks = tracks else { return }
             let currentPlaylistItem = playlist.playlistItem(at: selectedIndex)
             guard let newTrack = tracks[selectedIndex] else { return }

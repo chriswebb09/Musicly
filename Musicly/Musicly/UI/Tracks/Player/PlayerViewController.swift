@@ -182,12 +182,12 @@ extension PlayerViewController: TracksViewControllerDelegate {
     
     
     func getNextTrack(iTrack: iTrack) {
-        print("get next \(playListItem?.track)")
+        print("get next \(String(describing: playListItem?.track))")
         track = playListItem?.track
     }
     
     func getPrivousTrack(iTrack: iTrack) {
-        print("get previous \(playListItem?.track)")
+        print("get previous \(String(describing: playListItem?.track))")
         track = playListItem?.track
     }
 }

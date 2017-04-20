@@ -108,16 +108,16 @@ class Playlist {
         if index >= 0 {
             var trackItem = head
             
-            print(trackItem?.next?.track.trackName)
+            print(trackItem?.next?.track.trackName ?? "no track item")
             var i = index
             while let trackAt = trackItem, trackItem != nil {
-                print("getting node \(trackAt.next?.track.trackName)")
+                print("getting node \(String(describing: trackAt.next?.track.trackName))")
                 if i == 0 {
-                    print(" return \(trackItem?.track.trackName)")
+                    print(" return \(String(describing: trackItem?.track.trackName))")
                     return trackAt
                 }
                 i -= 1
-                print("getting node \(trackAt.next?.track.trackName)")
+                print("getting node \(String(describing: trackAt.next?.track.trackName))")
                 trackItem = trackAt.next
             }
         }
