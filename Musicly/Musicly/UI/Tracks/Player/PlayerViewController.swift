@@ -9,23 +9,18 @@ import AVFoundation
 final class PlayerViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
     var player: AVPlayer?
-    var playerView: PlayerView? = PlayerView()
+    var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
     var playList: Playlist?
     var track: iTrack?
     var rightButtonItem: UIBarButtonItem?
-    weak var delegate: PlayerViewControllerDelegate?
+    var index: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-        
-        let navController = self.parent as! UINavigationController
-        let parentControllerIndex = navController.viewControllers.count
-        let parentController = navController.viewControllers[parentControllerIndex - 2] as! TracksViewController
-        parentController.delegate = self
-        
         navigationController?.isNavigationBarHidden = false
+        view.addSubview(playerView)
         rightButtonItem = UIBarButtonItem.init(
             title: "Title",
             style: .done,
@@ -34,23 +29,20 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
         )
         guard let rightButtonItem = rightButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        
-        if let playerView = playerView, let track = track {
-            view.addSubview(playerView)
-            playerView.frame = UIScreen.main.bounds
-            playerView.layoutSubviews()
-            playerView.delegate = self
-            playerView.configure(with: track.artworkUrl, trackName: track.trackName)
-            title = track.artistName
-            guard let url = URL(string: track.previewUrl) else { return }
-            guard let fileTime = getFileTime(url: url) else { return }
-            playerView.setupTimeLabels(totalTime: fileTime)
-        }
+        playerView.frame = UIScreen.main.bounds
+        playerView.layoutSubviews()
+        playerView.delegate = self
     }
     
-    func setupPlayItem(item: PlaylistItem) {
-        self.playListItem = item
-        dump(playListItem)
+    func setupPlayItem(index: Int) {
+        playListItem = self.playList?.playlistItem(at: index)
+        self.track = playListItem?.track
+        playerView.configure(with: playListItem?.track.artworkUrl, trackName: playListItem?.track.trackName)
+           title = track?.artistName
+        guard let track = track else { return }
+        guard let url = URL(string: track.previewUrl) else { return }
+        guard let fileTime = getFileTime(url: url) else { return }
+        playerView.setupTimeLabels(totalTime: fileTime)
     }
     
     func back() {
@@ -76,12 +68,12 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let playerView = playerView {
-            stopPlayer()
-            dump(playerView)
-            playerView.removeFromSuperview()
-        }
-        playerView = nil
+        
+        stopPlayer()
+        dump(playerView)
+        playerView.removeFromSuperview()
+        
+        
         dump(playerView)
         dismiss(animated: true, completion: nil)
     }
@@ -92,9 +84,6 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     final func initPlayer(url: URL)  {
         if let player = player {
-            
-            print("playing")
-            
             player.play()
         } else {
             player = AVPlayer(url: url)
@@ -107,30 +96,23 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
 extension PlayerViewController: PlayerViewDelegate {
     
     func backButtonTapped() {
-        delegate?.setPreviousTrack(newTrack: true)
-        delegate?.setPreviousTrack(newTrack: true)
-        
         stopPlayer()
-        
+        playListItem = playListItem?.previous
         DispatchQueue.main.async {
-            
-            guard let track = self.track, let url = URL(string: track.previewUrl) else { return }
-            print("back")
+            guard let track = self.playListItem?.track, let url = URL(string: track.previewUrl) else { return }
             self.initPlayer(url: url)
-            self.playerView?.configure(with: track.artworkUrl, trackName: track.trackName)
+            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
         }
         
     }
     
     func skipButtonTapped() {
-        delegate?.setNextPlaylistItem(newItem: true)
-        delegate?.setNextTrack(newTrack: true)
         stopPlayer()
+        playListItem = playListItem?.next
         DispatchQueue.main.async {
-            guard let track = self.track, let url = URL(string: track.previewUrl) else { return }
-            print("next")
+            guard let track = self.playListItem?.track, let url = URL(string: track.previewUrl) else { return }
             self.initPlayer(url: url)
-            self.playerView?.configure(with: track.artworkUrl, trackName: track.trackName)
+            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName)
         }
     }
     
@@ -168,26 +150,5 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let urlString = track?.previewUrl else { return }
         guard let url = URL(string: urlString) else { return }
         initPlayer(url: url)
-    }
-}
-
-extension PlayerViewController: TracksViewControllerDelegate {
-    func getPreviousPlaylistItem(item: PlaylistItem) {
-        self.playListItem = item
-    }
-    
-    func getNextPlaylistItem(item: PlaylistItem) {
-        self.playListItem = item
-    }
-    
-    
-    func getNextTrack(iTrack: iTrack) {
-        print("get next \(String(describing: playListItem?.track))")
-        track = playListItem?.track
-    }
-    
-    func getPrivousTrack(iTrack: iTrack) {
-        print("get previous \(String(describing: playListItem?.track))")
-        track = playListItem?.track
     }
 }

@@ -12,8 +12,6 @@
  
  final class TracksViewController: UIViewController {
     
-    weak var delegate: TracksViewControllerDelegate?
-    
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
@@ -208,18 +206,13 @@
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-        if let track = tracks?[indexPath.row] {
-            let destinationVC: PlayerViewController? = PlayerViewController()
-            
-            if let destinationViewController = destinationVC {
-                guard let selectedIndex = selectedIndex else { return }
-                destinationViewController.delegate = self
-                guard let item = playlist.playlistItem(at: selectedIndex - 1) else { return }
-                destinationViewController.playList = self.playlist
-                destinationViewController.setupPlayItem(item: item)
-                destinationViewController.track = track
-                navigationController?.pushViewController(destinationViewController, animated: false)
-            }
+        let destinationVC: PlayerViewController? = PlayerViewController()
+        if let destinationViewController = destinationVC {
+            guard let selectedIndex = selectedIndex else { return }
+            destinationViewController.playList = playlist
+            destinationViewController.index = selectedIndex - 1
+            destinationViewController.setupPlayItem(index: selectedIndex)
+            navigationController?.pushViewController(destinationViewController, animated: false)
         }
     }
     
@@ -314,6 +307,7 @@
         collectionView?.reloadData()
         self.playlist.removeAll()
         store?.searchForTracks { [weak self] tracks, error in
+            self?.playlist.removeAll()
             tracks?.forEach {
                 self?.playlist.append(value: $0)
             }
@@ -389,51 +383,5 @@
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }
-    
- }
- 
- extension TracksViewController: PlayerViewControllerDelegate {
-    func setPreviousPlaylistItem(newItem: Bool) {
-        if newItem {
-            guard let selectedIndex = selectedIndex else { return }
-            let currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
-            guard let previousPlayListItem = currentPlaylistItem?.previous else { return }
-            print("Getting previous playlist item \(previousPlayListItem.track.trackName)")
-            delegate?.getPreviousPlaylistItem(item: previousPlayListItem)
-        }
-    }
-    
-    func setNextPlaylistItem(newItem: Bool) {
-        if newItem {
-            guard let selectedIndex = selectedIndex else { return }
-            let currentPlaylistItem: PlaylistItem? = playlist.playlistItem(at: selectedIndex)
-            guard let nextPlayListItem = currentPlaylistItem?.next else { return }
-            print("Getting next playlist item \(nextPlayListItem.track.trackName)")
-            delegate?.getPreviousPlaylistItem(item: nextPlayListItem)
-        }
-        
-    }
-    
-    func setPreviousTrack(newTrack: Bool) {
-        if newTrack {
-            guard var selectedIndex = selectedIndex else { return }
-            guard let tracks = tracks else { return }
-            selectedIndex -= 1
-            guard let newTrack = tracks[selectedIndex] else { return }
-            delegate?.getNextTrack(iTrack: newTrack)
-        }
-    }
-    
-    func setNextTrack(newTrack: Bool) {
-        if newTrack {
-            guard let selectedIndex = selectedIndex else { return }
-            guard let tracks = tracks else { return }
-            let currentPlaylistItem = playlist.playlistItem(at: selectedIndex)
-            guard let newTrack = tracks[selectedIndex] else { return }
-            
-            delegate?.getNextTrack(iTrack: newTrack)
-        }
-    }
-    
     
  }

@@ -164,6 +164,20 @@ class Playlist {
         }
         return false
     }
+    
+    func playlistItem(with trackName: String, for artistName: String) -> PlaylistItem? {
+        guard let currentTrack = head else { return nil }
+        
+        while currentTrack.track.trackName != trackName  && currentTrack.track.artistName != artistName {
+            guard let currentTrack = currentTrack.next else { return nil }
+            print("checked track at \(currentTrack.track.trackName)")
+            if currentTrack.track.trackName == trackName {
+                print("Found track: \(currentTrack.track.trackName)")
+                return currentTrack
+            }
+        }
+        return nil
+    }
 }
 
 extension PlaylistItem: CustomStringConvertible {
