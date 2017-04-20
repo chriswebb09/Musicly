@@ -49,7 +49,6 @@ class PlaylistItem {
     weak var previous: PlaylistItem? = nil
     
     public init(item: iTrack?) {
-        print("Creating track \(item)")
         self.track = item
     }
 }
@@ -107,17 +106,12 @@ class Playlist {
         
         if index >= 0 {
             var trackItem = head
-            
-            print(trackItem?.next?.track?.trackName ?? "no track item")
             var i = index
             while let trackAt = trackItem, trackItem != nil {
-                print("getting node \(String(describing: trackAt.next?.track?.trackName))")
                 if i == 0 {
-                    print(" return \(String(describing: trackItem?.track?.trackName))")
                     return trackAt
                 }
                 i -= 1
-                print("getting node \(String(describing: trackAt.next?.track?.trackName))")
                 trackItem = trackAt.next
             }
         }
@@ -170,9 +164,9 @@ class Playlist {
         
         while currentTrack.track?.trackName != trackName  && currentTrack.track?.artistName != artistName {
             guard let currentTrack = currentTrack.next else { return nil }
-            print("checked track at \(currentTrack.track?.trackName)")
+     
             if currentTrack.track?.trackName == trackName {
-                print("Found track: \(currentTrack.track?.trackName)")
+                
                 return currentTrack
             }
         }

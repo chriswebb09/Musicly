@@ -35,12 +35,8 @@ final class iTrackDataStore {
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
-                    print(data)
                     if let parsedData = DataParser.parseDataForTracks(json: data) {
-                        print(parsedData)
                         for data in parsedData {
-                            print(data)
-                           // guard let data = data else { return }
                             returnData?.append(data)
                         }
                         completion(returnData, nil)

@@ -10,11 +10,8 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     var player: AVPlayer?
     var playerView: PlayerView = PlayerView()
-    var playListItem: PlaylistItem? {
-        didSet  {
-            print(playListItem?.track?.trackName)
-        }
-    }
+    var playListItem: PlaylistItem?
+    
     var playList: Playlist?
     var track: iTrack?
     var rightButtonItem: UIBarButtonItem?

@@ -109,7 +109,6 @@ final class IndicatorView: UIView {
     
     deinit {
         color = nil
-        print("indicator deallocated")
         dump(self)
     }
     

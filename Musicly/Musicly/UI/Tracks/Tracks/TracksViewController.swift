@@ -121,8 +121,6 @@
     private func loadData() {
         store?.setSearch(string: "Test")
         store?.searchForTracks { tracks, errors in
-            print(tracks)
-            // guard let tracks = tracks else { return }
             if let tracks = tracks {
                 tracks.forEach { self.playlist?.append(value: $0) }
             }
