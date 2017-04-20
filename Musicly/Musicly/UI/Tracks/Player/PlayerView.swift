@@ -35,12 +35,22 @@ final class PlayerView: UIView {
     private var skipButton: UIButton? = {
         var skipButton = UIButton()
         skipButton.setImage(#imageLiteral(resourceName: "skipiconwhite"), for: .normal)
+        if let imageView = skipButton.imageView {
+            imageView.layer.setViewShadow(view: imageView)
+            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
+        }
+
         return skipButton
     }()
     
     private var backButton: UIButton? = {
         var backButton = UIButton()
         backButton.setImage(#imageLiteral(resourceName: "backiconwhite"), for: .normal)
+        if let imageView = backButton.imageView {
+            imageView.layer.setViewShadow(view: imageView)
+            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: imageView.layer.cornerRadius).cgPath
+        }
+
         return backButton
     }()
     
@@ -343,7 +353,7 @@ final class PlayerView: UIView {
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.14).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
     }
     
     private func setupSkipButton() {
@@ -353,10 +363,10 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.08).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.08).isActive = true
-        button.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.1).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.06).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.06).isActive = true
+        button.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.15).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
     }
     
     private func setupBackButton() {
@@ -366,10 +376,10 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.08).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.08).isActive = true
-        button.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.1).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.06).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.06).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.06).isActive = true
+        button.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.15).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
     }
     
     

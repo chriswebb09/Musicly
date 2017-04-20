@@ -101,7 +101,7 @@ class AudioEqualizer {
 
 final class IndicatorView: UIView {
     
-    var color: UIColor? = .gray
+    var color: UIColor? = .white
     var animationRect: CGRect?
     
     var animating: Bool { return isAnimating }
@@ -129,7 +129,7 @@ final class IndicatorView: UIView {
                                y: frame.height,
                                width: animationWidth,
                                height: animationHeight)
-        self.color = .gray
+        self.color = .white
         isHidden = true
     }
     

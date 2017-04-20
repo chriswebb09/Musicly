@@ -23,7 +23,7 @@ struct CollectionViewConstants {
                                                           right: 20.0)
     static let rowTimeDivider: Double = 8
     static let defaultItemCount = 50
-    static let baseDuration: Double = 0.15
+    static let baseDuration: Double = 0.18
 }
 
 struct ApplicationConstants {

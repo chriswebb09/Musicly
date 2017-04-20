@@ -8,39 +8,6 @@
 
 import UIKit
 
-struct TrackQueue {
-    
-    private var tracks = [iTrack?]()
-    
-    var isEmpty: Bool {
-        return count == 0
-    }
-    
-    var count: Int {
-        return tracks.count - head
-    }
-    
-    private var head = 0
-    
-    mutating func enqueue(_ track: iTrack) {
-        tracks.append(track)
-    }
-    
-    mutating func dequeue() -> iTrack? {
-        guard head < tracks.count, let track = tracks[head] else { return nil }
-        tracks[head] = nil
-        head += 1
-        
-        let percentage = Double(head)/Double(tracks.count)
-        if tracks.count > 50 && percentage > 0.25 {
-            tracks.removeFirst(head)
-            head = 0
-        }
-        
-        return track
-    }
-}
-
 class PlaylistItem {
     var playListID: String? = ""
     var identifier: String? = ""

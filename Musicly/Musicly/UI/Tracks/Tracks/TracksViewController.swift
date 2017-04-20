@@ -196,12 +196,17 @@
         return CollectionViewConstants.defaultItemCount
     }
     
-    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
+    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell, rowTime: Double) {
         if let index = indexPath,
             let track = playlist?.playlistItem(at: index.row)?.track {
             guard let artURL = track.artworkUrl else { return }
             guard let trackName = track.trackName else { return }
-            cell.configureCell(with: trackName, with: artURL) 
+            cell.configureCell(with: trackName, with: artURL)
+            DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
+                UIView.animate(withDuration: CollectionViewConstants.baseDuration + rowTime) {
+                    cell.alpha = 1
+                }
+            }
         }
     }
  }
@@ -222,14 +227,9 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        setTrackCell(indexPath: indexPath, cell: cell)
         cell.alpha = 0
         let rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
-        DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
-            UIView.animate(withDuration: CollectionViewConstants.baseDuration + rowTime) {
-                cell.alpha = 1
-            }
-        }
+        setTrackCell(indexPath: indexPath, cell: cell, rowTime: rowTime)
         return cell
     }
  }
@@ -313,7 +313,7 @@
         collectionView.reloadData()
         self.playlist?.removeAll()
         store?.searchForTracks { [weak self] tracks, error in
-            self?.playlist?.removeAll()
+           // self?.playlist?.removeAll()
             tracks?.forEach {
                 self?.playlist?.append(value: $0)
             }
