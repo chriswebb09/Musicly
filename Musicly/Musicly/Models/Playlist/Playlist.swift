@@ -76,6 +76,10 @@ class Playlist {
         }
     }
     
+    func peek() -> iTrack? {
+        return first?.track
+    }
+    
     func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack? {
         let previous = playlistItem?.previous
         let next = playlistItem?.next
