@@ -19,7 +19,7 @@ final class PlayerView: UIView {
     private var track: iTrack?
     private var playState: FileState?
     private var time: Int? = 0
-    private var thumbs: Thumbs = .none
+    private var thumbs: Thumbs? = .none
     
     deinit {
         time = nil

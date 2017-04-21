@@ -11,9 +11,8 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     var player: AVPlayer?
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
-    
+    var avUrlAsset: AVURLAsset?
     var playList: Playlist?
-    var track: iTrack?
     var rightButtonItem: UIBarButtonItem?
     var index: Int?
     
@@ -36,12 +35,13 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     }
     
     func setupPlayItem(index: Int) {
-        playListItem = self.playList?.playlistItem(at: index)
-        guard let thumb = self.playListItem?.track?.thumbs else { return }
-        track = playListItem?.track
+
+        playListItem = playList?.playlistItem(at: index)
+        guard let thumb = playListItem?.track?.thumbs else { return }
+        guard let track = playListItem?.track else { return }
+        guard let name = track.artistName else { return }
         playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName, thumbs: thumb)
-        title = track?.artistName
-        guard let track = track else { return }
+        title = name
         guard let previewUrl = track.previewUrl else { return }
         guard let url = URL(string: previewUrl) else { return }
         guard let fileTime = getFileTime(url: url) else { return }
@@ -55,7 +55,7 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     // Gets total time length for song
     
     private final func getFileTime(url: URL) -> String? {
-        var avUrlAsset: AVURLAsset? = AVURLAsset(url: url)
+        avUrlAsset = AVURLAsset(url: url)
         if let asset = avUrlAsset {
             let audioDuration: CMTime = asset.duration
             let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
@@ -81,10 +81,23 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     }
     
     final func initPlayer(url: URL)  {
-        if let player = player {
+
+        if player != nil {
+            //self.player = nil
+            self.avUrlAsset = AVURLAsset(url: url)
+            var item = AVPlayerItem(asset: self.avUrlAsset!)
+            self.player = AVPlayer(playerItem: item)
+            //self.player?.currentItem = item
+            //var newPlayer: AVPlayer? = AVPlayer(playerItem: item)
+           // self.player = newPlayer
+            guard let player = self.player else { return }
             player.play()
         } else {
-            player = AVPlayer(url: url)
+            self.avUrlAsset = AVURLAsset(url: url)
+            var item = AVPlayerItem(asset: self.avUrlAsset!)
+            self.player = AVPlayer(playerItem: item)
+//            var newPlayer: AVPlayer? = AVPlayer(playerItem: item)
+           // self.player.
             guard let player = player else { return }
             player.play()
         }
@@ -95,10 +108,10 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func backButtonTapped() {
         guard let previous = playListItem?.previous else { return }
-        stopPlayer()
+        
         playListItem = previous
-        //print(playListItem?.track?.thumbs)
-        DispatchQueue.main.async {
+        stopPlayer()
+        DispatchQueue.main.async { [unowned self] in
             if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
                 self.title = track.artistName
                 self.initPlayer(url: url)
@@ -112,20 +125,19 @@ extension PlayerViewController: PlayerViewDelegate {
     func skipButtonTapped() {
         playListItem = playListItem?.next
         stopPlayer()
-        //print(playListItem?.track?.thumbs)
         DispatchQueue.main.async {
             guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
             self.title = track.artistName
             self.initPlayer(url: url)
             guard let thumb = self.playListItem?.track?.thumbs else { return }
-            print(thumb)
             self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
         }
     }
     
     
     func pauseButtonTapped() {
-        stopPlayer()
+        player?.pause()
+//        stopPlayer()
     }
     
     func resetPlayerAndSong() {
@@ -151,7 +163,8 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func playButtonTapped() {
-        guard let urlString = track?.previewUrl else { return }
+        stopPlayer()
+        guard let urlString = playListItem?.track?.previewUrl else { return }
         guard let url = URL(string: urlString) else { return }
         initPlayer(url: url)
     }
