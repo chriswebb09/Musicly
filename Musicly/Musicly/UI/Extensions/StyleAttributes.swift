@@ -10,6 +10,16 @@ import UIKit
 
 // TODO: - Cleanup and consolidate
 
+struct PlayerViewConstants {
+    static let backButtonWidthMultiplier: CGFloat = 0.06
+    static let backButtonHeightMultiplier: CGFloat = 0.06
+    static let backButtonCenterYOffset: CGFloat = -0.08
+    static let progressViewWidthMultiplier: CGFloat = 0.6
+    static let progressViewHeightMultiplier: CGFloat = 0.01
+    static let playTimeLabelHeightMutliplier: CGFloat = 0.25
+    
+}
+
 struct CollectionViewConstants {
     static let backgroundColor = UIColor(red: 0.97,
                                          green: 0.97,

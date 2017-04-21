@@ -15,6 +15,7 @@ enum FileState {
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
+    
     private var timer: Timer?
     private var track: iTrack?
     private var playState: FileState?
@@ -235,7 +236,9 @@ final class PlayerView: UIView {
         guard let trackTitleLabel = trackTitleLabel else { return }
         guard let trackTitleView = trackTitleView else { return }
         guard let controlsView = controlsView  else { return }
+        
         trackTitleView.addSubview(trackTitleLabel)
+        
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
         trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
@@ -356,7 +359,7 @@ final class PlayerView: UIView {
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.14).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
     }
     
     private func setupSkipButton() {
@@ -366,10 +369,10 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.06).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.06).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.backButtonWidthMultiplier).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.backButtonHeightMultiplier).isActive = true
         button.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.15).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
     }
     
     private func setupBackButton() {
@@ -379,10 +382,10 @@ final class PlayerView: UIView {
         controlsView.addSubview(button)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.06).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.06).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.backButtonWidthMultiplier).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.backButtonHeightMultiplier).isActive = true
         button.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.15).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.08).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
     }
     
     
@@ -402,8 +405,8 @@ final class PlayerView: UIView {
         
         controlsView.addSubview(progressView)
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.6).isActive = true
-        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.01).isActive = true
+        progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.progressViewWidthMultiplier).isActive = true
+        progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.progressViewHeightMultiplier).isActive = true
         progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
         progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.2).isActive = true
         
@@ -416,7 +419,7 @@ final class PlayerView: UIView {
         controlsView.addSubview(totalPlayLengthLabel)
         totalPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         totalPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.18).isActive = true
-        totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
+        totalPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.playTimeLabelHeightMutliplier).isActive = true
         totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.07).isActive = true
         totalPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.2).isActive = true
     }
@@ -428,7 +431,7 @@ final class PlayerView: UIView {
         controlsView.addSubview(currentPlayLengthLabel)
         currentPlayLengthLabel.translatesAutoresizingMaskIntoConstraints = false
         currentPlayLengthLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
-        currentPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.25).isActive = true
+        currentPlayLengthLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.playTimeLabelHeightMutliplier).isActive = true
         currentPlayLengthLabel.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
         currentPlayLengthLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.2).isActive = true
     }
