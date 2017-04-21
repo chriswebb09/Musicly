@@ -83,21 +83,18 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     final func initPlayer(url: URL)  {
 
         if player != nil {
-            //self.player = nil
+           
             self.avUrlAsset = AVURLAsset(url: url)
-            var item = AVPlayerItem(asset: self.avUrlAsset!)
+            guard let asset = avUrlAsset else { return }
+            let item = AVPlayerItem(asset: asset)
             self.player = AVPlayer(playerItem: item)
-            //self.player?.currentItem = item
-            //var newPlayer: AVPlayer? = AVPlayer(playerItem: item)
-           // self.player = newPlayer
             guard let player = self.player else { return }
             player.play()
         } else {
+             guard let asset = avUrlAsset else { return }
             self.avUrlAsset = AVURLAsset(url: url)
-            var item = AVPlayerItem(asset: self.avUrlAsset!)
+            let item = AVPlayerItem(asset: asset)
             self.player = AVPlayer(playerItem: item)
-//            var newPlayer: AVPlayer? = AVPlayer(playerItem: item)
-           // self.player.
             guard let player = player else { return }
             player.play()
         }

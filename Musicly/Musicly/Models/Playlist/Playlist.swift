@@ -40,13 +40,14 @@ class Playlist {
     }
     
     func append(value: iTrack?) {
-        let newNode: PlaylistItem? = PlaylistItem(item: value!)
+        guard let value = value else { return }
+        let newPlaylistItem: PlaylistItem? = PlaylistItem(item: value)
         itemCount += 1
-        if let lastNode = tail {
-            newNode?.previous = lastNode
-            lastNode.next = newNode
+        if let lastItem = tail {
+            newPlaylistItem?.previous = lastItem
+            lastItem.next = newPlaylistItem
         } else if head == nil {
-            head = newNode
+            head = newPlaylistItem
         }
     }
     
@@ -75,7 +76,7 @@ class Playlist {
         }
     }
     
-    func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack {
+    func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack? {
         let previous = playlistItem?.previous
         let next = playlistItem?.next
         
@@ -88,7 +89,8 @@ class Playlist {
         
         playlistItem?.previous = nil
         playlistItem?.next = nil
-        return playlistItem!.track!
+        guard let trackItem = playlistItem?.track else { return nil }
+        return trackItem
     }
     
     func removeAll() {
