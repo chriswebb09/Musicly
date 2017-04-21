@@ -17,7 +17,9 @@ struct PlayerViewConstants {
     static let progressViewWidthMultiplier: CGFloat = 0.6
     static let progressViewHeightMultiplier: CGFloat = 0.01
     static let playTimeLabelHeightMutliplier: CGFloat = 0.25
-    
+    static let trackTitleViewHeightMultiplier: CGFloat = 0.08
+    static let trackTitleLabelHeightMultiplier: CGFloat = 0.6
+    static let trackTitleLabelCenterYOffset: CGFloat =  0.5
 }
 
 struct CollectionViewConstants {

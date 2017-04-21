@@ -228,7 +228,7 @@ final class PlayerView: UIView {
         
         trackTitleView.translatesAutoresizingMaskIntoConstraints = false
         trackTitleView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        trackTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.08).isActive = true
+        trackTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.trackTitleViewHeightMultiplier).isActive = true
         trackTitleView.topAnchor.constraint(equalTo: topAnchor).isActive = true
     }
     
@@ -241,8 +241,8 @@ final class PlayerView: UIView {
         
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
-        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: 0.6).isActive = true
-        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * 0.5).isActive = true
+        trackTitleLabel.heightAnchor.constraint(equalTo: trackTitleView.heightAnchor, multiplier: PlayerViewConstants.trackTitleLabelHeightMultiplier).isActive = true
+        trackTitleLabel.centerYAnchor.constraint(equalTo: trackTitleView.centerYAnchor, constant: controlsView.bounds.height * PlayerViewConstants.trackTitleLabelCenterYOffset).isActive = true
     }
     
     // MARK: - Cover art setup
