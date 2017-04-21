@@ -255,7 +255,7 @@ final class PlayerView: UIView {
         
         artworkView.translatesAutoresizingMaskIntoConstraints = false
         artworkView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
+        artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.artworkViewHeightMultiplier).isActive = true
         artworkView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         artworkView.topAnchor.constraint(equalTo: trackTitleView.bottomAnchor).isActive = true
     }
@@ -267,8 +267,8 @@ final class PlayerView: UIView {
         artworkView.addSubview(albumArtworkView)
         
         albumArtworkView.translatesAutoresizingMaskIntoConstraints = false
-        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: 0.5).isActive = true
-        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.6).isActive = true
+        albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: PlayerViewConstants.albumWidthMultiplier).isActive = true
+        albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: PlayerViewConstants.albumHeightMultiplier).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
         
@@ -282,7 +282,7 @@ final class PlayerView: UIView {
         
         preferencesView.translatesAutoresizingMaskIntoConstraints = false
         preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.06).isActive = true
+        preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.preferencedHeightMultiplier).isActive = true
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
         
     }
@@ -296,9 +296,9 @@ final class PlayerView: UIView {
         preferencesView.addSubview(artistInfoButton)
         
         artistInfoButton.translatesAutoresizingMaskIntoConstraints = false
-        artistInfoButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.2).isActive = true
-        artistInfoButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
-        artistInfoButton.rightAnchor.constraint(equalTo: preferencesView.rightAnchor, constant: UIScreen.main.bounds.width * -0.05).isActive = true
+        artistInfoButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: PlayerViewConstants.artistInfoWidthMultiplier).isActive = true
+        artistInfoButton.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: PlayerViewConstants.artistInfoHeightMultiplier).isActive = true
+        artistInfoButton.rightAnchor.constraint(equalTo: preferencesView.rightAnchor, constant: UIScreen.main.bounds.width * PlayerViewConstants.artistInfoRightOffset).isActive = true
         artistInfoButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
         
     }
@@ -309,7 +309,7 @@ final class PlayerView: UIView {
         
         thumbsButtonSetup(thumbs: thumbsUpButton)
         
-        thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.06).isActive = true
+        thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * PlayerViewConstants.thumbsUpLeftOffset).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
@@ -320,7 +320,7 @@ final class PlayerView: UIView {
         
         thumbsButtonSetup(thumbs: thumbsDownButton)
         
-        thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * 0.21).isActive = true
+        thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * PlayerViewConstants.thumbsDownLeftOffset).isActive = true
         thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
@@ -331,8 +331,8 @@ final class PlayerView: UIView {
         preferencesView.addSubview(thumbs)
         
         thumbs.translatesAutoresizingMaskIntoConstraints = false
-        thumbs.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: 0.07).isActive = true
-        thumbs.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: 0.7).isActive = true
+        thumbs.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: PlayerViewConstants.thumbsWidthMultiplier).isActive = true
+        thumbs.heightAnchor.constraint(equalTo: preferencesView.heightAnchor, multiplier: PlayerViewConstants.thumbsHeightMultplier).isActive = true
     }
     
     // MARK: - Music controls setup
@@ -345,7 +345,7 @@ final class PlayerView: UIView {
         
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.55).isActive = true
+        controlsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.controlsViewHeightMultiplier).isActive = true
         controlsView.topAnchor.constraint(equalTo: preferencesView.bottomAnchor).isActive = true
     }
     
