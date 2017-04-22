@@ -27,7 +27,9 @@ extension UIViewController {
     
     func setupMusicIcon(icon: UIView) {
         view.addSubview(icon)
+        
         icon.translatesAutoresizingMaskIntoConstraints = false
+        
         icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.18).isActive = true
         icon.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35).isActive = true
         icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -35,7 +37,9 @@ extension UIViewController {
     }
     
     func setupInfoLabel(infoLabel: UILabel) {
+        
         view.addSubview(infoLabel)
+        
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true

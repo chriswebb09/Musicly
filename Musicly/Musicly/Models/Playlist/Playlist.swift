@@ -77,6 +77,7 @@ class Playlist {
     }
     
     func peek() -> iTrack? {
+        
         return first?.track
     }
     

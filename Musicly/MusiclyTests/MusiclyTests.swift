@@ -51,4 +51,21 @@ class MusiclyTests: XCTestCase {
         playerViewController?.player = AVPlayer()
         XCTAssert(playerViewController?.player != nil)
     }
+    
+    func testDataStore() {
+        
+        let dataSource = iTrackDataStore(searchTerm: "new")
+        let expect = expectation(description: "Data store calls api and returns iTrack data array.")
+        
+        dataSource.searchForTracks { tracks, error in
+            XCTAssert(tracks?.count == 49)
+            expect.fulfill()
+        }
+
+        waitForExpectations(timeout: 4) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
 }
