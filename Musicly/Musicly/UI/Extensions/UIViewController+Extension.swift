@@ -40,5 +40,4 @@ extension UIViewController {
         infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.12).isActive = true
     }
-    
 }

@@ -63,7 +63,3 @@ final class SplashViewController: UIViewController {
     }
     
 }
-
-struct SplashConstants {
-    static let animationDuration: Double = 0.004
-}

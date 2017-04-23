@@ -11,7 +11,6 @@ import UIKit
 // TODO: - Cleanup and consolidate
 
 struct PlayerViewConstants {
-    
     static let backButtonWidthMultiplier: CGFloat = 0.06
     static let backButtonHeightMultiplier: CGFloat = 0.06
     static let backButtonCenterYOffset: CGFloat = -0.08
@@ -33,7 +32,6 @@ struct PlayerViewConstants {
     static let controlsViewHeightMultiplier: CGFloat = 0.55
     static let thumbsHeightMultplier: CGFloat = 0.7
     static let thumbsWidthMultiplier: CGFloat = 0.07
-    
 }
 
 struct CollectionViewConstants {
@@ -81,7 +79,6 @@ struct HeaderViewProperties {
     static let frame = CGRect(x:0 , y:0, width: UIScreen.main.bounds.width, height:50)
 }
 
-
 struct CollectionViewAttributes {
     static let backgroundColor = UIColor(red:0.95, green:0.96, blue:0.98, alpha:1.0)
 }
@@ -126,6 +123,10 @@ struct BasePopoverAlertConstants {
     static let containerOpacity: Float = 0.5
 }
 
+struct SplashConstants {
+    static let animationDuration: Double = 0.004
+}
+
 struct DetailPopoverConstants {
     static let cornerRadius: CGFloat = 10
     static let borderWidth: CGFloat = 10
@@ -144,7 +145,6 @@ public struct LogoConstants {
 }
 
 enum RowSize {
-    
     case header, track, item, largeLayout, smallLayout
     
     var rawValue: CGSize {
@@ -198,7 +198,6 @@ struct PlaylistCellConstants {
     static let shadowOpacity: Float = 0.5
     static let mainFont = UIFont(name: "HelveticaNeue", size: 22)!
 }
-
 
 struct ButtonConstants {
     static let tagBorderWidth: CGFloat = 1

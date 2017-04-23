@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Realm
 import RealmSwift
 
 private let reuseIdentifier = "PlaylistCell"
