@@ -98,6 +98,12 @@ class Playlist {
             track = nil
             track = next
         }
+        head = nil
+        itemCount = 0
+    }
+    
+    func removeNodesFromList() {
+        
     }
     
     func contains(playlistItem item: PlaylistItem) -> Bool {

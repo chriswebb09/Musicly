@@ -18,12 +18,12 @@
         }
     }
     
-    fileprivate var playlist: Playlist = Playlist()
+    var playlist: Playlist = Playlist()
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
-
+    
     fileprivate var searchBarActive: Bool = false {
         didSet {
             if searchBarActive == true {
@@ -36,7 +36,7 @@
         }
     }
     
-    private var image = #imageLiteral(resourceName: "search-button")
+    fileprivate var image = #imageLiteral(resourceName: "search-button")
     var buttonItem: UIBarButtonItem?
     
     fileprivate lazy var small: UICollectionViewFlowLayout = {
@@ -92,7 +92,7 @@
         setupCollectionView()
         setupSearchButton()
         setupDefaultUI()
-        loadData()
+        
         setup()
     }
     
@@ -112,16 +112,6 @@
     
     func setupSearchButton() {
         navigationItem.setRightBarButton(buttonItem, animated: false)
-    }
-    
-    // Loads dummy data
-    
-    private func loadData() {
-        store?.setSearch(string: "Test")
-        store?.searchForTracks { [weak self] playlist, errors in
-            guard let playlist = playlist else { return }
-            self?.playlist = playlist
-        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -179,26 +169,23 @@
  
  extension TracksViewController: UICollectionViewDataSource {
     
-    // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if playlist.itemCount > 0 {
-            return playlist.itemCount
-        }
-        return CollectionViewConstants.defaultItemCount
+        return playlist.itemCount
     }
     
-    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell, rowTime: Double) {
+    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
+        var rowTime: Double
         if let index = indexPath,
-            let track = playlist.playlistItem(at: index.row)?.track {
-            guard let artURL = track.artworkUrl else { return }
-            guard let trackName = track.trackName else { return }
-            cell.configureCell(with: trackName, with: artURL)
-            DispatchQueue.main.asyncAfter(deadline: .now() + rowTime) {
-                UIView.animate(withDuration: CollectionViewConstants.baseDuration + rowTime) {
-                    cell.alpha = 1
-                }
+            let track = playlist.playlistItem(at: index.row)?.track, let artWorkUrl = track.artworkUrl {
+            if index.row > 10 {
+                rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
+            } else {
+                rowTime = (Double(index.row)) / CollectionViewConstants.rowTimeDivider
             }
+            guard let artURL = URL(string: artWorkUrl) else { return }
+            guard let trackName = track.trackName else { return }
+            let viewModel = TrackCellViewModel(trackName: trackName, albumImageUrl: artURL)
+            cell.configureCell(with: viewModel, withTime: rowTime)
         }
     }
  }
@@ -211,20 +198,13 @@
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.playList = playlist
         destinationViewController.index = selectedIndex
-//        destinationViewController.setupPlayItem(index: selectedIndex)
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         cell.alpha = 0
-        if indexPath.row > 10 {
-            let rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
-            setTrackCell(indexPath: indexPath, cell: cell, rowTime: rowTime)
-        } else {
-            let rowTime = (Double(indexPath.row % 5)) / CollectionViewConstants.rowTimeDivider
-            setTrackCell(indexPath: indexPath, cell: cell, rowTime: rowTime)
-        }
+        setTrackCell(indexPath: indexPath, cell: cell)
         return cell
     }
  }
@@ -307,6 +287,7 @@
         musicIcon.isHidden = true
         collectionView.reloadData()
         self.playlist.removeAll()
+        
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }
             self.playlist = playlist
@@ -336,6 +317,7 @@
     }
     
     func cancelSearching(_ searchBar: UISearchBar, searchBarActive: Bool) -> Bool {
+        print("cancel search")
         return false
     }
  }
@@ -374,6 +356,17 @@
  extension TracksViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        playlist.removeAll()
+        DispatchQueue.main.async {
+            self.infoLabel.isHidden = false
+            self.musicIcon.isHidden = false
+            
+            self.setupInfoLabel(infoLabel: self.infoLabel)
+            self.setupMusicIcon(icon: self.musicIcon)
+            
+            self.collectionView?.reloadData()
+        }
+        
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }

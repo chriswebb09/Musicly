@@ -96,10 +96,12 @@ extension PlayerViewController: PlayerViewDelegate {
         DispatchQueue.main.async { [unowned self] in
             if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
                 self.title = track.artistName
-                self.initPlayer(url: url)
-                guard let thumb = self.playListItem?.track?.thumbs else { return }
+               
+               //guard let thumb = self.playListItem?.track?.thumbs else { return }
                 let viewModel = PlayerViewModel(track: track, playState: .queued)
                 self.playerView.configure(with: viewModel)
+                self.initPlayer(url: url)
+                self.playerView.updateProgressBar(value: 0)
             }
         }
     }
@@ -107,13 +109,16 @@ extension PlayerViewController: PlayerViewDelegate {
     func skipButtonTapped() {
         playListItem = playListItem?.next
         stopPlayer()
+        guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
+       // initPlayer(url: url)
+       // title = track.artistName
+       // let viewModel = PlayerViewModel(track: track, playState: .queued)
         DispatchQueue.main.async {
-            guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
             self.title = track.artistName
-            self.initPlayer(url: url)
-             let viewModel = PlayerViewModel(track: track, playState: .queued)
-            guard let thumb = self.playListItem?.track?.thumbs else { return }
+            let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
+            self.initPlayer(url: url)
+            self.playerView.updateProgressBar(value: 0)
         }
     }
     
@@ -143,6 +148,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func stopPlayer() {
         player.pause()
+       // player.removeTimeObserver(self)
     }
     
     func playButtonTapped() {

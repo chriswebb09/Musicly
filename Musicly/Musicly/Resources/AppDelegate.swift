@@ -10,7 +10,7 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+    lazy var coreDataStack = CoreDataStack()
     var backgroundSessionCompletionHandler: (() -> Void)?
     var window: UIWindow?
     
@@ -32,11 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSFontAttributeName: ApplicationConstants.mainFont!,
             NSForegroundColorAttributeName: ApplicationConstants.fontColor
         ]
+       
         window?.makeKeyAndVisible()
         return true
     }
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         backgroundSessionCompletionHandler = completionHandler
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        coreDataStack.save()
     }
 }

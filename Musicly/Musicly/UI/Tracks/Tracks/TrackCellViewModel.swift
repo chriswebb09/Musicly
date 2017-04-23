@@ -6,9 +6,15 @@
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct TrackCellViewModel {
-
     
+    var trackName: String
+    var albumImageUrl: URL
+    
+    init(trackName: String, albumImageUrl: URL) {
+        self.trackName = trackName
+        self.albumImageUrl = albumImageUrl
+    }
 }

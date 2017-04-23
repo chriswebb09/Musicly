@@ -10,6 +10,13 @@ import UIKit
 
 final internal class TrackCell: UICollectionViewCell {
     
+    var viewModel: TrackCellViewModel? {
+        didSet {
+            guard let viewModel = viewModel else { return }
+            trackNameLabel.text = viewModel.trackName
+        }
+    }
+    
     private var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
@@ -24,20 +31,21 @@ final internal class TrackCell: UICollectionViewCell {
         return album
     }()
     
-    // TODO: - This can be implemented better
-    
     private func setShadow() {
         layer.setCellShadow(contentView: contentView)
         let path =  UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius)
         layer.shadowPath = path.cgPath
     }
     
-    func configureCell(with trackName: String, with artworkUrl: String) {
-        if let url = URL(string: artworkUrl) {
-            albumArtView.downloadImage(url: url)
-            trackNameLabel.text = trackName
-        }
+    func configureCell(with viewModel: TrackCellViewModel, withTime: Double) {
+        self.viewModel  = viewModel
+        self.albumArtView.downloadImage(url: viewModel.albumImageUrl)
         layoutSubviews()
+        DispatchQueue.main.asyncAfter(deadline: .now() + withTime) {
+            UIView.animate(withDuration: CollectionViewConstants.baseDuration) {
+                self.alpha = 1
+            }
+        }
     }
     
     override func layoutSubviews() {
@@ -51,13 +59,14 @@ final internal class TrackCell: UICollectionViewCell {
         setShadow()
         setupAlbumArt()
         setupTrackInfoLabel()
+        //alpha = 1
     }
     
     private func setupAlbumArt() {
         contentView.addSubview(albumArtView)
         albumArtView.translatesAutoresizingMaskIntoConstraints = false
-        albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: TrackCellConstants.albumHeightMultiplier).isActive = true
+        albumArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
