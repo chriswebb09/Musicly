@@ -13,25 +13,25 @@ enum ButtonType {
     
     fileprivate func setupLoginButton(with title:String) -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor(red:0.41, green:0.72, blue:0.90, alpha:1.0)
-        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
-        button.layer.cornerRadius = 2
+        button.backgroundColor = ButtonConstants.backgroundColor
+        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: ButtonConstants.mainFont]), for: .normal)
+        button.layer.cornerRadius = ButtonConstants.tagBorderCorner
         return button
     }
     
     fileprivate func setupSystemButton(with title:String, color: UIColor?) -> UIButton {
         let button = TagButton()
-        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0), NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
-        button.layer.cornerRadius = 2
-        button.layer.borderWidth = 1
+        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: ButtonConstants.systemButtonColor, NSFontAttributeName: ButtonConstants.mainFont]), for: .normal)
+        button.layer.cornerRadius = ButtonConstants.tagBorderCorner
+        button.layer.borderWidth = ButtonConstants.tagBorderWidth
         return button as UIButton
     }
     
     fileprivate func setupTagButton(with title:String, color: UIColor?, tag: Int, index: IndexPath) -> TagButton {
         let button = TagButton()
-        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
-        button.layer.cornerRadius = 2
-        button.layer.borderWidth = 1
+        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: ButtonConstants.mainFont]), for: .normal)
+        button.layer.cornerRadius = ButtonConstants.tagBorderCorner
+        button.layer.borderWidth = ButtonConstants.tagBorderWidth
         button.buttonTag = tag
         button.index = index
         return button

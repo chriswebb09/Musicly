@@ -46,9 +46,9 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         CATransaction.begin()
-        let animationDuration: Double = 0.004
+        
         CATransaction.setCompletionBlock {
-            let duration: TimeInterval = animationDuration
+            let duration: TimeInterval = SplashConstants.animationDuration
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
                 self?.splashView.zoomAnimation() {
                     print("animating")
@@ -62,4 +62,8 @@ final class SplashViewController: UIViewController {
         CATransaction.commit()
     }
     
+}
+
+struct SplashConstants {
+       static let animationDuration: Double = 0.004
 }

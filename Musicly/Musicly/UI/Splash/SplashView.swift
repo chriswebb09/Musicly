@@ -34,8 +34,8 @@ final class SplashView: UIView {
     private func setupConstraints() {
         addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: Logo.logoImageWidth).isActive = true
-        logoImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Logo.logoImageHeight).isActive = true
+        logoImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: LogoConstants.logoImageWidth).isActive = true
+        logoImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: LogoConstants.logoImageHeight).isActive = true
         logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
@@ -44,11 +44,10 @@ final class SplashView: UIView {
     
     func zoomAnimation(_ handler: completion? = nil) {
         let duration: TimeInterval = animationDuration
-        self.alpha = 0.7
+        alpha = LogoConstants.startAlpha
         UIView.animate(withDuration: duration, animations:{ [weak self] in
-            if let zoom = self?.zoomOut() {
-                self?.logoImageView.transform = zoom
-            }; self?.alpha = 0
+            self?.logoImageView.transform = LogoConstants.zoomOutTranform
+            self?.alpha = 0
             }, completion: { finished in
                 DispatchQueue.main.async {
                     weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -57,16 +56,11 @@ final class SplashView: UIView {
                 handler?()
         })
     }
-    
-    private func zoomOut() -> CGAffineTransform {
-        let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 8, y: 18)
-        return zoomOutTranform
-    }
-    
-
 }
 
-public struct Logo {
+public struct LogoConstants {
     public static let logoImageWidth = CGFloat(0.3)
     public static let logoImageHeight = CGFloat(0.1)
+    static let startAlpha: CGFloat = 0.7
+    static let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 8, y: 18)
 }

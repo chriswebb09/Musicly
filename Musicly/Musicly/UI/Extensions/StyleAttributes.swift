@@ -181,6 +181,26 @@ struct EqualizerConstants {
     static let cornerRadii: CGSize = CGSize(width: 10.0, height: 10.0)
 }
 
+struct PlaylistCellConstants {
+    static let nameLabelCenterX = UIScreen.main.bounds.width * 0.2
+    static let artViewMultiplier: CGFloat = 0.25
+    static let artViewWidthMultiplier: CGFloat = 0.6
+    static let shadowOffset = CGSize(width: 0, height: 2)
+    static let cornerRadius: CGFloat = 2
+    static let borderWidth: CGFloat = 1
+    static let shadowOpacity: Float = 0.5
+    static let mainFont = UIFont(name: "HelveticaNeue", size: 22)!
+}
+
+
+struct ButtonConstants {
+    static let tagBorderWidth: CGFloat = 1
+    static let tagBorderCorner: CGFloat = 2
+    static let mainFont = UIFont(name: "Avenir-Book", size: 10)!
+    static let backgroundColor = UIColor(red:0.41, green:0.72, blue:0.90, alpha:1.0)
+    static let systemButtonColor =  UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+}
+
 public struct Tabbar {
     public static let tint = UIColor(red:0.07, green:0.59, blue:1.00, alpha:1.0)
     public static let tabbarFrameHeight: CGFloat = 0.09
