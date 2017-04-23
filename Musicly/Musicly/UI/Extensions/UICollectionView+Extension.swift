@@ -31,4 +31,24 @@ extension UICollectionView {
         infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
     }
+    
+    static func setupCollectionView() -> UICollectionView {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        var collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .vertical
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView.collectionViewLayout.invalidateLayout()
+        layout.sectionInset = PlaylistViewControllerConstants.edgeInset
+        layout.itemSize = PlaylistViewControllerConstants.itemSize
+   
+        return collectionView
+    }
+    
+    func setuLayout() {
+        self.collectionViewLayout.invalidateLayout()
+        self.layoutIfNeeded()
+    }
 }

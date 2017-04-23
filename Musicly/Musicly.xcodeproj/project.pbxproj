@@ -16,6 +16,8 @@
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A754E1361EABCCAC00136A9A /* TrackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754E1351EABCCAC00136A9A /* TrackCellViewModel.swift */; };
 		A754E13A1EABF92E00136A9A /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754E1391EABF92E00136A9A /* PlaylistCell.swift */; };
+		A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */; };
+		A7ADE8151EAD5ED7004F299E /* TracksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8141EAD5ED7004F299E /* TracksViewModel.swift */; };
 		A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B073721EA974E800DCC576 /* PlaylistItem.swift */; };
 		A7BB42FD1EA85E6000A205CA /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
@@ -91,6 +93,8 @@
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A754E1351EABCCAC00136A9A /* TrackCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellViewModel.swift; path = Tracks/TrackCellViewModel.swift; sourceTree = "<group>"; };
 		A754E1391EABF92E00136A9A /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistCell.swift; path = Playlist/PlaylistCell.swift; sourceTree = "<group>"; };
+		A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+extension.swift"; sourceTree = "<group>"; };
+		A7ADE8141EAD5ED7004F299E /* TracksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewModel.swift; path = Tracks/TracksViewModel.swift; sourceTree = "<group>"; };
 		A7B073721EA974E800DCC576 /* PlaylistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItem.swift; path = Playlist/PlaylistItem.swift; sourceTree = "<group>"; };
 		A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -245,6 +249,7 @@
 				A7CBC3E61E9FBACF00C95A50 /* TrackCell.swift */,
 				A754E1351EABCCAC00136A9A /* TrackCellViewModel.swift */,
 				A7CBC3E71E9FBACF00C95A50 /* TracksViewController.swift */,
+				A7ADE8141EAD5ED7004F299E /* TracksViewModel.swift */,
 			);
 			path = Tracks;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */,
 				A70CF4DD1EA633F3000656AF /* Reusable.swift */,
 				A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */,
+				A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -701,6 +707,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */,
+				A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */,
 				A7C995DC1E9EA6DF004826EE /* Filter.swift in Sources */,
 				A7CBC3EC1E9FBAE000C95A50 /* PlayerView.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
@@ -725,6 +732,7 @@
 				A7CBC3F21E9FD14500C95A50 /* PlayerViewDelegate.swift in Sources */,
 				A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */,
 				A7E62CE71EACB8380053B614 /* BasePopoverAlert.swift in Sources */,
+				A7ADE8151EAD5ED7004F299E /* TracksViewModel.swift in Sources */,
 				A7322E061EA3EE330096E5DE /* SplashView.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A7E62CEB1EACB8880053B614 /* DetailView.swift in Sources */,

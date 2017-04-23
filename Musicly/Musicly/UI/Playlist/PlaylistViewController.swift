@@ -18,24 +18,22 @@ class PlaylistViewController: UIViewController {
     
     let detailPop = DetailPopover()
     var playlists: [Playlist]?
-    var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var collectionView : UICollectionView? = UICollectionView.setupCollectionView()   
     var store: iTrackDataStore?
     var rightBarButtonItem: UIBarButtonItem?
-    var playlistList: Results<TrackList>!
     var testID: Results<CurrentListID>!
     var trackList: [TrackList]!
-    var tracklist: [TrackList]!
+
     
     override func viewDidLoad() {
         edgesForExtendedLayout = []
         title = "Playlists"
-        setupCollectionView()
-        
+       
+        self.collectionView = UICollectionView.setupCollectionView()
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
-        
         
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
@@ -57,11 +55,8 @@ class PlaylistViewController: UIViewController {
         if let realm = try? Realm() {
             testID = realm.objects(CurrentListID.self)
             let test = testID.first
-            let lists = realm.objects(TrackList.self).filter("listId == %@", test?.id)
-            self.tracklist = Array(lists)
             let testsList = realm.objects(TrackList.self)
             self.trackList = Array(testsList)
-            dump(tracklist.count)
         }
     }
     
@@ -70,20 +65,6 @@ class PlaylistViewController: UIViewController {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
-    }
-    func save() {
-    }
-    
-    func setupCollectionView() {
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .vertical
-            flowLayout.minimumLineSpacing = 0
-        }
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionView?.collectionViewLayout.invalidateLayout()
-        layout.sectionInset = PlaylistViewControllerConstants.edgeInset
-        layout.itemSize = PlaylistViewControllerConstants.itemSize
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
     }
 }
 
@@ -134,29 +115,19 @@ extension PlaylistViewController: UICollectionViewDataSource {
         let current = CurrentListID()
         current.id = trackList.listId
         
-        if let realm = try? Realm() {
-            testID = realm.objects(CurrentListID.self)
-            if !testID.contains(current) {
-                try! realm.write {
-                    realm.add(current)
-                }
-            }
-        }
-        if let realm = try? Realm() {
-            playlistList = realm.objects(TrackList.self)
-            if !playlistList.contains(trackList) {
-                try! realm.write {
-                    realm.add(trackList)
-                }
-            }
-            testID = realm.objects(CurrentListID.self)
-            if !testID.contains(current) {
-                try! realm.write {
-                    realm.add(current)
-                }
-            }
-        }
+        writeId(current: current)
         return trackList
+    }
+    
+    func writeId(current: CurrentListID) {
+        if let realm = try? Realm() {
+            testID = realm.objects(CurrentListID.self)
+            if !testID.contains(current) {
+                try! realm.write {
+                    realm.add(current)
+                }
+            }
+        }
     }
 }
 

@@ -136,6 +136,13 @@ struct DetailPopoverConstants {
     static let popViewFrameCenterY: CGFloat = UIScreen.main.bounds.height / 2.5
 }
 
+public struct LogoConstants {
+    public static let logoImageWidth = CGFloat(0.3)
+    public static let logoImageHeight = CGFloat(0.1)
+    static let startAlpha: CGFloat = 0.7
+    static let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 8, y: 18)
+}
+
 enum RowSize {
     
     case header, track, item, largeLayout, smallLayout

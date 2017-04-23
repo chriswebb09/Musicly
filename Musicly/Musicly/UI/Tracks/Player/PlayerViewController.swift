@@ -60,8 +60,6 @@ final class PlayerViewController: UIViewController {
     
     func add() {
         let lists = realm.objects(TrackList.self).filter("listId == %@", currentPlayerID.id)
-        dump(lists)
-        
         guard let track = playListItem?.track else { return }
         let item = Track()
         item.playlistID = currentPlayerID.id
@@ -73,9 +71,10 @@ final class PlayerViewController: UIViewController {
         
         if let realm = try? Realm() {
             playlistList = realm.objects(TrackList.self)
-            if !playlistList.contains(firstList!) {
+            guard let firstList = firstList else { return }
+            if !playlistList.contains(firstList) {
                 try! realm.write {
-                    realm.add(firstList!)
+                    realm.add(firstList)
                 }
             }
         }

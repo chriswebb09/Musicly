@@ -14,8 +14,6 @@
  
  final class TracksViewController: UIViewController {
     
-    var currentPlaylistID: String = ""
-    
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
@@ -23,9 +21,11 @@
     }
     
     var playlist: Playlist = Playlist()
+    
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
+    
     var store: iTrackDataStore?
     
     fileprivate var searchBarActive: Bool = false {
@@ -42,16 +42,6 @@
     
     fileprivate var image = #imageLiteral(resourceName: "search-button")
     var buttonItem: UIBarButtonItem?
-    
-    fileprivate lazy var small: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = EdgeAttributes.sectionInset
-        layout.itemSize = RowSize.smallLayout.rawValue
-        layout.minimumInteritemSpacing = SmallLayoutProperties.minimumInteritemSpacing
-        layout.minimumLineSpacing = SmallLayoutProperties.minimumLineSpacing
-        return layout
-    }()
-    
     var infoLabel: UILabel = UILabel.setupInfoLabel()
     
     var musicIcon: UIImageView = {
@@ -69,7 +59,6 @@
         title = "Music.ly"
         commonInit()
         setSearchBarColor(searchBar: searchBar)
-        
         let tabController = self.tabBarController as! TabBarController
         self.store = tabController.store
     }
@@ -90,16 +79,15 @@
     // TODO: - Consolidate navigation bar and buttonItem methods
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: image,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(navigationBarSetup))
+        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()
-        setupSearchButton()
+        navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
         setup()
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        collectionView?.setuLayout()
     }
     
     func navigationBarSetup() {
@@ -112,18 +100,6 @@
         textFieldInsideSearchBar?.textColor = .white
         navigationItem.rightBarButtonItem?.tintColor = .white
         searchBar.becomeFirstResponder()
-    }
-    
-    // MARK: - Adds searchButton to navigation bar
-    
-    func setupSearchButton() {
-        navigationItem.setRightBarButton(buttonItem, animated: false)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView?.collectionViewLayout.invalidateLayout()
-        collectionView?.layoutIfNeeded()
     }
     
     private func collectionViewRegister() {
@@ -152,14 +128,14 @@
             }
             collectionViewRegister()
         }
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        
         if let collectionView = collectionView {
             view.addSubview(collectionView)
         }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchBarActive = cancelSearching(searchBar, searchBarActive: searchBarActive)
+     
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
@@ -227,7 +203,7 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionViewLayout == small {
+        if collectionViewLayout == UICollectionViewFlowLayout.small() {
             return RowSize.smallLayout.rawValue
         }
         return RowSize.track.rawValue
@@ -272,6 +248,11 @@
         searchController.searchBar.resignFirstResponder()
     }
     
+    func toggle(to: Bool) {
+        infoLabel.isHidden = to
+        musicIcon.isHidden = to
+    }
+    
     // TODO: - Handle searchbar without text
     
     fileprivate func setup() {
@@ -289,8 +270,7 @@
     func searchBarHasInput() {
         guard let collectionView = collectionView else { return }
         collectionView.backgroundView?.isHidden = true
-        infoLabel.isHidden = true
-        musicIcon.isHidden = true
+        toggle(to: true)
         collectionView.reloadData()
         self.playlist.removeAll()
         store?.searchForTracks { playlist, error in
@@ -319,11 +299,6 @@
         UIView.animate(withDuration: 1.8) {
             self.collectionView?.alpha = 1
         }
-    }
-    
-    func cancelSearching(_ searchBar: UISearchBar, searchBarActive: Bool) -> Bool {
-        print("cancel search")
-        return false
     }
  }
  
@@ -362,14 +337,10 @@
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         playlist.removeAll()
-        DispatchQueue.main.async {
-            self.infoLabel.isHidden = false
-            self.musicIcon.isHidden = false
-            self.setupInfoLabel(infoLabel: self.infoLabel)
-            self.setupMusicIcon(icon: self.musicIcon)
-            self.collectionView?.reloadData()
-        }
-        
+        toggle(to: false)
+        setupInfoLabel(infoLabel: infoLabel)
+        setupMusicIcon(icon: musicIcon)
+        collectionView?.reloadData()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }
