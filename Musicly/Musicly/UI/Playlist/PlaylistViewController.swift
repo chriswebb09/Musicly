@@ -24,6 +24,7 @@ class PlaylistViewController: UIViewController {
     var trackList: [TrackList]!
     
     override func viewDidLoad() {
+        
         edgesForExtendedLayout = []
         title = "Playlists"
         
@@ -35,6 +36,7 @@ class PlaylistViewController: UIViewController {
         
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
+        
         self.rightBarButtonItem = UIBarButtonItem.init(
             title: "New",
             style: .done,
@@ -109,10 +111,8 @@ extension PlaylistViewController: UICollectionViewDataSource {
             new.playlistID = trackList.listId
             trackList.tracks.append(new)
         }
-        
         let current = CurrentListID()
         current.id = trackList.listId
-        
         writeId(current: current)
         return trackList
     }

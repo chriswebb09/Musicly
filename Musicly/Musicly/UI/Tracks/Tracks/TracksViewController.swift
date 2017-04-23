@@ -172,13 +172,18 @@
  
  extension TracksViewController {
     
+    func setupPlayerController() -> PlayerViewController {
+        let destinationViewController: PlayerViewController = PlayerViewController()
+        destinationViewController.playList = playlist
+        destinationViewController.hidesBottomBarWhenPushed = true
+        return destinationViewController
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-        let destinationViewController: PlayerViewController = PlayerViewController()
+        let destinationViewController = setupPlayerController()
         guard let selectedIndex = selectedIndex else { return }
-        destinationViewController.playList = playlist
         destinationViewController.index = selectedIndex
-        destinationViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
