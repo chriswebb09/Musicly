@@ -19,9 +19,9 @@ final class LocalStorageManager {
         return nil
     }
     
-    static func localFileExistsForImage(_ track: iTrack) -> Bool {
-        guard let previewUrl = track.previewUrl else { return false }
-        if let localUrl = LocalStorageManager.localFilePathForUrl(previewUrl) {
+    static func localFileExistsForImage(_ track: Track) -> Bool {
+       // guard let previewUrl = track.previewUrl else { return false }
+        if let localUrl = LocalStorageManager.localFilePathForUrl(track.previewUrl) {
             var isDir : ObjCBool = false
             return FileManager.default.fileExists(atPath: localUrl.path , isDirectory: &isDir)
         }

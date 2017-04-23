@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
-class Playlist {
+class Playlist: Object {
     
     private var head: PlaylistItem?
     
-    var itemCount: Int = 0
+    dynamic var id: String? = ""
+    dynamic var name: String? = ""
+    dynamic var current: Bool = false
+    
+    dynamic var itemCount: Int = 0
     
     var isEmpty: Bool? {
         return head == nil
@@ -73,7 +79,7 @@ class Playlist {
         }
     }
     
-    func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack? {
+    func removeFromPlaylist(for playlistItem: PlaylistItem?) -> Track? {
         let previous = playlistItem?.previous
         let next = playlistItem?.next
         

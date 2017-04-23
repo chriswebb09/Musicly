@@ -8,15 +8,16 @@
 
 import UIKit
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    lazy var coreDataStack = CoreDataStack()
+    
+    
     var backgroundSessionCompletionHandler: (() -> Void)?
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-       let viewController = SplashViewController()
-       // let viewController = PlaylistViewController()
+        let viewController = SplashViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let placeholderAttributes: [String : AnyObject] = [
@@ -33,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSFontAttributeName: ApplicationConstants.mainFont!,
             NSForegroundColorAttributeName: ApplicationConstants.fontColor
         ]
-       
+        
+        
+        
         window?.makeKeyAndVisible()
         return true
     }
@@ -42,7 +45,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         backgroundSessionCompletionHandler = completionHandler
     }
     
-    func applicationWillResignActive(_ application: UIApplication) {
-        coreDataStack.save()
-    }
 }

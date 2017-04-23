@@ -33,7 +33,7 @@ struct PlayerViewModel {
     var totalTime: Int
     var totalTimeString: String
     var artworkUrl: String
-    init(track: iTrack, playState: FileState) {
+    init(track: Track, playState: FileState) {
         self.playState = playState
         self.currentPlayTimeColor = .orange
         self.totalPlayTimeColor = .white
@@ -45,7 +45,7 @@ struct PlayerViewModel {
         self.thumbsDownImage = UIImage()
         self.thumbsUpImage = UIImage()
         self.albumArt = UIImage()
-        self.artworkUrl = track.artworkUrl!
-        self.trackName = track.trackName!
+        self.artworkUrl = track.artworkUrl
+        self.trackName = track.trackName
     }
 }

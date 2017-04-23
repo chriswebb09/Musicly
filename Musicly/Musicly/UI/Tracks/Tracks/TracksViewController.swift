@@ -7,10 +7,14 @@
  //
  
  import UIKit
+ import Realm
+ import RealmSwift
  
  private let reuseIdentifier = "trackCell"
  
  final class TracksViewController: UIViewController {
+    
+    var currentPlaylistID: String = ""
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
@@ -23,7 +27,6 @@
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore?
-        //= iTrackDataStore(searchTerm: "")
     
     fileprivate var searchBarActive: Bool = false {
         didSet {
@@ -178,18 +181,19 @@
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         var rowTime: Double
-        if let index = indexPath,
-            let track = playlist.playlistItem(at: index.row)?.track, let artWorkUrl = track.artworkUrl {
+        if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
+            print("TRACK \(track)")
             if index.row > 10 {
                 rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
             } else {
                 rowTime = (Double(index.row)) / CollectionViewConstants.rowTimeDivider
             }
-            guard let artURL = URL(string: artWorkUrl) else { return }
-            guard let trackName = track.trackName else { return }
-            let viewModel = TrackCellViewModel(trackName: trackName, albumImageUrl: artURL)
-            cell.configureCell(with: viewModel, withTime: rowTime)
+            if let url = URL(string: track.artworkUrl) {
+                let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
+                cell.configureCell(with: viewModel, withTime: rowTime)
+            }
         }
+        
     }
  }
  
@@ -201,7 +205,7 @@
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.playList = playlist
         destinationViewController.index = selectedIndex
-        destinationViewController.hidesBottomBarWhenPushed = true 
+        destinationViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
@@ -283,15 +287,12 @@
     // TODO: - Cleanup logic
     
     func searchBarHasInput() {
-        
         guard let collectionView = collectionView else { return }
         collectionView.backgroundView?.isHidden = true
-        
         infoLabel.isHidden = true
         musicIcon.isHidden = true
         collectionView.reloadData()
         self.playlist.removeAll()
-        
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }
             self.playlist = playlist

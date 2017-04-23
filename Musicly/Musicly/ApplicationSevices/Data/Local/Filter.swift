@@ -9,11 +9,11 @@
 import Foundation
 
 struct Filter {
-    static func filteredBy(filterFrom: [iTrack], term: String) -> [iTrack] {
-        let predicate = NSPredicate(format: "SELF BEGINSWITH %@", term)
-        let searchDataSource = filterFrom.filter { predicate.evaluate(with: $0.trackName) }
-
-        let sortedData = searchDataSource.sorted { $0.0.trackName?.localizedCaseInsensitiveCompare($0.1.trackName!) == ComparisonResult.orderedAscending }
-        return sortedData
-    }
+//    static func filteredBy(filterFrom: [Track], term: String) -> [Track] {
+//        let predicate = NSPredicate(format: "SELF BEGINSWITH %@", term)
+//        let searchDataSource = filterFrom.filter { predicate.evaluate(with: $0.trackName) }
+//
+//        let sortedData = searchDataSource.sorted { $0.0.trackName?.localizedCaseInsensitiveCompare($0.1.trackName!) == ComparisonResult.orderedAscending }
+//        return sortedData
+//    }
 }

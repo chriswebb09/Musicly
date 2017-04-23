@@ -103,7 +103,7 @@ extension iTunesAPIClient: URLSessionDownloadDelegate {
     
     // MARK: - Keeps track of download index - for collectionView
     
-    func trackIndexForDownloadTask(_ tracks: [iTrack], _ downloadTask: URLSessionDownloadTask) -> Int? {
+    func trackIndexForDownloadTask(_ tracks: [Track], _ downloadTask: URLSessionDownloadTask) -> Int? {
         if let url = downloadTask.originalRequest?.url?.absoluteString {
             for (index, track) in tracks.enumerated() {
                 if url == track.previewUrl {

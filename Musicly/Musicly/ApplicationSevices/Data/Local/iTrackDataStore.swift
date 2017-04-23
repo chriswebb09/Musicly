@@ -7,18 +7,22 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 final class iTrackDataStore {
-    
+    var realm: Realm?
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
-    var savedPlaylist: [NSManagedObjectContext] = []
-    var playlists: [Playlist] = [Playlist]()
+    var newTracks = [Track]()
+    var trackLists: Results<Playlist>!
     
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
         client?.setup()
+        if let realm = try? Realm() {
+            trackLists = realm.objects(Playlist.self)
+            print("------ END COLLECTION VIEWDID LOAD ------")
+        }
     }
     
     func setSearch(string: String?) {
@@ -30,26 +34,23 @@ final class iTrackDataStore {
             client.downloadTrackPreview(for: download)
         }
     }
-    
+
     func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
-        
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in
-                
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
                     let tracksData = data["results"] as! [JSON]
                     let playlist: Playlist? = Playlist()
+                    
                     tracksData.forEach {
-                        if let track = iTrack(json: $0) {
-                            let newItem: PlaylistItem? = PlaylistItem()
-                            newItem?.track = track
-                            guard let playlist = playlist, let item = newItem else { return }
-                            playlist.append(newPlaylistItem: item)
-                        }
+                        let track = Track(json: $0)
+                        self.newTracks.append(track)
+                        let newItem: PlaylistItem? = PlaylistItem()
+                        newItem?.track = track
+                        playlist?.append(newPlaylistItem: newItem)
                     }
-                    self.playlists.append(playlist!)
                     completion(playlist, nil)
                 } else {
                     completion(nil, NSError.generalParsingError(domain: ""))
@@ -58,4 +59,3 @@ final class iTrackDataStore {
         }
     }
 }
-

@@ -15,7 +15,7 @@ final class TabBarController: UITabBarController {
         setupTabs()
     }
     
-   var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
+    var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -39,7 +39,9 @@ final class TabBarController: UITabBarController {
     
     fileprivate func setupControllers() {
         let tracksController = TracksViewController()
-        var playlistController = PlaylistViewController()
+        tracksController.store = store
+        let playlistController = PlaylistViewController()
+        playlistController.store = store
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
         let controllers = [searchTab, playlistTab]

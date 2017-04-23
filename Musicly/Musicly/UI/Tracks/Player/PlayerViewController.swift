@@ -4,6 +4,8 @@
 
 
 import UIKit
+import Realm
+import RealmSwift
 import AVFoundation
 
 final class PlayerViewController: UIViewController {
@@ -15,9 +17,18 @@ final class PlayerViewController: UIViewController {
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem?
     var index: Int?
+    var currentPlayerID: CurrentListID!
+    let realm = try! Realm()
+    var playlistList: Results<TrackList>!
+    var currentID: Results<CurrentListID>!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.currentID = realm.objects(CurrentListID.self)
+        var test = currentID.first
+        self.currentPlayerID = test
+        
         playList?.printAllKeys()
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
@@ -26,26 +37,49 @@ final class PlayerViewController: UIViewController {
         playerView.layoutSubviews()
         setupPlayItem(index: index)
         playerView.delegate = self
+        self.rightButtonItem = UIBarButtonItem.init(
+            title: "New",
+            style: .done,
+            target: self,
+            action: #selector(add)
+        )
+        guard let rightButtonItem = self.rightButtonItem else { return }
+        navigationItem.rightBarButtonItems = [rightButtonItem]
     }
     
     func setupPlayItem(index: Int?) {
         guard let index = index else { return }
         playListItem = playList?.playlistItem(at: index)
         guard let track = playListItem?.track else { return }
-        guard let previewUrl = track.previewUrl else { return }
-        guard let url = URL(string: previewUrl) else { return }
-        guard let name = track.artistName else { return }
-        title = name
+        guard let url = URL(string: track.previewUrl) else { return }
+        title = track.artistName
         let viewModel = PlayerViewModel(track: track, playState: .queued)
         playerView.configure(with: viewModel)
         initPlayer(url: url)
     }
     
-    func back() {
-        presentingViewController?.dismiss(animated: true, completion: nil)
+    func add() {
+        let lists = realm.objects(TrackList.self).filter("listId == %@", currentPlayerID.id)
+        dump(lists)
+        
+        guard let track = playListItem?.track else { return }
+        let item = Track()
+        item.playlistID = currentPlayerID.id
+        item.artistID = track.artistID
+        item.artworkUrl = track.artworkUrl
+        item.artistName = track.artistName
+        
+        let firstList = lists.first
+        
+        if let realm = try? Realm() {
+            playlistList = realm.objects(TrackList.self)
+            if !playlistList.contains(firstList!) {
+                try! realm.write {
+                    realm.add(firstList!)
+                }
+            }
+        }
     }
-    
-    // Gets total time length for song
     
     private final func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
@@ -94,7 +128,8 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = previous
         stopPlayer()
         DispatchQueue.main.async { [unowned self] in
-            if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
+            if let track = self.playListItem?.track,
+                let url = URL(string: track.previewUrl) {
                 self.title = track.artistName
                 let viewModel = PlayerViewModel(track: track, playState: .queued)
                 self.playerView.configure(with: viewModel)
@@ -107,12 +142,11 @@ extension PlayerViewController: PlayerViewDelegate {
     func skipButtonTapped() {
         playListItem = playListItem?.next
         stopPlayer()
-        guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
         DispatchQueue.main.async {
-            self.title = track.artistName
+            guard let track = self.playListItem?.track else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
-            self.initPlayer(url: url)
+            self.initPlayer(url: URL(string: Track().previewUrl)!)
             self.playerView.updateProgressBar(value: 0)
         }
     }
@@ -130,12 +164,10 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func thumbsDownTapped() {
         guard let item = playListItem else { return }
-        item.track?.thumbs = .down
     }
     
     func thumbsUpTapped() {
         guard let item = playListItem else { return }
-        item.track?.thumbs = .up
     }
     
     // MARK: - Player controlers

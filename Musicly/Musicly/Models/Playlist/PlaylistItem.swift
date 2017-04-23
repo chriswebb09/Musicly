@@ -7,16 +7,12 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
-class PlaylistItem {
-    var track: iTrack?
+class PlaylistItem: Object {
+    var track: Track?
     var next: PlaylistItem?
     weak var previous: PlaylistItem?
-}
-
-extension PlaylistItem: Equatable {
-    static func ==(lhs: PlaylistItem, rhs: PlaylistItem) -> Bool {
-        return lhs.track!.previewUrl! == rhs.track!.previewUrl!
-    }
 }
 

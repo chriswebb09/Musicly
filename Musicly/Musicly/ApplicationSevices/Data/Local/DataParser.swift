@@ -2,17 +2,18 @@ import Foundation
 
 final class DataParser {
     
-    static func parseDataForTrack(json: JSON?) -> iTrack? {
+    static func parseDataForTrack(json: JSON?) -> Track? {
         guard let json = json else { return nil }
-        if let track = iTrack(json: json) {
-            return track
-        }
-        return nil
+        return Track(json: json)
+       // if let track = Track(json: json) {
+            //return track
+      //  }
+       // return nil
     }
     
-    static func parseDataForTracks(json: JSON?) -> [iTrack]? {
+    static func parseDataForTracks(json: JSON?) -> [Track]? {
         guard let json = json else { return nil }
-        let tracks: [iTrack]? = [iTrack]()
+        let tracks: [Track]? = [Track]()
         if let tracksJSON = json["results"] as? [[String : Any]?]? {
             if let tracksJSON = tracksJSON {
                 for trackJSON in tracksJSON {
