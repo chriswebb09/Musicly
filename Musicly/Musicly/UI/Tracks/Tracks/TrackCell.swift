@@ -59,7 +59,6 @@ final internal class TrackCell: UICollectionViewCell {
         setShadow()
         setupAlbumArt()
         setupTrackInfoLabel()
-        //alpha = 1
     }
     
     private func setupAlbumArt() {

@@ -6,7 +6,7 @@
 import UIKit
 import AVFoundation
 
-final class PlayerViewController: UIViewController, UIViewControllerTransitioningDelegate {
+final class PlayerViewController: UIViewController {
     
     var player: AVPlayer = AVPlayer()
     var playerView: PlayerView = PlayerView()
@@ -96,8 +96,6 @@ extension PlayerViewController: PlayerViewDelegate {
         DispatchQueue.main.async { [unowned self] in
             if let track = self.playListItem?.track, let urlString = track.previewUrl, let url = URL(string: urlString) {
                 self.title = track.artistName
-               
-               //guard let thumb = self.playListItem?.track?.thumbs else { return }
                 let viewModel = PlayerViewModel(track: track, playState: .queued)
                 self.playerView.configure(with: viewModel)
                 self.initPlayer(url: url)
@@ -110,9 +108,6 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = playListItem?.next
         stopPlayer()
         guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
-       // initPlayer(url: url)
-       // title = track.artistName
-       // let viewModel = PlayerViewModel(track: track, playState: .queued)
         DispatchQueue.main.async {
             self.title = track.artistName
             let viewModel = PlayerViewModel(track: track, playState: .queued)
@@ -121,7 +116,6 @@ extension PlayerViewController: PlayerViewDelegate {
             self.playerView.updateProgressBar(value: 0)
         }
     }
-    
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
@@ -148,7 +142,6 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func stopPlayer() {
         player.pause()
-       // player.removeTimeObserver(self)
     }
     
     func playButtonTapped() {
@@ -163,4 +156,8 @@ extension PlayerViewController: PlayerViewDelegate {
             }
         }
     }
+}
+
+extension PlayerViewController: UIViewControllerTransitioningDelegate {
+    // Implement
 }

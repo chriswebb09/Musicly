@@ -92,7 +92,6 @@
         setupCollectionView()
         setupSearchButton()
         setupDefaultUI()
-        
         setup()
     }
     
@@ -360,10 +359,8 @@
         DispatchQueue.main.async {
             self.infoLabel.isHidden = false
             self.musicIcon.isHidden = false
-            
             self.setupInfoLabel(infoLabel: self.infoLabel)
             self.setupMusicIcon(icon: self.musicIcon)
-            
             self.collectionView?.reloadData()
         }
         

@@ -202,8 +202,6 @@ final class PlayerView: UIView {
     func skipButtonTapped() {
         resetProgressAndTime()
         delegate?.skipButtonTapped()
-        //        viewModel.progress = 0
-        //        viewModel.time = 0
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
     }
@@ -211,8 +209,6 @@ final class PlayerView: UIView {
     func backButtonTapped() {
         resetProgressAndTime()
         delegate?.backButtonTapped()
-        //        viewModel.progress = 0
-        //        viewModel.time = 0
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
     }
@@ -402,9 +398,7 @@ final class PlayerView: UIView {
     
     func updateProgressBar(value: Double) {
         let floatValue = Float(value)
-        
         viewModel.progress += floatValue
-        
     }
     
     @objc private func updateTime() {
