@@ -11,23 +11,19 @@ import UIKit
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
-    private var timer: Timer?
-    private var playState: FileState? {
+    
+    var viewModel: PlayerViewModel! {
         didSet {
-            currentPlayLengthLabel.textColor = playState == .done ? .white : .orange
-            totalPlayLengthLabel.textColor = playState == .playing ? .white : .orange
-            if playState == .playing {
-                startEqualizer()
-            } else if playState == .done {
-                time = 0
-                stopEqualizer()
-            } else {
-                stopEqualizer()
-            }
+            currentPlayLengthLabel.textColor = viewModel.currentPlayTimeColor
+            totalPlayLengthLabel.textColor = viewModel.totalPlayTimeColor
+            progressView.progress = viewModel.progress
+            totalPlayLengthLabel.text = viewModel.totalTimeString
+            thumbsUpButton.setImage(viewModel.thumbsUpImage, for: .normal)
+            thumbsDownButton.setImage(viewModel.thumbsDownImage, for: .normal)
         }
     }
-    private var time: Int? = 0
-    private var thumbs: Thumbs? = .none
+    
+    private var timer: Timer?
     
     // MARK: - Cover art
     
@@ -75,7 +71,6 @@ final class PlayerView: UIView {
     
     private var progressView: UIProgressView = {
         var progressView = UIProgressView()
-        progressView.progress = 0.0
         progressView.progressTintColor = .orange
         progressView.observedProgress = Progress(totalUnitCount: 0)
         return progressView
@@ -175,6 +170,8 @@ final class PlayerView: UIView {
     }
     
     func configure(with artworkUrl: String?, trackName: String?, thumbs: Thumbs) {
+        viewModel = PlayerViewModel(playState: .queued)
+        viewModel.thumbs = .none
         if let artworkUrl = artworkUrl,
             let url = URL(string: artworkUrl),
             let trackName = trackName {
@@ -184,9 +181,6 @@ final class PlayerView: UIView {
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
             playButton.layer.setViewShadow(view: playButton)
             addSelectors()
-            DispatchQueue.main.async {
-                self.switchThumbs()
-            }
         }
     }
     
@@ -201,8 +195,8 @@ final class PlayerView: UIView {
     
     func resetProgressAndTime() {
         delegate?.resetPlayerAndSong()
-        progressView.progress = 0
-        time = 0
+        viewModel.progress = 0
+        viewModel.time = 0
     }
     
     func skipButtonTapped() {
@@ -216,7 +210,7 @@ final class PlayerView: UIView {
     }
     
     func setPlayState(state: FileState) {
-        playState = state
+        viewModel.playState = state
     }
     
     private func setupTrackTitleView() {
@@ -393,38 +387,27 @@ final class PlayerView: UIView {
         setupTimeLengthLabels()
     }
     
-    // Changes thumb button images depending on selection
-    
-    private func switchThumbs() {
-        thumbs == .down ? thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownorange"), for: .normal) : thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
-        thumbs == .up ? thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupiconorange"), for: .normal) : thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
-        if thumbs == .none {
-            thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
-            thumbsDownButton.setImage(#imageLiteral(resourceName: "thumbsdownblue"), for: .normal)
-        }
-    }
-    
     func setupTimeLabels(totalTime: String?) {
-        if let totalTime = totalTime {
-            totalPlayLengthLabel.text = totalTime
-        }
+        guard let totalTime = totalTime else { return }
+        viewModel.totalTimeString = totalTime
     }
     
     func updateProgressBar(value: Double) {
         let floatValue = Float(value)
-        progressView.progress += floatValue
+        viewModel.progress += floatValue
     }
     
     @objc private func updateTime() {
-        guard let playState = playState else { return }
-        switch playState {
+        switch viewModel.playState {
+        case .queued:
+            return
         case .playing:
-            if var time = time, let countDict = timer?.userInfo as? NSMutableDictionary?,
+            if let countDict = timer?.userInfo as? NSMutableDictionary?,
                 let count = countDict?["count"] as? Int {
-                time = count + 1
-                countDict?["count"] = time
-                currentPlayLengthLabel.text = String.constructTimeString(time: time)
-                if progressView.progress == 1 {
+                viewModel.time = count + 1
+                countDict?["count"] = viewModel.time
+                currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
+                if viewModel.progress == 1 {
                     finishedPlaying(countDict: countDict)
                 }
             }
@@ -436,23 +419,20 @@ final class PlayerView: UIView {
     }
     
     func finishedPlaying(countDict: NSMutableDictionary?) {
-        playState = .done
+        viewModel.playState = .done
         countDict?["count"] = time
         delegate?.resetPlayerAndSong()
         switchButton(button: pauseButton, for: playButton)
         timer = nil
-        progressView.progress = 0
+        viewModel.progress = 0
         animateEqualizer()
-        
     }
     
     func animateEqualizer() {
         UIView.animate(withDuration: 0.5) {
-            if let equalView = self.equalView {
-                self.playButton.alpha = 1
-                self.equalView?.alpha = 0
-                self.stopEqualizer()
-            }
+            self.playButton.alpha = 1
+            self.equalView?.alpha = 0
+            self.stopEqualizer()
         }
     }
     
@@ -460,43 +440,39 @@ final class PlayerView: UIView {
         if let countDict = timer?.userInfo as? NSMutableDictionary?,
             let count = countDict?["count"] as? Int {
             countDict?["count"] = count
-            time = count
+            viewModel.time = count
             currentPlayLengthLabel.text = String(describing: count)
             timer?.invalidate()
         }
     }
     
-    // Toggles thumbs
-    
     @objc private func thumbsUpTapped() {
-        thumbs = .up
-        switchThumbs()
+        viewModel.thumbs = .up
         delegate?.thumbsUpTapped()
     }
     
     @objc private func thumbsDownTapped() {
-        thumbs = .down
-        switchThumbs()
+        viewModel.thumbs = .down
         delegate?.thumbsDownTapped()
     }
     
     func setTimer() {
         timer?.invalidate()
-        guard let time = time else { return }
-        let timerDic: NSMutableDictionary = ["count": time]
+        let timerDic: NSMutableDictionary = ["count": viewModel.time]
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
     }
     
     @objc private func playButtonTapped() {
+        viewModel.playState = .playing
         delegate?.playButtonTapped()
         switchButton(button: playButton, for: pauseButton)
     }
     
     @objc private func pauseButtonTapped() {
+        viewModel.playState = .paused
         pauseTime()
         delegate?.pauseButtonTapped()
-        guard let time = time else { return }
-        currentPlayLengthLabel.text = String.constructTimeString(time: time)
+        currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
         switchButton(button: pauseButton, for: playButton)
     }
     

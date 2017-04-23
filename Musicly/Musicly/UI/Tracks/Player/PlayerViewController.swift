@@ -74,7 +74,6 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
         avUrlAsset = AVURLAsset(url: url)
         guard let asset = avUrlAsset else { return }
         let item = AVPlayerItem(asset: asset)
-       
         let audioDuration: CMTime = asset.duration
         let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
         if let secondsDuration = audioDurationSeconds {
@@ -82,7 +81,6 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
             let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
             self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
         }
-
         player = AVPlayer(playerItem: item)
         print(player.isPlaying)
     }
@@ -118,7 +116,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     
     func pauseButtonTapped() {
-        playerView.setPlayState(state: .paused)
+        playerView.stopEqualizer()
         player.pause()
     }
     
@@ -147,11 +145,11 @@ extension PlayerViewController: PlayerViewDelegate {
     func playButtonTapped() {
         DispatchQueue.main.async {
             self.player.play()
+            self.playerView.startEqualizer()
             self.playerView.setTimer()
-            self.playerView.setPlayState(state: .playing)
             self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
                 let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
-                var time = fraction / 450
+                let time = fraction / 450
                 self.playerView.updateProgressBar(value: time)
             }
         }

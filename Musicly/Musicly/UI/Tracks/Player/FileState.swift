@@ -9,5 +9,5 @@
 import Foundation
 
 enum FileState {
-    case playing, done, paused
+    case queued, playing, done, paused
 }

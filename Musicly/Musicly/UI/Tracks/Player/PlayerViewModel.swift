@@ -6,8 +6,44 @@
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct PlayerViewModel {
+    var thumbs: Thumbs {
+        didSet {
+            thumbsUpImage = thumbs == .up ? #imageLiteral(resourceName: "thumbsupiconorange") : #imageLiteral(resourceName: "thumbsupblue")
+            thumbsDownImage = thumbs == .down ? #imageLiteral(resourceName: "thumbsdownorange") : #imageLiteral(resourceName: "thumbsdownblue")
+        }
+    }
+    var currentPlayTimeColor: UIColor = .orange
+    var totalPlayTimeColor: UIColor
+    var progress: Float
+    var playState: FileState {
+        didSet {
+            currentPlayTimeColor = playState == .done ? .white : .orange
+            totalPlayTimeColor = playState == .done ? .orange : .white
+            print(playState)
+        }
+    }
     
+    var thumbsUpImage: UIImage
+    var thumbsDownImage: UIImage
+//    var noThumbsImage: UIImage
+    
+    var time: Int
+    var totalTime: Int
+    var totalTimeString: String
+    
+    init(playState: FileState) {
+        self.playState = playState
+        self.currentPlayTimeColor = .orange
+        self.totalPlayTimeColor = .white
+        self.time = 0
+        self.progress = 0
+        self.totalTimeString = ""
+        self.totalTime = 0
+        self.thumbs = .none
+        self.thumbsDownImage = UIImage()
+        self.thumbsUpImage = UIImage()
+    }
 }

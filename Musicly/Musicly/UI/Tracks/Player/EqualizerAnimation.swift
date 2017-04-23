@@ -105,11 +105,14 @@ final class IndicatorView: UIView {
     var animationRect: CGRect?
     
     var animating: Bool { return isAnimating }
-    private(set) public var isAnimating: Bool = false
+    private(set) public var isAnimating: Bool = false {
+        didSet {
+            print("Animating \(isAnimating)")
+        }
+    }
     
     deinit {
         color = nil
-     
     }
     
     required init?(coder aDecoder: NSCoder) {
