@@ -169,12 +169,12 @@ final class PlayerView: UIView {
         pauseButton.alpha = 0
     }
     
-    func configure(with artworkUrl: String?, trackName: String?, thumbs: Thumbs) {
-        viewModel = PlayerViewModel(playState: .queued)
-        viewModel.thumbs = .none
-        if let artworkUrl = artworkUrl,
-            let url = URL(string: artworkUrl),
-            let trackName = trackName {
+    func configure(with viewModel: PlayerViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.thumbs = .none
+        let artworkUrl = viewModel.artworkUrl
+        if let url = URL(string: artworkUrl) {
+            let trackName = viewModel.trackName
             albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = trackName
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)

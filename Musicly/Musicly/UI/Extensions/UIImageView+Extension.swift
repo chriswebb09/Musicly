@@ -24,5 +24,20 @@ extension UIImageView {
     }
 }
 
+extension UIImage {
+    static func downloadImage(url: URL, completion: @escaping (UIImage) -> Void) {
+        iTunesAPIClient.downloadData(url: url) { data, response, error in
+            if error != nil {
+                print(error?.localizedDescription ?? "Unknown error")
+            }
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                   completion(image)
+                }
+            }
+        }
+    }
+}
+
 
 

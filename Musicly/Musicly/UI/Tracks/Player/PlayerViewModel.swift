@@ -25,16 +25,15 @@ struct PlayerViewModel {
             print(playState)
         }
     }
-    
+    var trackName: String
+    var albumArt: UIImage
     var thumbsUpImage: UIImage
     var thumbsDownImage: UIImage
-//    var noThumbsImage: UIImage
-    
     var time: Int
     var totalTime: Int
     var totalTimeString: String
-    
-    init(playState: FileState) {
+    var artworkUrl: String
+    init(track: iTrack, playState: FileState) {
         self.playState = playState
         self.currentPlayTimeColor = .orange
         self.totalPlayTimeColor = .white
@@ -45,5 +44,8 @@ struct PlayerViewModel {
         self.thumbs = .none
         self.thumbsDownImage = UIImage()
         self.thumbsUpImage = UIImage()
+        self.albumArt = UIImage()
+        self.artworkUrl = track.artworkUrl!
+        self.trackName = track.trackName!
     }
 }

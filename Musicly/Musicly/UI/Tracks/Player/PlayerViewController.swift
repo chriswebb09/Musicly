@@ -36,7 +36,8 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
         guard let url = URL(string: previewUrl) else { return }
         guard let name = track.artistName else { return }
         title = name
-        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName, thumbs: .none)
+        let viewModel = PlayerViewModel(track: track, playState: .queued)
+        playerView.configure(with: viewModel)
         initPlayer(url: url)
     }
     
@@ -97,7 +98,8 @@ extension PlayerViewController: PlayerViewDelegate {
                 self.title = track.artistName
                 self.initPlayer(url: url)
                 guard let thumb = self.playListItem?.track?.thumbs else { return }
-                self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
+                let viewModel = PlayerViewModel(track: track, playState: .queued)
+                self.playerView.configure(with: viewModel)
             }
         }
     }
@@ -109,8 +111,9 @@ extension PlayerViewController: PlayerViewDelegate {
             guard let track = self.playListItem?.track, let previewUrl = track.previewUrl, let url = URL(string: previewUrl) else { return }
             self.title = track.artistName
             self.initPlayer(url: url)
+             let viewModel = PlayerViewModel(track: track, playState: .queued)
             guard let thumb = self.playListItem?.track?.thumbs else { return }
-            self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
+            self.playerView.configure(with: viewModel)
         }
     }
     
