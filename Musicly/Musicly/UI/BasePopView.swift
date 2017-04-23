@@ -40,8 +40,3 @@ class BasePopView: UIView {
         alertLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 }
-
-
-struct BasePopConstants {
-    static let heightMultiplier: CGFloat = 0.25
-}

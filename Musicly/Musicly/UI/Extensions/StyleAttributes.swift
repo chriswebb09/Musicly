@@ -94,6 +94,48 @@ struct NavigationBarAttributes {
     static let navBarTint = UIColor.white
 }
 
+struct DetailViewConstants {
+    static let heightMultiplier: CGFloat = 0.15
+    static let fieldWidth: CGFloat = 0.9
+    static let borderWidth: CGFloat = 1
+    static let largeCornerRadius: CGFloat = 5
+    static let cornerRadius: CGFloat = 2
+    static let shadowOpacity: Float = 0.5
+    static let shadowOffset = CGSize(width: 0, height: 2)
+    static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
+}
+
+struct PlaylistViewControllerConstants {
+    static let itemSize =  CGSize(width: UIScreen.main.bounds.width, height: 150)
+    static let mainColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+    static let edgeInset = UIEdgeInsets(top:10, left: 0, bottom: 60, right: 0)
+    static let collectionViewEdge = UIEdgeInsets(top:0, left: 0, bottom: 60, right: 0)
+    static let minimumSpace: CGFloat = 20
+    static let collectionItemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
+}
+
+struct BasePopConstants {
+    static let heightMultiplier: CGFloat = 0.25
+}
+
+struct BasePopoverAlertConstants {
+    static let popViewX = UIScreen.main.bounds.width / 2
+    static let popViewY = UIScreen.main.bounds.height / 2
+    static let containerOpacity: Float = 0.5
+}
+
+struct DetailPopoverConstants {
+    static let cornerRadius: CGFloat = 10
+    static let borderWidth: CGFloat = 10
+    static let popViewFrameX: CGFloat = UIScreen.main.bounds.width * 0.5
+    static let popViewFrameY: CGFloat = UIScreen.main.bounds.height * -0.5
+    static let popViewFrameWidth: CGFloat = UIScreen.main.bounds.width * 0.93
+    static let popViewFrameHeight: CGFloat = UIScreen.main.bounds.height * 0.78
+    static let popViewFrameCenterY: CGFloat = UIScreen.main.bounds.height / 2.5
+}
+
 enum RowSize {
     
     case header, track, item, largeLayout, smallLayout

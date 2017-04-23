@@ -27,9 +27,3 @@ class BasePopoverAlert: UIView {
         viewController.view.sendSubview(toBack: containerView)
     }
 }
-
-struct BasePopoverAlertConstants {
-    static let popViewX = UIScreen.main.bounds.width / 2
-    static let popViewY = UIScreen.main.bounds.height / 2
-    static let containerOpacity: Float = 0.5
-}
