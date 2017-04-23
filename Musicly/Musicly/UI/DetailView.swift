@@ -12,18 +12,18 @@ class DetailView: UIView {
     
     var playlistNameField: UITextField = {
         var playlistNameField = UITextField()
-        playlistNameField.layer.borderColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0).cgColor
-        playlistNameField.layer.cornerRadius = 5
-        playlistNameField.layer.borderWidth = 1
+        playlistNameField.layer.borderColor = DetailViewConstants.mainColor.cgColor
+        playlistNameField.layer.cornerRadius = DetailViewConstants.largeCornerRadius
+        playlistNameField.layer.borderWidth = DetailViewConstants.borderWidth
         return playlistNameField
     }()
     
     var titleLabel: UILabel = {
         var titleLabel = UILabel()
-        titleLabel.backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        titleLabel.backgroundColor = DetailViewConstants.mainColor
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
-        titleLabel.font =  UIFont(name: "Avenir-Book", size: 18)
+        titleLabel.font = DetailViewConstants.titleFont
         return titleLabel
     }()
     
@@ -38,57 +38,61 @@ class DetailView: UIView {
     let doneButton: UIButton = {
         var button = ButtonType.system(title: "Done", color: UIColor.white)
         var uiButton = button.newButton
-        uiButton.layer.cornerRadius = 0
         return uiButton
     }()
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.borderWidth = 1
         isUserInteractionEnabled = true
         backgroundColor = UIColor.white
-        layer.cornerRadius = 2.0
-        layer.borderWidth = 1.0
+        layer.cornerRadius = DetailViewConstants.cornerRadius
+        layer.borderWidth = DetailViewConstants.borderWidth
         layer.borderColor = UIColor.clear.cgColor
         layer.shadowColor = UIColor.lightGray.cgColor
-        layer.shadowOffset = CGSize(width:0,height: 2.0)
-        layer.shadowRadius = 1.0
-        layer.shadowOpacity = 0.5
+        layer.shadowRadius = DetailViewConstants.borderWidth
+        layer.shadowOpacity = DetailViewConstants.shadowOpacity
         layer.masksToBounds = true
         layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
     }
     
-    // MARK: - Configure View
-    
-    func configureView(playlist: Playlist) {
+    func configureView() {
         titleLabel.text = "Create Playlist"
-        guard let url = URL(string: (playlist.playlistItem(at: 0)?.track?.artworkUrl)!) else { return }
         layoutSubviews()
         setupConstraints()
     }
-    
-    // MARK: - Configure constraints
     
     func setupConstraints() {
         addSubview(playlistNameField)
         playlistNameField.translatesAutoresizingMaskIntoConstraints = false
         playlistNameField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playlistNameField.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
-        playlistNameField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
+        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: DetailViewConstants.heightMultiplier).isActive = true
+        playlistNameField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: DetailViewConstants.fieldWidth).isActive = true
 
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         titleLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
+        titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: DetailViewConstants.heightMultiplier).isActive = true
 
         addSubview(doneButton)
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         doneButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        doneButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.14).isActive = true
+        doneButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: DetailViewConstants.heightMultiplier).isActive = true
         doneButton.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
+}
+
+struct DetailViewConstants {
+    static let heightMultiplier: CGFloat = 0.15
+    static let fieldWidth: CGFloat = 0.9
+    static let borderWidth: CGFloat = 1
+    static let largeCornerRadius: CGFloat = 5
+    static let cornerRadius: CGFloat = 2
+    static let shadowOpacity: Float = 0.5
+    static let shadowOffset = CGSize(width: 0, height: 2)
+    static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
 }

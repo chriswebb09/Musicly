@@ -9,21 +9,27 @@
 import UIKit
 
 class BasePopoverAlert: UIView {
-    public let containerView: UIView = {
+    
+    let containerView: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = UIColor.black
-        containerView.layer.opacity = 0.5
+        containerView.layer.opacity = BasePopoverAlertConstants.containerOpacity
         return containerView
     }()
     
-    public func showPopView(viewController: UIViewController) {
+    func showPopView(viewController: UIViewController) {
         containerView.frame = UIScreen.main.bounds
-        containerView.center = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+        containerView.center = CGPoint(x: BasePopoverAlertConstants.popViewX, y: BasePopoverAlertConstants.popViewY)
         viewController.view.addSubview(containerView)
     }
     
-    public func hidePopView(viewController:UIViewController){
+    func hidePopView(viewController:UIViewController){
         viewController.view.sendSubview(toBack: containerView)
     }
 }
 
+struct BasePopoverAlertConstants {
+    static let popViewX = UIScreen.main.bounds.width / 2
+    static let popViewY = UIScreen.main.bounds.height / 2
+    static let containerOpacity: Float = 0.5
+}

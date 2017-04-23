@@ -21,8 +21,7 @@ enum ButtonType {
     
     fileprivate func setupSystemButton(with title:String, color: UIColor?) -> UIButton {
         let button = TagButton()
-        let buttonColor = color ?? UIColor.black
-        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: buttonColor, NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
+        button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0), NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
         button.layer.cornerRadius = 2
         button.layer.borderWidth = 1
         return button as UIButton
@@ -30,7 +29,6 @@ enum ButtonType {
     
     fileprivate func setupTagButton(with title:String, color: UIColor?, tag: Int, index: IndexPath) -> TagButton {
         let button = TagButton()
-        let buttonColor = color ?? UIColor.black
         button.setAttributedTitle( NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.blue, NSFontAttributeName: UIFont(name: "Avenir-Book", size: 10)!]), for: .normal)
         button.layer.cornerRadius = 2
         button.layer.borderWidth = 1

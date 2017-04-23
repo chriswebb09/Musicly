@@ -38,10 +38,10 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupControllers() {
-        var tracksController = TracksViewController()
+        let tracksController = TracksViewController()
         var playlistController = PlaylistViewController()
         let searchTab = setupSearchTab(tracksViewController: tracksController)
-        let playlistTab = setupPlaylistTab(playlistViewController: PlaylistViewController())
+        let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
         let controllers = [searchTab, playlistTab]
         setTabTitles(controllers: controllers)
     }

@@ -11,9 +11,11 @@ import UIKit
 private let reuseIdentifier = "PlaylistCell"
 
 class PlaylistViewController: UIViewController {
+    
     let detailPop = DetailPopover()
     var playlists: [Playlist]?
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
     var store: iTrackDataStore? {
         didSet {
             self.playlists = store?.playlists
@@ -29,7 +31,7 @@ class PlaylistViewController: UIViewController {
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+        collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
         view.addSubview(collectionView!)
         self.rightBarButtonItem = UIBarButtonItem.init(
             title: "New",
@@ -54,11 +56,10 @@ class PlaylistViewController: UIViewController {
         }
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         collectionView?.collectionViewLayout.invalidateLayout()
-        layout.sectionInset = UIEdgeInsets(top:10, left: 0, bottom: 60, right: 0)
-        layout.itemSize = CGSize(width: view.bounds.width, height: 150)
+        layout.sectionInset = PlaylistViewControllerConstants.edgeInset
+        layout.itemSize = PlaylistViewControllerConstants.itemSize
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
     }
-    
 }
 
 extension PlaylistViewController: UICollectionViewDataSource {
@@ -87,28 +88,13 @@ extension PlaylistViewController: UICollectionViewDataSource {
         return cell
     }
     
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        guard let playlist = self.playlists?.last else { return }
-//        detailPop.popView.configureView(playlist: playlist)
-//        UIView.animate(withDuration: 0.15, animations: {
-//            self.detailPop.showPopView(viewController: self)
-//            self.detailPop.popView.isHidden = false
-//            let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 10, y: 10)
-//           
-//        })
-//        self.detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
-//
-//    }
-    
     func pop() {
-        guard let playlist = self.playlists?.last else { return }
-        detailPop.popView.configureView(playlist: playlist)
-        detailPop.popView.doneButton.backgroundColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+        detailPop.popView.configureView()
+        detailPop.popView.doneButton.backgroundColor = PlaylistViewControllerConstants.mainColor
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
-            let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 10, y: 10)
+            //let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 10, y: 10)
             
         }
         self.detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
@@ -125,14 +111,24 @@ extension PlaylistViewController: UICollectionViewDataSource {
 extension PlaylistViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height/2)
+        return PlaylistViewControllerConstants.collectionItemSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top:0, left: 0, bottom: 60, right: 0)
+        return PlaylistViewControllerConstants.collectionViewEdge
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return PlaylistViewControllerConstants.minimumSpace
     }
+}
+
+struct PlaylistViewControllerConstants {
+    static let itemSize =  CGSize(width: UIScreen.main.bounds.width, height: 150)
+    static let mainColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+    static let edgeInset = UIEdgeInsets(top:10, left: 0, bottom: 60, right: 0)
+    static let collectionViewEdge = UIEdgeInsets(top:0, left: 0, bottom: 60, right: 0)
+    static let minimumSpace: CGFloat = 20
+    static let collectionItemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
 }
