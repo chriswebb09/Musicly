@@ -11,13 +11,10 @@ import UIKit
 extension UIImageView {
     
     func downloadImage(url: URL) {
-        
         iTunesAPIClient.downloadData(url: url) { data, response, error in
-            
             if error != nil {
                 print(error?.localizedDescription ?? "Unknown error")
             }
-            
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
                     self.image = image

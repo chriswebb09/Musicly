@@ -18,13 +18,12 @@
         }
     }
     
-    fileprivate var playlist: Playlist? = Playlist()
+    fileprivate var playlist: Playlist = Playlist()
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
-    //  fileprivate var tracks: [iTrack?]?
-    
+
     fileprivate var searchBarActive: Bool = false {
         didSet {
             if searchBarActive == true {
@@ -60,7 +59,6 @@
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
@@ -120,10 +118,9 @@
     
     private func loadData() {
         store?.setSearch(string: "Test")
-        store?.searchForTracks { tracks, errors in
-            if let tracks = tracks {
-                tracks.forEach { self.playlist?.append(value: $0) }
-            }
+        store?.searchForTracks { [weak self] playlist, errors in
+            guard let playlist = playlist else { return }
+            self?.playlist = playlist
         }
     }
     
@@ -141,19 +138,15 @@
     
     fileprivate func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
             newLayout.sectionInset = EdgeAttributes.sectionInset
             newLayout.itemSize = RowSize.item.rawValue
             newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
             newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
-            
             flowLayout.scrollDirection = .vertical
-            
             collectionView?.layoutIfNeeded()
             collectionView?.collectionViewLayout = newLayout
             view.backgroundColor = CollectionViewAttributes.backgroundColor
-            
             collectionView?.frame = UIScreen.main.bounds
             setupInfoLabel(infoLabel: infoLabel)
             setupMusicIcon(icon: musicIcon)
@@ -189,7 +182,6 @@
     // TODO: - Fix reloadAtSections so that collectionView does not need 50 items in order not to crash
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let playlist = playlist else { return CollectionViewConstants.defaultItemCount }
         if playlist.itemCount > 0 {
             return playlist.itemCount
         }
@@ -198,7 +190,7 @@
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell, rowTime: Double) {
         if let index = indexPath,
-            let track = playlist?.playlistItem(at: index.row)?.track {
+            let track = playlist.playlistItem(at: index.row)?.track {
             guard let artURL = track.artworkUrl else { return }
             guard let trackName = track.trackName else { return }
             cell.configureCell(with: trackName, with: artURL)
@@ -215,14 +207,12 @@
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-        let destinationVC: PlayerViewController? = PlayerViewController()
-        if let destinationViewController = destinationVC {
-            guard let selectedIndex = selectedIndex else { return }
-            destinationViewController.playList = playlist
-            destinationViewController.index = selectedIndex
-            destinationViewController.setupPlayItem(index: selectedIndex)
-            navigationController?.pushViewController(destinationViewController, animated: false)
-        }
+        let destinationViewController: PlayerViewController = PlayerViewController()
+        guard let selectedIndex = selectedIndex else { return }
+        destinationViewController.playList = playlist
+        destinationViewController.index = selectedIndex
+//        destinationViewController.setupPlayItem(index: selectedIndex)
+        navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -269,8 +259,8 @@
  extension TracksViewController: UISearchControllerDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        playlist.removeAll()
         searchBar.setShowsCancelButton(true, animated: true)
-        
         searchBarActive = true
     }
     
@@ -316,21 +306,20 @@
         infoLabel.isHidden = true
         musicIcon.isHidden = true
         collectionView.reloadData()
-        self.playlist?.removeAll()
-        store?.searchForTracks { [weak self] tracks, error in
-            tracks?.forEach {
-                self?.playlist?.append(value: $0)
-            }
+        self.playlist.removeAll()
+        store?.searchForTracks { playlist, error in
+            guard let playlist = playlist else { return }
+            self.playlist = playlist
             collectionView.reloadData()
             collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
-                    if let collectionView = self?.collectionView {
+                    if let collectionView = self.collectionView {
                         collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
                         collectionView.isHidden = false
                     }
                 }
             }, completion: { finished in
-                
+                print(finished)
             })
         }
     }
@@ -339,11 +328,8 @@
         let barText = searchBar.getTextFromBar()
         store?.setSearch(string: barText)
         searchBarActive = true
-        if barText != "" {
-            searchBarHasInput()
-        }
+        if barText != "" { searchBarHasInput() }
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
-        
         UIView.animate(withDuration: 1.8) {
             self.collectionView?.alpha = 1
         }
@@ -365,19 +351,12 @@
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
         if searchString != nil {
-            playlist?.removeAll()
+            playlist.removeAll()
             if let searchString = searchString {
                 store?.setSearch(string: searchString)
                 store?.searchForTracks { tracks, error in
                     self.store?.searchForTracks { tracks, error in
-                        
-                        if let tracks = tracks {
-                            
-                            tracks.forEach {
-                                self.playlist?.append(value: $0)
-                            }
-                        }
-                        //    self.tracks = tracks
+                        self.playlist = tracks!
                     }
                 }
             }

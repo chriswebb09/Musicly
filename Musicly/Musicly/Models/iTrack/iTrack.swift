@@ -15,26 +15,26 @@ struct iTrack {
     
     let trackName: String?
     let artistName: String?
-    let artistId: Int
+    let artistId: Int?
     let previewUrl: String?
     let artworkUrl: String?
-    let collectionName: String
-    var thumbs: Thumbs
+    let collectionName: String?
+    var thumbs: Thumbs?
     
-    var downloaded: Bool {
+    var downloaded: Bool? {
         didSet {
-            delegate?.downloadIsComplete(downloaded: downloaded)
+            delegate?.downloadIsComplete(downloaded: (downloaded != nil))
         }
     }
     
-    init?(json: [String : Any]) {
+    init?(json: [String : Any]?) {
         
-        if let trackName = json["trackName"] as? String,
-            let artistName = json["artistName"] as? String,
-            let artistId = json["artistId"] as? Int,
-            let previewUrl = json["previewUrl"] as? String,
-            let artworkUrl = json["artworkUrl100"] as? String,
-            let collectionName = json["collectionName"] as? String {
+        if let trackName = json?["trackName"] as? String,
+            let artistName = json?["artistName"] as? String,
+            let artistId = json?["artistId"] as? Int,
+            let previewUrl = json?["previewUrl"] as? String,
+            let artworkUrl = json?["artworkUrl100"] as? String,
+            let collectionName = json?["collectionName"] as? String {
             
             self.trackName = trackName
             self.artistName = artistName

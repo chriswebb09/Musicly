@@ -8,7 +8,7 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
-    var player: AVPlayer?
+    var player: AVPlayer = AVPlayer()
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
     var avUrlAsset: AVURLAsset?
@@ -18,34 +18,26 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        playList?.printAllKeys()
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
         view.addSubview(playerView)
-        rightButtonItem = UIBarButtonItem.init(
-            title: " ",
-            style: .done,
-            target: self,
-            action: #selector(back)
-        )
-        guard let rightButtonItem = rightButtonItem else { return }
-        navigationItem.rightBarButtonItems = [rightButtonItem]
         playerView.frame = UIScreen.main.bounds
         playerView.layoutSubviews()
+        setupPlayItem(index: index)
         playerView.delegate = self
     }
     
-    func setupPlayItem(index: Int) {
-
+    func setupPlayItem(index: Int?) {
+        guard let index = index else { return }
         playListItem = playList?.playlistItem(at: index)
-        guard let thumb = playListItem?.track?.thumbs else { return }
         guard let track = playListItem?.track else { return }
-        guard let name = track.artistName else { return }
-        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName, thumbs: thumb)
-        title = name
         guard let previewUrl = track.previewUrl else { return }
         guard let url = URL(string: previewUrl) else { return }
-        guard let fileTime = getFileTime(url: url) else { return }
-        playerView.setupTimeLabels(totalTime: fileTime)
+        guard let name = track.artistName else { return }
+        title = name
+        playerView.configure(with: playListItem?.track?.artworkUrl, trackName: playListItem?.track?.trackName, thumbs: .none)
+        initPlayer(url: url)
     }
     
     func back() {
@@ -56,15 +48,13 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     
     private final func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
-        if let asset = avUrlAsset {
-            let audioDuration: CMTime = asset.duration
-            let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
-            if let secondsDuration = audioDurationSeconds {
-                let minutes = Int(secondsDuration / 60)
-                let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
-                avUrlAsset = nil
-                return "\(minutes):\(rem)"
-            }
+        guard let avUrlAsset = avUrlAsset else { return nil }
+        let audioDuration: CMTime = avUrlAsset.duration
+        let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+        if let secondsDuration = audioDurationSeconds {
+            let minutes = Int(secondsDuration / 60)
+            let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
+            return "\(minutes):\(rem + 3)"
         }
         return nil
     }
@@ -81,23 +71,20 @@ final class PlayerViewController: UIViewController, UIViewControllerTransitionin
     }
     
     final func initPlayer(url: URL)  {
-
-        if player != nil {
-           
-            self.avUrlAsset = AVURLAsset(url: url)
-            guard let asset = avUrlAsset else { return }
-            let item = AVPlayerItem(asset: asset)
-            self.player = AVPlayer(playerItem: item)
-            guard let player = self.player else { return }
-            player.play()
-        } else {
-             guard let asset = avUrlAsset else { return }
-            self.avUrlAsset = AVURLAsset(url: url)
-            let item = AVPlayerItem(asset: asset)
-            self.player = AVPlayer(playerItem: item)
-            guard let player = player else { return }
-            player.play()
+        avUrlAsset = AVURLAsset(url: url)
+        guard let asset = avUrlAsset else { return }
+        let item = AVPlayerItem(asset: asset)
+       
+        let audioDuration: CMTime = asset.duration
+        let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+        if let secondsDuration = audioDurationSeconds {
+            let minutes = Int(secondsDuration / 60)
+            let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
+            self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
         }
+
+        player = AVPlayer(playerItem: item)
+        print(player.isPlaying)
     }
 }
 
@@ -105,7 +92,6 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func backButtonTapped() {
         guard let previous = playListItem?.previous else { return }
-        
         playListItem = previous
         stopPlayer()
         DispatchQueue.main.async { [unowned self] in
@@ -116,7 +102,6 @@ extension PlayerViewController: PlayerViewDelegate {
                 self.playerView.configure(with: track.artworkUrl, trackName: track.trackName, thumbs: thumb)
             }
         }
-        
     }
     
     func skipButtonTapped() {
@@ -133,8 +118,8 @@ extension PlayerViewController: PlayerViewDelegate {
     
     
     func pauseButtonTapped() {
-        player?.pause()
-//        stopPlayer()
+        playerView.setPlayState(state: .paused)
+        player.pause()
     }
     
     func resetPlayerAndSong() {
@@ -156,13 +141,19 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Player controlers
     
     func stopPlayer() {
-        player = nil
+        player.pause()
     }
     
     func playButtonTapped() {
-        stopPlayer()
-        guard let urlString = playListItem?.track?.previewUrl else { return }
-        guard let url = URL(string: urlString) else { return }
-        initPlayer(url: url)
+        DispatchQueue.main.async {
+            self.player.play()
+            self.playerView.setTimer()
+            self.playerView.setPlayState(state: .playing)
+            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+                let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
+                var time = fraction / 450
+                self.playerView.updateProgressBar(value: time)
+            }
+        }
     }
 }

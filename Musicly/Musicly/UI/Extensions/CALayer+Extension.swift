@@ -27,12 +27,6 @@ extension CALayer {
         shadowColor = UIColor.black.cgColor
         shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         shadowRadius = 1.5
-        shadowOpacity = 0.7
+        shadowOpacity = 1
     }
-}
-
-
-struct CALayerConstants {
-    static let shadowWidthMultiplier: CGFloat = 0.00001
-    static let shadowHeightMultiplier: CGFloat = 0.0002
 }

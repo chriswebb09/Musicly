@@ -15,4 +15,9 @@ extension AVPlayer {
         rate = PlayerAttributes.playerRate
         pause()
     }
+    
+    var isPlaying: Bool {
+        return rate != 0 && error == nil
+    }
+    
 }

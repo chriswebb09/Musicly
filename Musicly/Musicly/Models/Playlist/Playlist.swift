@@ -11,21 +11,11 @@ import UIKit
 class Playlist {
     
     private var head: PlaylistItem?
+    
     var itemCount: Int = 0
     
-    var isEmpty: Bool {
+    var isEmpty: Bool? {
         return head == nil
-    }
-    
-    private var first: PlaylistItem? {
-        return head
-    }
-    
-    var tail: PlaylistItem? {
-        guard last != nil else {
-            return nil
-        }
-        return last
     }
     
     private var last: PlaylistItem? {
@@ -39,15 +29,22 @@ class Playlist {
         }
     }
     
-    func append(value: iTrack?) {
-        guard let value = value else { return }
-        let newPlaylistItem: PlaylistItem? = PlaylistItem(item: value)
+    func append(newPlaylistItem: PlaylistItem?) {
         itemCount += 1
-        if let lastItem = tail {
+        if let lastItem = last {
             newPlaylistItem?.previous = lastItem
             lastItem.next = newPlaylistItem
         } else if head == nil {
             head = newPlaylistItem
+        }
+    }
+    
+    func printAllKeys() {
+        var current: PlaylistItem! = head
+        var i = 1
+        while current != nil {
+            i += 1
+            current = current.next
         }
     }
     
@@ -76,11 +73,6 @@ class Playlist {
         }
     }
     
-    func peek() -> iTrack? {
-        
-        return first?.track
-    }
-    
     func removeFromPlaylist(for playlistItem: PlaylistItem?) -> iTrack? {
         let previous = playlistItem?.previous
         let next = playlistItem?.next
@@ -99,8 +91,13 @@ class Playlist {
     }
     
     func removeAll() {
-        head = nil
-        itemCount = 0
+        var track = head
+        
+        while let next = track?.next {
+            track?.previous = nil
+            track = nil
+            track = next
+        }
     }
     
     func contains(playlistItem item: PlaylistItem) -> Bool {
@@ -112,20 +109,6 @@ class Playlist {
             }
         }
         return false
-    }
-    
-    func playlistItem(with trackName: String, for artistName: String) -> PlaylistItem? {
-        guard let currentTrack = head else { return nil }
-        
-        while currentTrack.track?.trackName != trackName  && currentTrack.track?.artistName != artistName {
-            guard let currentTrack = currentTrack.next else { return nil }
-     
-            if currentTrack.track?.trackName == trackName {
-                
-                return currentTrack
-            }
-        }
-        return nil
     }
 }
 

@@ -55,7 +55,7 @@ class MusiclyTests: XCTestCase {
     func testDataStore() {
         
         let dataSource = iTrackDataStore(searchTerm: "new")
-        let expect = expectation(description: "Data store calls api and returns iTrack data array.")
+        let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
         
         dataSource.searchForTracks { tracks, error in
             XCTAssert(tracks?.count == 49)

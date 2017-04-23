@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension UICollectionView {
     
     func register<T: UICollectionViewCell>(_: T.Type) where T: Reusable {
@@ -32,5 +31,4 @@ extension UICollectionView {
         infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
     }
-    
 }

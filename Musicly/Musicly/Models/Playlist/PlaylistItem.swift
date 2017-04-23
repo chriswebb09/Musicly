@@ -9,30 +9,14 @@
 import UIKit
 
 class PlaylistItem {
-    
-    var playListID: String? = ""
-    var identifier: String? = ""
-    
     var track: iTrack?
-    
-    var next: PlaylistItem? = nil
-    weak var previous: PlaylistItem? = nil
-    
-    init(item: iTrack?) {
-        self.track = item
-    }
+    var next: PlaylistItem?
+    weak var previous: PlaylistItem?
 }
 
 extension PlaylistItem: Equatable {
     static func ==(lhs: PlaylistItem, rhs: PlaylistItem) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.track!.previewUrl! == rhs.track!.previewUrl!
     }
 }
 
-extension PlaylistItem: CustomStringConvertible {
-    var description: String {
-        get {
-            return "Node(\(identifier))"
-        }
-    }
-}

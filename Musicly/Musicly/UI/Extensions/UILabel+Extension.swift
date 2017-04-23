@@ -10,8 +10,6 @@ import UIKit
 
 extension UILabel {
     
-    // TODO: - This can be implemented better
-    
     static func setupInfoLabel() -> UILabel {
         let infoLabel: UILabel = UILabel()
         infoLabel.textAlignment = .center
@@ -22,6 +20,5 @@ extension UILabel {
         infoLabel.text = "Add to your playlist..."
         return infoLabel
     }
-    
     
 }

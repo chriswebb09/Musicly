@@ -28,23 +28,30 @@ final class iTrackDataStore {
         }
     }
     
-    func searchForTracks(completion: @escaping (_ downloads: [iTrack]?, _ error: Error?) -> Void) {
-        var returnData: [iTrack]? = [iTrack]()
+    func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
+        
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in
+                
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
-                    if let parsedData = DataParser.parseDataForTracks(json: data) {
-                        for data in parsedData {
-                            returnData?.append(data)
+                    let tracksData = data["results"] as! [JSON]
+                    let playlist: Playlist? = Playlist()
+                    tracksData.forEach {
+                        if let track = iTrack(json: $0) {
+                            let newItem: PlaylistItem? = PlaylistItem()
+                            newItem?.track = track
+                            guard let playlist = playlist, let item = newItem else { return }
+                            playlist.append(newPlaylistItem: item)
                         }
-                        completion(returnData, nil)
-                    } else {
-                        completion(nil, NSError.generalParsingError(domain: ""))
                     }
+                    completion(playlist, nil)
+                } else {
+                    completion(nil, NSError.generalParsingError(domain: ""))
                 }
             }
         }
     }
 }
+

@@ -23,7 +23,7 @@ final class iTunesAPIClient: NSObject {
     weak var downloadsSession : URLSession? {
         get {
             let config = URLSessionConfiguration.background(withIdentifier: "background")
-            weak var queue = OperationQueue()
+            weak var queue: OperationQueue? = OperationQueue()
             return URLSession(configuration: config, delegate: self, delegateQueue: queue)
         }
     }
@@ -41,13 +41,13 @@ final class iTunesAPIClient: NSObject {
                 if let error = error {
                     completion(nil, error)
                 } else {
-                    if let data = data,
-                        let responseObject = self.convertToJSON(with: data) {
+                    do {
+                        let responseObject = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]
                         DispatchQueue.main.async {
                             completion(responseObject, nil)
                         }
-                    } else {
-                        completion(nil, NSError.generalParsingError(domain: url.absoluteString))
+                    } catch {
+                        print(error.localizedDescription)
                     }
                 }
             }
@@ -57,20 +57,20 @@ final class iTunesAPIClient: NSObject {
     // MARK: - Transitory session
     
     internal static func downloadData(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
-        URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
-            completion(data, response, error)
-            }.resume()
-    }
-    
-    // MARK: - Turns data into JSON - JSON is typealias
-    
-    fileprivate static func convertToJSON(with data: Data?) -> JSON? {
-        guard let data = data else { return nil }
-        do {
-            return try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? JSON
-        } catch {
-            return nil
+        weak var downloadSession : URLSession? {
+            get {
+                let config = URLSessionConfiguration.ephemeral
+                return URLSession(configuration: config)
+            }
         }
+        
+        let task: URLSessionDataTask? = downloadSession?.dataTask(with: URLRequest(url: url)) { data, response, error in
+            completion(data, response, error)
+            downloadSession?.invalidateAndCancel()
+        }
+        
+        task?.resume()
+        
     }
 }
 
@@ -140,7 +140,7 @@ extension iTunesAPIClient: URLSessionDelegate {
 }
 
 extension iTunesAPIClient {
-
+    
     
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
