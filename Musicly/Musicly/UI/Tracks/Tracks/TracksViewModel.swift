@@ -18,9 +18,7 @@ class TracksViewModel {
     }
     
     func rowTimeForIndex(indexPath: IndexPath) -> Double {
-        
         var rowTime =  indexPath.row > 10 ? (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider : (Double(indexPath.row)) / CollectionViewConstants.rowTimeDivider
-      
         return rowTime
     }
 }

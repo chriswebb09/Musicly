@@ -26,9 +26,8 @@ final class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.currentID = realm.objects(CurrentListID.self)
-        var test = currentID.first
-        self.currentPlayerID = test
-        
+        let test = currentID.first
+        currentPlayerID = test
         playList?.printAllKeys()
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
@@ -37,7 +36,7 @@ final class PlayerViewController: UIViewController {
         playerView.layoutSubviews()
         setupPlayItem(index: index)
         playerView.delegate = self
-        self.rightButtonItem = UIBarButtonItem.init(
+        rightButtonItem = UIBarButtonItem.init(
             title: "New",
             style: .done,
             target: self,
@@ -58,17 +57,21 @@ final class PlayerViewController: UIViewController {
         initPlayer(url: url)
     }
     
-    func add() {
-        let lists = realm.objects(TrackList.self).filter("listId == %@", currentPlayerID.id)
-        guard let track = playListItem?.track else { return }
+    func setupItem(with track: Track) -> Track {
         let item = Track()
         item.playlistID = currentPlayerID.id
         item.artistID = track.artistID
         item.artworkUrl = track.artworkUrl
         item.artistName = track.artistName
-        
+        return item
+    }
+    
+    func add() {
+        let lists = realm.objects(TrackList.self).filter("listId == %@", currentPlayerID.id)
+        guard let track = playListItem?.track else { return }
+        let item = setupItem(with: track)
+        item.playlistID = currentPlayerID.id
         let firstList = lists.first
-        
         if let realm = try? Realm() {
             playlistList = realm.objects(TrackList.self)
             guard let firstList = firstList else { return }
@@ -162,11 +165,11 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Thumbs
     
     func thumbsDownTapped() {
-        guard let item = playListItem else { return }
+        guard playListItem != nil else { return }
     }
     
     func thumbsUpTapped() {
-        guard let item = playListItem else { return }
+        guard playListItem != nil else { return }
     }
     
     // MARK: - Player controlers

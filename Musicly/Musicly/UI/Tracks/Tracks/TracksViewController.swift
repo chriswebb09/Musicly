@@ -7,7 +7,6 @@
  //
  
  import UIKit
- import Realm
  import RealmSwift
  
  private let reuseIdentifier = "trackCell"
@@ -135,7 +134,7 @@
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-     
+        
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
@@ -158,7 +157,6 @@
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         var rowTime: Double
         if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
-            print("TRACK \(track)")
             if index.row > 10 {
                 rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
             } else {
@@ -169,7 +167,6 @@
                 cell.configureCell(with: viewModel, withTime: rowTime)
             }
         }
-        
     }
  }
  
@@ -344,5 +341,4 @@
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }
-    
  }

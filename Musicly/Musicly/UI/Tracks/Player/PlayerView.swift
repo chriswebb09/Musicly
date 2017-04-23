@@ -27,7 +27,6 @@ final class PlayerView: UIView {
     
     // MARK: - Cover art
     
-    
     private var albumArtworkView: UIImageView = {
         var albumArtworkView = UIImageView()
         albumArtworkView.backgroundColor = .clear

@@ -15,20 +15,18 @@ private let reuseIdentifier = "PlaylistCell"
 class PlaylistViewController: UIViewController {
     
     var realm: Realm?
-    
     let detailPop = DetailPopover()
     var playlists: [Playlist]?
-    var collectionView : UICollectionView? = UICollectionView.setupCollectionView()   
+    var collectionView : UICollectionView? = UICollectionView.setupCollectionView()
     var store: iTrackDataStore?
     var rightBarButtonItem: UIBarButtonItem?
     var testID: Results<CurrentListID>!
     var trackList: [TrackList]!
-
     
     override func viewDidLoad() {
         edgesForExtendedLayout = []
         title = "Playlists"
-       
+        
         self.collectionView = UICollectionView.setupCollectionView()
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -152,5 +150,3 @@ extension PlaylistViewController: UITextFieldDelegate {
         return true
     }
 }
-
-

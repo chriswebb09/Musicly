@@ -49,7 +49,6 @@ final class PlaylistCell: UICollectionViewCell {
         layoutSubviews()
     }
     
-    
     func setupConstraints() {
         contentView.addSubview(playlistNameLabel)
         playlistNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -64,5 +63,3 @@ final class PlaylistCell: UICollectionViewCell {
         playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: PlaylistCellConstants.artViewWidthMultiplier).isActive = true
     }
 }
-
-
