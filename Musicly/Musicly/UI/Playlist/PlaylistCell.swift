@@ -60,8 +60,8 @@ final class PlaylistCell: UICollectionViewCell {
         playlistArtView.translatesAutoresizingMaskIntoConstraints = false
         playlistArtView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: contentView.bounds.height * 0.1).isActive = true
         playlistArtView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4).isActive = true
-        playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8).isActive = true
+        playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.25).isActive = true
+        playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6).isActive = true
     
     }
     

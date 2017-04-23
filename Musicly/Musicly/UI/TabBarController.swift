@@ -10,12 +10,12 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    // MARK: - Initialization
-    
     override func viewDidLoad() {
         view.backgroundColor = .white
         setupTabs()
     }
+    
+   var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -38,7 +38,9 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupControllers() {
-        let searchTab = setupSearchTab(tracksViewController: TracksViewController())
+        var tracksController = TracksViewController()
+        var playlistController = PlaylistViewController()
+        let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: PlaylistViewController())
         let controllers = [searchTab, playlistTab]
         setTabTitles(controllers: controllers)
@@ -65,21 +67,9 @@ final class TabBarController: UITabBarController {
         return playlistTab
     }
     
-    
-    
     func configureTabBarItem(item: UITabBarItem) {
         item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
         item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:.normal)
         item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:0.41, green:0.72, blue:0.90, alpha:1.0)], for:.selected)
     }
-}
-
-public struct Tabbar {
-    public static let tint = UIColor(red:0.07, green:0.59, blue:1.00, alpha:1.0)
-    public static let tabbarFrameHeight: CGFloat = 0.09
-}
-
-struct TabbarConstants {
-    static let navXYOrigin: CGFloat = 0
-    static let navHeightMultiplier: CGFloat = 1.2
 }

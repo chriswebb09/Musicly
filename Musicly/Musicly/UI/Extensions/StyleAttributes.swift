@@ -11,6 +11,7 @@ import UIKit
 // TODO: - Cleanup and consolidate
 
 struct PlayerViewConstants {
+    
     static let backButtonWidthMultiplier: CGFloat = 0.06
     static let backButtonHeightMultiplier: CGFloat = 0.06
     static let backButtonCenterYOffset: CGFloat = -0.08
@@ -32,6 +33,7 @@ struct PlayerViewConstants {
     static let controlsViewHeightMultiplier: CGFloat = 0.55
     static let thumbsHeightMultplier: CGFloat = 0.7
     static let thumbsWidthMultiplier: CGFloat = 0.07
+    
 }
 
 struct CollectionViewConstants {
@@ -135,4 +137,14 @@ struct EqualizerConstants {
     static let heightValMultiplier: CGFloat = 0.1
     static let durationMultiplier: Double = 1.1
     static let cornerRadii: CGSize = CGSize(width: 10.0, height: 10.0)
+}
+
+public struct Tabbar {
+    public static let tint = UIColor(red:0.07, green:0.59, blue:1.00, alpha:1.0)
+    public static let tabbarFrameHeight: CGFloat = 0.09
+}
+
+struct TabbarConstants {
+    static let navXYOrigin: CGFloat = 0
+    static let navHeightMultiplier: CGFloat = 1.2
 }

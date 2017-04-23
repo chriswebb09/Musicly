@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 final class iTrackDataStore {
     
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
+    var savedPlaylist: [NSManagedObjectContext] = []
+    var playlists: [Playlist] = [Playlist]()
     
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
@@ -46,6 +49,7 @@ final class iTrackDataStore {
                             playlist.append(newPlaylistItem: item)
                         }
                     }
+                    self.playlists.append(playlist!)
                     completion(playlist, nil)
                 } else {
                     completion(nil, NSError.generalParsingError(domain: ""))

@@ -22,7 +22,8 @@
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
-    fileprivate var store: iTrackDataStore? = iTrackDataStore(searchTerm: "")
+    var store: iTrackDataStore?
+        //= iTrackDataStore(searchTerm: "")
     
     fileprivate var searchBarActive: Bool = false {
         didSet {
@@ -65,6 +66,9 @@
         title = "Music.ly"
         commonInit()
         setSearchBarColor(searchBar: searchBar)
+        
+        let tabController = self.tabBarController as! TabBarController
+        self.store = tabController.store
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,6 +201,7 @@
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.playList = playlist
         destinationViewController.index = selectedIndex
+        destinationViewController.hidesBottomBarWhenPushed = true 
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
