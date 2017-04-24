@@ -14,7 +14,9 @@
 <br><br>
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/start.png">
 <br><br>
-<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/search.png">
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/Simulator%20Screen%20Shot%20Apr%2024%2C%202017%2C%205.17.28%20AM.png">
+<br><br>
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/Simulator%20Screen%20Shot%20Apr%2024%2C%202017%2C%205.16.48%20AM.png">
 <br><br>
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/progressplay.png">
 </p>
