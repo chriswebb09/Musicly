@@ -10,7 +10,11 @@ import UIKit
 import RealmSwift
 
 final class iTrackDataStore {
+    
+    typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
+    
     var realm: Realm?
+    
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
     var newTracks = [Track]()
@@ -21,7 +25,6 @@ final class iTrackDataStore {
         client?.setup()
         if let realm = try? Realm() {
             trackLists = realm.objects(Playlist.self)
-            print("------ END COLLECTION VIEWDID LOAD ------")
         }
     }
     
@@ -35,7 +38,7 @@ final class iTrackDataStore {
         }
     }
 
-    func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
+    func searchForTracks(completion: @escaping playlistCompletion) {
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in
                 if let error = error {

@@ -18,6 +18,9 @@
 		A754E13A1EABF92E00136A9A /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754E1391EABF92E00136A9A /* PlaylistCell.swift */; };
 		A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */; };
 		A7ADE8151EAD5ED7004F299E /* TracksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8141EAD5ED7004F299E /* TracksViewModel.swift */; };
+		A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */; };
+		A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8181EAD7CE8004F299E /* TrackList.swift */; };
+		A7ADE81B1EAD7D1D004F299E /* CurrentListID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE81A1EAD7D1D004F299E /* CurrentListID.swift */; };
 		A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B073721EA974E800DCC576 /* PlaylistItem.swift */; };
 		A7BB42FD1EA85E6000A205CA /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */; };
 		A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9959E1E9EA6CF004826EE /* AppDelegate.swift */; };
@@ -95,6 +98,9 @@
 		A754E1391EABF92E00136A9A /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistCell.swift; path = Playlist/PlaylistCell.swift; sourceTree = "<group>"; };
 		A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+extension.swift"; sourceTree = "<group>"; };
 		A7ADE8141EAD5ED7004F299E /* TracksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewModel.swift; path = Tracks/TracksViewModel.swift; sourceTree = "<group>"; };
+		A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmThumb.swift; path = iTrack/RealmThumb.swift; sourceTree = "<group>"; };
+		A7ADE8181EAD7CE8004F299E /* TrackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackList.swift; path = iTrack/TrackList.swift; sourceTree = "<group>"; };
+		A7ADE81A1EAD7D1D004F299E /* CurrentListID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurrentListID.swift; path = iTrack/CurrentListID.swift; sourceTree = "<group>"; };
 		A7B073721EA974E800DCC576 /* PlaylistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItem.swift; path = Playlist/PlaylistItem.swift; sourceTree = "<group>"; };
 		A7BB42FB1EA85E6000A205CA /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,8 +414,11 @@
 			isa = PBXGroup;
 			children = (
 				A7CBC4041E9FE62300C95A50 /* Track.swift */,
+				A7ADE8181EAD7CE8004F299E /* TrackList.swift */,
+				A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */,
 				A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */,
 				A7CBC4061E9FE62300C95A50 /* Thumbs.swift */,
+				A7ADE81A1EAD7D1D004F299E /* CurrentListID.swift */,
 			);
 			name = iTrack;
 			sourceTree = "<group>";
@@ -714,6 +723,7 @@
 				A7E62CE91EACB85B0053B614 /* ButtonHelpers.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
 				A7E62CE51EACB8190053B614 /* BasePopView.swift in Sources */,
+				A7ADE81B1EAD7D1D004F299E /* CurrentListID.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
 				A7F8B0511EA2E04900B333F9 /* EqualizerAnimation.swift in Sources */,
@@ -733,6 +743,7 @@
 				A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */,
 				A7E62CE71EACB8380053B614 /* BasePopoverAlert.swift in Sources */,
 				A7ADE8151EAD5ED7004F299E /* TracksViewModel.swift in Sources */,
+				A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */,
 				A7322E061EA3EE330096E5DE /* SplashView.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A7E62CEB1EACB8880053B614 /* DetailView.swift in Sources */,
@@ -745,6 +756,7 @@
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
 				A7BB42FD1EA85E6000A205CA /* PlaylistViewController.swift in Sources */,
 				A7CBC3E91E9FBACF00C95A50 /* TracksViewController.swift in Sources */,
+				A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */,
 				A7CBC4011E9FE61500C95A50 /* Download.swift in Sources */,
 				A7CA202E1EAC6C9000EF69A1 /* PlayerViewModel.swift in Sources */,
 				A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */,

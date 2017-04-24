@@ -10,42 +10,6 @@ import Foundation
 import Realm
 import RealmSwift
 
-class CurrentListID: Object {
-    dynamic var id: String = ""
-}
-
-class TrackList: Object {
-    dynamic var listId: String = ""
-    dynamic var listName: String = ""
-    dynamic var date: String = ""
-    var tracks = List<Track>()
-}
-
-
-class RealmThumb: Object {
-    var thumb: Thumbs
-    
-    convenience init(thumb: Thumbs) {
-        self.init()
-        self.thumb = thumb
-    }
-    
-    required init() {
-        self.thumb = .none
-        super.init()
-    }
-    
-    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        self.thumb = .none
-        super.init(realm: realm, schema: schema)
-    }
-    
-    required init(value: Any, schema: RLMSchema) {
-        self.thumb = .none
-        super.init(value: value, schema: schema)
-    }
-}
-
 class Track: Object {
     
     var thumbs: RealmThumb?

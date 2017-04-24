@@ -15,6 +15,8 @@ typealias JSON = [String: Any]
 @objc(iTunesAPIClient)
 final class iTunesAPIClient: NSObject {
     
+    typealias jsonCompletion = (_ responseObject: JSON?, _ error: Error?) -> Void
+    
     var activeDownloads: [String: Download]?
     weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
@@ -34,7 +36,7 @@ final class iTunesAPIClient: NSObject {
     
     // MARK: - Main search functionality
     
-    static func search(for query: String, completion: @escaping (_ responseObject: JSON?, _ error: Error?) -> Void) {
+    static func search(for query: String, completion: @escaping jsonCompletion) {
         if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
             let url = URL(string: "https://itunes.apple.com/search?media=music&entity=song&term=\(encodedQuery)") {
             self.downloadData(url: url) { data, response, error in

@@ -23,24 +23,23 @@ final class SplashViewController: UIViewController {
     
     func animateYSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.y")
-        animation.duration = 0.22
-        animation.fromValue = 1
-        animation.toValue = 2.5
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.autoreverses = true
-        animation.repeatCount = 3
+        setupSlowAnimation(animation: animation)
         return animation
     }
     
     func animateXSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.x")
+        setupSlowAnimation(animation: animation)
+        return animation
+    }
+    
+    func setupSlowAnimation(animation: CABasicAnimation) {
         animation.duration = 0.22
         animation.fromValue = 1
         animation.toValue = 1.5
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.autoreverses = true
         animation.repeatCount = 3
-        return animation
     }
     
     override func viewDidAppear(_ animated: Bool) {
