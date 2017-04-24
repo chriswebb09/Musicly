@@ -19,7 +19,6 @@
 		A71ADF481EADE0C00030932E /* BasePopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF441EADE0C00030932E /* BasePopView.swift */; };
 		A71ADF491EADE0C00030932E /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF451EADE0C00030932E /* DetailPopover.swift */; };
 		A71ADF4A1EADE0C00030932E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF461EADE0C00030932E /* DetailView.swift */; };
-		A71ADF4C1EADE19C0030932E /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4B1EADE19C0030932E /* NSError+Extension.swift */; };
 		A71ADF531EADE1F00030932E /* EqualizerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4D1EADE1F00030932E /* EqualizerAnimation.swift */; };
 		A71ADF541EADE1F00030932E /* FileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4E1EADE1F00030932E /* FileState.swift */; };
 		A71ADF551EADE1F00030932E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4F1EADE1F00030932E /* PlayerView.swift */; };
@@ -30,7 +29,9 @@
 		A71ADF5E1EADE2040030932E /* TrackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF5A1EADE2040030932E /* TrackCellViewModel.swift */; };
 		A71ADF5F1EADE2040030932E /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF5B1EADE2040030932E /* TracksViewController.swift */; };
 		A71ADF601EADE2040030932E /* TracksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF5C1EADE2040030932E /* TracksViewModel.swift */; };
+		A71ADF661EADE3220030932E /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF651EADE3220030932E /* NSError+Extension.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
+		A769B9231EADE72D0011004E /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A769B9221EADE72D0011004E /* Textfield+Extension.swift */; };
 		A7993E961EADB63E00472E7C /* RealmDatabase+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */; };
 		A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */; };
 		A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */; };
@@ -98,7 +99,6 @@
 		A71ADF441EADE0C00030932E /* BasePopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopView.swift; path = Elements/Popover/BasePopView.swift; sourceTree = "<group>"; };
 		A71ADF451EADE0C00030932E /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailPopover.swift; path = Elements/Popover/DetailPopover.swift; sourceTree = "<group>"; };
 		A71ADF461EADE0C00030932E /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailView.swift; path = Elements/Popover/DetailView.swift; sourceTree = "<group>"; };
-		A71ADF4B1EADE19C0030932E /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
 		A71ADF4D1EADE1F00030932E /* EqualizerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EqualizerAnimation.swift; path = Screens/Player/EqualizerAnimation.swift; sourceTree = "<group>"; };
 		A71ADF4E1EADE1F00030932E /* FileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileState.swift; path = Screens/Player/FileState.swift; sourceTree = "<group>"; };
 		A71ADF4F1EADE1F00030932E /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = Screens/Player/PlayerView.swift; sourceTree = "<group>"; };
@@ -109,7 +109,10 @@
 		A71ADF5A1EADE2040030932E /* TrackCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellViewModel.swift; path = Musicly/UI/Screens/Tracks/TrackCellViewModel.swift; sourceTree = SOURCE_ROOT; };
 		A71ADF5B1EADE2040030932E /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewController.swift; path = Musicly/UI/Screens/Tracks/TracksViewController.swift; sourceTree = SOURCE_ROOT; };
 		A71ADF5C1EADE2040030932E /* TracksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewModel.swift; path = Musicly/UI/Screens/Tracks/TracksViewModel.swift; sourceTree = SOURCE_ROOT; };
+		A71ADF631EADE3140030932E /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
+		A71ADF651EADE3220030932E /* NSError+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		A769B9221EADE72D0011004E /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Textfield+Extension.swift"; path = "Musicly/UI/Elements/Textfield+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Extension.swift"; sourceTree = "<group>"; };
 		A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+extension.swift"; sourceTree = "<group>"; };
 		A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmThumb.swift; path = iTrack/RealmThumb.swift; sourceTree = "<group>"; };
@@ -205,7 +208,8 @@
 		A71739D51EA1915400C28A41 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A71ADF4B1EADE19C0030932E /* NSError+Extension.swift */,
+				A71ADF651EADE3220030932E /* NSError+Extension.swift */,
+				A71ADF631EADE3140030932E /* NSError+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -292,6 +296,7 @@
 				A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */,
 				A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */,
 				A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */,
+				A769B9221EADE72D0011004E /* Textfield+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -732,7 +737,7 @@
 				A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A71ADF491EADE0C00030932E /* DetailPopover.swift in Sources */,
-				A71ADF4C1EADE19C0030932E /* NSError+Extension.swift in Sources */,
+				A71ADF661EADE3220030932E /* NSError+Extension.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
 				A7ADE81B1EAD7D1D004F299E /* CurrentListID.swift in Sources */,
 				A71ADF5D1EADE2040030932E /* TrackCell.swift in Sources */,
@@ -743,6 +748,7 @@
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
 				A71ADF481EADE0C00030932E /* BasePopView.swift in Sources */,
+				A769B9231EADE72D0011004E /* Textfield+Extension.swift in Sources */,
 				A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */,
 				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,
 				A71ADF5F1EADE2040030932E /* TracksViewController.swift in Sources */,
@@ -864,7 +870,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -908,7 +914,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

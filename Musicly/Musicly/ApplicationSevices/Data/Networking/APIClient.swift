@@ -15,6 +15,8 @@ typealias JSON = [String: Any]
 @objc(iTunesAPIClient)
 final class iTunesAPIClient: NSObject {
     
+    // JSON completion typealiases for asynchronous code
+    
     typealias jsonCompletion = (_ responseObject: JSON?, _ error: Error?) -> Void
     
     var activeDownloads: [String: Download]?

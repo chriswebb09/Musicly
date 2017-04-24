@@ -17,12 +17,13 @@ class PlaylistViewController: UIViewController {
     let detailPop = DetailPopover()
     var playlists: [Playlist]?
     var collectionView : UICollectionView? = UICollectionView.setupCollectionView()
+    
     var store: iTrackDataStore? {
         didSet {
-            //dump(store)
             print(store?.trackLists.last)
         }
     }
+    
     var rightBarButtonItem: UIBarButtonItem?
     var listID: Results<CurrentListID>!
     var trackList: [TrackList]!
@@ -72,12 +73,8 @@ extension PlaylistViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
         if trackList.count <= 0 {
-    //  ''  if te.tracks.count <= 0 {
             cell.configure(playlistName: "Test", artUrl: nil)
         } else {
-          //  let test = trackList[0]
-          //  let item = test.tracks[0]
-          //  let url = URL(string: item.artworkUrl)!
             cell.configure(playlistName: "List", artUrl: nil)
         }
         return cell

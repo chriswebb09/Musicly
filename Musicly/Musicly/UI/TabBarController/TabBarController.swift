@@ -9,6 +9,9 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    
+    // Accessible in Tabbar child controllers 
+    
     var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
     override func viewDidLoad() {
@@ -21,6 +24,8 @@ final class TabBarController: UITabBarController {
         super.viewWillLayoutSubviews()
         self.setupTabBar(tabBar: tabBar, view: view)
     }
+    
+    // General dimensions and look of tabbar
     
     func setupTabBar(tabBar:UITabBar, view:UIView) {
         var tabFrame = tabBar.frame

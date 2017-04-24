@@ -255,8 +255,6 @@
         musicIcon.isHidden = to
     }
     
-    // TODO: - Handle searchbar without text
-    
     fileprivate func setup() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
@@ -266,8 +264,6 @@
         definesPresentationContext = true
         searchBar.barTintColor = .white
     }
-    
-    // TODO: - Cleanup logic
     
     func searchBarHasInput() {
         guard let collectionView = collectionView else { return }

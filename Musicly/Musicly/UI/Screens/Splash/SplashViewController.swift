@@ -21,17 +21,23 @@ final class SplashViewController: UIViewController {
         splashView.layoutSubviews()
     }
     
+    // Animates up and down
+    
     func animateYSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.y")
         setupSlowAnimation(animation: animation)
         return animation
     }
     
+    // Animates sides
+    
     func animateXSlow() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale.x")
         setupSlowAnimation(animation: animation)
         return animation
     }
+    
+    // Shared setup for animations
     
     func setupSlowAnimation(animation: CABasicAnimation) {
         animation.duration = 0.22

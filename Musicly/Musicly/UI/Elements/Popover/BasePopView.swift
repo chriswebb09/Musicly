@@ -10,6 +10,8 @@ import UIKit
 
 class BasePopView: UIView {
     
+    // View with title ect. 
+    
     let headBanner: UIView = {
         let banner = UIView()
         banner.backgroundColor = UIColor.black

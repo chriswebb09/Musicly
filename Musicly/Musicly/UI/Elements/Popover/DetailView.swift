@@ -10,6 +10,8 @@ import UIKit
 
 class DetailView: UIView {
     
+    // Input for playlist name
+    
     var playlistNameField: TextFieldExtension = {
         var playlistNameField = TextFieldExtension()
         playlistNameField.layer.borderColor = DetailViewConstants.mainColor.cgColor
@@ -89,6 +91,8 @@ class DetailView: UIView {
     }
 }
 
+// Constants
+
 struct DetailViewConstants {
     static let heightMultiplier: CGFloat = 0.2
     static let fieldWidth: CGFloat = 0.8
@@ -100,24 +104,3 @@ struct DetailViewConstants {
     static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
     static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
 }
-
-class TextFieldExtension: UITextField {
-    
-    // Sets textfield input to + 10 inset on origin x value
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x: bounds.origin.x + 10,
-                      y: bounds.origin.y,
-                      width: bounds.width + 10,
-                      height: bounds.height)
-    }
-    
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x: bounds.origin.x + 10,
-                      y: bounds.origin.y,
-                      width: bounds.width + 10,
-                      height: bounds.height)
-    }
-}
-
-

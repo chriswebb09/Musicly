@@ -17,6 +17,8 @@ final internal class TrackCell: UICollectionViewCell {
         }
     }
     
+    // Song name
+    
     private var trackNameLabel: UILabel = {
         var trackName = UILabel()
         trackName.backgroundColor = .white
@@ -30,6 +32,8 @@ final internal class TrackCell: UICollectionViewCell {
         var album = UIImageView()
         return album
     }()
+    
+    // Cell shadow
     
     private func setShadow() {
         layer.setCellShadow(contentView: contentView)

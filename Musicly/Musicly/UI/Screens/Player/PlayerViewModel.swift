@@ -33,6 +33,7 @@ struct PlayerViewModel {
     var totalTime: Int
     var totalTimeString: String
     var artworkUrl: String
+    
     init(track: Track, playState: FileState) {
         self.playState = playState
         self.currentPlayTimeColor = .orange

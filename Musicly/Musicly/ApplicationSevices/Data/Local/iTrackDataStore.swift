@@ -13,10 +13,10 @@ final class iTrackDataStore {
     
     typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
     
-    var realm: Realm!
-    
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
+    
+    var realm: Realm!
     var newTracks = [Track]()
     var trackLists: Results<TrackList>!
     var tracks: Results<Track>!
@@ -34,13 +34,13 @@ final class iTrackDataStore {
     func saveItem(playlistItem: PlaylistItem) {
         let track = playlistItem.track
         var newList = lists.last
-        //    var old = lists.first
-        // //  newList?.appendToTracks(track: playlistItem.track!)
     }
     
     func setSearch(string: String?) {
         self.searchTerm = string
     }
+    
+    // Creates new TrackList
     
     func createNewList(name: String) {
         var newList = TrackList()
@@ -49,6 +49,8 @@ final class iTrackDataStore {
         lists.append(newList)
         save(list: newList)
     }
+    
+    // Save individual track
     
     func saveTrack(track: Track) {
         if let realm = try? Realm() {
@@ -68,6 +70,7 @@ final class iTrackDataStore {
         }
     }
     
+    // Save tracklist to Realm
     
     func save(list: TrackList) {
         if let realm = try? Realm() {
@@ -81,17 +84,23 @@ final class iTrackDataStore {
         }
     }
     
+    // Fetch playlist from Realm storage to use
+    
     func pullLists() -> TrackList? {
         let realm = try! Realm()
         let results = realm.objects(TrackList.self)
         return results.first
     }
     
+    // Donwload preview - form downloading audio
+    
     func downloadTrackPreview(for download: Download?) {
         if let client = client {
             client.downloadTrackPreview(for: download)
         }
     }
+    
+    // Hit with search terms, parse json and return objects
     
     func searchForTracks(completion: @escaping playlistCompletion) {
         if let searchTerm = searchTerm {

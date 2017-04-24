@@ -10,6 +10,8 @@ import UIKit
 
 extension UICollectionViewFlowLayout {
     
+    // collection view layout with small cells - possibly for animations 
+    
     static func small() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = EdgeAttributes.sectionInset

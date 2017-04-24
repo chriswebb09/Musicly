@@ -41,7 +41,6 @@ class Track: Object {
             let previewUrl = json["previewUrl"] as? String,
             let artworkUrl = json["artworkUrl100"] as? String,
             let collectionName = json["collectionName"] as? String {
-            
             self.trackName = trackName
             self.artistName = artistName
             self.artistID = String(describing: artistId)

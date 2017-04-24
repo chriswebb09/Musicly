@@ -16,8 +16,12 @@ final class PlayerViewController: UIViewController {
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem?
     var index: Int?
+    
     var currentPlayerID: CurrentListID!
+    
     let realm = try! Realm()
+    
+    // Gets data from Realm
     var playlistList: Results<TrackList>!
     var currentID: Results<CurrentListID>!
     
@@ -78,11 +82,6 @@ final class PlayerViewController: UIViewController {
         let tabbar = self.tabBarController as! TabBarController
         let store = tabbar.store
         store.saveTrack(track: new)
-       // store.saveItem(playlistItem: playListItem!)
-        //store.lists.last?.appendToTracks(track: new)
-       // guard let list = store.lists.last else { return }
-       // list.appendToTracks(track: new)
-       // store.save(list: list)
     }
     
     private final func getFileTime(url: URL) -> String? {
@@ -124,35 +123,6 @@ final class PlayerViewController: UIViewController {
         print(player.isPlaying)
     }
     
-    func save(entityList: [TrackList], shouldUpdate update: Bool = true) {
-        var database = try! Realm()
-        
-        database.beginWrite()
-        for entity in entityList {
-            if let key = type(of: entity).primaryKey(), let value = entity[key] , update {
-                if let existingObject = database.object(ofType: type(of: entity), forPrimaryKey: value as AnyObject) {
-                    let relationships = existingObject.objectSchema.properties.filter {
-                        $0.type == .array
-                    }
-                    for relationship in relationships {
-                        if let newObjectRelationship = entity[relationship.name] as? ListBase , newObjectRelationship.count == 0 {
-                            entity[relationship.name] = existingObject[relationship.name]
-                        }
-                    }
-                }
-            }
-            database.add(entity, update: update)
-        }
-        
-        do {
-            try database.commitWrite()
-        } catch let writeError {
-            debugPrint("Unable to commit write: \(writeError)")
-        }
-        
-        database.refresh()
-        //.appendToTracks(track: new)
-    }
 }
 
 extension PlayerViewController: PlayerViewDelegate {
