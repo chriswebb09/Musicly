@@ -20,13 +20,13 @@ class PlaylistViewController: UIViewController {
     
     var store: iTrackDataStore? {
         didSet {
-            print(store?.trackLists.last)
+            //print(store?.trackLists.last)
         }
     }
     
     var rightBarButtonItem: UIBarButtonItem?
     var listID: Results<CurrentListID>!
-    var trackList: [TrackList]!
+    var trackList: [TrackList] = [TrackList]()
     
     override func viewDidLoad() {
         edgesForExtendedLayout = []
@@ -38,24 +38,22 @@ class PlaylistViewController: UIViewController {
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
-        
-        self.rightBarButtonItem = UIBarButtonItem.init(
-            title: "New",
-            style: .done,
-            target: self,
-            action: #selector(pop)
-        )
-        
+        self.rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         guard let rightButtonItem = self.rightBarButtonItem else { return }
-        
         navigationItem.rightBarButtonItems = [rightButtonItem]
+        
+        var tabbar = self.tabBarController as! TabBarController
+        
+        self.store = tabbar.store
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let tabController = self.tabBarController as! TabBarController
         self.store = tabController.store
-        self.trackList = Array(store!.trackLists)
+        guard let store = store else { return }
+        store.setSearch(string: "")
+        self.trackList = Array(store.trackLists)
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
             
@@ -66,26 +64,27 @@ class PlaylistViewController: UIViewController {
 extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let trackList = trackList else { return 0 }
+        dump(trackList)
         return trackList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
-        if trackList.count <= 0 {
-            cell.configure(playlistName: "Test", artUrl: nil)
-        } else {
-            cell.configure(playlistName: "List", artUrl: nil)
-        }
+        let track = trackList[indexPath.row]
+        var name = track.listName
+        cell.configure(playlistName: name, artUrl: nil)
         return cell
     }
     
     func pop() {
         detailPop.popView.configureView()
-        detailPop.popView.doneButton.backgroundColor = PlaylistViewControllerConstants.mainColor
-        detailPop.popView.doneButton.setTitleColor(.white, for: .normal)
-        detailPop.popView.doneButton.titleLabel!.font = UIFont(name: "Avenir-Book", size: 18)!
+        //detailPop.popView.doneButton.backgroundColor = PlaylistViewControllerConstants.mainColor
+        detailPop.popView.backgroundColor = CollectionViewAttributes.backgroundColor
+        detailPop.popView.doneButton.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
+        detailPop.popView.doneButton.titleLabel!.font = UIFont(name: "Avenir-Book", size: 20)!
         detailPop.popView.doneButton.setTitle("Done", for: .normal)
+        detailPop.popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
+        detailPop.popView.doneButton.layer.borderWidth = 1.5
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
@@ -96,7 +95,7 @@ extension PlaylistViewController: UICollectionViewDataSource {
     func hidePop() {
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
         self.store?.createNewList(name: nameText)
-        
+        //
         if let last = store?.trackLists.last {
             trackList.append(last)
         }

@@ -15,6 +15,7 @@ final class TabBarController: UITabBarController {
     var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
     override func viewDidLoad() {
+        self.store = iTrackDataStore(searchTerm: "")
         store.setSearch(string: "new")
         view.backgroundColor = .white
         setupTabs()
@@ -44,9 +45,9 @@ final class TabBarController: UITabBarController {
     fileprivate func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
-        tracksController.store = store
+        //tracksController.store = store
         let playlistController = PlaylistViewController()
-        playlistController.store = store
+       // playlistController.store = store
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
         let controllers = [searchTab, playlistTab]

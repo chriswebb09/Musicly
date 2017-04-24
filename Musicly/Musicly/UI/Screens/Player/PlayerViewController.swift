@@ -45,14 +45,10 @@ final class PlayerViewController: UIViewController {
                                                target: self,
                                                action: #selector(add)
         )
-        
         rightButtonItem?.tintColor = UIColor.orange
-        
         guard let rightButtonItem = self.rightButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        rightButtonItem.tintColor = .orange
-        rightButtonItem.image = #imageLiteral(resourceName: "heartorangesmall").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        rightButtonItem.image = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     }
     
     func setupPlayItem(index: Int?) {

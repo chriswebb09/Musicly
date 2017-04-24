@@ -110,7 +110,7 @@ struct BasePopConstants {
 struct BasePopoverAlertConstants {
     static let popViewX = UIScreen.main.bounds.width / 2
     static let popViewY = UIScreen.main.bounds.height / 2
-    static let containerOpacity: Float = 0.5
+    static let containerOpacity: Float = 0.4
 }
 
 struct SplashConstants {
@@ -170,7 +170,7 @@ struct EqualizerConstants {
 
 struct PlaylistCellConstants {
     static let nameLabelCenterX = UIScreen.main.bounds.width * 0.2
-    static let artViewMultiplier: CGFloat = 0.25
+    static let artViewMultiplier: CGFloat = 0.22
     static let artViewWidthMultiplier: CGFloat = 0.6
     static let shadowOffset = CGSize(width: 0, height: 2)
     static let cornerRadius: CGFloat = 2

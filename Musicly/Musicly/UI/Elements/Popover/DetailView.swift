@@ -95,8 +95,8 @@ class DetailView: UIView {
 
 struct DetailViewConstants {
     static let heightMultiplier: CGFloat = 0.2
-    static let fieldWidth: CGFloat = 0.8
-    static let borderWidth: CGFloat = 1
+    static let fieldWidth: CGFloat = 0.9
+    static let borderWidth: CGFloat = 2
     static let largeCornerRadius: CGFloat = 5
     static let cornerRadius: CGFloat = 2
     static let shadowOpacity: Float = 0.5
