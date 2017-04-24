@@ -9,13 +9,13 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
     override func viewDidLoad() {
+        store.setSearch(string: "new")
         view.backgroundColor = .white
         setupTabs()
     }
-    
-    var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -28,8 +28,7 @@ final class TabBarController: UITabBarController {
         tabFrame.size.height = tabBarHeight
         tabFrame.origin.y = view.frame.size.height - tabBarHeight
         tabBar.frame = tabFrame
-        tabBar.isTranslucent = true
-        tabBar.tintColor = Tabbar.tint
+        tabBar.isTranslucent = false
     }
     
     func setupTabs() {
@@ -38,6 +37,7 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupControllers() {
+        UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
         tracksController.store = store
         let playlistController = PlaylistViewController()
@@ -56,15 +56,19 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
-        tracksViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "discturntable")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "discturntable")?.withRenderingMode(.alwaysTemplate))
-        configureTabBarItem(item: tracksViewController.tabBarItem)
+        var normalImage = #imageLiteral(resourceName: "blue-dj")
+        var selectedImage = #imageLiteral(resourceName: "orangedj")
+        tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
+        
         let tracksTab = UINavigationController(rootViewController: tracksViewController)
         return tracksTab
     }
     
     fileprivate func setupPlaylistTab(playlistViewController: PlaylistViewController) -> UINavigationController {
-        playlistViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "heart")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "heart")?.withRenderingMode(.alwaysTemplate))
-        configureTabBarItem(item: playlistViewController.tabBarItem)
+        var selectedImage = #imageLiteral(resourceName: "orange-soundwave")
+        var normalImage = #imageLiteral(resourceName: "blue-soundwave")
+        playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
+        playlistViewController.tabBarItem.selectedImage = selectedImage
         let playlistTab = UINavigationController(rootViewController: playlistViewController)
         return playlistTab
     }

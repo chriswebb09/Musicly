@@ -35,14 +35,20 @@ final class PlayerViewController: UIViewController {
         playerView.layoutSubviews()
         setupPlayItem(index: index)
         playerView.delegate = self
-        rightButtonItem = UIBarButtonItem.init(
-            title: "New",
-            style: .done,
-            target: self,
-            action: #selector(add)
+        
+        rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "heartorangesmall"),
+                                               style: .done,
+                                               target: self,
+                                               action: #selector(add)
         )
+        
+        rightButtonItem?.tintColor = UIColor.orange
+        
         guard let rightButtonItem = self.rightButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
+        rightButtonItem.tintColor = .orange
+        rightButtonItem.image = #imageLiteral(resourceName: "heartorangesmall").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.navigationItem.rightBarButtonItem?.tintColor = .orange
     }
     
     func setupPlayItem(index: Int?) {
@@ -58,7 +64,9 @@ final class PlayerViewController: UIViewController {
     
     func setupItem(with track: Track) -> Track {
         let item = Track()
-        item.playlistID = currentPlayerID.id
+        if let currentPlatID = currentPlayerID {
+            item.playlistID = currentPlayerID.id
+        }
         item.artistID = track.artistID
         item.artworkUrl = track.artworkUrl
         item.artistName = track.artistName
@@ -66,20 +74,15 @@ final class PlayerViewController: UIViewController {
     }
     
     func add() {
-        let lists = realm.objects(TrackList.self).filter("listId == %@", currentPlayerID.id)
-        guard let track = playListItem?.track else { return }
-        let item = setupItem(with: track)
-        item.playlistID = currentPlayerID.id
-        let firstList = lists.first
-        if let realm = try? Realm() {
-            playlistList = realm.objects(TrackList.self)
-            guard let firstList = firstList else { return }
-            if !playlistList.contains(firstList) {
-                try! realm.write {
-                    realm.add(firstList)
-                }
-            }
-        }
+         var new = setupItem(with: (self.playListItem?.track)!)
+        let tabbar = self.tabBarController as! TabBarController
+        let store = tabbar.store
+        store.saveTrack(track: new)
+       // store.saveItem(playlistItem: playListItem!)
+        //store.lists.last?.appendToTracks(track: new)
+       // guard let list = store.lists.last else { return }
+       // list.appendToTracks(track: new)
+       // store.save(list: list)
     }
     
     private final func getFileTime(url: URL) -> String? {
@@ -119,6 +122,36 @@ final class PlayerViewController: UIViewController {
         }
         player = AVPlayer(playerItem: item)
         print(player.isPlaying)
+    }
+    
+    func save(entityList: [TrackList], shouldUpdate update: Bool = true) {
+        var database = try! Realm()
+        
+        database.beginWrite()
+        for entity in entityList {
+            if let key = type(of: entity).primaryKey(), let value = entity[key] , update {
+                if let existingObject = database.object(ofType: type(of: entity), forPrimaryKey: value as AnyObject) {
+                    let relationships = existingObject.objectSchema.properties.filter {
+                        $0.type == .array
+                    }
+                    for relationship in relationships {
+                        if let newObjectRelationship = entity[relationship.name] as? ListBase , newObjectRelationship.count == 0 {
+                            entity[relationship.name] = existingObject[relationship.name]
+                        }
+                    }
+                }
+            }
+            database.add(entity, update: update)
+        }
+        
+        do {
+            try database.commitWrite()
+        } catch let writeError {
+            debugPrint("Unable to commit write: \(writeError)")
+        }
+        
+        database.refresh()
+        //.appendToTracks(track: new)
     }
 }
 

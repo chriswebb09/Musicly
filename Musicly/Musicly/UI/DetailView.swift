@@ -10,11 +10,13 @@ import UIKit
 
 class DetailView: UIView {
     
-    var playlistNameField: UITextField = {
-        var playlistNameField = UITextField()
+    var playlistNameField: TextFieldExtension = {
+        var playlistNameField = TextFieldExtension()
         playlistNameField.layer.borderColor = DetailViewConstants.mainColor.cgColor
         playlistNameField.layer.cornerRadius = DetailViewConstants.largeCornerRadius
         playlistNameField.layer.borderWidth = DetailViewConstants.borderWidth
+        playlistNameField.placeholder = "Name your playlist"
+        playlistNameField.font = UIFont(name: "Avenir-Book", size: 20)!
         return playlistNameField
     }()
     
@@ -36,9 +38,11 @@ class DetailView: UIView {
     }()
     
     let doneButton: UIButton = {
-        var button = ButtonType.system(title: "Done", color: UIColor.white)
-        var uiButton = button.newButton
-        return uiButton
+        var button = UIButton()
+        button.tintColor = .white
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel!.font = UIFont(name: "Avenir-Book", size: 20)!
+        return button
     }()
     
     override func layoutSubviews() {
@@ -66,7 +70,7 @@ class DetailView: UIView {
         playlistNameField.translatesAutoresizingMaskIntoConstraints = false
         playlistNameField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playlistNameField.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: DetailViewConstants.heightMultiplier).isActive = true
+        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
         playlistNameField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: DetailViewConstants.fieldWidth).isActive = true
         
         addSubview(titleLabel)
@@ -84,4 +88,36 @@ class DetailView: UIView {
         doneButton.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
 }
+
+struct DetailViewConstants {
+    static let heightMultiplier: CGFloat = 0.2
+    static let fieldWidth: CGFloat = 0.8
+    static let borderWidth: CGFloat = 1
+    static let largeCornerRadius: CGFloat = 5
+    static let cornerRadius: CGFloat = 2
+    static let shadowOpacity: Float = 0.5
+    static let shadowOffset = CGSize(width: 0, height: 2)
+    static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
+}
+
+class TextFieldExtension: UITextField {
+    
+    // Sets textfield input to + 10 inset on origin x value
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 10,
+                      y: bounds.origin.y,
+                      width: bounds.width + 10,
+                      height: bounds.height)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 10,
+                      y: bounds.origin.y,
+                      width: bounds.width + 10,
+                      height: bounds.height)
+    }
+}
+
 

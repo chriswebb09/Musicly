@@ -11,8 +11,18 @@ import RealmSwift
 import Realm
 
 class TrackList: Object {
+    
     dynamic var listId: String = ""
     dynamic var listName: String = ""
     dynamic var date: String = ""
     var tracks = List<Track>()
+    
+    
+    func appendToTracks(track: Track) {
+        tracks.append(track)
+    }
+    
+    override static func primaryKey() -> String? {
+        return "listId"
+    }
 }

@@ -19,8 +19,8 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistNameLabel: UILabel = {
         var playlistNameLabel = UILabel()
-        playlistNameLabel.sizeToFit()
-        playlistNameLabel.font = PlaylistCellConstants.mainFont
+     
+        playlistNameLabel.font =  UIFont(name: "Avenir-Book", size: 18)!
         return playlistNameLabel
     }()
     
@@ -42,10 +42,14 @@ final class PlaylistCell: UICollectionViewCell {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
     
-    func configure(playlistName: String, artUrl: URL) {
+    func configure(playlistName: String, artUrl: URL?) {
         setupConstraints()
-        self.playlistNameLabel.text = playlistName
-        self.playlistArtView.downloadImage(url: artUrl)
+        if let artUrl = artUrl {
+            self.playlistArtView.downloadImage(url: artUrl)
+        } else {
+            self.playlistArtView.image = #imageLiteral(resourceName: "blue-record")
+        }
+        self.playlistNameLabel.text = "Playlist: \(playlistName)"
         layoutSubviews()
     }
     
@@ -53,7 +57,7 @@ final class PlaylistCell: UICollectionViewCell {
         contentView.addSubview(playlistNameLabel)
         playlistNameLabel.translatesAutoresizingMaskIntoConstraints = false
         playlistNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: PlaylistCellConstants.nameLabelCenterX).isActive = true
-        playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * -0.12).isActive = true
+        playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
         contentView.addSubview(playlistArtView)
         playlistArtView.translatesAutoresizingMaskIntoConstraints = false

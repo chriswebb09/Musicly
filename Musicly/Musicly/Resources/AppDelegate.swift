@@ -30,13 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = UINavigationController(rootViewController: viewController)
         UINavigationBar.appearance().tintColor = NavigationBarAttributes.navBarTint
+        
         UINavigationBar.appearance().titleTextAttributes = [
             NSFontAttributeName: ApplicationConstants.mainFont!,
             NSForegroundColorAttributeName: ApplicationConstants.fontColor
         ]
-        
-        
-        
         window?.makeKeyAndVisible()
         return true
     }

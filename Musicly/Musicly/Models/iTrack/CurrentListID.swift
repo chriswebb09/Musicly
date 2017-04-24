@@ -12,5 +12,8 @@ import Realm
 
 class CurrentListID: Object {
     dynamic var id: String = ""
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 

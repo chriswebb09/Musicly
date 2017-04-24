@@ -91,17 +91,7 @@ struct NavigationBarAttributes {
     static let navBarTint = UIColor.white
 }
 
-struct DetailViewConstants {
-    static let heightMultiplier: CGFloat = 0.15
-    static let fieldWidth: CGFloat = 0.9
-    static let borderWidth: CGFloat = 1
-    static let largeCornerRadius: CGFloat = 5
-    static let cornerRadius: CGFloat = 2
-    static let shadowOpacity: Float = 0.5
-    static let shadowOffset = CGSize(width: 0, height: 2)
-    static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
-    static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
-}
+
 
 struct PlaylistViewControllerConstants {
     static let itemSize =  CGSize(width: UIScreen.main.bounds.width, height: 150)
@@ -127,15 +117,15 @@ struct SplashConstants {
     static let animationDuration: Double = 0.004
 }
 
-struct DetailPopoverConstants {
-    static let cornerRadius: CGFloat = 10
-    static let borderWidth: CGFloat = 10
-    static let popViewFrameX: CGFloat = UIScreen.main.bounds.width * 0.5
-    static let popViewFrameY: CGFloat = UIScreen.main.bounds.height * -0.5
-    static let popViewFrameWidth: CGFloat = UIScreen.main.bounds.width * 0.93
-    static let popViewFrameHeight: CGFloat = UIScreen.main.bounds.height * 0.78
-    static let popViewFrameCenterY: CGFloat = UIScreen.main.bounds.height / 2.5
-}
+//struct DetailPopoverConstants {
+//    static let cornerRadius: CGFloat = 10
+//    static let borderWidth: CGFloat = 10
+//    static let popViewFrameX: CGFloat = UIScreen.main.bounds.width * 0.5
+//    static let popViewFrameY: CGFloat = UIScreen.main.bounds.height * -0.5
+//    static let popViewFrameWidth: CGFloat = UIScreen.main.bounds.width * 0.93
+//    static let popViewFrameHeight: CGFloat = UIScreen.main.bounds.height * 0.78
+//    static let popViewFrameCenterY: CGFloat = UIScreen.main.bounds.height / 2.5
+//}
 
 public struct LogoConstants {
     public static let logoImageWidth = CGFloat(0.3)

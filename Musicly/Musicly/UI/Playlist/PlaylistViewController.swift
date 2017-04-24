@@ -17,22 +17,24 @@ class PlaylistViewController: UIViewController {
     let detailPop = DetailPopover()
     var playlists: [Playlist]?
     var collectionView : UICollectionView? = UICollectionView.setupCollectionView()
-    var store: iTrackDataStore?
+    var store: iTrackDataStore? {
+        didSet {
+            //dump(store)
+            print(store?.trackLists.last)
+        }
+    }
     var rightBarButtonItem: UIBarButtonItem?
-    var testID: Results<CurrentListID>!
+    var listID: Results<CurrentListID>!
     var trackList: [TrackList]!
     
     override func viewDidLoad() {
-        
         edgesForExtendedLayout = []
         title = "Playlists"
-        
         self.collectionView = UICollectionView.setupCollectionView()
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
-        
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
         
@@ -44,25 +46,18 @@ class PlaylistViewController: UIViewController {
         )
         
         guard let rightButtonItem = self.rightBarButtonItem else { return }
-        let tabController = self.tabBarController as! TabBarController
-        self.store = tabController.store
+        
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        add()
-    }
-    
-    func add() {
-        if let realm = try? Realm() {
-            testID = realm.objects(CurrentListID.self)
-            let test = testID.first
-            let testsList = realm.objects(TrackList.self)
-            self.trackList = Array(testsList)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let tabController = self.tabBarController as! TabBarController
+        self.store = tabController.store
+        self.trackList = Array(store!.trackLists)
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
+            
         }
     }
 }
@@ -70,21 +65,30 @@ class PlaylistViewController: UIViewController {
 extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let trackList = trackList else { return 0 }
         return trackList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
-        let test = trackList[indexPath.row]
-        let item = test.tracks[0]
-        let url = URL(string: item.artworkUrl)!
-        cell.configure(playlistName: item.playlistID, artUrl: url)
+        if trackList.count <= 0 {
+    //  ''  if te.tracks.count <= 0 {
+            cell.configure(playlistName: "Test", artUrl: nil)
+        } else {
+          //  let test = trackList[0]
+          //  let item = test.tracks[0]
+          //  let url = URL(string: item.artworkUrl)!
+            cell.configure(playlistName: "List", artUrl: nil)
+        }
         return cell
     }
     
     func pop() {
         detailPop.popView.configureView()
         detailPop.popView.doneButton.backgroundColor = PlaylistViewControllerConstants.mainColor
+        detailPop.popView.doneButton.setTitleColor(.white, for: .normal)
+        detailPop.popView.doneButton.titleLabel!.font = UIFont(name: "Avenir-Book", size: 18)!
+        detailPop.popView.doneButton.setTitle("Done", for: .normal)
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
@@ -93,38 +97,60 @@ extension PlaylistViewController: UICollectionViewDataSource {
     }
     
     func hidePop() {
-        setupNewList()
+        guard let nameText = detailPop.popView.playlistNameField.text else { return }
+        self.store?.createNewList(name: nameText)
+        
+        if let last = store?.trackLists.last {
+            trackList.append(last)
+        }
+        
         detailPop.hidePopView(viewController: self)
         detailPop.popView.isHidden = true
         view.sendSubview(toBack: detailPop)
-    }
-    
-    func setupNewList() -> TrackList? {
-        let trackList = TrackList()
-        trackList.listId = UUID().uuidString
-        trackList.listName = "Test list"
-        guard let store = store else { return nil }
-        let test = store.newTracks
-        test.forEach {
-            let new = $0
-            new.playlistID = trackList.listId
-            trackList.tracks.append(new)
+        
+        if let zeroList = self.store?.lists[0] {
+            self.trackList.append(zeroList)
         }
-        let current = CurrentListID()
-        current.id = trackList.listId
-        writeId(current: current)
-        return trackList
+        
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+        }
     }
     
-    func writeId(current: CurrentListID) {
+    func setupNewList(name: String) -> TrackList {
+        let list = TrackList()
+        list.date = String(describing: NSDate())
+        list.listId = UUID().uuidString
+        list.listName = name
+        
+        return list
+    }
+    
+    func saveTrackList(trackList: TrackList) {
+        let lists: Results<TrackList>!
         if let realm = try? Realm() {
-            testID = realm.objects(CurrentListID.self)
-            if !testID.contains(current) {
+            lists = realm.objects(TrackList.self)
+            if !lists.contains(trackList) {
                 try! realm.write {
-                    realm.add(current)
+                    realm.add(trackList)
                 }
             }
         }
+    }
+    
+    func saveCurrentListID(newID: CurrentListID) {
+        if let realm = try? Realm() {
+            self.listID = realm.objects(CurrentListID.self)
+            if !self.listID.contains(newID) {
+                try! realm.write {
+                    realm.add(newID)
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(trackList[indexPath.row].listId)
     }
 }
 

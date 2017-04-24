@@ -35,6 +35,10 @@ class Playlist: Object {
         }
     }
     
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
     func append(newPlaylistItem: PlaylistItem?) {
         itemCount += 1
         if let lastItem = last {

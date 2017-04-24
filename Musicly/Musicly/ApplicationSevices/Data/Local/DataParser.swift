@@ -5,10 +5,6 @@ final class DataParser {
     static func parseDataForTrack(json: JSON?) -> Track? {
         guard let json = json else { return nil }
         return Track(json: json)
-       // if let track = Track(json: json) {
-            //return track
-      //  }
-       // return nil
     }
     
     static func parseDataForTracks(json: JSON?) -> [Track]? {

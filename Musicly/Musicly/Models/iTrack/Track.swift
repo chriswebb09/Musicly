@@ -22,6 +22,7 @@ class Track: Object {
     dynamic var artworkUrl: String = ""
     dynamic var collectionName: String = ""
     dynamic var downloaded: Bool = false
+    dynamic var imageData: Data = Data()
     
     let owners = LinkingObjects(
         fromType: TrackList.self,
@@ -65,6 +66,23 @@ class Track: Object {
     required init(value: Any, schema: RLMSchema) {
         self.thumbs = RealmThumb(thumb: .none)
         super.init(value: value, schema: schema)
+    }
+    
+    static func saveAlbumImageData(from urlString: String) -> Data {
+        let url = URL(string: urlString)!
+        var albumImageData = Data()
+        iTunesAPIClient.downloadData(url: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            albumImageData = data
+            while albumImageData.isEmpty {
+                print("downloading")
+            }
+        }
+        return albumImageData
+    }
+    
+    override static func primaryKey() -> String? {
+        return "playlistID"
     }
 }
 

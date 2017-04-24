@@ -37,7 +37,7 @@ extension UICollectionView {
         var collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
-            flowLayout.minimumLineSpacing = 0
+            flowLayout.minimumLineSpacing = 5
         }
         
         collectionView.collectionViewLayout.invalidateLayout()
