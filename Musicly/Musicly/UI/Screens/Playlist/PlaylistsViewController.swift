@@ -154,6 +154,8 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         let destinationVC = PlaylistViewController()
         destinationVC.tracklist = trackList[indexPath.row]
         destinationVC.title = trackList[indexPath.row].listName
+        store?.currentPlaylistID = trackList[indexPath.row].listId
+        store?.setCurrentPlaylist()
         navigationController?.pushViewController(destinationVC, animated: false)
     }
 }

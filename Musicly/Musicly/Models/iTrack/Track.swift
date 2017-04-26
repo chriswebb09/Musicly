@@ -81,7 +81,7 @@ class Track: Object {
     }
     
     override static func primaryKey() -> String? {
-        return "playlistID"
+        return "previewUrl"
     }
 }
 

@@ -49,6 +49,11 @@ final class PlaylistViewController: UIViewController {
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
         title = tracklist.listName
+        for track in tracklist.tracks {
+            var newItem = PlaylistItem()
+            newItem.track = track
+            playlist.append(newPlaylistItem: newItem)
+        }
         commonInit()
         setSearchBarColor(searchBar: searchBar)
         let tabController = self.tabBarController as! TabBarController
@@ -83,15 +88,7 @@ final class PlaylistViewController: UIViewController {
     }
     
     func navigationBarSetup() {
-        navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchBar = searchController.searchBar
-        navigationItem.titleView = searchBar
-        searchBar.delegate = self
-        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
-        textFieldInsideSearchBar?.textColor = .white
-        navigationItem.rightBarButtonItem?.tintColor = .white
-        searchBar.becomeFirstResponder()
+        self.tabBarController?.selectedIndex = 0
     }
     
     private func collectionViewRegister() {
@@ -165,6 +162,7 @@ extension PlaylistViewController {
     
     func setupPlayerController() -> PlayerViewController {
         let destinationViewController: PlayerViewController = PlayerViewController()
+        print(playlist)
         destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         return destinationViewController
@@ -175,6 +173,7 @@ extension PlaylistViewController {
         let destinationViewController = setupPlayerController()
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.index = selectedIndex
+        print(tracklist.tracks[indexPath.row])
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
@@ -189,6 +188,7 @@ extension PlaylistViewController {
             if translation.y < 0 {
                 cell.frame = CGRect(x: finalFrame.origin.x + 10, y: 50, width: 300, height: -200)
             }
+            
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
                 cell.alpha = 1
                 cell.frame = finalFrame
@@ -215,6 +215,7 @@ extension PlaylistViewController {
                 }
             }
         }
+
     }
 }
 

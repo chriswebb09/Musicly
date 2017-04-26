@@ -21,6 +21,8 @@ final class iTrackDataStore {
     var trackLists: Results<TrackList>!
     var tracks: Results<Track>!
     var lists = [TrackList]()
+    var currentPlaylistID: String?
+    var currentPlaylist: TrackList?
     
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
@@ -29,13 +31,23 @@ final class iTrackDataStore {
             tracks = realm.objects(Track.self)
             trackLists = realm.objects(TrackList.self)
         }
+        
+        currentPlaylistID = trackLists.last?.listId
+    }
+    
+    func setCurrentPlaylist() {
+        for list in trackLists {
+            if list.listId == currentPlaylistID! {
+                currentPlaylist = list
+            }
+        }
     }
     
     func setupItem(with track: Track) {
         let item = Track()
-//        if let currentPlatID = currentPlayerID {
-//            item.playlistID = currentPlayerID.id
-//        }
+        if let currentPlaylistID = currentPlaylistID {
+            item.playlistID = currentPlaylistID
+        }
         item.previewUrl = track.previewUrl
         item.trackName = track.trackName
         item.artistID = track.artistID
@@ -43,7 +55,7 @@ final class iTrackDataStore {
         item.artistName = track.artistName
         item.collectionName = track.collectionName
         saveTrack(track: item)
-//        return item
+
     }
     
     func saveItem(playlistItem: PlaylistItem) {
@@ -58,9 +70,12 @@ final class iTrackDataStore {
     // Creates new TrackList
     
     func createNewList(name: String) {
+        let date = Date()
+        var stringDate = String(describing: date)
         var newList = TrackList()
         newList.listName = name
         newList.listId = UUID().uuidString
+        newList.date = stringDate
         lists.append(newList)
         save(list: newList)
     }
@@ -72,11 +87,13 @@ final class iTrackDataStore {
             
             tracks = realm.objects(Track.self)
             if !tracks.contains(track) {
-                var newList = lists.last
+              //  var newList: TrackList
+             
+                //var newList = lists.last
                 
                 try! realm.write {
-                    newList?.appendToTracks(track: track)
-                    realm.add(track, update: true)
+                    currentPlaylist?.appendToTracks(track: track)
+                   // realm.add(track, update: true)
                 }
             } else {
                 print("Exists")

@@ -12,7 +12,7 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistArtView: UIImageView = {
         var playlistArtView = UIImageView()
-        playlistArtView.layer.borderWidth = PlaylistCellConstants.cornerRadius
+      //  playlistArtView.layer.borderWidth = PlaylistCellConstants.cornerRadius
         playlistArtView.clipsToBounds = true
         return playlistArtView
     }()
