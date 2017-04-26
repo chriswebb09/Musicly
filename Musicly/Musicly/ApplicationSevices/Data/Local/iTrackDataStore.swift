@@ -31,6 +31,21 @@ final class iTrackDataStore {
         }
     }
     
+    func setupItem(with track: Track) {
+        let item = Track()
+//        if let currentPlatID = currentPlayerID {
+//            item.playlistID = currentPlayerID.id
+//        }
+        item.previewUrl = track.previewUrl
+        item.trackName = track.trackName
+        item.artistID = track.artistID
+        item.artworkUrl = track.artworkUrl
+        item.artistName = track.artistName
+        item.collectionName = track.collectionName
+        saveTrack(track: item)
+//        return item
+    }
+    
     func saveItem(playlistItem: PlaylistItem) {
         let track = playlistItem.track
         var newList = lists.last

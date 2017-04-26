@@ -46,7 +46,7 @@ final class TabBarController: UITabBarController {
         UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
         //tracksController.store = store
-        let playlistController = PlaylistViewController()
+        let playlistController = PlaylistsViewController()
        // playlistController.store = store
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
@@ -70,7 +70,7 @@ final class TabBarController: UITabBarController {
         return tracksTab
     }
     
-    fileprivate func setupPlaylistTab(playlistViewController: PlaylistViewController) -> UINavigationController {
+    fileprivate func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
         var selectedImage = #imageLiteral(resourceName: "orange-soundwave")
         var normalImage = #imageLiteral(resourceName: "blue-soundwave")
         playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))

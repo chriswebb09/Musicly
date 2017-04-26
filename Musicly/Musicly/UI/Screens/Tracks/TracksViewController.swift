@@ -188,10 +188,55 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        cell.alpha = 0
-        setTrackCell(indexPath: indexPath, cell: cell)
+        if let track = playlist.playlistItem(at: indexPath.row)?.track {
+            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: URL(string: track.artworkUrl)!)
+            cell.configureCell(with: cellViewModel, withTime: 0)
+        }
+        
+        DispatchQueue.main.async {
+            let finalFrame = cell.frame
+            
+            let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+
+            if translation.y < 0 {
+                cell.frame = CGRect(x: finalFrame.origin.x + 10, y: 50, width: 300, height: -200)
+            }
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+                cell.alpha = 1
+                cell.frame = finalFrame
+            }, completion: { finished in
+                
+            })
+
+        }
+
         return cell
+    }
+
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if let cell = collectionView.cellForItem(at: indexPath) as? TrackCell {
+            DispatchQueue.main.async {
+                let finalFrame = cell.frame
+                
+                let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+                
+                if translation.x < 0 {
+                    cell.frame = CGRect(x: finalFrame.origin.x - 5000, y: -500, width: 500, height: 200)
+                } else {
+                    cell.frame = CGRect(x: finalFrame.origin.x + 500, y: -500, width: 500, height: 600)
+                }
+                
+                
+                UIView.animate(withDuration: 26) {
+                    cell.frame = finalFrame
+                }
+            }
+        }
     }
  }
  

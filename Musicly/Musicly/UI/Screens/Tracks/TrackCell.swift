@@ -45,11 +45,7 @@ final internal class TrackCell: UICollectionViewCell {
         self.viewModel  = viewModel
         self.albumArtView.downloadImage(url: viewModel.albumImageUrl)
         layoutSubviews()
-        DispatchQueue.main.asyncAfter(deadline: .now() + withTime) {
-            UIView.animate(withDuration: CollectionViewConstants.baseDuration) {
-                self.alpha = 1
-            }
-        }
+        self.alpha = 1
     }
     
     override func layoutSubviews() {

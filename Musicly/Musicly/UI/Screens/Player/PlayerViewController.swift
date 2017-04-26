@@ -22,6 +22,7 @@ final class PlayerViewController: UIViewController {
     let realm = try! Realm()
     
     // Gets data from Realm
+    
     var playlistList: Results<TrackList>!
     var currentID: Results<CurrentListID>!
     
@@ -62,22 +63,12 @@ final class PlayerViewController: UIViewController {
         initPlayer(url: url)
     }
     
-    func setupItem(with track: Track) -> Track {
-        let item = Track()
-        if let currentPlatID = currentPlayerID {
-            item.playlistID = currentPlayerID.id
-        }
-        item.artistID = track.artistID
-        item.artworkUrl = track.artworkUrl
-        item.artistName = track.artistName
-        return item
-    }
-    
     func add() {
-         var new = setupItem(with: (self.playListItem?.track)!)
+        guard let trackAdded = self.playListItem?.track else { return }
+        
         let tabbar = self.tabBarController as! TabBarController
         let store = tabbar.store
-        store.saveTrack(track: new)
+        store.setupItem(with: trackAdded)
     }
     
     private final func getFileTime(url: URL) -> String? {
@@ -177,15 +168,13 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func playButtonTapped() {
-        DispatchQueue.main.async {
-            self.player.play()
-            self.playerView.startEqualizer()
-            self.playerView.setTimer()
-            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
-                let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
-                let time = fraction / 450
-                self.playerView.updateProgressBar(value: time)
-            }
+        player.play()
+        playerView.startEqualizer()
+        playerView.setTimer()
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+            let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
+            let time = fraction / 450
+            self.playerView.updateProgressBar(value: time)
         }
     }
 }
