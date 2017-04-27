@@ -31,7 +31,7 @@
 		A71ADF601EADE2040030932E /* TracksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF5C1EADE2040030932E /* TracksViewModel.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */; };
-		A744416B1EB1209E00FEB3F2 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A744416A1EB1209E00FEB3F2 /* PlaylistView.swift */; };
+		A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */; };
 		A769B9231EADE72D0011004E /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A769B9221EADE72D0011004E /* Textfield+Extension.swift */; };
 		A7993E961EADB63E00472E7C /* RealmDatabase+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */; };
 		A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */; };
@@ -114,7 +114,7 @@
 		A71ADF5C1EADE2040030932E /* TracksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewModel.swift; path = Musicly/UI/Screens/Tracks/TracksViewModel.swift; sourceTree = SOURCE_ROOT; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Screens/Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
-		A744416A1EB1209E00FEB3F2 /* PlaylistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistView.swift; path = Screens/Playlist/PlaylistView.swift; sourceTree = "<group>"; };
+		A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailPopover+Extension.swift"; sourceTree = "<group>"; };
 		A769B9221EADE72D0011004E /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Textfield+Extension.swift"; path = "Musicly/UI/Elements/Textfield+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Extension.swift"; sourceTree = "<group>"; };
 		A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+extension.swift"; sourceTree = "<group>"; };
@@ -301,6 +301,7 @@
 				A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */,
 				A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */,
 				A769B9221EADE72D0011004E /* Textfield+Extension.swift */,
+				A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -363,7 +364,6 @@
 			isa = PBXGroup;
 			children = (
 				A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */,
-				A744416A1EB1209E00FEB3F2 /* PlaylistView.swift */,
 			);
 			name = Playlist;
 			sourceTree = "<group>";
@@ -769,8 +769,8 @@
 				A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
+				A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */,
 				A71ADF481EADE0C00030932E /* BasePopView.swift in Sources */,
-				A744416B1EB1209E00FEB3F2 /* PlaylistView.swift in Sources */,
 				A769B9231EADE72D0011004E /* Textfield+Extension.swift in Sources */,
 				A7CBC4021E9FE61500C95A50 /* DownloadDelegate.swift in Sources */,
 				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,

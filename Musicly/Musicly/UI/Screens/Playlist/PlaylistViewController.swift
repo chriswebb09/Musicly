@@ -60,8 +60,8 @@ final class PlaylistViewController: UIViewController {
         title = tracklist.listName
         commonInit()
         setSearchBarColor(searchBar: searchBar)
-        let tabController = self.tabBarController as! TabBarController
-        self.store = tabController.store
+        let tabController = tabBarController as! TabBarController
+        store = tabController.store
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -20,7 +20,7 @@ class PlaylistsViewController: UIViewController {
     
     var store: iTrackDataStore? {
         didSet {
-            
+            dump(store)
         }
     }
     
@@ -41,9 +41,7 @@ class PlaylistsViewController: UIViewController {
         rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         guard let rightButtonItem = self.rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        
-        let tabbar = self.tabBarController as! TabBarController
-        
+        let tabbar = tabBarController as! TabBarController
         store = tabbar.store
     }
     
@@ -75,8 +73,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         if track.tracks.count > 0 {
             if let arturl = URL(string: track.tracks[0].artworkUrl) {
                 cell.configure(playlistName: name, artUrl: arturl)
-            } else {
-                cell.configure(playlistName: name, artUrl: nil)
             }
         } else {
             cell.configure(playlistName: name, artUrl: nil)
@@ -84,20 +80,8 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func setupPop() {
-        detailPop.popView.configureView()
-        detailPop.popView.backgroundColor = CollectionViewAttributes.backgroundColor
-        detailPop.popView.doneButton.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
-        detailPop.popView.doneButton.titleLabel!.font = UIFont(name: "Avenir-Book", size: 20)!
-        detailPop.popView.doneButton.setTitle("Done", for: .normal)
-        detailPop.popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
-        detailPop.popView.doneButton.layer.borderWidth = 1.5
-        detailPop.popView.layer.borderWidth = 1.5
-        
-    }
-    
     func pop() {
-        setupPop()
+        detailPop.setupPop()
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false

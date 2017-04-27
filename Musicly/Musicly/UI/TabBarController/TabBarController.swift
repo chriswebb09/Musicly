@@ -10,7 +10,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    // Accessible in Tabbar child controllers 
+    // Accessible in Tabbar child controllers
     
     var store: iTrackDataStore = iTrackDataStore(searchTerm: "")
     
@@ -60,8 +60,8 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
-        var normalImage = #imageLiteral(resourceName: "blue-dj")
-        var selectedImage = #imageLiteral(resourceName: "orangedj")
+        let normalImage = #imageLiteral(resourceName: "blue-dj")
+        let selectedImage = #imageLiteral(resourceName: "orangedj")
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         
         let tracksTab = UINavigationController(rootViewController: tracksViewController)
@@ -69,8 +69,8 @@ final class TabBarController: UITabBarController {
     }
     
     fileprivate func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
-        var selectedImage = #imageLiteral(resourceName: "orange-soundwave")
-        var normalImage = #imageLiteral(resourceName: "blue-soundwave")
+        let selectedImage = #imageLiteral(resourceName: "orange-soundwave")
+        let normalImage = #imageLiteral(resourceName: "blue-soundwave")
         playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         playlistViewController.tabBarItem.selectedImage = selectedImage
         let playlistTab = UINavigationController(rootViewController: playlistViewController)
