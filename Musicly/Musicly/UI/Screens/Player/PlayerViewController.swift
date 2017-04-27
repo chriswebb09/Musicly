@@ -14,8 +14,8 @@ final class PlayerViewController: UIViewController {
     var playListItem: PlaylistItem?
     var avUrlAsset: AVURLAsset?
     var playList: Playlist?
-    var rightButtonItem: UIBarButtonItem?
-    var index: Int?
+    var rightButtonItem: UIBarButtonItem! = UIBarButtonItem.init(image: #imageLiteral(resourceName: "heartorangesmall"), style: .done, target: self, action: #selector(add))
+    var index: Int!
     
     let realm = try! Realm()
     
@@ -25,25 +25,26 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        edgesForExtendedLayout = []
-        navigationController?.isNavigationBarHidden = false
-        view.addSubview(playerView)
-        playerView.frame = UIScreen.main.bounds
-        playerView.layoutSubviews()
-        setupPlayItem(index: index)
+        baseControllerSetup()
+        baseViewSetup()
+        setupItem(index: index)
         playerView.delegate = self
-        rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "heartorangesmall"),
-                                               style: .done,
-                                               target: self,
-                                               action: #selector(add))
-        rightButtonItem?.tintColor = UIColor.orange
-        guard let rightButtonItem = self.rightButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
         rightButtonItem.image = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     }
     
-    func setupPlayItem(index: Int?) {
-        guard let index = index else { return }
+    func baseControllerSetup() {
+        edgesForExtendedLayout = []
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    func baseViewSetup() {
+        view.addSubview(playerView)
+        playerView.frame = UIScreen.main.bounds
+        playerView.layoutSubviews()
+    }
+    
+    func setupItem(index: Int) {
         playListItem = playList?.playlistItem(at: index)
         guard let track = playListItem?.track else { return }
         guard let url = URL(string: track.previewUrl) else { return }
@@ -75,7 +76,7 @@ final class PlayerViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        stopPlayer()
+        
         playerView.removeFromSuperview()
         dismiss(animated: true, completion: nil)
     }
@@ -102,10 +103,28 @@ final class PlayerViewController: UIViewController {
 
 extension PlayerViewController: PlayerViewDelegate {
     
+    // MARK: - Player controlers
+    
+    func playButtonTapped() {
+        player.play()
+        playerView.startEqualizer()
+        playerView.setTimer()
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+            let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
+            let time = fraction / 450
+            self.playerView.updateProgressBar(value: time)
+        }
+    }
+    
+    func pauseButtonTapped() {
+        playerView.stopEqualizer()
+        player.pause()
+    }
+    
     func backButtonTapped() {
         guard let previous = playListItem?.previous else { return }
         playListItem = previous
-        stopPlayer()
+        player.pause()
         DispatchQueue.main.async { [unowned self] in
             if let track = self.playListItem?.track,
                 let url = URL(string: track.previewUrl) {
@@ -120,20 +139,15 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func skipButtonTapped() {
         playListItem = playListItem?.next
-        stopPlayer()
+        player.pause()
         DispatchQueue.main.async {
             guard let track = self.playListItem?.track else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
-            
-            self.initPlayer(url: URL(string: track.previewUrl)!)
+            guard let url =  URL(string: track.previewUrl) else { return }
+            self.initPlayer(url: url)
             self.playerView.updateProgressBar(value: 0)
         }
-    }
-    
-    func pauseButtonTapped() {
-        playerView.stopEqualizer()
-        player.pause()
     }
     
     func resetPlayerAndSong() {
@@ -143,31 +157,14 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Thumbs
     
     func thumbsDownTapped() {
-        if let playlistItem = playListItem, let track = playListItem?.track {
+        if let playlistItem = playListItem, let track = playlistItem.track {
             track.thumbs?.thumb = .down
         }
     }
     
     func thumbsUpTapped() {
-        if let playlistItem = playListItem, let track = playListItem?.track {
+        if let playlistItem = playListItem, let track = playlistItem.track {
             track.thumbs?.thumb = .up
-        }
-    }
-    
-    // MARK: - Player controlers
-    
-    func stopPlayer() {
-        player.pause()
-    }
-    
-    func playButtonTapped() {
-        player.play()
-        playerView.startEqualizer()
-        playerView.setTimer()
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
-            let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(self.player.currentItem!.duration)
-            let time = fraction / 450
-            self.playerView.updateProgressBar(value: time)
         }
     }
 }
