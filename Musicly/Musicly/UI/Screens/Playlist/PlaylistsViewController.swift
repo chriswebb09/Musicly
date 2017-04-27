@@ -114,29 +114,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         return list
     }
     
-    func saveTrackList(trackList: TrackList) {
-        let lists: Results<TrackList>!
-        if let realm = try? Realm() {
-            lists = realm.objects(TrackList.self)
-            if !lists.contains(trackList) {
-                try! realm.write {
-                    realm.add(trackList)
-                }
-            }
-        }
-    }
-    
-    func saveCurrentListID(newID: CurrentListID) {
-        if let realm = try? Realm() {
-            listID = realm.objects(CurrentListID.self)
-            if !self.listID.contains(newID) {
-                try! realm.write {
-                    realm.add(newID)
-                }
-            }
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
         destinationVC.tracklist = trackList[indexPath.row]

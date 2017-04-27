@@ -154,16 +154,11 @@ extension PlaylistViewController: UICollectionViewDataSource {
 
 extension PlaylistViewController {
     
-    func setupPlayerController() -> PlayerViewController {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
         let destinationViewController: PlayerViewController = PlayerViewController()
         destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
-        return destinationViewController
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        let destinationViewController = setupPlayerController()
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.index = selectedIndex
         navigationController?.pushViewController(destinationViewController, animated: false)
