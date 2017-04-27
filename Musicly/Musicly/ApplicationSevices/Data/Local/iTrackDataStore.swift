@@ -45,18 +45,10 @@ final class iTrackDataStore {
     }
     
     func setupItem(with track: Track) {
-        let item = Track()
         if let currentPlaylistID = currentPlaylistID {
-            item.playlistID = currentPlaylistID
+            track.playlistID = currentPlaylistID
         }
-        item.previewUrl = track.previewUrl
-        item.trackName = track.trackName
-        item.artistID = track.artistID
-        item.artworkUrl = track.artworkUrl
-        item.artistName = track.artistName
-        item.collectionName = track.collectionName
-        saveTrack(track: item)
-
+        saveTrack(track: track)
     }
     
     func saveItem(playlistItem: PlaylistItem) {

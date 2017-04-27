@@ -9,6 +9,8 @@
 import Foundation
 import AVFoundation
 
-class Player {
+class TrackPlayer {
+    
+    var player: AVPlayer? = AVPlayer() 
     
 }

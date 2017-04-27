@@ -20,7 +20,17 @@ final class PlaylistViewController: UIViewController {
     }
     
     var playlist: Playlist = Playlist()
-    var tracklist: TrackList = TrackList()
+    
+    var tracklist: TrackList = TrackList() {
+        didSet {
+            for track in tracklist.tracks {
+                let newItem = PlaylistItem()
+                newItem.track = track
+                playlist.append(newPlaylistItem: newItem)
+            }
+        }
+    }
+    
     fileprivate var selectedIndex: Int?
     fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
@@ -40,20 +50,14 @@ final class PlaylistViewController: UIViewController {
     }
     
     fileprivate var image = #imageLiteral(resourceName: "search-button")
+   
     var buttonItem: UIBarButtonItem?
-    
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         image = image.withRenderingMode(.alwaysOriginal)
         title = tracklist.listName
-        for track in tracklist.tracks {
-            var newItem = PlaylistItem()
-            newItem.track = track
-            playlist.append(newPlaylistItem: newItem)
-        }
         commonInit()
         setSearchBarColor(searchBar: searchBar)
         let tabController = self.tabBarController as! TabBarController
@@ -76,7 +80,6 @@ final class PlaylistViewController: UIViewController {
     func commonInit() {
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
-        
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
@@ -85,7 +88,7 @@ final class PlaylistViewController: UIViewController {
     }
     
     func navigationBarSetup() {
-        self.tabBarController?.selectedIndex = 0
+        tabBarController?.selectedIndex = 0
     }
     
     private func collectionViewRegister() {
@@ -140,16 +143,10 @@ extension PlaylistViewController: UICollectionViewDataSource {
     }
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
-        var rowTime: Double
         if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
-            if index.row > 10 {
-                rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
-            } else {
-                rowTime = (Double(index.row)) / CollectionViewConstants.rowTimeDivider
-            }
             if let url = URL(string: track.artworkUrl) {
                 let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-                cell.configureCell(with: viewModel, withTime: rowTime)
+                cell.configureCell(with: viewModel, withTime: 0)
             }
         }
     }
@@ -169,7 +166,6 @@ extension PlaylistViewController {
         let destinationViewController = setupPlayerController()
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.index = selectedIndex
-        print(tracklist.tracks[indexPath.row])
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
@@ -178,20 +174,6 @@ extension PlaylistViewController {
         let track = tracklist.tracks[indexPath.row]
         let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: URL(string: track.artworkUrl)!)
         cell.configureCell(with: cellViewModel, withTime: 0)
-        DispatchQueue.main.async {
-            let finalFrame = cell.frame
-            let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-            if translation.y < 0 {
-                cell.frame = CGRect(x: finalFrame.origin.x + 10, y: 50, width: 300, height: -200)
-            }
-            
-            UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-                cell.alpha = 1
-                cell.frame = finalFrame
-            }, completion: { finished in
-                
-            })
-        }
         return cell
     }
 }
