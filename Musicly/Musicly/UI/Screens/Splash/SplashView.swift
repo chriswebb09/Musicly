@@ -57,5 +57,3 @@ final class SplashView: UIView {
         })
     }
 }
-
-

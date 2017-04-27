@@ -22,7 +22,10 @@ final class PlaylistsViewController: UIViewController {
     
     override func viewDidLoad() {
         title = "Playlists"
-        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal),
+                                                  style: .done,
+                                                  target: self,
+                                                  action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup()
         detailPop.popView.playlistNameField.delegate = self
@@ -67,10 +70,14 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         
         if track.tracks.count > 0 {
             if let arturl = URL(string: track.tracks[0].artworkUrl) {
-                cell.configure(playlistName: name, artUrl: arturl, numberOfTracks: String(describing: track.tracks.count))
+                cell.configure(playlistName: name,
+                               artUrl: arturl,
+                               numberOfTracks: String(describing: track.tracks.count))
             }
         } else {
-            cell.configure(playlistName: name, artUrl: nil, numberOfTracks: String(describing: track.tracks.count))
+            cell.configure(playlistName: name,
+                           artUrl: nil,
+                           numberOfTracks: String(describing: track.tracks.count))
         }
         return cell
     }
@@ -81,7 +88,9 @@ extension PlaylistsViewController: UICollectionViewDataSource {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
         }
-        detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
+        detailPop.popView.doneButton.addTarget(self,
+                                               action: #selector(hidePop),
+                                               for: .touchUpInside)
     }
     
     func hidePop() {

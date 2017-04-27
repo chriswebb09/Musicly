@@ -65,7 +65,10 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
+        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()
@@ -74,7 +77,6 @@
         setup()
     }
     func navigationBarSetup() {
-        print("here")
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
@@ -154,8 +156,11 @@
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
-        UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-            cell.frame = finalFrame
+        UIView.animate(withDuration: 2.1, delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.5,
+                       options: [.curveEaseInOut], animations: {
+                        cell.frame = finalFrame
         }, completion: { finished in
             cell.alpha = 1
         })
@@ -270,10 +275,6 @@
  // MARK: - UISearchResultsUpdating
  
  extension TracksViewController: UISearchResultsUpdating {
-    
-    func filterContentForSearchText(searchText: String) {
-        print("filter")
-    }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
