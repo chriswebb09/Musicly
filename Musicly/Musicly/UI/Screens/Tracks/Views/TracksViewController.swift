@@ -50,12 +50,13 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        guard let realmUrl = Realm.Configuration.defaultConfiguration.fileURL else { return }
+        print(realmUrl)
         searchController.delegate = self
         title = "Music.ly"
         commonInit()
         setSearchBarColor(searchBar: searchBar)
-        let tabController = self.tabBarController as! TabBarController
+        let tabController = tabBarController as! TabBarController
         store = tabController.store
     }
     
@@ -242,7 +243,6 @@
         guard let collectionView = collectionView else { return }
         collectionView.backgroundView?.isHidden = true
         toggle(to: true)
-        collectionView.reloadData()
         playlist.removeAll()
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }

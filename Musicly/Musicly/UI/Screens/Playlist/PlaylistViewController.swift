@@ -160,7 +160,7 @@ extension PlaylistViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionViewConstants.layoutSpacingMinItem
     }
-
+    
     func toggle(to: Bool) {
         infoLabel.isHidden = to
         musicIcon.isHidden = to

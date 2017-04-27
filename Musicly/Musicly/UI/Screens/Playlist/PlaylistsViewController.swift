@@ -95,7 +95,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
     
     func hidePop() {
-        
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
         store.createNewList(name: nameText)
         if let tracklists = store.trackLists, let last = tracklists.last {
