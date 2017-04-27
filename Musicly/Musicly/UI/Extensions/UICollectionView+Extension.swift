@@ -47,6 +47,7 @@ extension UICollectionView {
         return collectionView
     }
     
+    
     func setuLayout() {
         self.collectionViewLayout.invalidateLayout()
         self.layoutIfNeeded()

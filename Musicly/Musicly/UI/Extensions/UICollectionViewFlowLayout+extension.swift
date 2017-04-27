@@ -20,4 +20,13 @@ extension UICollectionViewFlowLayout {
         layout.minimumLineSpacing = SmallLayoutProperties.minimumLineSpacing
         return layout
     }
+    
+    static func setupLayout() -> UICollectionViewFlowLayout {
+        let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        newLayout.sectionInset = EdgeAttributes.sectionInset
+        newLayout.itemSize = RowSize.item.rawValue
+        newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
+        newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
+        return newLayout
+    }
 }

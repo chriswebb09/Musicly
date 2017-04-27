@@ -109,11 +109,7 @@
     
     fileprivate func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            newLayout.sectionInset = EdgeAttributes.sectionInset
-            newLayout.itemSize = RowSize.item.rawValue
-            newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
-            newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
+            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
             flowLayout.scrollDirection = .vertical
             collectionView?.layoutIfNeeded()
             collectionView?.collectionViewLayout = newLayout
