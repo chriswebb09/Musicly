@@ -14,7 +14,7 @@ final class PlayerViewController: UIViewController {
     var playListItem: PlaylistItem?
     var avUrlAsset: AVURLAsset?
     var playList: Playlist?
-    var rightButtonItem: UIBarButtonItem! = UIBarButtonItem.init(image: #imageLiteral(resourceName: "heartorangesmall"), style: .done, target: self, action: #selector(add))
+    var rightButtonItem: UIBarButtonItem! = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(add))
     var index: Int!
     
     let realm = try! Realm()
@@ -30,7 +30,6 @@ final class PlayerViewController: UIViewController {
         setupItem(index: index)
         playerView.delegate = self
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        rightButtonItem.image = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     }
     
     func baseControllerSetup() {
@@ -76,7 +75,6 @@ final class PlayerViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         playerView.removeFromSuperview()
         dismiss(animated: true, completion: nil)
     }
