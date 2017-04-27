@@ -36,6 +36,7 @@
             }
         }
     }
+    
     var buttonItem: UIBarButtonItem!
     var infoLabel: UILabel = UILabel.setupInfoLabel()
     

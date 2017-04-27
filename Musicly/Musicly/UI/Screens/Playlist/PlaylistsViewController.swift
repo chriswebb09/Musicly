@@ -22,23 +22,28 @@ final class PlaylistsViewController: UIViewController {
         }
     }
     
-    var rightBarButtonItem: UIBarButtonItem? = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+    var rightBarButtonItem: UIBarButtonItem!
     
     var trackList: [TrackList] = [TrackList]()
     
     override func viewDidLoad() {
         title = "Playlists"
+        self.rightBarButtonItem =  UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         tabController = self.tabBarController as! TabBarController
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
-        view.addSubview(collectionView!)
+        collectionViewSetup()
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
         let tabbar = tabBarController as! TabBarController
         store = tabbar.store
+    }
+    
+    func collectionViewSetup() {
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
+        view.addSubview(collectionView!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,7 +97,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         if let tracklists = store.trackLists, let last = tracklists.last {
             trackList.append(last)
         }
-        
         detailPop.hidePopView(viewController: self)
         detailPop.popView.isHidden = true
         view.sendSubview(toBack: detailPop)
