@@ -103,7 +103,6 @@ final class iTrackDataStore {
         }
     }
     
-    
     // Save individual track
     
     func saveTrack(track: Track) {
@@ -122,7 +121,6 @@ final class iTrackDataStore {
             }
         }
     }
-    
     
     // Hit with search terms, parse json and return objects
     

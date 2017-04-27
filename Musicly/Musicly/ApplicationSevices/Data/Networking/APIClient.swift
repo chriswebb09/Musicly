@@ -12,8 +12,7 @@ import UIKit
 
 typealias JSON = [String: Any]
 
-@objc(iTunesAPIClient)
-final class iTunesAPIClient: NSObject {
+final class iTunesAPIClient {
     
     // JSON completion typealiases for asynchronous code
     
@@ -50,14 +49,11 @@ final class iTunesAPIClient: NSObject {
                 return URLSession(configuration: config)
             }
         }
-        
         let task: URLSessionDataTask? = downloadSession?.dataTask(with: URLRequest(url: url)) { data, response, error in
             completion(data, response, error)
             downloadSession?.invalidateAndCancel()
         }
-        
         task?.resume()
-        
     }
 }
 
