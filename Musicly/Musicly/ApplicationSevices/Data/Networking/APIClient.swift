@@ -78,46 +78,6 @@ final class iTunesAPIClient: NSObject {
     }
 }
 
-// MARK: - URLSessionDownloadDelegate
-
-extension iTunesAPIClient: URLSessionDownloadDelegate {
-    
-    func downloadTrackPreview(for download: Download?) {
-        if let download = download,
-            let urlString = download.url,
-            let url = URL(string: urlString) {
-            download.isDownloading = true
-            download.downloadStatus = .downloading
-            activeDownloads?[urlString] = download
-            download.downloadTask = downloadsSession?.downloadTask(with: url)
-            download.downloadTask?.resume()
-        }
-    }
-    
-    func startDownload(_ download: Download?) {
-        if let download = download, let url = download.url {
-            activeDownloads?[url] = download
-            if let url = download.url {
-                if URL(string: url) != nil {
-                    downloadTrackPreview(for: download)
-                }
-            }
-        }
-    }
-    
-    // MARK: - Keeps track of download index - for collectionView
-    
-    func trackIndexForDownloadTask(_ tracks: [Track], _ downloadTask: URLSessionDownloadTask) -> Int? {
-        if let url = downloadTask.originalRequest?.url?.absoluteString {
-            for (index, track) in tracks.enumerated() {
-                if url == track.previewUrl {
-                    return index
-                }
-            }
-        }
-        return nil
-    }
-}
 
 // MARK: - URLSessionDelegate
 
@@ -132,44 +92,4 @@ extension iTunesAPIClient: URLSessionDelegate {
             }
         }
     }
-    
-    // TODO: - Possibly unneeded
-    
-    internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64) {
-        if let downloadUrl = downloadTask.originalRequest?.url?.absoluteString,
-            let download = activeDownloads?[downloadUrl] {
-            download.progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
-        }
-    }
 }
-
-extension iTunesAPIClient {
-    
-    
-    internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        
-        if let originalURL = downloadTask.originalRequest?.url?.absoluteString {
-            let destinationURL = LocalStorageManager.localFilePathForUrl(originalURL)
-            let fileManager = FileManager.default
-            
-            do {
-                if let destinationURL = destinationURL {
-                    try fileManager.copyItem(at: location, to: destinationURL)
-                }
-            } catch let error {
-                print("Could not copy file to disk: \(error.localizedDescription)")
-            }
-        }
-        
-        if let downloadUrl = downloadTask.originalRequest?.url?.absoluteString,
-            let download = activeDownloads?[downloadUrl] {
-            download.downloadStatus = .finished
-            download.isDownloading = false
-        }
-    }
-    
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: URLSession) {
-        print("Session: \(session)")
-    }
-}
-

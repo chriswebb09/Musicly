@@ -125,13 +125,6 @@ final class iTrackDataStore {
         }
     }
     
-    // Donwload preview - form downloading audio
-    
-    func downloadTrackPreview(for download: Download?) {
-        if let client = client {
-            client.downloadTrackPreview(for: download)
-        }
-    }
     
     // Hit with search terms, parse json and return objects
     
