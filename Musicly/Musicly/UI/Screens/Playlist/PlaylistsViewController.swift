@@ -40,7 +40,8 @@ final class PlaylistsViewController: UIViewController {
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
-        view.addSubview(collectionView!)
+        guard let collectionView = collectionView else { return }
+        view.addSubview(collectionView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
