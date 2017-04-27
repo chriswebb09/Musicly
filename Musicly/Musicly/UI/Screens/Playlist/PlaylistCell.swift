@@ -44,11 +44,12 @@ final class PlaylistCell: UICollectionViewCell {
     func configure(playlistName: String, artUrl: URL?) {
         setupConstraints()
         if let artUrl = artUrl {
-            self.playlistArtView.downloadImage(url: artUrl)
+            playlistArtView.downloadImage(url: artUrl)
         } else {
-            self.playlistArtView.image = #imageLiteral(resourceName: "blue-record")
+            playlistArtView.image = #imageLiteral(resourceName: "blue-record")
         }
-        self.playlistNameLabel.text = "Playlist: \(playlistName)"
+        playlistArtView.roundCornersForAspectFit(radius: 40)
+        playlistNameLabel.text = "Playlist: \(playlistName)"
         layoutSubviews()
     }
     

@@ -170,8 +170,8 @@ struct EqualizerConstants {
 
 struct PlaylistCellConstants {
     static let nameLabelCenterX = UIScreen.main.bounds.width * 0.2
-    static let artViewMultiplier: CGFloat = 0.22
-    static let artViewWidthMultiplier: CGFloat = 0.6
+    static let artViewMultiplier: CGFloat = 0.32
+    static let artViewWidthMultiplier: CGFloat = 0.7
     static let shadowOffset = CGSize(width: 0, height: 2)
     static let cornerRadius: CGFloat = 2
     static let borderWidth: CGFloat = 1

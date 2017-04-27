@@ -98,27 +98,10 @@ final class PlaylistViewController: UIViewController {
     }
     
     fileprivate func setupCollectionView() {
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-            newLayout.sectionInset = EdgeAttributes.sectionInset
-            newLayout.itemSize = RowSize.item.rawValue
-            newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
-            newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
-            flowLayout.scrollDirection = .vertical
-            collectionView?.layoutIfNeeded()
-            collectionView?.collectionViewLayout = newLayout
-            view.backgroundColor = CollectionViewAttributes.backgroundColor
-            collectionView?.frame = UIScreen.main.bounds
-            
-            if let collectionView = collectionView {
-                view.addSubview(collectionView)
-            }
-            collectionViewRegister()
-        }
-        
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-        }
+        collectionView?.setupCollection()
+        view.backgroundColor = CollectionViewAttributes.backgroundColor
+        if let collectionView = collectionView { view.addSubview(collectionView) }
+        collectionViewRegister()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
