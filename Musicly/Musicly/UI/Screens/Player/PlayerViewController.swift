@@ -25,7 +25,6 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        playList?.printAllKeys()
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
         view.addSubview(playerView)
@@ -126,7 +125,8 @@ extension PlayerViewController: PlayerViewDelegate {
             guard let track = self.playListItem?.track else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
-            self.initPlayer(url: URL(string: Track().previewUrl)!)
+            
+            self.initPlayer(url: URL(string: track.previewUrl)!)
             self.playerView.updateProgressBar(value: 0)
         }
     }
@@ -143,11 +143,15 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Thumbs
     
     func thumbsDownTapped() {
-        guard playListItem != nil else { return }
+        if let playlistItem = playListItem, let track = playListItem?.track {
+            track.thumbs?.thumb = .down
+        }
     }
     
     func thumbsUpTapped() {
-        guard playListItem != nil else { return }
+        if let playlistItem = playListItem, let track = playListItem?.track {
+            track.thumbs?.thumb = .up
+        }
     }
     
     // MARK: - Player controlers

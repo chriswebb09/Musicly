@@ -23,12 +23,12 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.setupTabBar(tabBar: tabBar, view: view)
+        setupTabBar(tabBar: tabBar, view: view)
     }
     
     // General dimensions and look of tabbar
     
-    func setupTabBar(tabBar:UITabBar, view:UIView) {
+    private func setupTabBar(tabBar: UITabBar, view: UIView) {
         var tabFrame = tabBar.frame
         let tabBarHeight = view.frame.height * Tabbar.tabbarFrameHeight
         tabFrame.size.height = tabBarHeight
@@ -37,12 +37,12 @@ final class TabBarController: UITabBarController {
         tabBar.isTranslucent = false
     }
     
-    func setupTabs() {
+    private func setupTabs() {
         super.viewDidLoad()
         setupControllers()
     }
     
-    fileprivate func setupControllers() {
+    private func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
         let playlistController = PlaylistsViewController()
@@ -59,7 +59,7 @@ final class TabBarController: UITabBarController {
         selectedIndex = 0
     }
     
-    fileprivate func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
+    private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
         let normalImage = #imageLiteral(resourceName: "blue-dj")
         let selectedImage = #imageLiteral(resourceName: "orangedj")
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
@@ -68,18 +68,12 @@ final class TabBarController: UITabBarController {
         return tracksTab
     }
     
-    fileprivate func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
+    private func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
         let selectedImage = #imageLiteral(resourceName: "orange-soundwave")
         let normalImage = #imageLiteral(resourceName: "blue-soundwave")
         playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         playlistViewController.tabBarItem.selectedImage = selectedImage
         let playlistTab = UINavigationController(rootViewController: playlistViewController)
         return playlistTab
-    }
-    
-    func configureTabBarItem(item: UITabBarItem) {
-        item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
-        item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:.normal)
-        item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:0.41, green:0.72, blue:0.90, alpha:1.0)], for:.selected)
     }
 }

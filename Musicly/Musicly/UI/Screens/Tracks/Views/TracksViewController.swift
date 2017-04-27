@@ -20,9 +20,6 @@
     }
     
     var playlist: Playlist = Playlist()
-    
-    fileprivate var selectedIndex: Int?
-    fileprivate var selectedImage = UIImageView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     var store: iTrackDataStore?
@@ -79,7 +76,6 @@
     }
     
     func navigationBarSetup() {
-        
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
@@ -142,12 +138,10 @@
  extension TracksViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
         let destinationViewController: PlayerViewController = PlayerViewController()
         destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
-        guard let selectedIndex = selectedIndex else { return }
-        destinationViewController.index = selectedIndex
+        destinationViewController.index = indexPath.row
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     

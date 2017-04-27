@@ -22,12 +22,11 @@ final class PlaylistsViewController: UIViewController {
         }
     }
     
-    var rightBarButtonItem: UIBarButtonItem?
-    var listID: Results<CurrentListID>!
+    var rightBarButtonItem: UIBarButtonItem? = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+
     var trackList: [TrackList] = [TrackList]()
     
     override func viewDidLoad() {
-        
         title = "Playlists"
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -35,8 +34,7 @@ final class PlaylistsViewController: UIViewController {
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
-        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
-        guard let rightButtonItem = self.rightBarButtonItem else { return }
+        guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
         let tabbar = tabBarController as! TabBarController
         store = tabbar.store
@@ -49,10 +47,10 @@ final class PlaylistsViewController: UIViewController {
         guard let store = store else { return }
         store.setSearch(string: "")
         if let tracklists = store.trackLists {
-            trackList = Array(tracklists)
-        }
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
+            DispatchQueue.main.async {
+                self.trackList = Array(tracklists)
+                self.collectionView?.reloadData()
+            }
         }
     }
 }
@@ -60,6 +58,7 @@ final class PlaylistsViewController: UIViewController {
 extension PlaylistsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let store = store else { return 0 }
         return trackList.count
     }
     
@@ -93,14 +92,12 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
         store.createNewList(name: nameText)
         if let tracklists = store.trackLists, let last = tracklists.last {
-            dump(trackList)
             trackList.append(last)
         }
         
         detailPop.hidePopView(viewController: self)
         detailPop.popView.isHidden = true
         view.sendSubview(toBack: detailPop)
-        
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }

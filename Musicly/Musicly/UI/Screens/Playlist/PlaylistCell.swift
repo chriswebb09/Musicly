@@ -18,13 +18,14 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistNameLabel: UILabel = {
         var playlistNameLabel = UILabel()
-        playlistNameLabel.font =  UIFont(name: "Avenir-Book", size: 18)!
+        playlistNameLabel.font = UIFont(name: "Avenir-Medium", size: 18)!
         return playlistNameLabel
     }()
     
     private var numberOfSongsLabel: UILabel = {
         let numberOfSongs = UILabel()
         numberOfSongs.text = "10"
+        numberOfSongs.font =  UIFont(name: "Avenir-Light", size: 16)!
         return numberOfSongs
     }()
     

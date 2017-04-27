@@ -30,6 +30,7 @@
 		A71C03FA1EB2029B00941ECB /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F81EB2029B00941ECB /* DetailPopover.swift */; };
 		A71C03FB1EB2029B00941ECB /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F91EB2029B00941ECB /* DetailView.swift */; };
 		A71C03FD1EB202CB00941ECB /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */; };
+		A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C04031EB24ECA00941ECB /* RealmClient.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */; };
 		A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */; };
@@ -112,6 +113,7 @@
 		A71C03F81EB2029B00941ECB /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailPopover.swift; path = Elements/Popover/Detail/DetailPopover.swift; sourceTree = "<group>"; };
 		A71C03F91EB2029B00941ECB /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailView.swift; path = Elements/Popover/Detail/DetailView.swift; sourceTree = "<group>"; };
 		A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Textfield+Extension.swift"; sourceTree = "<group>"; };
+		A71C04031EB24ECA00941ECB /* RealmClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Screens/Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DetailPopover+Extension.swift"; path = "Extensions/DetailPopover+Extension.swift"; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				A7C995CD1E9EA6DF004826EE /* DataStorage.swift */,
 				A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */,
 				A7B349E01EB13D4000B4F9FE /* Player.swift */,
+				A71C04031EB24ECA00941ECB /* RealmClient.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
 				A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */,
 				A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
