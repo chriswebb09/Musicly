@@ -21,8 +21,6 @@ final class PlaylistViewController: UIViewController {
     
     var playlist: Playlist = Playlist()
     
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
-    
     var store: iTrackDataStore?
     
     var tracklist: TrackList = TrackList() {
@@ -34,18 +32,6 @@ final class PlaylistViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
-            }
-        }
-    }
-    
-    fileprivate var searchBarActive: Bool = false {
-        didSet {
-            if searchBarActive == true {
-                navigationItem.rightBarButtonItems = []
-            } else {
-                if let buttonItem = buttonItem {
-                    navigationItem.rightBarButtonItems = [buttonItem]
-                }
             }
         }
     }
@@ -75,7 +61,7 @@ final class PlaylistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let searchBarText = searchBar.text, searchBarText.characters.count > 0 { searchBarActive = true }
+        navigationItem.rightBarButtonItems = [buttonItem!]
     }
     
     private func commonInit() {
@@ -104,15 +90,6 @@ final class PlaylistViewController: UIViewController {
         setupMusicIcon(icon: musicIcon)
         if let collectionView = collectionView { view.addSubview(collectionView) }
         collectionViewRegister()
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        DispatchQueue.main.async { self.collectionView?.reloadData() }
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: false)
-        searchBarActive = false
     }
 }
 
@@ -190,8 +167,7 @@ extension PlaylistViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionViewConstants.layoutSpacingMinItem
     }
-    
-    
+
     func toggle(to: Bool) {
         infoLabel.isHidden = to
         musicIcon.isHidden = to
