@@ -11,8 +11,7 @@ import RealmSwift
 
 extension Realm {
     func save(entityList: [TrackList], shouldUpdate update: Bool = true) {
-        var database = try! Realm()
-        
+        let database = try! Realm()
         database.beginWrite()
         for entity in entityList {
             if let key = type(of: entity).primaryKey(), let value = entity[key] , update {

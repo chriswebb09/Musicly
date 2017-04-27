@@ -130,7 +130,6 @@
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
