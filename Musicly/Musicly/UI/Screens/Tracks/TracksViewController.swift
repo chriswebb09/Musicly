@@ -188,13 +188,11 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         if let track = playlist.playlistItem(at: indexPath.row)?.track {
             let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: URL(string: track.artworkUrl)!)
             cell.configureCell(with: cellViewModel, withTime: 0)
         }
-        
         DispatchQueue.main.async {
             let finalFrame = cell.frame
             let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
@@ -210,9 +208,6 @@
         }
         return cell
     }
-    
-    
-    
  }
  
  // MARK: - UICollectionViewDelegate
@@ -344,7 +339,7 @@
         collectionView?.reloadData()
     }
     
-    public func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         searchBarActive = true
     }
  }
