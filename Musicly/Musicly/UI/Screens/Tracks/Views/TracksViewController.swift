@@ -20,6 +20,7 @@
     }
     
     var playlist: Playlist = Playlist()
+    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     var store: iTrackDataStore?
@@ -35,9 +36,7 @@
             }
         }
     }
-    
-    fileprivate var image = #imageLiteral(resourceName: "search-button")
-    var buttonItem: UIBarButtonItem?
+    var buttonItem: UIBarButtonItem? = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
     var infoLabel: UILabel = UILabel.setupInfoLabel()
     
     var musicIcon: UIImageView = {
@@ -52,7 +51,6 @@
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         searchController.delegate = self
-        image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
         commonInit()
         setSearchBarColor(searchBar: searchBar)
@@ -66,7 +64,6 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()

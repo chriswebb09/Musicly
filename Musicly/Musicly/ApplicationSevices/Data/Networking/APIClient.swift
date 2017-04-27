@@ -18,8 +18,7 @@ final class iTunesAPIClient: NSObject {
     // JSON completion typealiases for asynchronous code
     
     typealias jsonCompletion = (_ responseObject: JSON?, _ error: Error?) -> Void
-    
-    var activeDownloads: [String: Download]?
+
     weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
     // MARK: - Main session used
@@ -31,10 +30,7 @@ final class iTunesAPIClient: NSObject {
             return URLSession(configuration: config, delegate: self, delegateQueue: queue)
         }
     }
-    
-    func setup() {
-        activeDownloads = [String: Download]()
-    }
+
     
     // MARK: - Main search functionality
     

@@ -25,7 +25,6 @@ final class iTrackDataStore {
     var currentPlaylist: TrackList?
     
     init() {
-        client?.setup()
         if let realm = try? Realm() {
             tracks = realm.objects(Track.self)
             trackLists = realm.objects(TrackList.self)
@@ -38,7 +37,7 @@ final class iTrackDataStore {
     
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
-        client?.setup()
+
         if let realm = try? Realm() {
             tracks = realm.objects(Track.self)
             dump(tracks)
