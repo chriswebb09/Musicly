@@ -67,15 +67,7 @@
         if let searchBarText = searchBar.text, searchBarText.characters.count > 0 {
             searchBarActive = true
         }
-        if searchBarActive == true {
-            navigationItem.rightBarButtonItems = []
-        } else {
-            guard let buttonItem = buttonItem else { return }
-            navigationItem.rightBarButtonItems = [buttonItem]
-        }
     }
-    
-    // TODO: - Consolidate navigation bar and buttonItem methods
     
     func commonInit() {
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
@@ -108,22 +100,14 @@
     }
     
     fileprivate func setupCollectionView() {
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
-            flowLayout.scrollDirection = .vertical
-            collectionView?.layoutIfNeeded()
-            collectionView?.collectionViewLayout = newLayout
-            view.backgroundColor = CollectionViewAttributes.backgroundColor
-            collectionView?.frame = UIScreen.main.bounds
-            setupInfoLabel(infoLabel: infoLabel)
-            setupMusicIcon(icon: musicIcon)
-            
-            if let collectionView = collectionView {
-                view.addSubview(collectionView)
-            }
-            collectionViewRegister()
+        collectionView?.setupCollection()
+        view.backgroundColor = CollectionViewAttributes.backgroundColor
+        setupInfoLabel(infoLabel: infoLabel)
+        setupMusicIcon(icon: musicIcon)
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
         }
-        
+        collectionViewRegister()
         if let collectionView = collectionView {
             view.addSubview(collectionView)
         }
@@ -179,23 +163,21 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        if let track = playlist.playlistItem(at: indexPath.row)?.track {
-            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: URL(string: track.artworkUrl)!)
+        if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
+            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
             cell.configureCell(with: cellViewModel, withTime: 0)
         }
-        DispatchQueue.main.async {
-            let finalFrame = cell.frame
-            let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-            if translation.y < 0 {
-                cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0)
-            }
-            UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-                
-                cell.frame = finalFrame
-            }, completion: { finished in
-                cell.alpha = 1
-            })
+        let finalFrame = cell.frame
+        let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+        if translation.y < 0 {
+            cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0)
         }
+        UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+            cell.frame = finalFrame
+        }, completion: { finished in
+            cell.alpha = 1
+        })
+        
         return cell
     }
  }

@@ -47,6 +47,17 @@ extension UICollectionView {
         return collectionView
     }
     
+    func setupCollection() {
+        if let flowLayout = self.collectionViewLayout as? UICollectionViewFlowLayout {
+            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
+            flowLayout.scrollDirection = .vertical
+            self.layoutIfNeeded()
+            self.collectionViewLayout = newLayout
+          //  view.backgroundColor = CollectionViewAttributes.backgroundColor
+            self.frame = UIScreen.main.bounds
+        }
+    }
+    
     
     func setuLayout() {
         self.collectionViewLayout.invalidateLayout()
