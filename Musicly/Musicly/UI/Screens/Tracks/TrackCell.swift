@@ -45,7 +45,7 @@ final internal class TrackCell: UICollectionViewCell {
         self.viewModel  = viewModel
         self.albumArtView.downloadImage(url: viewModel.albumImageUrl)
         layoutSubviews()
-        self.alpha = 1
+       // self.alpha = 1
     }
     
     override func layoutSubviews() {

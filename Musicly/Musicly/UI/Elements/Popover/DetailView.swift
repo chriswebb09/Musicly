@@ -59,6 +59,8 @@ class DetailView: UIView {
         layer.shadowOpacity = DetailViewConstants.shadowOpacity
         layer.masksToBounds = true
         layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
+        layer.borderWidth = 1.5
+        layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
     }
     
     func configureView() {
@@ -72,7 +74,7 @@ class DetailView: UIView {
         playlistNameField.translatesAutoresizingMaskIntoConstraints = false
         playlistNameField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playlistNameField.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15).isActive = true
+        playlistNameField.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.14).isActive = true
         playlistNameField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: DetailViewConstants.fieldWidth).isActive = true
         
         addSubview(titleLabel)

@@ -46,7 +46,7 @@ final class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.delegate = self
+       
         image = image.withRenderingMode(.alwaysOriginal)
         title = tracklist.listName
         for track in tracklist.tracks {
@@ -73,8 +73,6 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    // TODO: - Consolidate navigation bar and buttonItem methods
-    
     func commonInit() {
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
@@ -82,7 +80,6 @@ final class PlaylistViewController: UIViewController {
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        setup()
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         collectionView?.setuLayout()
     }
@@ -162,7 +159,6 @@ extension PlaylistViewController {
     
     func setupPlayerController() -> PlayerViewController {
         let destinationViewController: PlayerViewController = PlayerViewController()
-        print(playlist)
         destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         return destinationViewController
@@ -189,7 +185,7 @@ extension PlaylistViewController {
                 cell.frame = CGRect(x: finalFrame.origin.x + 10, y: 50, width: 300, height: -200)
             }
             
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+            UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
                 cell.alpha = 1
                 cell.frame = finalFrame
             }, completion: { finished in
@@ -197,25 +193,6 @@ extension PlaylistViewController {
             })
         }
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        if let cell = collectionView.cellForItem(at: indexPath) as? TrackCell {
-            DispatchQueue.main.async {
-                let finalFrame = cell.frame
-                let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-                if translation.x < 0 {
-                    cell.frame = CGRect(x: finalFrame.origin.x - 5000, y: -500, width: 500, height: 200)
-                } else {
-                    cell.frame = CGRect(x: finalFrame.origin.x + 500, y: -500, width: 500, height: 600)
-                }
-                UIView.animate(withDuration: 26) {
-                    cell.frame = finalFrame
-                }
-            }
-        }
-
     }
 }
 
@@ -241,120 +218,5 @@ extension PlaylistViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionViewConstants.layoutSpacingMinItem
-    }
-}
-
-// MARK: - UISearchController Delegate
-
-extension PlaylistViewController: UISearchControllerDelegate {
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        playlist.removeAll()
-        searchBar.setShowsCancelButton(true, animated: true)
-        searchBarActive = true
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBarActive = false
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if !searchBarActive {
-            collectionView?.reloadData()
-            searchBarActive = true
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !searchBarActive {
-            searchBarActive = true
-            collectionView?.reloadData()
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
-    fileprivate func setup() {
-        setSearchBarColor(searchBar: searchBar)
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.definesPresentationContext = true
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        definesPresentationContext = true
-        searchBar.barTintColor = .white
-    }
-    
-    func searchBarHasInput() {
-        guard let collectionView = collectionView else { return }
-        collectionView.backgroundView?.isHidden = true
-        collectionView.reloadData()
-        self.playlist.removeAll()
-        store?.searchForTracks { playlist, error in
-            guard let playlist = playlist else { return }
-            self.playlist = playlist
-            collectionView.reloadData()
-            collectionView.performBatchUpdates ({
-                DispatchQueue.main.async {
-                    if let collectionView = self.collectionView {
-                        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-                        collectionView.isHidden = false
-                    }
-                }
-            }, completion: { finished in
-                print(finished)
-            })
-        }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let barText = searchBar.getTextFromBar()
-        store?.setSearch(string: barText)
-        searchBarActive = true
-        if barText != "" { searchBarHasInput() }
-        navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
-        UIView.animate(withDuration: 1.8) {
-            self.collectionView?.alpha = 1
-        }
-    }
-}
-
-// MARK: - UISearchResultsUpdating
-
-extension PlaylistViewController: UISearchResultsUpdating {
-    
-    func filterContentForSearchText(searchText: String) {
-        print("filter")
-    }
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchString = searchController.searchBar.text
-        if searchString != nil {
-            playlist.removeAll()
-            if let searchString = searchString {
-                store?.setSearch(string: searchString)
-                store?.searchForTracks { tracks, error in
-                    self.store?.searchForTracks { tracks, error in
-                        self.playlist = tracks!
-                    }
-                }
-            }
-        }
-        collectionView?.reloadData()
-    }
-    
-    public func updateSearchResults(for searchController: UISearchController) {
-        searchBarActive = true
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension PlaylistViewController: UISearchBarDelegate {
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        playlist.removeAll()
-        collectionView?.reloadData()
-        navigationItem.setRightBarButton(buttonItem, animated: false)
-        searchBarActive = false
     }
 }

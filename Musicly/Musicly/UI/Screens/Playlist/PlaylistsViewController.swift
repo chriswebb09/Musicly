@@ -63,14 +63,12 @@ class PlaylistsViewController: UIViewController {
 extension PlaylistsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dump(trackList)
         return trackList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
         let index = indexPath.row
-        print(index)
         let track = trackList[index]
         let name = track.listName
         
@@ -94,6 +92,8 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         detailPop.popView.doneButton.setTitle("Done", for: .normal)
         detailPop.popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
         detailPop.popView.doneButton.layer.borderWidth = 1.5
+        detailPop.popView.layer.borderWidth = 1.5
+
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
@@ -123,7 +123,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         list.date = String(describing: NSDate())
         list.listId = UUID().uuidString
         list.listName = name
-        
+    
         return list
     }
     

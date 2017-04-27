@@ -31,12 +31,15 @@ final class iTrackDataStore {
             tracks = realm.objects(Track.self)
             trackLists = realm.objects(TrackList.self)
         }
-        
-        currentPlaylistID = trackLists.last?.listId
+        if let list = trackLists.last {
+        //let id = list.listId {
+            currentPlaylistID = list.listId
+        }
+     ///   currentPlaylistID = trackLists.last?.listId
     }
     
     func setCurrentPlaylist() {
-        for list in trackLists {
+        for list in lists {
             if list.listId == currentPlaylistID! {
                 currentPlaylist = list
             }
@@ -87,13 +90,13 @@ final class iTrackDataStore {
             
             tracks = realm.objects(Track.self)
             if !tracks.contains(track) {
-              //  var newList: TrackList
+                var newList: TrackList
              
                 //var newList = lists.last
                 
                 try! realm.write {
                     currentPlaylist?.appendToTracks(track: track)
-                   // realm.add(track, update: true)
+                    realm.add(track, update: true)
                 }
             } else {
                 print("Exists")
