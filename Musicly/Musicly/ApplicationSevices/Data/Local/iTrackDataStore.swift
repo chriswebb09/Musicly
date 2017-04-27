@@ -48,12 +48,18 @@ final class iTrackDataStore {
         if let currentPlaylistID = currentPlaylistID {
             track.playlistID = currentPlaylistID
         }
-        saveTrack(track: track)
-    }
-    
-    func saveItem(playlistItem: PlaylistItem) {
-        let track = playlistItem.track
-        var newList = lists.last
+        
+        if let realm = try? Realm() {
+            trackLists = realm.objects(TrackList.self).filter("listId == %@", currentPlaylistID!)
+            currentPlaylist = trackLists.last!
+            
+            try! realm.write {
+                currentPlaylist?.appendToTracks(track: track)
+                realm.add(currentPlaylist!, update: true)
+                realm.add(trackLists, update: true)
+                realm.refresh()
+            }
+        }
     }
     
     func setSearch(string: String?) {
@@ -73,6 +79,18 @@ final class iTrackDataStore {
         save(list: newList)
     }
     
+    func save(list: TrackList) {
+        if let realm = try? Realm() {
+            trackLists = realm.objects(TrackList.self)
+            
+            if !trackLists.contains(list) {
+                try! realm.write {
+                    realm.add(list, update: true)
+                }
+            }
+        }
+    }
+    
     // Save individual track
     
     func saveTrack(track: Track) {
@@ -90,28 +108,6 @@ final class iTrackDataStore {
                 return
             }
         }
-    }
-    
-    // Save tracklist to Realm
-    
-    func save(list: TrackList) {
-        if let realm = try? Realm() {
-            trackLists = realm.objects(TrackList.self)
-            
-            if !trackLists.contains(list) {
-                try! realm.write {
-                    realm.add(list, update: true)
-                }
-            }
-        }
-    }
-    
-    // Fetch playlist from Realm storage to use
-    
-    func pullLists() -> TrackList? {
-        let realm = try! Realm()
-        let results = realm.objects(TrackList.self)
-        return results.first
     }
     
     // Donwload preview - form downloading audio

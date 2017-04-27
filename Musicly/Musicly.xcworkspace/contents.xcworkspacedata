@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Musicly/UI/Elements/Popover/Detail/DetailPopover.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Musicly/UI/Elements/Popover/Detail/DetailView.swift">
+   </FileRef>
+   <FileRef
       location = "group:Musicly.xcodeproj">
    </FileRef>
    <FileRef

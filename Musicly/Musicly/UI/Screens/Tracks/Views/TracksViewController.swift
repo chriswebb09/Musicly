@@ -53,6 +53,7 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"

@@ -50,7 +50,7 @@ final class PlaylistViewController: UIViewController {
     }
     
     fileprivate var image = #imageLiteral(resourceName: "search-button")
-   
+    
     var buttonItem: UIBarButtonItem?
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
