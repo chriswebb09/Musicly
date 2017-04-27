@@ -64,9 +64,7 @@
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let searchBarText = searchBar.text, searchBarText.characters.count > 0 {
-            searchBarActive = true
-        }
+        if let searchBarText = searchBar.text, searchBarText.characters.count > 0 { searchBarActive = true }
     }
     
     func commonInit() {
@@ -104,19 +102,12 @@
         view.backgroundColor = CollectionViewAttributes.backgroundColor
         setupInfoLabel(infoLabel: infoLabel)
         setupMusicIcon(icon: musicIcon)
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-        }
+        if let collectionView = collectionView { view.addSubview(collectionView) }
         collectionViewRegister()
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-        }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
+        DispatchQueue.main.async { self.collectionView?.reloadData() }
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -169,9 +160,7 @@
         }
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-        if translation.y < 0 {
-            cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0)
-        }
+        if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
         UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
             cell.frame = finalFrame
         }, completion: { finished in
@@ -192,9 +181,7 @@
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionViewLayout == UICollectionViewFlowLayout.small() {
-            return RowSize.smallLayout.rawValue
-        }
+        if collectionViewLayout == UICollectionViewFlowLayout.small() { return RowSize.smallLayout.rawValue }
         return RowSize.track.rawValue
     }
     
