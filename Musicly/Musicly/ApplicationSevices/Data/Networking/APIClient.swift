@@ -18,8 +18,6 @@ final class iTunesAPIClient: NSObject {
     // JSON completion typealiases for asynchronous code
     
     typealias jsonCompletion = (_ responseObject: JSON?, _ error: Error?) -> Void
-
-    weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
     // MARK: - Main search functionality
     

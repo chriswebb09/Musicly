@@ -14,7 +14,6 @@
 		A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3C1EADE09E0030932E /* SplashViewController.swift */; };
 		A71ADF411EADE0AF0030932E /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3F1EADE0AF0030932E /* PlaylistCell.swift */; };
 		A71ADF421EADE0AF0030932E /* PlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF401EADE0AF0030932E /* PlaylistsViewController.swift */; };
-		A71ADF541EADE1F00030932E /* FileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4E1EADE1F00030932E /* FileState.swift */; };
 		A71ADF551EADE1F00030932E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF4F1EADE1F00030932E /* PlayerView.swift */; };
 		A71ADF561EADE1F00030932E /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF501EADE1F00030932E /* PlayerViewController.swift */; };
 		A71ADF571EADE1F00030932E /* PlayerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF511EADE1F00030932E /* PlayerViewDelegate.swift */; };
@@ -88,7 +87,6 @@
 		A71ADF3C1EADE09E0030932E /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Screens/Splash/SplashViewController.swift; sourceTree = "<group>"; };
 		A71ADF3F1EADE0AF0030932E /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistCell.swift; path = Screens/Playlist/PlaylistCell.swift; sourceTree = "<group>"; };
 		A71ADF401EADE0AF0030932E /* PlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistsViewController.swift; path = Screens/Playlist/PlaylistsViewController.swift; sourceTree = "<group>"; };
-		A71ADF4E1EADE1F00030932E /* FileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileState.swift; path = Screens/Player/FileState.swift; sourceTree = "<group>"; };
 		A71ADF4F1EADE1F00030932E /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = Screens/Player/PlayerView.swift; sourceTree = "<group>"; };
 		A71ADF501EADE1F00030932E /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewController.swift; path = Screens/Player/PlayerViewController.swift; sourceTree = "<group>"; };
 		A71ADF511EADE1F00030932E /* PlayerViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerViewDelegate.swift; path = Screens/Player/PlayerViewDelegate.swift; sourceTree = "<group>"; };
@@ -475,7 +473,6 @@
 		A7CBC3EE1E9FBAEB00C95A50 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				A71ADF4E1EADE1F00030932E /* FileState.swift */,
 				A71C04011EB2039E00941ECB /* Views */,
 				A71C04021EB203A800941ECB /* Delegate */,
 				A71C04001EB2039800941ECB /* Model */,
@@ -826,7 +823,6 @@
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,
 				A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */,
 				A71C03FA1EB2029B00941ECB /* DetailPopover.swift in Sources */,
-				A71ADF541EADE1F00030932E /* FileState.swift in Sources */,
 				A7B349DF1EB12ADF00B4F9FE /* NSError+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

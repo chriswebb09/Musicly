@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum FileState {
+    case queued, playing, done, paused
+}
+
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
