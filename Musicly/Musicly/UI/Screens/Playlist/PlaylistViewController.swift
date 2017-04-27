@@ -84,7 +84,7 @@ final class PlaylistViewController: UIViewController {
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
-        collectionView?.setuLayout()
+        collectionView?.setupLayout()
     }
     
     func navigationBarSetup() {

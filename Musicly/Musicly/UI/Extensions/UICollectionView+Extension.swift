@@ -14,6 +14,22 @@ extension UICollectionView {
         register(T.self, forCellWithReuseIdentifier: NSStringFromClass(T.self))
     }
     
+    func setupDefaultUI() {
+        let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.textColor]
+        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: .normal)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.textColor
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for tracks...", attributes: [NSForegroundColorAttributeName: UIColor.white])
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+        
+    }
+    
+    func setupCollectionView() {
+        setupDefaultUI()
+       
+        backgroundColor = CollectionViewConstants.backgroundColor
+        setupLayout()
+    }
+    
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +75,7 @@ extension UICollectionView {
     }
     
     
-    func setuLayout() {
+    func setupLayout() {
         self.collectionViewLayout.invalidateLayout()
         self.layoutIfNeeded()
     }

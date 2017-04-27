@@ -16,6 +16,7 @@ extension UIViewController {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.textColor
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for tracks...", attributes: [NSForegroundColorAttributeName: UIColor.white])
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+        
     }
     
     func setSearchBarColor(searchBar: UISearchBar) {

@@ -59,7 +59,7 @@
         commonInit()
         setSearchBarColor(searchBar: searchBar)
         let tabController = self.tabBarController as! TabBarController
-        self.store = tabController.store
+        store = tabController.store
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,14 +73,12 @@
         collectionView?.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
-        setupDefaultUI()
+        collectionView?.setupCollectionView()
         setup()
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
-        collectionView?.setuLayout()
     }
     
     func navigationBarSetup() {
-        navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
+        
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
