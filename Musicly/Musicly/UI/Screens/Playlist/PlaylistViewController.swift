@@ -14,9 +14,7 @@ private let reuseIdentifier = "trackCell"
 final class PlaylistViewController: UIViewController {
     
     var playlist: Playlist = Playlist()
-    
     var store: iTrackDataStore?
-    
     var tracklist: TrackList = TrackList() {
         didSet {
             for track in tracklist.tracks {
@@ -76,13 +74,18 @@ final class PlaylistViewController: UIViewController {
         collectionView?.delegate = self
     }
     
-    fileprivate func setupCollectionView() {
-        collectionView?.setupCollection()
+    private func setupCollectionView() {
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
+            flowLayout.scrollDirection = .vertical
+            collectionView?.layoutIfNeeded()
+            collectionView?.collectionViewLayout = newLayout
+            collectionView?.frame = UIScreen.main.bounds
+        }
         view.backgroundColor = CollectionViewAttributes.backgroundColor
         setupInfoLabel(infoLabel: infoLabel)
         setupMusicIcon(icon: musicIcon)
         if let collectionView = collectionView { view.addSubview(collectionView) }
-        collectionViewRegister()
     }
 }
 
@@ -135,7 +138,6 @@ extension PlaylistViewController {
         }, completion: { finished in
             cell.alpha = 1
         })
-        
         return cell
     }
 }

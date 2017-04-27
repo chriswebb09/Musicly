@@ -10,7 +10,7 @@ import UIKit
 
 final internal class TrackCell: UICollectionViewCell {
     
-    var viewModel: TrackCellViewModel? {
+    private var viewModel: TrackCellViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
             trackNameLabel.text = viewModel.trackName

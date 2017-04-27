@@ -55,7 +55,6 @@
         searchController.delegate = self
         title = "Music.ly"
         commonInit()
-        setSearchBarColor(searchBar: searchBar)
         let tabController = tabBarController as! TabBarController
         store = tabController.store
     }
@@ -82,7 +81,6 @@
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
-        searchBar.delegate = self
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = .white
         navigationItem.rightBarButtonItem?.tintColor = .white
@@ -95,8 +93,14 @@
         collectionView?.delegate = self
     }
     
-    fileprivate func setupCollectionView() {
-        collectionView?.setupCollection()
+   private func setupCollectionView() {
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
+            flowLayout.scrollDirection = .vertical
+            collectionView?.layoutIfNeeded()
+            collectionView?.collectionViewLayout = newLayout
+            collectionView?.frame = UIScreen.main.bounds
+        }
         view.backgroundColor = CollectionViewAttributes.backgroundColor
         setupInfoLabel(infoLabel: infoLabel)
         setupMusicIcon(icon: musicIcon)
