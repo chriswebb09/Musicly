@@ -111,10 +111,7 @@ class Playlist: Object {
         head = nil
         itemCount = 0
     }
-    
-    func removeNodesFromList() {
-        
-    }
+
     
     func contains(playlistItem item: PlaylistItem) -> Bool {
         guard let currentTrack = head else { return false }

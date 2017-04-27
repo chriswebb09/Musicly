@@ -56,8 +56,6 @@
 		A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */; };
 		A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */; };
 		A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4041E9FE62300C95A50 /* Track.swift */; };
-		A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */; };
-		A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4061E9FE62300C95A50 /* Thumbs.swift */; };
 		A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC40A1E9FE63000C95A50 /* Playlist.swift */; };
 		BB2634885F3F26D76E4058D8 /* Pods_MusiclyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F3B9D661206A6F91E05C21 /* Pods_MusiclyTests.framework */; };
 		E8255C1EF1DF0B54D05B149F /* Pods_Musicly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049711FAEBCF9F15C01DA033 /* Pods_Musicly.framework */; };
@@ -140,8 +138,6 @@
 		A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A7CBC4041E9FE62300C95A50 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = iTrack/Track.swift; sourceTree = "<group>"; };
-		A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iTrackDelegate.swift; path = iTrack/iTrackDelegate.swift; sourceTree = "<group>"; };
-		A7CBC4061E9FE62300C95A50 /* Thumbs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Thumbs.swift; path = iTrack/Thumbs.swift; sourceTree = "<group>"; };
 		A7CBC40A1E9FE63000C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Playlist/Playlist.swift; sourceTree = "<group>"; };
 		C0CC79972E792E6914215932 /* Pods-Musicly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musicly.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Musicly/Pods-Musicly.debug.xcconfig"; sourceTree = "<group>"; };
 		C38E2BC5607BB57CAC66B696 /* Pods-MusiclyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusiclyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusiclyTests/Pods-MusiclyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -499,8 +495,6 @@
 				A7CBC4041E9FE62300C95A50 /* Track.swift */,
 				A7ADE8181EAD7CE8004F299E /* TrackList.swift */,
 				A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */,
-				A7CBC4051E9FE62300C95A50 /* iTrackDelegate.swift */,
-				A7CBC4061E9FE62300C95A50 /* Thumbs.swift */,
 			);
 			name = iTrack;
 			sourceTree = "<group>";
@@ -811,7 +805,6 @@
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
 				A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */,
-				A7CBC4091E9FE62300C95A50 /* Thumbs.swift in Sources */,
 				A71C03F21EB1F79A00941ECB /* EqualizerAnimation.swift in Sources */,
 				A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */,
 				A71C03FB1EB2029B00941ECB /* DetailView.swift in Sources */,
@@ -836,7 +829,6 @@
 				A71C03E91EB1F74D00941ECB /* TrackCellViewModel.swift in Sources */,
 				A71C03EA1EB1F74D00941ECB /* TracksViewModel.swift in Sources */,
 				A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */,
-				A7CBC4081E9FE62300C95A50 /* iTrackDelegate.swift in Sources */,
 				A71ADF421EADE0AF0030932E /* PlaylistsViewController.swift in Sources */,
 				A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,
