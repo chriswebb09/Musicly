@@ -149,12 +149,14 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
+        let finalFrame = cell.frame
+        
+        let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
             let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
             cell.configureCell(with: cellViewModel, withTime: 0)
         }
-        let finalFrame = cell.frame
-        let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+        
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
         UIView.animate(withDuration: 2.1, delay: 0,
                        usingSpringWithDamping: 0.5,
@@ -164,7 +166,6 @@
         }, completion: { finished in
             cell.alpha = 1
         })
-        
         return cell
     }
  }

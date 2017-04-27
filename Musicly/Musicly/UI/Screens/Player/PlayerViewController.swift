@@ -14,7 +14,7 @@ final class PlayerViewController: UIViewController {
     var playListItem: PlaylistItem?
     var avUrlAsset: AVURLAsset?
     var playList: Playlist?
-    var rightButtonItem: UIBarButtonItem! = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(add))
+    var rightButtonItem: UIBarButtonItem!
     var index: Int!
     
     let realm = try! Realm()
@@ -25,6 +25,7 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(add))
         baseControllerSetup()
         baseViewSetup()
         setupItem(index: index)

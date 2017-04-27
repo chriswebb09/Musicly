@@ -66,7 +66,8 @@ final class PlaylistViewController: UIViewController {
     }
     
     func goToSearch() {
-        self.tabBarController?.selectedIndex = 0
+        tabBarController?.selectedIndex = 0
+        navigationController?.popViewController(animated: false)
     }
     
     private func collectionViewRegister() {

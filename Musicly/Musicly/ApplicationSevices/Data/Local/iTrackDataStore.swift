@@ -16,7 +16,7 @@ final class iTrackDataStore {
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
     
-    var realm: Realm! = try! Realm()
+    var realm: Realm = try! Realm()
     var newTracks = [Track]()
     var trackLists: Results<TrackList>!
     var tracks: Results<Track>!
@@ -49,8 +49,9 @@ final class iTrackDataStore {
     }
     
     func setCurrentPlaylist() {
+        guard let currentPlaylistID = currentPlaylistID else { return }
         for list in lists {
-            if list.listId == currentPlaylistID! {
+            if list.listId == currentPlaylistID {
                 currentPlaylist = list
             }
         }
@@ -62,12 +63,14 @@ final class iTrackDataStore {
         }
         
         if let realm = try? Realm() {
-            trackLists = realm.objects(TrackList.self).filter("listId == %@", currentPlaylistID!)
-            currentPlaylist = trackLists.last!
-            
+            guard let currentPlaylistID = currentPlaylistID else { return }
+            trackLists = realm.objects(TrackList.self).filter("listId == %@", currentPlaylistID)
+            guard let lastTrackList = trackLists.last else { return }
+            currentPlaylist = lastTrackList
+            guard let currentPlaylist = currentPlaylist else { return }
             try! realm.write {
-                currentPlaylist?.appendToTracks(track: track)
-                realm.add(currentPlaylist!, update: true)
+                currentPlaylist.appendToTracks(track: track)
+                realm.add(currentPlaylist, update: true)
                 realm.add(trackLists, update: true)
                 realm.refresh()
             }

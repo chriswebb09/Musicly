@@ -25,10 +25,10 @@
 		A71C03F21EB1F79A00941ECB /* EqualizerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F11EB1F79A00941ECB /* EqualizerAnimation.swift */; };
 		A71C03F61EB2024700941ECB /* BasePopoverAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F41EB2024700941ECB /* BasePopoverAlert.swift */; };
 		A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F51EB2024700941ECB /* BasePopView.swift */; };
-		A71C03FA1EB2029B00941ECB /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F81EB2029B00941ECB /* DetailPopover.swift */; };
-		A71C03FB1EB2029B00941ECB /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F91EB2029B00941ECB /* DetailView.swift */; };
 		A71C03FD1EB202CB00941ECB /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */; };
 		A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C04031EB24ECA00941ECB /* RealmClient.swift */; };
+		A71C040A1EB280BF00941ECB /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C04091EB280BF00941ECB /* DetailPopover.swift */; };
+		A71C040C1EB280D500941ECB /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C040B1EB280D500941ECB /* DetailView.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */; };
 		A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */; };
@@ -98,10 +98,10 @@
 		A71C03F11EB1F79A00941ECB /* EqualizerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EqualizerAnimation.swift; path = Animations/EqualizerAnimation.swift; sourceTree = "<group>"; };
 		A71C03F41EB2024700941ECB /* BasePopoverAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopoverAlert.swift; path = Extensions/BasePopoverAlert.swift; sourceTree = "<group>"; };
 		A71C03F51EB2024700941ECB /* BasePopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopView.swift; path = Extensions/BasePopView.swift; sourceTree = "<group>"; };
-		A71C03F81EB2029B00941ECB /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailPopover.swift; path = Elements/Popover/Detail/DetailPopover.swift; sourceTree = "<group>"; };
-		A71C03F91EB2029B00941ECB /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailView.swift; path = Elements/Popover/Detail/DetailView.swift; sourceTree = "<group>"; };
 		A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Textfield+Extension.swift"; sourceTree = "<group>"; };
 		A71C04031EB24ECA00941ECB /* RealmClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
+		A71C04091EB280BF00941ECB /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPopover.swift; sourceTree = "<group>"; };
+		A71C040B1EB280D500941ECB /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Screens/Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DetailPopover+Extension.swift"; path = "Extensions/DetailPopover+Extension.swift"; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 		A71C03FE1EB2037100941ECB /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				A71C03F81EB2029B00941ECB /* DetailPopover.swift */,
-				A71C03F91EB2029B00941ECB /* DetailView.swift */,
+				A71C04091EB280BF00941ECB /* DetailPopover.swift */,
+				A71C040B1EB280D500941ECB /* DetailView.swift */,
 				A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */,
 			);
 			name = Detail;
@@ -794,11 +794,11 @@
 				A71ADF581EADE1F00030932E /* PlayerViewModel.swift in Sources */,
 				A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
+				A71C040A1EB280BF00941ECB /* DetailPopover.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
 				A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */,
 				A71C03F21EB1F79A00941ECB /* EqualizerAnimation.swift in Sources */,
 				A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */,
-				A71C03FB1EB2029B00941ECB /* DetailView.swift in Sources */,
 				A7C9959F1E9EA6CF004826EE /* AppDelegate.swift in Sources */,
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
 				A71ADF551EADE1F00030932E /* PlayerView.swift in Sources */,
@@ -813,6 +813,7 @@
 				A71ADF411EADE0AF0030932E /* PlaylistCell.swift in Sources */,
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
 				A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */,
+				A71C040C1EB280D500941ECB /* DetailView.swift in Sources */,
 				A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */,
 				A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */,
 				A71C03E91EB1F74D00941ECB /* TrackCellViewModel.swift in Sources */,
@@ -822,7 +823,6 @@
 				A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,
 				A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */,
-				A71C03FA1EB2029B00941ECB /* DetailPopover.swift in Sources */,
 				A7B349DF1EB12ADF00B4F9FE /* NSError+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
