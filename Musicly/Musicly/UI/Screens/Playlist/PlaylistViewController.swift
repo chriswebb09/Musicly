@@ -65,7 +65,6 @@ final class PlaylistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        searchController.delegate = self
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
         commonInit()
@@ -80,7 +79,7 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func commonInit() {
-        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(navigationBarSetup))
+        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = [.all]
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
@@ -88,15 +87,8 @@ final class PlaylistViewController: UIViewController {
         setup()
     }
     
-    func navigationBarSetup() {
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchBar = searchController.searchBar
-        navigationItem.titleView = searchBar
-        searchBar.delegate = self
-        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
-        textFieldInsideSearchBar?.textColor = .white
-        navigationItem.rightBarButtonItem?.tintColor = .white
-        searchBar.becomeFirstResponder()
+    func goToSearch() {
+        self.tabBarController?.selectedIndex = 0
     }
     
     private func collectionViewRegister() {
@@ -198,37 +190,7 @@ extension PlaylistViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionViewConstants.layoutSpacingMinItem
     }
-}
-
-// MARK: - UISearchController Delegate
-
-extension PlaylistViewController: UISearchControllerDelegate {
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        playlist.removeAll()
-        searchBar.setShowsCancelButton(true, animated: true)
-        searchBarActive = true
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBarActive = false
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if !searchBarActive {
-            collectionView?.reloadData()
-            searchBarActive = true
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !searchBarActive {
-            searchBarActive = true
-            collectionView?.reloadData()
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
     
     func toggle(to: Bool) {
         infoLabel.isHidden = to
@@ -237,92 +199,6 @@ extension PlaylistViewController: UISearchControllerDelegate {
     
     fileprivate func setup() {
         setSearchBarColor(searchBar: searchBar)
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.definesPresentationContext = true
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        definesPresentationContext = true
         searchBar.barTintColor = .white
     }
-    
-    func searchBarHasInput() {
-        guard let collectionView = collectionView else { return }
-        collectionView.backgroundView?.isHidden = true
-        toggle(to: true)
-        collectionView.reloadData()
-        playlist.removeAll()
-        store?.searchForTracks { playlist, error in
-            guard let playlist = playlist else { return }
-            self.playlist = playlist
-            collectionView.reloadData()
-            collectionView.performBatchUpdates ({
-                DispatchQueue.main.async {
-                    if let collectionView = self.collectionView {
-                        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-                        collectionView.isHidden = false
-                    }
-                }
-            }, completion: { finished in
-                print(finished)
-            })
-        }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let barText = searchBar.getTextFromBar()
-        store?.setSearch(string: barText)
-        searchBarActive = true
-        if barText != "" { searchBarHasInput() }
-        navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
-        UIView.animate(withDuration: 1.8) {
-            self.collectionView?.alpha = 1
-        }
-    }
 }
-
-// MARK: - UISearchResultsUpdating
-
-extension PlaylistViewController: UISearchResultsUpdating {
-    
-    func filterContentForSearchText(searchText: String) {
-        print("filter")
-    }
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchString = searchController.searchBar.text
-        if searchString != nil {
-            playlist.removeAll()
-            if let searchString = searchString {
-                store?.setSearch(string: searchString)
-                store?.searchForTracks { tracks, error in
-                    self.store?.searchForTracks { tracks, error in
-                        guard let tracks = tracks else { return }
-                        self.playlist = tracks
-                    }
-                }
-            }
-        }
-        collectionView?.reloadData()
-    }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        searchBarActive = true
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension PlaylistViewController: UISearchBarDelegate {
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        playlist.removeAll()
-        toggle(to: false)
-        setupInfoLabel(infoLabel: infoLabel)
-        setupMusicIcon(icon: musicIcon)
-        collectionView?.reloadData()
-        navigationItem.setRightBarButton(buttonItem, animated: false)
-        searchBarActive = false
-    }
-}
-
-
