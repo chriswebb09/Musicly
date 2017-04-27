@@ -37,7 +37,6 @@ final class iTrackDataStore {
     
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
-
         if let realm = try? Realm() {
             tracks = realm.objects(Track.self)
             dump(tracks)

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		802768400C61A741A372161B /* Pods_MusiclyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2DD93AD7AA64BCFA83BEBD /* Pods_MusiclyUITests.framework */; };
 		A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70CF4DD1EA633F3000656AF /* Reusable.swift */; };
-		A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */; };
 		A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF231EADDFE50030932E /* TabBarController.swift */; };
 		A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3B1EADE09E0030932E /* SplashView.swift */; };
 		A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3C1EADE09E0030932E /* SplashViewController.swift */; };
@@ -45,7 +44,6 @@
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
 		A7C995B41E9EA6D0004826EE /* MusiclyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995B31E9EA6D0004826EE /* MusiclyTests.swift */; };
 		A7C995BF1E9EA6D0004826EE /* MusiclyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995BE1E9EA6D0004826EE /* MusiclyUITests.swift */; };
-		A7C995D51E9EA6DF004826EE /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CC1E9EA6DF004826EE /* DataParser.swift */; };
 		A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
 		A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */; };
@@ -85,7 +83,6 @@
 		A1F3B9D661206A6F91E05C21 /* Pods_MusiclyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusiclyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F52DE761385242BF409E94 /* Pods-MusiclyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusiclyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusiclyUITests/Pods-MusiclyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A70CF4DD1EA633F3000656AF /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
-		A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extension.swift"; sourceTree = "<group>"; };
 		A71ADF231EADDFE50030932E /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = TabBarController/TabBarController.swift; sourceTree = "<group>"; };
 		A71ADF3B1EADE09E0030932E /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashView.swift; path = Screens/Splash/SplashView.swift; sourceTree = "<group>"; };
 		A71ADF3C1EADE09E0030932E /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Screens/Splash/SplashViewController.swift; sourceTree = "<group>"; };
@@ -127,7 +124,6 @@
 		A7C995BA1E9EA6D0004826EE /* MusiclyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusiclyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C995BE1E9EA6D0004826EE /* MusiclyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusiclyUITests.swift; sourceTree = "<group>"; };
 		A7C995C01E9EA6D0004826EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7C995CC1E9EA6DF004826EE /* DataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDataStore.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
 		A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -346,7 +342,6 @@
 				A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */,
 				A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */,
 				A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */,
-				A71739D61EA1C1E500C28A41 /* AVPlayer+Extension.swift */,
 				A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */,
 				A70CF4DD1EA633F3000656AF /* Reusable.swift */,
 				A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */,
@@ -358,7 +353,6 @@
 		A73268C71E9EB65A00B48CD9 /* Local */ = {
 			isa = PBXGroup;
 			children = (
-				A7C995CC1E9EA6DF004826EE /* DataParser.swift */,
 				A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */,
 				A7B349E01EB13D4000B4F9FE /* Player.swift */,
 				A71C04031EB24ECA00941ECB /* RealmClient.swift */,
@@ -812,9 +806,7 @@
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
 				A71ADF551EADE1F00030932E /* PlayerView.swift in Sources */,
 				A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */,
-				A7C995D51E9EA6DF004826EE /* DataParser.swift in Sources */,
 				A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */,
-				A71739D71EA1C1E500C28A41 /* AVPlayer+Extension.swift in Sources */,
 				A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A71C03F61EB2024700941ECB /* BasePopoverAlert.swift in Sources */,

@@ -36,7 +36,7 @@
             }
         }
     }
-    var buttonItem: UIBarButtonItem? = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
+    var buttonItem: UIBarButtonItem!
     var infoLabel: UILabel = UILabel.setupInfoLabel()
     
     var musicIcon: UIImageView = {
@@ -64,6 +64,7 @@
     }
     
     func commonInit() {
+        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()
@@ -71,8 +72,9 @@
         collectionView?.setupCollectionView()
         setup()
     }
-    
     func navigationBarSetup() {
+        print("here")
+        navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar

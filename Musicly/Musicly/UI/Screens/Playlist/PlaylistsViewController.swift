@@ -15,19 +15,20 @@ final class PlaylistsViewController: UIViewController {
     
     let detailPop = DetailPopover()
     var collectionView : UICollectionView? = UICollectionView.setupPlaylistCollectionView()
-    
-    var store: iTrackDataStore? {
+    var tabController: TabBarController!
+    var store: iTrackDataStore! {
         didSet {
             dump(store)
         }
     }
     
     var rightBarButtonItem: UIBarButtonItem? = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
-
+    
     var trackList: [TrackList] = [TrackList]()
     
     override func viewDidLoad() {
         title = "Playlists"
+        tabController = self.tabBarController as! TabBarController
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -42,9 +43,7 @@ final class PlaylistsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let tabController = self.tabBarController as! TabBarController
         store = tabController.store
-        guard let store = store else { return }
         store.setSearch(string: "")
         if let tracklists = store.trackLists {
             DispatchQueue.main.async {
@@ -58,7 +57,6 @@ final class PlaylistsViewController: UIViewController {
 extension PlaylistsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let store = store else { return 0 }
         return trackList.count
     }
     
@@ -88,7 +86,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
     
     func hidePop() {
-        guard let store = store else { return }
+    
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
         store.createNewList(name: nameText)
         if let tracklists = store.trackLists, let last = tracklists.last {
@@ -107,8 +105,8 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         let destinationVC = PlaylistViewController()
         destinationVC.tracklist = trackList[indexPath.row]
         destinationVC.title = trackList[indexPath.row].listName
-        store?.currentPlaylistID = trackList[indexPath.row].listId
-        store?.setCurrentPlaylist()
+        store.currentPlaylistID = trackList[indexPath.row].listId
+        store.setCurrentPlaylist()
         navigationController?.pushViewController(destinationVC, animated: false)
     }
 }
