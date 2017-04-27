@@ -13,12 +13,6 @@ private let reuseIdentifier = "trackCell"
 
 final class PlaylistViewController: UIViewController {
     
-    fileprivate var searchBar = UISearchBar() {
-        didSet {
-            searchBar.returnKeyType = .done
-        }
-    }
-    
     var playlist: Playlist = Playlist()
     
     var store: iTrackDataStore?
@@ -54,7 +48,6 @@ final class PlaylistViewController: UIViewController {
         image = image.withRenderingMode(.alwaysOriginal)
         title = "Music.ly"
         commonInit()
-        setSearchBarColor(searchBar: searchBar)
         let tabController = self.tabBarController as! TabBarController
         store = tabController.store
     }
@@ -70,7 +63,6 @@ final class PlaylistViewController: UIViewController {
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         collectionView?.setupCollectionView()
-        setup()
     }
     
     func goToSearch() {
@@ -171,10 +163,5 @@ extension PlaylistViewController: UICollectionViewDelegate {
     func toggle(to: Bool) {
         infoLabel.isHidden = to
         musicIcon.isHidden = to
-    }
-    
-    fileprivate func setup() {
-        setSearchBarColor(searchBar: searchBar)
-        searchBar.barTintColor = .white
     }
 }

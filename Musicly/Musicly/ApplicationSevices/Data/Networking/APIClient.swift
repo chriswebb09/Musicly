@@ -21,17 +21,6 @@ final class iTunesAPIClient: NSObject {
 
     weak var defaultSession: URLSession? = URLSession(configuration: .default)
     
-    // MARK: - Main session used
-    
-    weak var downloadsSession : URLSession? {
-        get {
-            let config = URLSessionConfiguration.background(withIdentifier: "background")
-            weak var queue: OperationQueue? = OperationQueue()
-            return URLSession(configuration: config, delegate: self, delegateQueue: queue)
-        }
-    }
-
-    
     // MARK: - Main search functionality
     
     static func search(for query: String, completion: @escaping jsonCompletion) {
@@ -75,17 +64,3 @@ final class iTunesAPIClient: NSObject {
 }
 
 
-// MARK: - URLSessionDelegate
-
-extension iTunesAPIClient: URLSessionDelegate {
-    
-    internal func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let completionHandler = appDelegate.backgroundSessionCompletionHandler {
-            appDelegate.backgroundSessionCompletionHandler = nil
-            DispatchQueue.main.async {
-                completionHandler()
-            }
-        }
-    }
-}
