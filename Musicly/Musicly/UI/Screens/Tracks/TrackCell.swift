@@ -41,9 +41,9 @@ final internal class TrackCell: UICollectionViewCell {
         layer.shadowPath = path.cgPath
     }
     
-    func configureCell(with viewModel: TrackCellViewModel, withTime: Double) {
-        self.viewModel  = viewModel
-        self.albumArtView.downloadImage(url: viewModel.albumImageUrl)
+    func configureCell(with model: TrackCellViewModel, withTime: Double) {
+        viewModel  = model
+        albumArtView.downloadImage(url: model.albumImageUrl)
         layoutSubviews()
        // self.alpha = 1
     }

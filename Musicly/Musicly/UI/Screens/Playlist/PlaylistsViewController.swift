@@ -31,29 +31,29 @@ class PlaylistsViewController: UIViewController {
     override func viewDidLoad() {
         edgesForExtendedLayout = []
         title = "Playlists"
-        self.collectionView = UICollectionView.setupCollectionView()
+        collectionView = UICollectionView.setupCollectionView()
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
         view.addSubview(collectionView!)
         detailPop.popView.playlistNameField.delegate = self
-        self.rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         guard let rightButtonItem = self.rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
         
         let tabbar = self.tabBarController as! TabBarController
         
-        self.store = tabbar.store
+        store = tabbar.store
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let tabController = self.tabBarController as! TabBarController
-        self.store = tabController.store
+        store = tabController.store
         guard let store = store else { return }
         store.setSearch(string: "")
-        self.trackList = Array(store.trackLists)
+        trackList = Array(store.trackLists)
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
@@ -102,12 +102,12 @@ extension PlaylistsViewController: UICollectionViewDataSource {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
         }
-        self.detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
+        detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
     }
     
     func hidePop() {
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
-        self.store?.createNewList(name: nameText)
+        store?.createNewList(name: nameText)
         if let last = store?.trackLists.last {
             dump(trackList)
             trackList.append(last)
@@ -144,7 +144,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     
     func saveCurrentListID(newID: CurrentListID) {
         if let realm = try? Realm() {
-            self.listID = realm.objects(CurrentListID.self)
+            listID = realm.objects(CurrentListID.self)
             if !self.listID.contains(newID) {
                 try! realm.write {
                     realm.add(newID)

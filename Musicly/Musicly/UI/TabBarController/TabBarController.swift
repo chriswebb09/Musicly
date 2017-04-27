@@ -45,9 +45,7 @@ final class TabBarController: UITabBarController {
     fileprivate func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
-        //tracksController.store = store
         let playlistController = PlaylistsViewController()
-       // playlistController.store = store
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
         let controllers = [searchTab, playlistTab]
