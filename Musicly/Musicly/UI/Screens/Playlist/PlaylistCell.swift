@@ -18,9 +18,14 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistNameLabel: UILabel = {
         var playlistNameLabel = UILabel()
-        
         playlistNameLabel.font =  UIFont(name: "Avenir-Book", size: 18)!
         return playlistNameLabel
+    }()
+    
+    private var numberOfSongsLabel: UILabel = {
+        let numberOfSongs = UILabel()
+        numberOfSongs.text = "10"
+        return numberOfSongs
     }()
     
     override func layoutSubviews() {
@@ -39,17 +44,21 @@ final class PlaylistCell: UICollectionViewCell {
         layer.shadowOpacity = PlaylistCellConstants.shadowOpacity
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        DispatchQueue.main.async {
+            self.playlistArtView.roundCornersForAspectFit(radius: self.playlistArtView.bounds.width / 2)
+        }
     }
     
-    func configure(playlistName: String, artUrl: URL?) {
+    func configure(playlistName: String, artUrl: URL?, numberOfTracks: String) {
         setupConstraints()
         if let artUrl = artUrl {
             playlistArtView.downloadImage(url: artUrl)
         } else {
             playlistArtView.image = #imageLiteral(resourceName: "blue-record")
         }
-        playlistArtView.roundCornersForAspectFit(radius: 40)
+        
         playlistNameLabel.text = "Playlist: \(playlistName)"
+        numberOfSongsLabel.text = "\(numberOfTracks) Tracks"
         layoutSubviews()
     }
     
@@ -57,7 +66,14 @@ final class PlaylistCell: UICollectionViewCell {
         contentView.addSubview(playlistNameLabel)
         playlistNameLabel.translatesAutoresizingMaskIntoConstraints = false
         playlistNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: PlaylistCellConstants.nameLabelCenterX).isActive = true
-        playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * -0.15).isActive = true
+        
+        
+        contentView.addSubview(numberOfSongsLabel)
+        numberOfSongsLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberOfSongsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: PlaylistCellConstants.nameLabelCenterX).isActive = true
+        numberOfSongsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * 0.15).isActive = true
+        
         
         contentView.addSubview(playlistArtView)
         playlistArtView.translatesAutoresizingMaskIntoConstraints = false

@@ -53,13 +53,29 @@ extension UICollectionView {
         let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
-            flowLayout.minimumLineSpacing = 5
+            flowLayout.minimumLineSpacing = 1
         }
         
         collectionView.collectionViewLayout.invalidateLayout()
         layout.sectionInset = PlaylistViewControllerConstants.edgeInset
         layout.itemSize = PlaylistViewControllerConstants.itemSize
    
+        return collectionView
+    }
+    
+    static func setupPlaylistCollectionView() -> UICollectionView {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .vertical
+            flowLayout.minimumLineSpacing = 10
+        }
+        
+        //collectionView.collectionViewLayout.invalidateLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            //PlaylistViewControllerConstants.edgeInset
+        layout.itemSize = PlaylistViewControllerConstants.itemSize
+        
         return collectionView
     }
     

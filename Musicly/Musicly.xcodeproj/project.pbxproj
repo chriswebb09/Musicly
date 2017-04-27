@@ -33,7 +33,6 @@
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */; };
 		A75C6D8C1EB1A2FD00C0E26E /* DetailPopover+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */; };
-		A7993E961EADB63E00472E7C /* RealmDatabase+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */; };
 		A7ADE8131EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */; };
 		A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */; };
 		A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8181EAD7CE8004F299E /* TrackList.swift */; };
@@ -116,7 +115,6 @@
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Screens/Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
 		A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DetailPopover+Extension.swift"; path = "Extensions/DetailPopover+Extension.swift"; sourceTree = "<group>"; };
-		A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Extension.swift"; sourceTree = "<group>"; };
 		A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+extension.swift"; sourceTree = "<group>"; };
 		A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmThumb.swift; path = iTrack/RealmThumb.swift; sourceTree = "<group>"; };
 		A7ADE8181EAD7CE8004F299E /* TrackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackList.swift; path = iTrack/TrackList.swift; sourceTree = "<group>"; };
@@ -221,11 +219,8 @@
 		A71ADF251EADDFFC0030932E /* Popover */ = {
 			isa = PBXGroup;
 			children = (
-				A71C03F81EB2029B00941ECB /* DetailPopover.swift */,
-				A71C03F91EB2029B00941ECB /* DetailView.swift */,
-				A71C03F41EB2024700941ECB /* BasePopoverAlert.swift */,
-				A71C03F51EB2024700941ECB /* BasePopView.swift */,
-				A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */,
+				A71C03FE1EB2037100941ECB /* Detail */,
+				A71C03FF1EB2037800941ECB /* Base */,
 			);
 			name = Popover;
 			sourceTree = "<group>";
@@ -262,6 +257,50 @@
 				A71C03F11EB1F79A00941ECB /* EqualizerAnimation.swift */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		A71C03FE1EB2037100941ECB /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				A71C03F81EB2029B00941ECB /* DetailPopover.swift */,
+				A71C03F91EB2029B00941ECB /* DetailView.swift */,
+				A75C6D8B1EB1A2FD00C0E26E /* DetailPopover+Extension.swift */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		A71C03FF1EB2037800941ECB /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				A71C03F41EB2024700941ECB /* BasePopoverAlert.swift */,
+				A71C03F51EB2024700941ECB /* BasePopView.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		A71C04001EB2039800941ECB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A71ADF521EADE1F00030932E /* PlayerViewModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A71C04011EB2039E00941ECB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A71ADF4F1EADE1F00030932E /* PlayerView.swift */,
+				A71ADF501EADE1F00030932E /* PlayerViewController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		A71C04021EB203A800941ECB /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				A71ADF511EADE1F00030932E /* PlayerViewDelegate.swift */,
+			);
+			name = Delegate;
 			sourceTree = "<group>";
 		};
 		A7322E081EA3EE400096E5DE /* Splash */ = {
@@ -325,7 +364,6 @@
 				A70CF4DD1EA633F3000656AF /* Reusable.swift */,
 				A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */,
 				A7ADE8121EAD5962004F299E /* UICollectionViewFlowLayout+extension.swift */,
-				A7993E951EADB63E00472E7C /* RealmDatabase+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -457,10 +495,9 @@
 			isa = PBXGroup;
 			children = (
 				A71ADF4E1EADE1F00030932E /* FileState.swift */,
-				A71ADF4F1EADE1F00030932E /* PlayerView.swift */,
-				A71ADF501EADE1F00030932E /* PlayerViewController.swift */,
-				A71ADF511EADE1F00030932E /* PlayerViewDelegate.swift */,
-				A71ADF521EADE1F00030932E /* PlayerViewModel.swift */,
+				A71C04011EB2039E00941ECB /* Views */,
+				A71C04021EB203A800941ECB /* Delegate */,
+				A71C04001EB2039800941ECB /* Model */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -817,7 +854,6 @@
 				A71ADF411EADE0AF0030932E /* PlaylistCell.swift in Sources */,
 				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
 				A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */,
-				A7993E961EADB63E00472E7C /* RealmDatabase+Extension.swift in Sources */,
 				A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */,
 				A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */,
 				A71C03E91EB1F74D00941ECB /* TrackCellViewModel.swift in Sources */,

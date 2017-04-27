@@ -11,12 +11,10 @@ import RealmSwift
 
 private let reuseIdentifier = "PlaylistCell"
 
-class PlaylistsViewController: UIViewController {
+final class PlaylistsViewController: UIViewController {
     
-    var realm: Realm?
     let detailPop = DetailPopover()
-    var playlists: [Playlist]?
-    var collectionView : UICollectionView? = UICollectionView.setupCollectionView()
+    var collectionView : UICollectionView? = UICollectionView.setupPlaylistCollectionView()
     
     var store: iTrackDataStore? {
         didSet {
@@ -29,9 +27,8 @@ class PlaylistsViewController: UIViewController {
     var trackList: [TrackList] = [TrackList]()
     
     override func viewDidLoad() {
-        edgesForExtendedLayout = []
+        
         title = "Playlists"
-        collectionView = UICollectionView.setupCollectionView()
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -51,7 +48,9 @@ class PlaylistsViewController: UIViewController {
         store = tabController.store
         guard let store = store else { return }
         store.setSearch(string: "")
-        trackList = Array(store.trackLists)
+        if let tracklists = store.trackLists {
+            trackList = Array(tracklists)
+        }
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
@@ -72,10 +71,10 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         
         if track.tracks.count > 0 {
             if let arturl = URL(string: track.tracks[0].artworkUrl) {
-                cell.configure(playlistName: name, artUrl: arturl)
+                cell.configure(playlistName: name, artUrl: arturl, numberOfTracks: String(describing: track.tracks.count))
             }
         } else {
-            cell.configure(playlistName: name, artUrl: nil)
+            cell.configure(playlistName: name, artUrl: nil, numberOfTracks: String(describing: track.tracks.count))
         }
         return cell
     }
@@ -90,9 +89,10 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
     
     func hidePop() {
+        guard let store = store else { return }
         guard let nameText = detailPop.popView.playlistNameField.text else { return }
-        store?.createNewList(name: nameText)
-        if let last = store?.trackLists.last {
+        store.createNewList(name: nameText)
+        if let tracklists = store.trackLists, let last = tracklists.last {
             dump(trackList)
             trackList.append(last)
         }
@@ -127,7 +127,7 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return PlaylistViewControllerConstants.minimumSpace
+        return 0
     }
 }
 

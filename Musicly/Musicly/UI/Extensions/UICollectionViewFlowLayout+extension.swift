@@ -17,7 +17,7 @@ extension UICollectionViewFlowLayout {
         layout.sectionInset = EdgeAttributes.sectionInset
         layout.itemSize = RowSize.smallLayout.rawValue
         layout.minimumInteritemSpacing = SmallLayoutProperties.minimumInteritemSpacing
-        layout.minimumLineSpacing = SmallLayoutProperties.minimumLineSpacing
+        layout.minimumLineSpacing = 0
         return layout
     }
     
@@ -26,7 +26,7 @@ extension UICollectionViewFlowLayout {
         newLayout.sectionInset = EdgeAttributes.sectionInset
         newLayout.itemSize = RowSize.item.rawValue
         newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
-        newLayout.minimumLineSpacing = CollectionViewConstants.layoutSpacingMinLine
+        newLayout.minimumLineSpacing = 0
         return newLayout
     }
 }

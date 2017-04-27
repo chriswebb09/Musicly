@@ -170,7 +170,7 @@ struct EqualizerConstants {
 
 struct PlaylistCellConstants {
     static let nameLabelCenterX = UIScreen.main.bounds.width * 0.2
-    static let artViewMultiplier: CGFloat = 0.32
+    static let artViewMultiplier: CGFloat = 0.35
     static let artViewWidthMultiplier: CGFloat = 0.7
     static let shadowOffset = CGSize(width: 0, height: 2)
     static let cornerRadius: CGFloat = 2
@@ -178,6 +178,31 @@ struct PlaylistCellConstants {
     static let shadowOpacity: Float = 0.5
     static let mainFont = UIFont(name: "HelveticaNeue", size: 22)!
 }
+
+struct DetailPopoverConstants {
+    static let cornerRadius: CGFloat = 10
+    static let borderWidth: CGFloat = 10
+    static let popViewFrameX: CGFloat = UIScreen.main.bounds.width * 0.5
+    static let popViewFrameY: CGFloat = UIScreen.main.bounds.height * -0.5
+    static let popViewFrameWidth: CGFloat = UIScreen.main.bounds.width * 0.9
+    static let popViewFrameHeight: CGFloat = UIScreen.main.bounds.height * 0.55
+    static let popViewFrameCenterY: CGFloat = UIScreen.main.bounds.height / 2.5
+}
+
+// Constants
+
+struct DetailViewConstants {
+    static let heightMultiplier: CGFloat = 0.2
+    static let fieldWidth: CGFloat = 0.9
+    static let borderWidth: CGFloat = 2
+    static let largeCornerRadius: CGFloat = 5
+    static let cornerRadius: CGFloat = 2
+    static let shadowOpacity: Float = 0.5
+    static let shadowOffset = CGSize(width: 0, height: 2)
+    static let mainColor: UIColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
+    static let titleFont: UIFont = UIFont(name: "Avenir-Book", size: 18)!
+}
+
 
 struct ButtonConstants {
     static let tagBorderWidth: CGFloat = 1

@@ -17,8 +17,6 @@ final class PlayerViewController: UIViewController {
     var rightButtonItem: UIBarButtonItem?
     var index: Int?
     
-    var currentPlayerID: CurrentListID!
-    
     let realm = try! Realm()
     
     // Gets data from Realm

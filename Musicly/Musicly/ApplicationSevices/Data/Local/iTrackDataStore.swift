@@ -16,7 +16,7 @@ final class iTrackDataStore {
     fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
     fileprivate var searchTerm: String?
     
-    var realm: Realm!
+    var realm: Realm! = try! Realm()
     var newTracks = [Track]()
     var trackLists: Results<TrackList>!
     var tracks: Results<Track>!
@@ -24,15 +24,29 @@ final class iTrackDataStore {
     var currentPlaylistID: String?
     var currentPlaylist: TrackList?
     
+    init() {
+        client?.setup()
+        if let realm = try? Realm() {
+            tracks = realm.objects(Track.self)
+            trackLists = realm.objects(TrackList.self)
+            
+            if let list = trackLists.last {
+                currentPlaylistID = list.listId
+            }
+        }
+    }
+    
     init(searchTerm: String?) {
         self.searchTerm = searchTerm
         client?.setup()
         if let realm = try? Realm() {
             tracks = realm.objects(Track.self)
+            dump(tracks)
             trackLists = realm.objects(TrackList.self)
-        }
-        if let list = trackLists.last {
-            currentPlaylistID = list.listId
+            
+            if let list = trackLists.last {
+                currentPlaylistID = list.listId
+            }
         }
     }
     
@@ -90,6 +104,7 @@ final class iTrackDataStore {
             }
         }
     }
+    
     
     // Save individual track
     
