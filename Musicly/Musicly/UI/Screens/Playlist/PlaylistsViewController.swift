@@ -106,14 +106,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         }
     }
     
-    func setupNewList(name: String) -> TrackList {
-        let list = TrackList()
-        list.date = String(describing: NSDate())
-        list.listId = UUID().uuidString
-        list.listName = name
-        return list
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
         destinationVC.tracklist = trackList[indexPath.row]
