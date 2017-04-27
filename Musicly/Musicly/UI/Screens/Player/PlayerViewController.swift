@@ -24,14 +24,9 @@ final class PlayerViewController: UIViewController {
     // Gets data from Realm
     
     var playlistList: Results<TrackList>!
-    var currentID: Results<CurrentListID>!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.currentID = realm.objects(CurrentListID.self)
-        let test = currentID.first
-        currentPlayerID = test
         playList?.printAllKeys()
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
@@ -40,12 +35,10 @@ final class PlayerViewController: UIViewController {
         playerView.layoutSubviews()
         setupPlayItem(index: index)
         playerView.delegate = self
-        
         rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "heartorangesmall"),
                                                style: .done,
                                                target: self,
-                                               action: #selector(add)
-        )
+                                               action: #selector(add))
         rightButtonItem?.tintColor = UIColor.orange
         guard let rightButtonItem = self.rightButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
@@ -65,7 +58,6 @@ final class PlayerViewController: UIViewController {
     
     func add() {
         guard let trackAdded = self.playListItem?.track else { return }
-        
         let tabbar = self.tabBarController as! TabBarController
         let store = tabbar.store
         store.setupItem(with: trackAdded)
@@ -107,7 +99,6 @@ final class PlayerViewController: UIViewController {
             self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
         }
         player = AVPlayer(playerItem: item)
-        print(player.isPlaying)
     }
     
 }

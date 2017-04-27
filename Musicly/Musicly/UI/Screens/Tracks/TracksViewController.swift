@@ -172,16 +172,11 @@
  
  extension TracksViewController {
     
-    func setupPlayerController() -> PlayerViewController {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
         let destinationViewController: PlayerViewController = PlayerViewController()
         destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
-        return destinationViewController
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        let destinationViewController = setupPlayerController()
         guard let selectedIndex = selectedIndex else { return }
         destinationViewController.index = selectedIndex
         navigationController?.pushViewController(destinationViewController, animated: false)
@@ -285,7 +280,7 @@
         collectionView.backgroundView?.isHidden = true
         toggle(to: true)
         collectionView.reloadData()
-        self.playlist.removeAll()
+        playlist.removeAll()
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }
             self.playlist = playlist
@@ -331,7 +326,8 @@
                 store?.setSearch(string: searchString)
                 store?.searchForTracks { tracks, error in
                     self.store?.searchForTracks { tracks, error in
-                        self.playlist = tracks!
+                        guard let tracks = tracks else { return }
+                        self.playlist = tracks
                     }
                 }
             }
