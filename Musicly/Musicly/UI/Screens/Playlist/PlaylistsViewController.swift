@@ -84,7 +84,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func pop() {
+    func setupPop() {
         detailPop.popView.configureView()
         detailPop.popView.backgroundColor = CollectionViewAttributes.backgroundColor
         detailPop.popView.doneButton.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
@@ -93,7 +93,11 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         detailPop.popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
         detailPop.popView.doneButton.layer.borderWidth = 1.5
         detailPop.popView.layer.borderWidth = 1.5
-
+        
+    }
+    
+    func pop() {
+        setupPop()
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
             self.detailPop.popView.isHidden = false
@@ -112,7 +116,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         detailPop.hidePopView(viewController: self)
         detailPop.popView.isHidden = true
         view.sendSubview(toBack: detailPop)
-
+        
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
         }
@@ -123,7 +127,6 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         list.date = String(describing: NSDate())
         list.listId = UUID().uuidString
         list.listName = name
-    
         return list
     }
     

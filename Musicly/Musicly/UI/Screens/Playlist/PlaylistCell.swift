@@ -12,14 +12,14 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistArtView: UIImageView = {
         var playlistArtView = UIImageView()
-      //  playlistArtView.layer.borderWidth = PlaylistCellConstants.cornerRadius
+        //  playlistArtView.layer.borderWidth = PlaylistCellConstants.cornerRadius
         playlistArtView.clipsToBounds = true
         return playlistArtView
     }()
     
     private var playlistNameLabel: UILabel = {
         var playlistNameLabel = UILabel()
-     
+        
         playlistNameLabel.font =  UIFont(name: "Avenir-Book", size: 18)!
         return playlistNameLabel
     }()

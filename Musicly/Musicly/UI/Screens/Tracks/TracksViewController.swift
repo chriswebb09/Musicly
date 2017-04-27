@@ -202,7 +202,7 @@
                 cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0)
             }
             UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-               
+                
                 cell.frame = finalFrame
             }, completion: { finished in
                 cell.alpha = 1
@@ -210,9 +210,9 @@
         }
         return cell
     }
-
     
-
+    
+    
  }
  
  // MARK: - UICollectionViewDelegate
