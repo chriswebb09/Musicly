@@ -25,7 +25,10 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(add))
+        self.rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal),
+                                                    style: .done,
+                                                    target: self,
+                                                    action: #selector(add))
         baseControllerSetup()
         baseViewSetup()
         setupItem(index: index)
@@ -63,9 +66,11 @@ final class PlayerViewController: UIViewController {
     
     private final func getFileTime(url: URL) -> String? {
         avUrlAsset = AVURLAsset(url: url)
+        
         guard let avUrlAsset = avUrlAsset else { return nil }
         let audioDuration: CMTime = avUrlAsset.duration
         let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+        
         if let secondsDuration = audioDurationSeconds {
             let minutes = Int(secondsDuration / 60)
             let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
@@ -89,9 +94,11 @@ final class PlayerViewController: UIViewController {
         avUrlAsset = AVURLAsset(url: url)
         guard let asset = avUrlAsset else { return }
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
+            
             let item = AVPlayerItem(asset: asset)
             let audioDuration: CMTime = asset.duration
             let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
+            
             if let secondsDuration = audioDurationSeconds {
                 let minutes = Int(secondsDuration / 60)
                 let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
@@ -113,6 +120,7 @@ extension PlayerViewController: PlayerViewDelegate {
         playerView.startEqualizer()
         playerView.setTimer()
         player?.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+            
             guard let player = self.player else { return }
             guard let currentItem = player.currentItem else { return }
             

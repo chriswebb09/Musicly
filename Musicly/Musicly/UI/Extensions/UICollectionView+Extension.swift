@@ -19,12 +19,6 @@ extension UICollectionView {
         
     }
     
-    func setupCollectionView() {
-        setupDefaultUI()
-        backgroundColor = CollectionViewConstants.backgroundColor
-        setupLayout()
-    }
-    
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -53,11 +47,6 @@ extension UICollectionView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         layout.itemSize = PlaylistViewControllerConstants.itemSize
         return collectionView
-    }
-    
-    func setupLayout() {
-        self.collectionViewLayout.invalidateLayout()
-        self.layoutIfNeeded()
     }
 }
 

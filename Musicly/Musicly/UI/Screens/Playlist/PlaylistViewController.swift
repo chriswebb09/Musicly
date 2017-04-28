@@ -60,7 +60,9 @@ final class PlaylistViewController: UIViewController {
         edgesForExtendedLayout = [.all]
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
-        collectionView?.setupCollectionView()
+        collectionView?.setupDefaultUI()
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        
     }
     
     func goToSearch() {
@@ -75,13 +77,15 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
-            flowLayout.scrollDirection = .vertical
-            collectionView?.layoutIfNeeded()
-            collectionView?.collectionViewLayout = newLayout
-            collectionView?.frame = UIScreen.main.bounds
-        }
+        let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        newLayout.sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
+        newLayout.itemSize = RowSize.item.rawValue
+        newLayout.minimumInteritemSpacing = 5
+        newLayout.minimumLineSpacing = 25
+        newLayout.scrollDirection = .vertical
+        collectionView?.layoutIfNeeded()
+        collectionView?.collectionViewLayout = newLayout
+        collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
         setupInfoLabel(infoLabel: infoLabel)
         setupMusicIcon(icon: musicIcon)
@@ -151,7 +155,6 @@ extension PlaylistViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionViewLayout == UICollectionViewFlowLayout.small() { return RowSize.smallLayout.rawValue }
         return RowSize.track.rawValue
     }
     

@@ -73,7 +73,8 @@
         collectionView?.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
-        collectionView?.setupCollectionView()
+        collectionView?.setupDefaultUI()
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         setupSearchController()
     }
     func navigationBarSetup() {
