@@ -93,7 +93,7 @@
         collectionView?.delegate = self
     }
     
-   private func setupCollectionView() {
+    private func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
             flowLayout.scrollDirection = .vertical
@@ -145,32 +145,25 @@
  extension TracksViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationViewController: PlayerViewController = PlayerViewController()
-        destinationViewController.playList = playlist
-        destinationViewController.hidesBottomBarWhenPushed = true
-        destinationViewController.index = indexPath.row
-        navigationController?.pushViewController(destinationViewController, animated: false)
+        DispatchQueue.main.async {
+             let destinationViewController: PlayerViewController = PlayerViewController()
+            destinationViewController.playList = self.playlist
+            destinationViewController.hidesBottomBarWhenPushed = true
+            destinationViewController.index = indexPath.row
+            self.navigationController?.pushViewController(destinationViewController, animated: false)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
         let finalFrame = cell.frame
-        
-        let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
-            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-            cell.configureCell(with: cellViewModel, withTime: 0)
+            DispatchQueue.main.async {
+                let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
+                cell.configureCell(with: cellViewModel, withTime: 0)
+            }
         }
-        
-        if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
-        UIView.animate(withDuration: 2.1, delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.5,
-                       options: [.curveEaseInOut], animations: {
-                        cell.frame = finalFrame
-        }, completion: { finished in
-            cell.alpha = 1
-        })
         return cell
     }
  }
@@ -247,6 +240,7 @@
         guard let collectionView = collectionView else { return }
         collectionView.backgroundView?.isHidden = true
         toggle(to: true)
+        collectionView.reloadData()
         playlist.removeAll()
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }

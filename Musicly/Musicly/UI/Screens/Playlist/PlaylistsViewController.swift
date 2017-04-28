@@ -47,12 +47,8 @@ final class PlaylistsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         store = tabController.store
-        store.setSearch(string: "")
-        if let tracklists = store.trackLists {
-            DispatchQueue.main.async {
-                self.trackList = Array(tracklists)
-                self.collectionView?.reloadData()
-            }
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
         }
     }
 }
@@ -60,10 +56,18 @@ final class PlaylistsViewController: UIViewController {
 extension PlaylistsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let tracklists = store.trackLists {
+            DispatchQueue.main.async {
+                self.trackList = Array(tracklists)
+                
+            }
+        }
+        
         return trackList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("PlaylistsViewController - cellForItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
         let index = indexPath.row
         let track = trackList[index]

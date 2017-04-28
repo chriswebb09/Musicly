@@ -8,34 +8,28 @@ import UIKit
 
 class AudioEqualizer {
     
-    var size: CGSize?
+    var size: CGSize
     
-    init(size: CGSize?) {
+    init(size: CGSize) {
         self.size = size
     }
     
-    func createLayer(for size: CGSize?, with color: UIColor?) -> CALayer? {
+    func createLayer(for size: CGSize, with color: UIColor) -> CALayer? {
         let layer: CAShapeLayer? = CAShapeLayer()
+        let roundedRect = CGRect(x: size.width,
+                                 y: size.height,
+                                 width: size.width,
+                                 height: size.height)
+        let path: UIBezierPath? = UIBezierPath(roundedRect: roundedRect,
+                                               byRoundingCorners: [.allCorners],
+                                               cornerRadii: EqualizerConstants.cornerRadii)
+        layer?.fillColor = color.cgColor
+        layer?.path = path?.cgPath
         
-        if let size = size, let color = color, let layer = layer {
-            let roundedRect = CGRect(x: size.width,
-                                     y: size.height,
-                                     width: size.width,
-                                     height: size.height)
-            let path: UIBezierPath? = UIBezierPath(roundedRect: roundedRect,
-                                                   byRoundingCorners: [.allCorners],
-                                                   cornerRadii: EqualizerConstants.cornerRadii)
-            layer.fillColor = color.cgColor
-            layer.path = path?.cgPath
-        }
         return layer
     }
     
-    func setUpAnimation(in layer: CALayer?, color: UIColor?) {
-        
-        guard let size = size else { return }
-        guard let layer = layer else { return }
-        guard let color = color else { return }
+    func setUpAnimation(in layer: CALayer, color: UIColor) {
         
         let lineSize = size.width / EqualizerConstants.lineSizeDenominator
         let lineDimensions = CGSize(width: lineSize, height: size.height)
@@ -44,9 +38,9 @@ class AudioEqualizer {
         let x = layer.bounds.size.width - xOffset
         let y = yOffset * EqualizerConstants.yMultiplier
         
-        let duration: [CFTimeInterval?] = [1.4, 1, 1.7, 2, 1.2]
-        let values = [0.05, 0.35, 0.12, 0.4, 0.2, 0.3, 0.15]
-        
+        let duration: [CFTimeInterval?] = [1.2, 1.5, 1.7, 2, 1.6]
+        let values = [0.1, 0.13, 0.35, 0.12, 0.4, 0.2, 0.01, 0.14, 0.3, 0.15]
+        let colors = [UIColor(red:0.19, green:0.34, blue:0.57, alpha:1.0), UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor(red:0.19, green:0.38, blue:0.60, alpha:1.0)]
         for i in 0 ..< 4 {
             
             let animation = CAKeyframeAnimation()
@@ -72,6 +66,8 @@ class AudioEqualizer {
                 if let path = path {
                     animation.values?.append(path.cgPath)
                 }
+                
+                
             }
             
             if let timeDuration = duration[i] {
@@ -81,7 +77,7 @@ class AudioEqualizer {
             animation.repeatCount = HUGE
             animation.isRemovedOnCompletion = false
             
-            let line = createLayer(for: lineDimensions, with: color)
+            let line = createLayer(for: lineDimensions, with: colors[i])
             let xVal = x + lineSize * EqualizerConstants.xValMultiplier * CGFloat(i)
             let yVal = y * EqualizerConstants.yValMutliplier
             let widthVal = lineSize * EqualizerConstants.widthValMultiplier
@@ -122,7 +118,7 @@ final class IndicatorView: UIView {
         super.init(frame: frame!)
         guard let frame = frame else { return }
         
-        let animationWidth = frame.size.width * 0.5
+        let animationWidth = frame.size.width * 0.52
         let animationHeight = frame.height / 1.9
         
         animationRect = CGRect(x: frame.width,
@@ -158,7 +154,7 @@ final class IndicatorView: UIView {
             if let minEdge  = minEdge {
                 self.animationRect?.size = CGSize(width: minEdge, height: minEdge)
                 if let animation = animation {
-                    animation.setUpAnimation(in: layer, color: color)
+                    animation.setUpAnimation(in: layer, color: color!)
                 }
             }
         }

@@ -84,11 +84,9 @@ final class PlaylistCell: UICollectionViewCell {
     
     func setupConstraints() {
         contentView.addSubview(playlistNameLabel)
-       
         playlistNameLabel.translatesAutoresizingMaskIntoConstraints = false
         playlistNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.1).isActive = true
         playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * -0.16).isActive = true
-        
         
         contentView.addSubview(numberOfSongsLabel)
         numberOfSongsLabel.translatesAutoresizingMaskIntoConstraints = false
