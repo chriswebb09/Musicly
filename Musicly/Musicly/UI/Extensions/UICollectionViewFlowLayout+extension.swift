@@ -23,10 +23,10 @@ extension UICollectionViewFlowLayout {
     
     static func setupLayout() -> UICollectionViewFlowLayout {
         let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        newLayout.sectionInset = EdgeAttributes.sectionInset
+        newLayout.sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
         newLayout.itemSize = RowSize.item.rawValue
-        newLayout.minimumInteritemSpacing = CollectionViewConstants.layoutSpacingMinItem
-        newLayout.minimumLineSpacing = 0
+        newLayout.minimumInteritemSpacing = 5
+        newLayout.minimumLineSpacing = 25
         return newLayout
     }
 }

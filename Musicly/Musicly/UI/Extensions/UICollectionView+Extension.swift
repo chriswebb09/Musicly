@@ -9,11 +9,7 @@
 import UIKit
 
 extension UICollectionView {
-    
-    func register<T: UICollectionViewCell>(_: T.Type) where T: Reusable {
-        register(T.self, forCellWithReuseIdentifier: NSStringFromClass(T.self))
-    }
-    
+
     func setupDefaultUI() {
         let cancelButtonAttributes: NSDictionary = [NSForegroundColorAttributeName: UIColor.textColor]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [String : AnyObject], for: .normal)
@@ -25,7 +21,6 @@ extension UICollectionView {
     
     func setupCollectionView() {
         setupDefaultUI()
-        
         backgroundColor = CollectionViewConstants.backgroundColor
         setupLayout()
     }
@@ -48,21 +43,6 @@ extension UICollectionView {
         infoLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * 0.02).isActive = true
     }
     
-    static func setupCollectionView() -> UICollectionView {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .vertical
-            flowLayout.minimumLineSpacing = 1
-        }
-        
-        collectionView.collectionViewLayout.invalidateLayout()
-        layout.sectionInset = PlaylistViewControllerConstants.edgeInset
-        layout.itemSize = PlaylistViewControllerConstants.itemSize
-        
-        return collectionView
-    }
-    
     static func setupPlaylistCollectionView() -> UICollectionView {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
@@ -74,7 +54,6 @@ extension UICollectionView {
         layout.itemSize = PlaylistViewControllerConstants.itemSize
         return collectionView
     }
-    
     
     func setupLayout() {
         self.collectionViewLayout.invalidateLayout()

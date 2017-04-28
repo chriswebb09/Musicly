@@ -40,7 +40,8 @@ class AudioEqualizer {
         
         let duration: [CFTimeInterval?] = [1.2, 1.5, 1.7, 2, 1.6]
         let values = [0.1, 0.13, 0.35, 0.12, 0.4, 0.2, 0.01, 0.14, 0.3, 0.15]
-        let colors = [UIColor(red:0.19, green:0.34, blue:0.57, alpha:1.0), UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor(red:0.19, green:0.38, blue:0.60, alpha:1.0)]
+        let colors = [UIColor.white, UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor.white, UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0)]
+       
         for i in 0 ..< 4 {
             
             let animation = CAKeyframeAnimation()
