@@ -93,10 +93,8 @@ final class PlayerViewController: UIViewController {
             let audioDuration: CMTime = asset.duration
             let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
             if let secondsDuration = audioDurationSeconds {
-                
                 let minutes = Int(secondsDuration / 60)
                 let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
-                
                 DispatchQueue.main.async {
                     self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
                 }

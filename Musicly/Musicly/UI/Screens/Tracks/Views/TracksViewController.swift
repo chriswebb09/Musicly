@@ -65,10 +65,7 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal),
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(navigationBarSetup))
+        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
         edgesForExtendedLayout = [.all]
         collectionView?.isHidden = true
         setupCollectionView()
@@ -146,7 +143,7 @@
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-             let destinationViewController: PlayerViewController = PlayerViewController()
+            let destinationViewController: PlayerViewController = PlayerViewController()
             destinationViewController.playList = self.playlist
             destinationViewController.hidesBottomBarWhenPushed = true
             destinationViewController.index = indexPath.row
@@ -172,8 +169,7 @@
  
  extension TracksViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return RowSize.header.rawValue
     }
     
