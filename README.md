@@ -3,6 +3,12 @@
 <img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/playlist-skip.gif">
 </p>
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/playlist2.gif">
+</p>
+
+
+
 <h2 align="center">Todo</h2>
 
 * Debug
