@@ -65,13 +65,16 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(navigationBarSetup))
-        edgesForExtendedLayout = [.all]
+        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(navigationBarSetup))
+        edgesForExtendedLayout = []
         collectionView?.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         collectionView?.setupCollectionView()
-        setup()
+        setupSearchController()
     }
     func navigationBarSetup() {
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
@@ -91,13 +94,10 @@
     }
     
     private func setupCollectionView() {
-        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.setupLayout()
-            flowLayout.scrollDirection = .vertical
-            collectionView?.layoutIfNeeded()
-            collectionView?.collectionViewLayout = newLayout
-            collectionView?.frame = UIScreen.main.bounds
-        }
+        let newLayout: TrackItemsFlowLayout = TrackItemsFlowLayout()
+        newLayout.setup()
+        collectionView?.collectionViewLayout = newLayout
+        collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
         setupInfoLabel(infoLabel: infoLabel)
         setupMusicIcon(icon: musicIcon)
@@ -139,7 +139,9 @@
     }
  }
  
- extension TracksViewController {
+ // MARK: - UICollectionViewDelegate
+ 
+ extension TracksViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
@@ -149,7 +151,6 @@
             destinationViewController.index = indexPath.row
             self.navigationController?.pushViewController(destinationViewController, animated: false)
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -162,28 +163,6 @@
             }
         }
         return cell
-    }
- }
- 
- // MARK: - UICollectionViewDelegate
- 
- extension TracksViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return RowSize.header.rawValue
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionViewLayout == UICollectionViewFlowLayout.small() { return RowSize.smallLayout.rawValue }
-        return RowSize.track.rawValue
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return EdgeAttributes.edgeForStandard
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return CollectionViewConstants.layoutSpacingMinItem
     }
  }
  
@@ -222,7 +201,7 @@
         musicIcon.isHidden = to
     }
     
-    fileprivate func setup() {
+    fileprivate func setupSearchController() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
