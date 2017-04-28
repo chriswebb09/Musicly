@@ -44,9 +44,7 @@
 		A7C995BF1E9EA6D0004826EE /* MusiclyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995BE1E9EA6D0004826EE /* MusiclyUITests.swift */; };
 		A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
-		A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */; };
 		A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */; };
-		A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */; };
 		A7C995F51E9EA707004826EE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995F41E9EA707004826EE /* APIClient.swift */; };
 		A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */; };
 		A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */; };
@@ -122,9 +120,7 @@
 		A7C995C01E9EA6D0004826EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDataStore.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
-		A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
-		A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		A7C995F41E9EA707004826EE /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
@@ -333,10 +329,8 @@
 			children = (
 				A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */,
 				A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */,
-				A7C995E61E9EA6F6004826EE /* UICollectionView+Extension.swift */,
 				A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */,
 				A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */,
-				A7C995E81E9EA6F6004826EE /* UISearchBar+Extension.swift */,
 				A7CBC3EF1E9FC9E100C95A50 /* UILabel+Extension.swift */,
 				A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */,
 				A70CF4DD1EA633F3000656AF /* Reusable.swift */,
@@ -799,7 +793,6 @@
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
 				A71ADF551EADE1F00030932E /* PlayerView.swift in Sources */,
 				A7CBC3F01E9FC9E100C95A50 /* UILabel+Extension.swift in Sources */,
-				A7C995F31E9EA6F6004826EE /* UISearchBar+Extension.swift in Sources */,
 				A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */,
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A71C03F61EB2024700941ECB /* BasePopoverAlert.swift in Sources */,
@@ -807,7 +800,6 @@
 				A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */,
 				A71ADF571EADE1F00030932E /* PlayerViewDelegate.swift in Sources */,
 				A71ADF411EADE0AF0030932E /* PlaylistCell.swift in Sources */,
-				A7C995F11E9EA6F6004826EE /* UICollectionView+Extension.swift in Sources */,
 				A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */,
 				A71C040C1EB280D500941ECB /* DetailView.swift in Sources */,
 				A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */,

@@ -42,6 +42,7 @@ final internal class TrackCell: UICollectionViewCell {
     }
     
     func configureCell(with model: TrackCellViewModel, withTime: Double) {
+        alpha = 0
         viewModel  = model
         albumArtView.downloadImage(url: model.albumImageUrl)
         layoutSubviews()

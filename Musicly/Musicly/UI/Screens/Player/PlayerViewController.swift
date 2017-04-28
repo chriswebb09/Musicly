@@ -9,6 +9,7 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
+    var trackPlayer: TrackPlayer?
     var player: AVPlayer? = AVPlayer()
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
@@ -25,14 +26,16 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.rightButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal),
-                                                    style: .done,
-                                                    target: self,
-                                                    action: #selector(add))
+        setupBarButton()
         baseControllerSetup()
         baseViewSetup()
         setupItem(index: index)
         playerView.delegate = self
+    }
+    
+    func setupBarButton() {
+        let rightButtonImage = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
         navigationItem.rightBarButtonItems = [rightButtonItem]
     }
     
@@ -82,7 +85,7 @@ final class PlayerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.removeFromSuperview()
-        self.player?.pause()
+        player?.pause()
         dismiss(animated: true, completion: nil)
     }
     

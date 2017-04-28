@@ -60,7 +60,7 @@ final class PlaylistViewController: UIViewController {
         edgesForExtendedLayout = [.all]
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
-        collectionView?.setupDefaultUI()
+        setupDefaultUI()
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         
     }

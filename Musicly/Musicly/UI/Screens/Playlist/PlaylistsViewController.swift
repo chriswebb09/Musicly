@@ -14,7 +14,7 @@ private let reuseIdentifier = "PlaylistCell"
 final class PlaylistsViewController: UIViewController {
     
     let detailPop = DetailPopover()
-    var collectionView : UICollectionView? = UICollectionView.setupPlaylistCollectionView()
+    var collectionView : UICollectionView?
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
@@ -22,6 +22,7 @@ final class PlaylistsViewController: UIViewController {
     
     override func viewDidLoad() {
         title = "Playlists"
+        self.collectionView = setupPlaylistCollectionView()
         rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup()
@@ -129,5 +130,17 @@ extension PlaylistsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func setupPlaylistCollectionView() -> UICollectionView {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .vertical
+            flowLayout.minimumLineSpacing = 10
+        }
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        layout.itemSize = PlaylistViewControllerConstants.itemSize
+        return collectionView
     }
 }

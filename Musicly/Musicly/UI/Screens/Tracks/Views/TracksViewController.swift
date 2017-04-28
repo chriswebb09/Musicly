@@ -73,7 +73,7 @@
         collectionView?.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
-        collectionView?.setupDefaultUI()
+        setupDefaultUI()
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         setupSearchController()
     }
@@ -135,6 +135,10 @@
             if let url = URL(string: track.artworkUrl) {
                 let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
                 cell.configureCell(with: viewModel, withTime: rowTime)
+                print("Rowtime: \(rowTime)")
+                UIView.animate(withDuration: rowTime / 10) {
+                    cell.alpha = 1
+                }
             }
         }
     }
@@ -159,8 +163,7 @@
         let finalFrame = cell.frame
         if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
             DispatchQueue.main.async {
-                let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-                cell.configureCell(with: cellViewModel, withTime: 0)
+                self.setTrackCell(indexPath: indexPath, cell: cell)
             }
         }
         return cell
@@ -236,7 +239,7 @@
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let barText = searchBar.getTextFromBar()
+        guard let barText = searchBar.text else { return }
         store?.setSearch(string: barText)
         searchBarActive = true
         if barText != "" { searchBarHasInput() }

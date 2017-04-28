@@ -12,7 +12,8 @@ final class PlaylistCell: UICollectionViewCell {
     
     private var playlistArtView: UIImageView = {
         var playlistArtView = UIImageView()
-        playlistArtView.clipsToBounds = true
+        playlistArtView.layer.borderColor = UIColor.black.cgColor
+        playlistArtView.layer.borderWidth = 1.5
         return playlistArtView
     }()
     
@@ -61,7 +62,7 @@ final class PlaylistCell: UICollectionViewCell {
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
         DispatchQueue.main.async {
-            self.playlistArtView.roundCornersForAspectFit(radius: self.playlistArtView.bounds.width / 2)
+            self.playlistArtView.setRounded()
         }
     }
     
@@ -85,31 +86,31 @@ final class PlaylistCell: UICollectionViewCell {
     func setupConstraints() {
         contentView.addSubview(playlistNameLabel)
         playlistNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        playlistNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.1).isActive = true
+        playlistNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         playlistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * -0.16).isActive = true
         
         contentView.addSubview(numberOfSongsLabel)
         numberOfSongsLabel.translatesAutoresizingMaskIntoConstraints = false
-        numberOfSongsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.1).isActive = true
+        numberOfSongsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         numberOfSongsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * 0.2).isActive = true
         
         contentView.addSubview(listTypeLabel)
         listTypeLabel.translatesAutoresizingMaskIntoConstraints = false
-        listTypeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.1).isActive = true
+        listTypeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         listTypeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: contentView.bounds.height * 0.06).isActive = true
         
         contentView.addSubview(cellImage)
         cellImage.translatesAutoresizingMaskIntoConstraints = false
         cellImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
         cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1).isActive = true
-        cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: UIScreen.main.bounds.width * -0.06).isActive = true
+        cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: contentView.bounds.width * -0.06).isActive = true
         cellImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
         contentView.addSubview(playlistArtView)
         playlistArtView.translatesAutoresizingMaskIntoConstraints = false
-        playlistArtView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: contentView.bounds.height * 0.1).isActive = true
+        playlistArtView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         playlistArtView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: PlaylistCellConstants.artViewMultiplier).isActive = true
-        playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: PlaylistCellConstants.artViewWidthMultiplier).isActive = true
+        playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.27).isActive = true
+        playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.71).isActive = true
     }
 }

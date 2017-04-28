@@ -27,7 +27,7 @@ extension UIViewController {
     func setupMusicIcon(icon: UIView) {
         view.addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.18).isActive = true
+        icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         icon.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35).isActive = true
         icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * -0.04).isActive = true

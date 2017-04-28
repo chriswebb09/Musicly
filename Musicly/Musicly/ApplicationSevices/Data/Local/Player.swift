@@ -9,8 +9,28 @@
 import Foundation
 import AVFoundation
 
-class TrackPlayer {
+class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
-    var player: AVPlayer? = AVPlayer() 
+    var url: URL
     
+    lazy var asset: AVURLAsset = {
+        var asset: AVURLAsset = AVURLAsset(url: self.url)
+        asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
+        return asset
+    }()
+    
+    lazy var player: AVPlayer = {
+        var player: AVPlayer = AVPlayer(playerItem: self.playerItem)
+        player.actionAtItemEnd = AVPlayerActionAtItemEnd.none
+        return player
+    }()
+    
+    lazy var playerItem: AVPlayerItem = {
+        var playerItem: AVPlayerItem = AVPlayerItem(asset: self.asset)
+        return playerItem
+    }()
+    
+    init(url: URL) {
+        self.url = url
+    }
 }

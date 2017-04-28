@@ -22,9 +22,6 @@ extension UIImageView {
             }
         }
     }
-}
-
-extension UIImageView {
     
     func roundCornersForAspectFit(radius: CGFloat) {
         if let image = self.image {
@@ -44,6 +41,15 @@ extension UIImageView {
             self.layer.mask = mask
         }
     }
+    
+    
+    func setRounded() {
+        let radius = self.frame.height / 2
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+    }
+    
+    
 }
 
 
@@ -55,7 +61,7 @@ extension UIImage {
             }
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
-                   completion(image)
+                    completion(image)
                 }
             }
         }
