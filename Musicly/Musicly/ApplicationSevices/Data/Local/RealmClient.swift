@@ -7,3 +7,27 @@
 //
 
 import Foundation
+import Realm
+import RealmSwift
+
+class RealmClient {
+    
+    var realm: Realm
+    
+    init() {
+        self.realm = try! Realm()
+    }
+    
+    func getTracks() -> Results<Track> {
+        return realm.objects(Track.self)
+    }
+    
+    func getTrackList() -> Results<TrackList> {
+        return realm.objects(TrackList.self)
+    }
+    
+    func getFilteredTrackList(predicate: String) -> Results<TrackList> {
+        return realm.objects(TrackList.self).filter("listId == %@", predicate)
+    }
+    
+}

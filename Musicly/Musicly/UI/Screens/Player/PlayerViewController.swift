@@ -100,14 +100,10 @@ final class PlayerViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
                 }
-                
             }
             self.player = AVPlayer(playerItem: item)
         }
-        
-        
     }
-    
 }
 
 extension PlayerViewController: PlayerViewDelegate {
