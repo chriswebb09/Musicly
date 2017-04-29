@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/playlist-skip.gif">
+<img src="https://github.com/chriswebb09/Musicly/blob/master/Assets/musicly.gif">
 </p>
 
 <p align="center">
