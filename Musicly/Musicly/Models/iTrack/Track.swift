@@ -33,7 +33,7 @@ class Track: Object {
         self.init(thumb: thumb)
     }
     
-    convenience init(json: JSON) {
+    convenience init(json: [String: Any]) {
         self.init()
         if let trackName = json["trackName"] as? String,
             let artistName = json["artistName"] as? String,
@@ -70,13 +70,14 @@ class Track: Object {
     static func saveAlbumImageData(from urlString: String) -> Data {
         let url = URL(string: urlString)!
         var albumImageData = Data()
-        iTunesAPIClient.downloadData(url: url) { data, response, error in
+         URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
+//        iTunesAPIClient.downloadData(url: url) { data, response, error in
             guard let data = data, error == nil else { return }
             albumImageData = data
             while albumImageData.isEmpty {
                 print("downloading")
             }
-        }
+        }.resume()
         return albumImageData
     }
     

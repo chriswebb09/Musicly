@@ -9,7 +9,6 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
-    var trackPlayer: TrackPlayer?
     var player: AVPlayer? = AVPlayer()
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
@@ -31,40 +30,31 @@ final class PlayerViewController: UIViewController {
         baseViewSetup()
         setupItem(index: index)
         playerView.delegate = self
+        
     }
     
-    func setupBarButton() {
+   private func setupBarButton() {
         let rightButtonImage = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-        rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
+        self.rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
         navigationItem.rightBarButtonItems = [rightButtonItem]
     }
     
-    func baseControllerSetup() {
+    private func baseControllerSetup() {
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
     }
     
-    func baseViewSetup() {
+    private func baseViewSetup() {
         view.addSubview(playerView)
         playerView.frame = UIScreen.main.bounds
         playerView.layoutSubviews()
-    }
-    
-    func setupItem(index: Int) {
-        playListItem = playList?.playlistItem(at: index)
-        guard let track = playListItem?.track else { return }
-        guard let url = URL(string: track.previewUrl) else { return }
-        title = track.artistName
-        let viewModel = PlayerViewModel(track: track, playState: .queued)
-        playerView.configure(with: viewModel)
-        initPlayer(url: url)
     }
     
     func add() {
         guard let trackAdded = self.playListItem?.track else { return }
         let tabbar = self.tabBarController as! TabBarController
         let store = tabbar.store
-        store.setupItem(with: trackAdded)
+        store?.setupItem(with: trackAdded)
     }
     
     private final func getFileTime(url: URL) -> String? {
@@ -93,7 +83,22 @@ final class PlayerViewController: UIViewController {
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    final func initPlayer(url: URL)  {
+
+}
+
+extension PlayerViewController: PlayerViewDelegate {
+    
+    fileprivate func setupItem(index: Int) {
+        playListItem = playList?.playlistItem(at: index)
+        guard let track = playListItem?.track else { return }
+        guard let url = URL(string: track.previewUrl) else { return }
+        title = track.artistName
+        let viewModel = PlayerViewModel(track: track, playState: .queued)
+        playerView.configure(with: viewModel)
+        initPlayer(url: url)
+    }
+    
+    private func initPlayer(url: URL)  {
         avUrlAsset = AVURLAsset(url: url)
         guard let asset = avUrlAsset else { return }
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
@@ -106,15 +111,12 @@ final class PlayerViewController: UIViewController {
                 let minutes = Int(secondsDuration / 60)
                 let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
                 DispatchQueue.main.async {
-                    self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)")
+                    self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)", timevalue: Float(secondsDuration))
                 }
             }
             self.player = AVPlayer(playerItem: item)
         }
     }
-}
-
-extension PlayerViewController: PlayerViewDelegate {
     
     // MARK: - Player controlers
     

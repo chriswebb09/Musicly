@@ -13,7 +13,7 @@ final class iTrackDataStore {
     
     typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
     
-    fileprivate weak var client: iTunesAPIClient? = iTunesAPIClient()
+   // fileprivate weak var client: iTunesAPIClient?
     fileprivate var searchTerm: String?
     
     var realm: Realm = try! Realm()
@@ -25,18 +25,6 @@ final class iTrackDataStore {
     var currentPlaylist: TrackList?
     
     init() {
-        if let realm = try? Realm() {
-            tracks = realm.objects(Track.self)
-            trackLists = realm.objects(TrackList.self)
-            
-            if let list = trackLists.last {
-                currentPlaylistID = list.listId
-            }
-        }
-    }
-    
-    init(searchTerm: String?) {
-        self.searchTerm = searchTerm
         if let realm = try? Realm() {
             tracks = realm.objects(Track.self)
             dump(tracks)
@@ -133,7 +121,7 @@ final class iTrackDataStore {
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
-                    let tracksData = data["results"] as! [JSON]
+                    let tracksData = data["results"] as! [[String: Any]]
                     let playlist: Playlist? = Playlist()
                     
                     tracksData.forEach {

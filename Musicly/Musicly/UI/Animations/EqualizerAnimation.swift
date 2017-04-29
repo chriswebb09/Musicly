@@ -40,7 +40,6 @@ class AudioEqualizer {
         
         let duration: [CFTimeInterval?] = [1.2, 1.5, 1.7, 2, 1.6]
         let values = [0.1, 0.13, 0.35, 0.12, 0.4, 0.2, 0.01, 0.14, 0.3, 0.15]
-        let colors = [UIColor.white, UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0), UIColor.white, UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0)]
        
         for i in 0 ..< 4 {
             
@@ -78,7 +77,7 @@ class AudioEqualizer {
             animation.repeatCount = HUGE
             animation.isRemovedOnCompletion = false
             
-            let line = createLayer(for: lineDimensions, with: colors[i])
+            let line = createLayer(for: lineDimensions, with: UIColor(red:0.21, green:0.64, blue:0.82, alpha:1.0))
             let xVal = x + lineSize * EqualizerConstants.xValMultiplier * CGFloat(i)
             let yVal = y * EqualizerConstants.yValMutliplier
             let widthVal = lineSize * EqualizerConstants.widthValMultiplier
@@ -119,10 +118,10 @@ final class IndicatorView: UIView {
         super.init(frame: frame!)
         guard let frame = frame else { return }
         
-        let animationWidth = frame.size.width * 0.52
+        let animationWidth = frame.size.width * 0.5
         let animationHeight = frame.height / 1.9
         
-        animationRect = CGRect(x: frame.width,
+        animationRect = CGRect(x: frame.width - 10,
                                y: frame.height,
                                width: animationWidth,
                                height: animationHeight)

@@ -16,6 +16,9 @@ final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     
+    var progressIncrementer: Float = 0
+    var progressVisual: Float = 0
+    
     // Sets functionality for view from viewModel
     
     var viewModel: PlayerViewModel! {
@@ -279,7 +282,7 @@ final class PlayerView: UIView {
         addSubview(preferencesView)
         preferencesView.translatesAutoresizingMaskIntoConstraints = false
         preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.preferencedHeightMultiplier).isActive = true
+        preferencesView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.preferenceHeightMultiplier).isActive = true
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
     }
     
@@ -417,8 +420,9 @@ final class PlayerView: UIView {
         setupTimeLengthLabels()
     }
     
-    func setupTimeLabels(totalTime: String?) {
+    func setupTimeLabels(totalTime: String?, timevalue: Float) {
         guard let totalTime = totalTime else { return }
+        progressIncrementer = timevalue / 920
         viewModel.totalTimeString = totalTime
     }
     
@@ -437,9 +441,14 @@ final class PlayerView: UIView {
             if let countDict = timer?.userInfo as? NSMutableDictionary?,
                 let count = countDict?["count"] as? Int {
                 viewModel.time = count + 1
+                progressVisual += progressIncrementer
+                progressView.progress += progressVisual
+                print(progressVisual)
+                viewModel.progress = progressVisual
                 countDict?["count"] = viewModel.time
                 currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
-                if viewModel.progress == 1 {
+                if progressView.progress == 1 {
+                    stopEqualizer()
                     finishedPlaying(countDict: countDict)
                 }
             }

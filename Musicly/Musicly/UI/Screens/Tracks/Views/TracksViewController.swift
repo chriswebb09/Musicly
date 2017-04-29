@@ -56,6 +56,7 @@
         title = "Music.ly"
         commonInit()
         let tabController = tabBarController as! TabBarController
+        tabController.store = iTrackDataStore()
         store = tabController.store
     }
     
@@ -160,7 +161,6 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        let finalFrame = cell.frame
         if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
             DispatchQueue.main.async {
                 self.setTrackCell(indexPath: indexPath, cell: cell)

@@ -8,22 +8,14 @@
 
 import UIKit
 
-// MARK: - JSON type
-
-typealias JSON = [String: Any]
-
 final class iTunesAPIClient {
-    
-    // JSON completion typealiases for asynchronous code
-    
-    typealias jsonCompletion = (_ responseObject: JSON?, _ error: Error?) -> Void
     
     // MARK: - Main search functionality
     
-    static func search(for query: String, completion: @escaping jsonCompletion) {
+    static func search(for query: String, completion: @escaping (_ responseObject: [String: Any]?, _ error: Error?) -> Void) {
         if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
             let url = URL(string: "https://itunes.apple.com/search?media=music&entity=song&term=\(encodedQuery)") {
-            self.downloadData(url: url) { data, response, error in
+            URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
                 if let error = error {
                     completion(nil, error)
                 } else {
@@ -36,25 +28,7 @@ final class iTunesAPIClient {
                         print(error.localizedDescription)
                     }
                 }
-            }
+                }.resume()
         }
-    }
-    
-    // MARK: - Transitory session
-    
-    internal static func downloadData(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
-        weak var downloadSession : URLSession? {
-            get {
-                let config = URLSessionConfiguration.ephemeral
-                return URLSession(configuration: config)
-            }
-        }
-        let task: URLSessionDataTask? = downloadSession?.dataTask(with: URLRequest(url: url)) { data, response, error in
-            completion(data, response, error)
-            downloadSession?.invalidateAndCancel()
-        }
-        task?.resume()
     }
 }
-
-

@@ -10,15 +10,15 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     
-    let splashView = SplashView()
+    private let splashView: SplashView? = SplashView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         edgesForExtendedLayout = []
-        view.addSubview(splashView)
+        view.addSubview(splashView!)
         view.backgroundColor = .white
-        splashView.layoutSubviews()
+        splashView?.layoutSubviews()
     }
     
     // Animates up and down
@@ -55,15 +55,15 @@ final class SplashViewController: UIViewController {
         CATransaction.setCompletionBlock {
             let duration: TimeInterval = SplashConstants.animationDuration
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-                self?.splashView.zoomAnimation() {
+                self?.splashView?.zoomAnimation() {
                     print("animating")
                 }
             }
         }
         let animateXSlow = self.animateXSlow()
         let animateYSlow = self.animateYSlow()
-        splashView.layer.add(animateXSlow, forKey: nil)
-        splashView.layer.add(animateYSlow, forKey: nil)
+        splashView?.layer.add(animateXSlow, forKey: nil)
+        splashView?.layer.add(animateYSlow, forKey: nil)
         CATransaction.commit()
     }
     

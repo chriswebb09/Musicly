@@ -12,7 +12,7 @@ class BasePopView: UIView {
     
     // View with title ect. 
     
-    let headBanner: UIView = {
+    private let headBanner: UIView = {
         let banner = UIView()
         banner.backgroundColor = UIColor.black
         return banner
@@ -26,7 +26,7 @@ class BasePopView: UIView {
         return searchLabel
     }()
     
-    func setupConstraints() {
+   private func setupConstraints() {
         addSubview(headBanner)
         headBanner.translatesAutoresizingMaskIntoConstraints = false
         headBanner.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
