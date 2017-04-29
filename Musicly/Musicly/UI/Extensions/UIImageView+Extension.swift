@@ -12,7 +12,6 @@ extension UIImageView {
     
     func downloadImage(url: URL) {
         URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
-            
             if error != nil {
                 print(error?.localizedDescription ?? "Unknown error")
             }

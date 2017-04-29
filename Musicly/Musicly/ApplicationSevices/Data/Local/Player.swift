@@ -33,4 +33,13 @@ class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     init(url: URL) {
         self.url = url
     }
+    
+    func setUrlFromString(urlString: String?) {
+        guard let urlString = urlString else { return }
+        self.url = URL(string: urlString)!
+    }
+    
+    func setUrl(url: URL) {
+        self.url = url
+    }
 }

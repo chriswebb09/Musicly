@@ -71,7 +71,6 @@ class Track: Object {
         let url = URL(string: urlString)!
         var albumImageData = Data()
          URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
-//        iTunesAPIClient.downloadData(url: url) { data, response, error in
             guard let data = data, error == nil else { return }
             albumImageData = data
             while albumImageData.isEmpty {

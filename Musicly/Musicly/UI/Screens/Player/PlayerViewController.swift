@@ -9,14 +9,12 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
-    var player: AVPlayer? = AVPlayer()
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
-    var avUrlAsset: AVURLAsset?
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
     var index: Int!
-    
+    var trackPlayer: TrackPlayer!
     let realm = try! Realm()
     
     // Gets data from Realm
@@ -30,7 +28,6 @@ final class PlayerViewController: UIViewController {
         baseViewSetup()
         setupItem(index: index)
         playerView.delegate = self
-        
     }
     
    private func setupBarButton() {
@@ -58,10 +55,9 @@ final class PlayerViewController: UIViewController {
     }
     
     private final func getFileTime(url: URL) -> String? {
-        avUrlAsset = AVURLAsset(url: url)
-        
-        guard let avUrlAsset = avUrlAsset else { return nil }
-        let audioDuration: CMTime = avUrlAsset.duration
+        guard let previewUrl = playListItem?.track?.previewUrl else { return nil }
+        self.trackPlayer = TrackPlayer(url: URL(string: previewUrl)!)
+        let audioDuration: CMTime = trackPlayer.asset.duration
         let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
         
         if let secondsDuration = audioDurationSeconds {
@@ -75,15 +71,13 @@ final class PlayerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.removeFromSuperview()
-        player?.pause()
+        trackPlayer.player.pause()
         dismiss(animated: true, completion: nil)
     }
     
     func actionClose(_ tap: UITapGestureRecognizer) {
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
-
 }
 
 extension PlayerViewController: PlayerViewDelegate {
@@ -99,14 +93,10 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     private func initPlayer(url: URL)  {
-        avUrlAsset = AVURLAsset(url: url)
-        guard let asset = avUrlAsset else { return }
-        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
-            
-            let item = AVPlayerItem(asset: asset)
-            let audioDuration: CMTime = asset.duration
+        self.trackPlayer = TrackPlayer(url: url)
+        trackPlayer.asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
+            let audioDuration: CMTime = self.trackPlayer.asset.duration
             let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
-            
             if let secondsDuration = audioDurationSeconds {
                 let minutes = Int(secondsDuration / 60)
                 let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
@@ -114,21 +104,17 @@ extension PlayerViewController: PlayerViewDelegate {
                     self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)", timevalue: Float(secondsDuration))
                 }
             }
-            self.player = AVPlayer(playerItem: item)
         }
     }
     
     // MARK: - Player controlers
     
     func playButtonTapped() {
-        player?.play()
+        trackPlayer.player.play()
         playerView.startEqualizer()
         playerView.setTimer()
-        player?.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
-            
-            guard let player = self.player else { return }
-            guard let currentItem = player.currentItem else { return }
-            
+        trackPlayer.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+            guard let currentItem = self.trackPlayer.player.currentItem else { return }
             let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(currentItem.duration)
             let time = fraction / 450
             self.playerView.updateProgressBar(value: time)
@@ -137,13 +123,13 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
-        player?.pause()
+       trackPlayer.player.pause()
     }
     
     func backButtonTapped() {
         guard let previous = playListItem?.previous else { return }
         playListItem = previous
-        player?.pause()
+        trackPlayer.player.pause()
         DispatchQueue.main.async { [unowned self] in
             if let track = self.playListItem?.track,
                 let url = URL(string: track.previewUrl) {
@@ -158,7 +144,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func skipButtonTapped() {
         playListItem = playListItem?.next
-        player?.pause()
+        trackPlayer.player.pause()
         DispatchQueue.main.async {
             guard let track = self.playListItem?.track else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)

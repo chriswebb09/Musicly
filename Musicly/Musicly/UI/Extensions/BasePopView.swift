@@ -18,7 +18,7 @@ class BasePopView: UIView {
         return banner
     }()
     
-    lazy var alertLabel: UILabel = {
+    private var alertLabel: UILabel = {
         let searchLabel = UILabel()
         searchLabel.textColor = UIColor.white
         searchLabel.text = "Notification"
