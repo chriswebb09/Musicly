@@ -20,7 +20,7 @@ extension UIImageView {
                     self.image = image
                 }
             }
-        }.resume()
+            }.resume()
     }
     
     func setRounded() {

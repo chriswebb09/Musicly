@@ -22,7 +22,6 @@ extension CALayer {
     }
     
     func setViewShadow(view: UIView) {
-        print(view)
         let shadowOffsetWidth: CGFloat = view.bounds.height * CALayerConstants.shadowWidthMultiplier
         let shadowOffsetHeight: CGFloat = view.bounds.width * CALayerConstants.shadowHeightMultiplier
         shadowColor = UIColor.black.cgColor

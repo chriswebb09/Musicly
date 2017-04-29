@@ -12,10 +12,9 @@ final class TabBarController: UITabBarController {
     
     // Accessible in Tabbar child controllers
     
-    var store: iTrackDataStore? 
+    var store: iTrackDataStore?
     
     override func viewDidLoad() {
-      //  self.store = iTrackDataStore(searchTerm: "")
         view.backgroundColor = .white
         setupTabs()
     }

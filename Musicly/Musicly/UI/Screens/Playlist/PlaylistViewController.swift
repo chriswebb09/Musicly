@@ -77,13 +77,8 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        let newLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        newLayout.sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
-        newLayout.itemSize = RowSize.item.rawValue
-        newLayout.minimumInteritemSpacing = 5
-        newLayout.minimumLineSpacing = 25
-        newLayout.scrollDirection = .vertical
-        collectionView?.layoutIfNeeded()
+        let newLayout = PlaylistItemLayout()
+        newLayout.setup()
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
@@ -149,22 +144,6 @@ extension PlaylistViewController {
 // MARK: - UICollectionViewDelegate
 
 extension PlaylistViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return RowSize.header.rawValue
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return RowSize.track.rawValue
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return EdgeAttributes.edgeForStandard
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return CollectionViewConstants.layoutSpacingMinItem
-    }
     
     func toggle(to: Bool) {
         infoLabel.isHidden = to

@@ -32,7 +32,7 @@ final class PlayerViewController: UIViewController {
     
     private func setupBarButton() {
         let rightButtonImage = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-        self.rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
+        rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
         navigationItem.rightBarButtonItems = [rightButtonItem]
     }
     
@@ -49,14 +49,14 @@ final class PlayerViewController: UIViewController {
     
     func add() {
         guard let trackAdded = self.playListItem?.track else { return }
-        let tabbar = self.tabBarController as! TabBarController
+        let tabbar = tabBarController as! TabBarController
         let store = tabbar.store
         store?.setupItem(with: trackAdded)
     }
     
     private final func getFileTime(url: URL) -> String? {
         guard let previewUrl = playListItem?.track?.previewUrl else { return nil }
-        self.trackPlayer = TrackPlayer(url: URL(string: previewUrl)!)
+        trackPlayer = TrackPlayer(url: URL(string: previewUrl)!)
         let audioDuration: CMTime = trackPlayer.asset.duration
         let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
         
@@ -93,7 +93,7 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     private func initPlayer(url: URL)  {
-        self.trackPlayer = TrackPlayer(url: url)
+        trackPlayer = TrackPlayer(url: url)
         trackPlayer.asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
             let audioDuration: CMTime = self.trackPlayer.asset.duration
             let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)

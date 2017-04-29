@@ -12,7 +12,7 @@ import RealmSwift
 final class iTrackDataStore {
     
     typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
-
+    
     fileprivate var searchTerm: String?
     
     var realm: Realm = try! Realm()
@@ -65,7 +65,7 @@ final class iTrackDataStore {
     }
     
     func setSearch(string: String?) {
-        self.searchTerm = string
+        searchTerm = string
     }
     
     // Creates new TrackList

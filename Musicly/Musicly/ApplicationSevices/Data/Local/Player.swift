@@ -44,6 +44,6 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     }
     
     func getTrackDuration() -> Float {
-        return 0 
+        return 0
     }
 }
