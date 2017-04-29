@@ -14,7 +14,7 @@ final class iTrackDataStore {
     typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
     
     fileprivate var searchTerm: String?
-    
+    var realmClient = RealmClient()
     var realm: Realm = try! Realm()
     var newTracks = [Track]()
     var trackLists: Results<TrackList>!
@@ -28,7 +28,6 @@ final class iTrackDataStore {
             tracks = realm.objects(Track.self)
             dump(tracks)
             trackLists = realm.objects(TrackList.self)
-            
             if let list = trackLists.last {
                 currentPlaylistID = list.listId
             }
@@ -47,20 +46,7 @@ final class iTrackDataStore {
     func setupItem(with track: Track) {
         if let currentPlaylistID = currentPlaylistID {
             track.playlistID = currentPlaylistID
-        }
-        
-        if let realm = try? Realm() {
-            guard let currentPlaylistID = currentPlaylistID else { return }
-            trackLists = realm.objects(TrackList.self).filter("listId == %@", currentPlaylistID)
-            guard let lastTrackList = trackLists.last else { return }
-            currentPlaylist = lastTrackList
-            guard let currentPlaylist = currentPlaylist else { return }
-            try! realm.write {
-                currentPlaylist.appendToTracks(track: track)
-                realm.add(currentPlaylist, update: true)
-                realm.add(trackLists, update: true)
-                realm.refresh()
-            }
+            realmClient.save(track: track, playlistID: currentPlaylistID)
         }
     }
     
@@ -78,19 +64,7 @@ final class iTrackDataStore {
         newList.listId = UUID().uuidString
         newList.date = stringDate
         lists.append(newList)
-        save(list: newList)
-    }
-    
-    func save(list: TrackList) {
-        if let realm = try? Realm() {
-            trackLists = realm.objects(TrackList.self)
-            
-            if !trackLists.contains(list) {
-                try! realm.write {
-                    realm.add(list, update: true)
-                }
-            }
-        }
+        realmClient.save(list: newList)
     }
     
     // Save individual track

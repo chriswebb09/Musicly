@@ -29,4 +29,27 @@ class RealmClient {
         return realm.objects(TrackList.self).filter("listId == %@", predicate)
     }
     
+    func save(list: TrackList) {
+        if let realm = try? Realm() {
+            try! realm.write {
+                realm.add(list, update: true)
+            }
+        }
+    }
+    
+    func save(track: Track, playlistID: String) {
+        var tracklist: Results<TrackList>!
+        
+        if let realm = try? Realm() {
+            tracklist = realm.objects(TrackList.self).filter("listId == %@", playlistID)
+            guard let lastTracklist = tracklist.last else { return }
+            
+            try! realm.write {
+                lastTracklist.appendToTracks(track: track)
+                realm.add(lastTracklist, update: true)
+                realm.add(tracklist, update: true)
+                realm.refresh()
+            }
+        }
+    }
 }
