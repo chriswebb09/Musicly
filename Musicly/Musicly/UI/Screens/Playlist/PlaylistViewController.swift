@@ -68,6 +68,9 @@ final class PlaylistViewController: UIViewController {
     
     func goToSearch() {
         tabBarController?.selectedIndex = 0
+        let navController = tabBarController?.viewControllers?[0] as! UINavigationController
+        let controller = navController.viewControllers[0] as! TracksViewController
+        controller.navigationBarSetup()
         navigationController?.popViewController(animated: false)
     }
     

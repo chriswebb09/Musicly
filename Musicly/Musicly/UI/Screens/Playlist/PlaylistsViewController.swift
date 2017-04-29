@@ -59,6 +59,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
                 self.trackList = Array(tracklists)
             }
         }
+        dump(trackList)
         return trackList.count
     }
     
@@ -97,6 +98,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         detailPop.popView.isHidden = true
         view.sendSubview(toBack: detailPop)
         DispatchQueue.main.async {
+            self.trackList = self.store.lists
             self.collectionView?.reloadData()
         }
     }
@@ -111,8 +113,6 @@ extension PlaylistsViewController: UICollectionViewDelegate {
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
         destinationVC.tracklist = store.setupCurrentPlaylist()
-        //guard let trackList = store.setCurrentPlaylist() else { return }
-      //  destinationVC.tracklist = trackList
         navigationController?.pushViewController(destinationVC, animated: false)
     }
 }

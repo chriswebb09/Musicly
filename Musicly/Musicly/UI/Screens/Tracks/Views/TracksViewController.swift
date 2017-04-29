@@ -111,6 +111,10 @@
         DispatchQueue.main.async { self.collectionView?.reloadData() }
     }
     
+    func setSearchBarActive() {
+        self.searchBarActive = true 
+    }
+    
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: false)
         searchBarActive = false
