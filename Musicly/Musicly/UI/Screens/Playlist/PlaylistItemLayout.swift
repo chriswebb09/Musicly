@@ -18,10 +18,3 @@ final class PlaylistItemLayout: UICollectionViewFlowLayout {
         scrollDirection = .vertical
     }
 }
-
-
-//newLayout.sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
-//newLayout.itemSize = RowSize.item.rawValue
-//newLayout.minimumInteritemSpacing = 5
-//newLayout.minimumLineSpacing = 25
-//newLayout.scrollDirection = .vertical

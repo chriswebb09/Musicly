@@ -53,21 +53,7 @@ final class PlayerViewController: UIViewController {
         let store = tabbar.store
         store?.setupItem(with: trackAdded)
     }
-    
-    private final func getFileTime(url: URL) -> String? {
-        guard let previewUrl = playListItem?.track?.previewUrl else { return nil }
-        trackPlayer = TrackPlayer(url: URL(string: previewUrl)!)
-        let audioDuration: CMTime = trackPlayer.asset.duration
-        let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
-        
-        if let secondsDuration = audioDurationSeconds {
-            let minutes = Int(secondsDuration / 60)
-            let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
-            return "\(minutes):\(rem + 3)"
-        }
-        return nil
-    }
-    
+       
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.removeFromSuperview()
@@ -94,16 +80,8 @@ extension PlayerViewController: PlayerViewDelegate {
     
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
-        trackPlayer.asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
-            let audioDuration: CMTime = self.trackPlayer.asset.duration
-            let audioDurationSeconds: Float64? = CMTimeGetSeconds(audioDuration)
-            if let secondsDuration = audioDurationSeconds {
-                let minutes = Int(secondsDuration / 60)
-                let rem = Int(secondsDuration.truncatingRemainder(dividingBy: 60))
-                DispatchQueue.main.async {
-                    self.playerView.setupTimeLabels(totalTime: "\(minutes):\(rem + 2)", timevalue: Float(secondsDuration))
-                }
-            }
+        trackPlayer.getTrackDuration { stringValue, floatValue in
+            self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
         }
     }
     

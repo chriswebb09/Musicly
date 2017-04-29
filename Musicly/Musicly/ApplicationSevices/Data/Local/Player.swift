@@ -43,7 +43,15 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         self.url = url
     }
     
-    func getTrackDuration() -> Float {
-        return 0
+    func getTrackDuration(completion: @escaping (_ stringTime: String, _ timeValue: Float64) -> Void) {
+        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
+            let audioDuration = self.asset.duration
+            let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+            let minutes = Int(audioDurationSeconds / 60)
+            let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
+            DispatchQueue.main.async {
+                completion("\(minutes):\(rem + 2)", audioDurationSeconds)
+            }
+        }
     }
 }
