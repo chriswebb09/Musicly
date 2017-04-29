@@ -20,11 +20,14 @@ final class PlaylistViewController: UIViewController {
             for track in tracklist.tracks {
                 let newItem = PlaylistItem()
                 newItem.track = track
-                playlist.append(newPlaylistItem: newItem)
+                if !playlist.contains(playlistItem: newItem) {
+                    playlist.append(newPlaylistItem: newItem)
+                    DispatchQueue.main.async {
+                        self.collectionView?.reloadData()
+                    }
+                }
             }
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
+           
         }
     }
     

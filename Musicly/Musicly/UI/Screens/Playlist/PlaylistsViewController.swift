@@ -35,6 +35,8 @@ final class PlaylistsViewController: UIViewController {
     
     func collectionViewSetup() {
         collectionView?.dataSource = self
+        print(self.navigationController)
+        print("\n\n\n\n\n\n\n\n\n\n\n")
         collectionView?.delegate = self
         collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
@@ -108,12 +110,12 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
-        destinationVC.tracklist = trackList[indexPath.row]
-        
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
         destinationVC.tracklist = store.setupCurrentPlaylist()
-        navigationController?.pushViewController(destinationVC, animated: false)
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(destinationVC, animated: false)
+        }
     }
 }
 

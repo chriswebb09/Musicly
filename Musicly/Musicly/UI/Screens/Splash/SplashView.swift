@@ -12,7 +12,7 @@ typealias completion = () -> Void
 
 final class SplashView: UIView {
     
-    var animationDuration: Double = 0.28
+    var animationDuration: Double = 0.2
     
     var logoImageView: UIImageView = {
         let image = #imageLiteral(resourceName: "speakerblue")

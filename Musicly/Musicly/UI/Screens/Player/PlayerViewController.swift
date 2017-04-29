@@ -116,6 +116,7 @@ extension PlayerViewController: PlayerViewDelegate {
                 self.playerView.configure(with: viewModel)
                 self.initPlayer(url: url)
                 self.playerView.updateProgressBar(value: 0)
+                self.title = track.artistName
             }
         }
     }
@@ -130,6 +131,7 @@ extension PlayerViewController: PlayerViewDelegate {
             guard let url =  URL(string: track.previewUrl) else { return }
             self.initPlayer(url: url)
             self.playerView.updateProgressBar(value: 0)
+            self.title = track.artistName
         }
     }
     
