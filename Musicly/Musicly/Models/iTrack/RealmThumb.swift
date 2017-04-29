@@ -14,8 +14,8 @@ enum Thumbs {
     case up, down, none
 }
 
-
 class RealmThumb: Object {
+    
     var thumb: Thumbs
     
     convenience init(thumb: Thumbs) {

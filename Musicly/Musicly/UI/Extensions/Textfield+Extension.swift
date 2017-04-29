@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextFieldExtension: UITextField {
+final class TextFieldExtension: UITextField {
     
     // Sets textfield input to + 10 inset on origin x value
     

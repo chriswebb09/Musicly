@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
+final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     var url: URL
     
@@ -41,5 +41,9 @@ class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     func setUrl(url: URL) {
         self.url = url
+    }
+    
+    func getTrackDuration() -> Float {
+        return 0 
     }
 }

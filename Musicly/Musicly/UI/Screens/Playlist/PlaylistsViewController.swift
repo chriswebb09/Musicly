@@ -100,6 +100,9 @@ extension PlaylistsViewController: UICollectionViewDataSource {
             self.collectionView?.reloadData()
         }
     }
+}
+
+extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
@@ -111,22 +114,8 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
 }
 
-extension PlaylistsViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return PlaylistViewControllerConstants.collectionItemSize
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return PlaylistViewControllerConstants.collectionViewEdge
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumItemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
 extension PlaylistsViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

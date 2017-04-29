@@ -12,8 +12,7 @@ import RealmSwift
 final class iTrackDataStore {
     
     typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
-    
-   // fileprivate weak var client: iTunesAPIClient?
+
     fileprivate var searchTerm: String?
     
     var realm: Realm = try! Realm()

@@ -30,7 +30,7 @@ final class PlayerViewController: UIViewController {
         playerView.delegate = self
     }
     
-   private func setupBarButton() {
+    private func setupBarButton() {
         let rightButtonImage = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         self.rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
         navigationItem.rightBarButtonItems = [rightButtonItem]
@@ -123,7 +123,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
-       trackPlayer.player.pause()
+        trackPlayer.player.pause()
     }
     
     func backButtonTapped() {

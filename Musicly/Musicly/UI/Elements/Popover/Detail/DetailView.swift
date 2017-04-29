@@ -22,7 +22,7 @@ final class DetailView: UIView {
         return playlistNameField
     }()
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         var titleLabel = UILabel()
         titleLabel.backgroundColor = DetailViewConstants.mainColor
         titleLabel.textColor = .white
@@ -31,7 +31,7 @@ final class DetailView: UIView {
         return titleLabel
     }()
     
-    var detailsTextView: UITextView = {
+   private var detailsTextView: UITextView = {
         var detailsTextView = UITextView()
         detailsTextView.sizeToFit()
         detailsTextView.textAlignment = .center
@@ -69,7 +69,7 @@ final class DetailView: UIView {
         setupConstraints()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         addSubview(playlistNameField)
         playlistNameField.translatesAutoresizingMaskIntoConstraints = false
         playlistNameField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

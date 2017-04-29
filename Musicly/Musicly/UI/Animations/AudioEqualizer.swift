@@ -1,12 +1,14 @@
 //
-//  EqualizerAnimation.swift
+//  AudioEqualizer.swift
 //  Musicly
 //
-// Credit: https://github.com/ninjaprox/NVActivityIndicatorView
+//  Created by Christopher Webb-Orenstein on 4/29/17.
+//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
+//
 
 import UIKit
 
-class AudioEqualizer {
+final class AudioEqualizer {
     
     var size: CGSize
     
@@ -40,7 +42,7 @@ class AudioEqualizer {
         
         let duration: [CFTimeInterval?] = [1.2, 1.5, 1.7, 2, 1.6]
         let values = [0.1, 0.13, 0.35, 0.12, 0.4, 0.2, 0.01, 0.14, 0.3, 0.15]
-       
+        
         for i in 0 ..< 4 {
             
             let animation = CAKeyframeAnimation()
@@ -90,72 +92,6 @@ class AudioEqualizer {
                 line.frame = frame
                 line.add(animation, forKey: "animation")
                 layer.addSublayer(line)
-            }
-        }
-    }
-}
-
-final class IndicatorView: UIView {
-    
-    var color: UIColor? = .white
-    var animationRect: CGRect?
-    
-    var animating: Bool { return isAnimating }
-    
-    private(set) public var isAnimating: Bool = false {
-        didSet {
-            print("Animating \(isAnimating)")
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        backgroundColor = .clear
-        isHidden = true
-    }
-    
-    init(frame: CGRect?, color: UIColor? = nil, padding: CGFloat? = nil) {
-        super.init(frame: frame!)
-        guard let frame = frame else { return }
-        
-        let animationWidth = frame.size.width * 0.5
-        let animationHeight = frame.height / 1.9
-        
-        animationRect = CGRect(x: frame.width - 10,
-                               y: frame.height,
-                               width: animationWidth,
-                               height: animationHeight)
-        self.color = .white
-        isHidden = true
-    }
-    
-    final func startAnimating() {
-        isHidden = false
-        isAnimating = true
-        layer.speed = 1
-        if let animationRect = animationRect {
-            let animation: AudioEqualizer? = AudioEqualizer(size: animationRect.size)
-            if let animation = animation {
-                setUpAnimation(animation: animation)
-            }
-        }
-    }
-    
-    final func stopAnimating() {
-        isHidden = true
-        isAnimating = false
-        layer.sublayers?.removeAll()
-    }
-    
-    final func setUpAnimation(animation: AudioEqualizer?) {
-        if let animationRect = animationRect {
-            let minEdge: CGFloat? = max(animationRect.width, animationRect.height)
-            layer.sublayers = nil
-            if let minEdge  = minEdge {
-                self.animationRect?.size = CGSize(width: minEdge, height: minEdge)
-                if let animation = animation {
-                    animation.setUpAnimation(in: layer, color: color!)
-                }
             }
         }
     }
