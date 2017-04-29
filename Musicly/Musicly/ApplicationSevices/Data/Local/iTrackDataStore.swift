@@ -15,7 +15,6 @@ final class iTrackDataStore {
     
     fileprivate var searchTerm: String?
     var realmClient = RealmClient()
-    var realm: Realm = try! Realm()
     var newTracks = [Track]()
     var trackLists: Results<TrackList>!
     var tracks: Results<Track>!
@@ -24,13 +23,10 @@ final class iTrackDataStore {
     var currentPlaylist: TrackList?
     
     init() {
-        if let realm = try? Realm() {
-            tracks = realm.objects(Track.self)
-            dump(tracks)
-            trackLists = realm.objects(TrackList.self)
-            if let list = trackLists.last {
-                currentPlaylistID = list.listId
-            }
+        realmClient.setObjects { trackLists, tracks, id in
+            self.trackLists = trackLists
+            self.tracks = tracks
+            self.currentPlaylistID = id
         }
     }
     
@@ -67,25 +63,6 @@ final class iTrackDataStore {
         realmClient.save(list: newList)
     }
     
-    // Save individual track
-    
-    func saveTrack(track: Track) {
-        if let realm = try? Realm() {
-            
-            tracks = realm.objects(Track.self)
-            if !tracks.contains(track) {
-                var newList: TrackList
-                try! realm.write {
-                    currentPlaylist?.appendToTracks(track: track)
-                    realm.add(track, update: true)
-                }
-            } else {
-                print("Exists")
-                return
-            }
-        }
-    }
-    
     // Hit with search terms, parse json and return objects
     
     func searchForTracks(completion: @escaping playlistCompletion) {
@@ -96,10 +73,8 @@ final class iTrackDataStore {
                 } else if let data = data {
                     let tracksData = data["results"] as! [[String: Any]]
                     let playlist: Playlist? = Playlist()
-                    
                     tracksData.forEach {
                         let track = Track(json: $0)
-                        
                         let newItem: PlaylistItem? = PlaylistItem()
                         newItem?.track = track
                         playlist?.append(newPlaylistItem: newItem)

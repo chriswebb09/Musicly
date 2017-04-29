@@ -12,9 +12,21 @@ import RealmSwift
 class RealmClient {
     
     var realm: Realm
+    var trackLists: Results<TrackList>!
+    var tracks: Results<Track>!
     
     init() {
         self.realm = try! Realm()
+    }
+    
+    func setObjects(completion: @escaping (_ trackLists: Results<TrackList>, _ tracks: Results<Track>, _ id: String) -> Void) {
+        if let realm = try? Realm() {
+            tracks = realm.objects(Track.self)
+            trackLists = realm.objects(TrackList.self)
+            if let list = trackLists.last {
+                completion(trackLists, tracks, list.listId)
+            }
+        }
     }
     
     func getTracks() -> Results<Track> {
@@ -39,11 +51,9 @@ class RealmClient {
     
     func save(track: Track, playlistID: String) {
         var tracklist: Results<TrackList>!
-        
         if let realm = try? Realm() {
             tracklist = realm.objects(TrackList.self).filter("listId == %@", playlistID)
             guard let lastTracklist = tracklist.last else { return }
-            
             try! realm.write {
                 lastTracklist.appendToTracks(track: track)
                 realm.add(lastTracklist, update: true)
