@@ -44,7 +44,7 @@ final class PlaylistViewController: UIViewController {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         image = image.withRenderingMode(.alwaysOriginal)
-        title = "Music.ly"
+        title = tracklist.listName
         commonInit()
         let tabController = self.tabBarController as! TabBarController
         store = tabController.store
@@ -57,12 +57,13 @@ final class PlaylistViewController: UIViewController {
     
     private func commonInit() {
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
-        edgesForExtendedLayout = [.all]
+        edgesForExtendedLayout = []
+        print(tracklist)
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
         collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
-        
+        collectionViewRegister()
     }
     
     func goToSearch() {

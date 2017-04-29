@@ -107,9 +107,12 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
         destinationVC.tracklist = trackList[indexPath.row]
+        
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
-        store.setCurrentPlaylist()
+        destinationVC.tracklist = store.setupCurrentPlaylist()
+        //guard let trackList = store.setCurrentPlaylist() else { return }
+      //  destinationVC.tracklist = trackList
         navigationController?.pushViewController(destinationVC, animated: false)
     }
 }
