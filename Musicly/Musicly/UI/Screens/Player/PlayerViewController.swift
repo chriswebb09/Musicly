@@ -68,9 +68,26 @@ final class PlayerViewController: UIViewController {
     }
 }
 
+extension PlayerViewController: MenuDelegate {
+    func optionThreeTapped() {
+        print("Option one tapped")
+    }
+
+    func optionTwoTapped() {
+        print("Option two tapped")
+    }
+
+    func optionOneTapped() {
+        print("Option three tapped")
+    }
+
+    
+}
+
 extension PlayerViewController: PlayerViewDelegate {
     
     func moreButtonTapped() {
+        menuPop.popView.delegate = self 
         menuPop.setupPop()
         UIView.animate(withDuration: 0.15) {
             self.menuPop.showPopView(viewController: self)

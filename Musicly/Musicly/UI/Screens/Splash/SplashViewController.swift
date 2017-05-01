@@ -60,6 +60,7 @@ final class SplashViewController: UIViewController {
                 }
             }
         }
+        
         let animateXSlow = self.animateXSlow()
         let animateYSlow = self.animateYSlow()
         splashView?.layer.add(animateXSlow, forKey: nil)

@@ -1,14 +1,14 @@
 //
-//  BasePopoverAlert.swift
+//  BaseMenuPopover.swift
 //  Musicly
 //
-//  Created by Christopher Webb-Orenstein on 4/23/17.
+//  Created by Christopher Webb-Orenstein on 4/30/17.
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
 import UIKit
 
-class BasePopoverAlert: UIView {
+class BasePopoverMenu: UIView {
     
     let containerView: UIView = {
         let containerView = UIView()
@@ -18,8 +18,8 @@ class BasePopoverAlert: UIView {
     }()
     
     func showPopView(viewController: UIViewController) {
-        containerView.frame = UIScreen.main.bounds
-        containerView.center = CGPoint(x: BasePopoverAlertConstants.popViewX, y: BasePopoverAlertConstants.popViewY)
+        //containerView.frame = UIScreen.main.bounds
+        //containerView.center = CGPoint(x: BasePopoverAlertConstants.popViewX, y: BasePopoverAlertConstants.popViewY)
         viewController.view.addSubview(containerView)
     }
     
