@@ -21,7 +21,6 @@ final class IndicatorView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        backgroundColor = .clear
         isHidden = true
     }
     
@@ -29,11 +28,12 @@ final class IndicatorView: UIView {
         super.init(frame: frame!)
         guard let frame = frame else { return }
         
-        let animationWidth = frame.size.width * 0.5
-        let animationHeight = frame.height / 1.9
         
-        animationRect = CGRect(x: frame.width - 10,
-                               y: frame.height,
+        
+        let animationWidth = frame.size.width * 1.8
+        let animationHeight = frame.height * 1.45
+        animationRect = CGRect(x: frame.size.width * 6,
+                               y: frame.height * 0.2,
                                width: animationWidth,
                                height: animationHeight)
         self.color = .white

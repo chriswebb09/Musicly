@@ -12,6 +12,7 @@ protocol PlayerViewDelegate: class {
     func playButtonTapped()
     func pauseButtonTapped()
     func skipButtonTapped()
+    func moreButtonTapped()
     func backButtonTapped()
     func thumbsUpTapped()
     func thumbsDownTapped()

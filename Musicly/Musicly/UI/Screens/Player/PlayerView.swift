@@ -155,6 +155,20 @@ final class PlayerView: UIView {
     
     private var equalView: IndicatorView?
     
+    private var equalizerView: UIView = {
+        let equalizerView = UIView()
+        equalizerView.backgroundColor = .clear
+        
+        return equalizerView
+    }()
+    
+    private var equalizerBackgroundView: UIView = {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .black
+        backgroundView.alpha = 0.0
+        return backgroundView
+    }()
+    
     private var thumbsUpButton: UIButton = {
         let thumbsUpButton = UIButton()
         thumbsUpButton.setImage(#imageLiteral(resourceName: "thumbsupblue"), for: .normal)
@@ -169,8 +183,7 @@ final class PlayerView: UIView {
     
     private var artistInfoButton: UIButton = {
         var infoButton = UIButton()
-        infoButton.setTitle("Artist Bio", for: .normal)
-        infoButton.setTitleColor(.textColor, for: .normal)
+        infoButton.setImage(#imageLiteral(resourceName: "morebutton"), for: .normal)
         return infoButton
     }()
     
@@ -208,6 +221,7 @@ final class PlayerView: UIView {
         thumbsDownButton.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
         skipButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        artistInfoButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
     }
     
     func resetProgressAndTime() {
@@ -220,6 +234,7 @@ final class PlayerView: UIView {
     
     func skipButtonTapped() {
         resetProgressAndTime()
+        currentPlayLengthLabel.text = "0:00"
         delegate?.skipButtonTapped()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
@@ -227,6 +242,7 @@ final class PlayerView: UIView {
     
     func backButtonTapped() {
         resetProgressAndTime()
+        currentPlayLengthLabel.text = "0:00"
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
@@ -274,6 +290,23 @@ final class PlayerView: UIView {
         albumArtworkView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: PlayerViewConstants.albumHeightMultiplier).isActive = true
         albumArtworkView.centerXAnchor.constraint(equalTo: artworkView.centerXAnchor).isActive = true
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
+    }
+    
+    private func setupEqualizerView() {
+        artworkView.addSubview(equalizerView)
+        equalizerView.translatesAutoresizingMaskIntoConstraints = false
+        equalizerView.widthAnchor.constraint(equalTo: artworkView.widthAnchor).isActive = true
+        equalizerView.topAnchor.constraint(equalTo: artworkView.topAnchor).isActive = true
+        equalizerView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.08).isActive = true
+    }
+    
+    func setupEqualizerBackgroundView() {
+        equalizerView.addSubview(equalizerBackgroundView)
+        equalizerBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        equalizerBackgroundView.heightAnchor.constraint(equalTo: equalizerView.heightAnchor).isActive = true
+        equalizerBackgroundView.widthAnchor.constraint(equalTo: equalizerView.widthAnchor).isActive = true
+        equalizerBackgroundView.centerXAnchor.constraint(equalTo: equalizerView.centerXAnchor).isActive = true
+        equalizerBackgroundView.centerYAnchor.constraint(equalTo: equalizerView.centerYAnchor).isActive = true
     }
     
     // MARK: - Preferences setup
@@ -332,7 +365,6 @@ final class PlayerView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.14).isActive = true
-        button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
     }
     
@@ -357,25 +389,33 @@ final class PlayerView: UIView {
     // Kicks off Equalizer animation sequence
     
     func startEqualizer() {
-        equalView = IndicatorView(frame: frame, color: .gray, padding: 0)
+        equalView = IndicatorView(frame: equalizerView.frame, color: .gray, padding: 0)
         guard let equalView = equalView else { return }
-        equalView.alpha = 0.9
-        equalView.frame.size = artworkView.frame.size
-        artworkView.addSubview(equalView)
+        equalView.alpha = 0.8
+        equalView.frame.size = equalizerView.frame.size
+        equalizerView.addSubview(equalView)
+        equalizerBackgroundView.alpha = 0.5
         equalView.startAnimating()
     }
     
     // Stops equalizer animations
     
     func stopEqualizer() {
+        equalizerBackgroundView.alpha = 0
         equalView?.stopAnimating()
+    }
+    
+    func moreButtonTapped() {
+        delegate?.moreButtonTapped()
     }
     
     // Setups up play and pause buttons
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
+        playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
         setupTrackButtons(button: pauseButton)
+        pauseButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
     private func setupProgressView() {
@@ -408,6 +448,8 @@ final class PlayerView: UIView {
         setupTrackTitleView()
         setupArtworkView()
         setupAlbumArtworkView()
+        setupEqualizerView()
+        setupEqualizerBackgroundView()
         setupPreferencesView()
         setupArtistBioButton()
         setupThumbsUpButton()

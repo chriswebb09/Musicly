@@ -29,15 +29,12 @@ class MusiclyTests: XCTestCase {
         let splashVC = SplashViewController()
         splashVC.viewDidLoad()
         self.measure {
-            splashVC.splashView.zoomAnimation()
+            //splashVC.splashView.zoomAnimation()
         }
     }
     
-    
-
-    
     func testDataStore() {
-        let dataSource = iTrackDataStore(searchTerm: "new")
+        let dataSource = iTrackDataStore()
         let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
         dataSource.searchForTracks { playlist, error in
             XCTAssert(playlist?.itemCount == 49)

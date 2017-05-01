@@ -9,9 +9,17 @@
 import Foundation
 import AVFoundation
 
+protocol TrackPlayerDelegate: class {
+    func updateProgress(progress: Double)
+}
+
+let audioCache = NSCache<NSString, AVURLAsset>()
+
 final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     var url: URL
+    
+    weak var delegate: TrackPlayerDelegate?
     
     lazy var asset: AVURLAsset = {
         var asset: AVURLAsset = AVURLAsset(url: self.url)
@@ -22,6 +30,7 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     lazy var player: AVPlayer = {
         var player: AVPlayer = AVPlayer(playerItem: self.playerItem)
         player.actionAtItemEnd = AVPlayerActionAtItemEnd.none
+        
         return player
     }()
     
@@ -29,6 +38,8 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         var playerItem: AVPlayerItem = AVPlayerItem(asset: self.asset)
         return playerItem
     }()
+    
+    var test: Any?
     
     init(url: URL) {
         self.url = url
@@ -43,15 +54,38 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         self.url = url
     }
     
+    func play() {
+        player.playImmediately(atRate: 1)
+    }
+    
     func getTrackDuration(completion: @escaping (_ stringTime: String, _ timeValue: Float64) -> Void) {
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
+            print("track duration")
             let audioDuration = self.asset.duration
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+            print("audio")
             let minutes = Int(audioDurationSeconds / 60)
             let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
             DispatchQueue.main.async {
+                print("completion")
                 completion("\(minutes):\(rem + 2)", audioDurationSeconds)
             }
         }
+    }
+    
+    func observePlayTime() {
+        print("observing")
+        test = player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+            guard let currentItem = self.player.currentItem else { return }
+            let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(currentItem.duration)
+            let time = fraction / 450
+            self.delegate?.updateProgress(progress: time)
+            //self.playerView.updateProgressBar(value: time)
+        }
+    }
+    
+    func removePlayTimeObserver() {
+        guard let test = test else { return }
+        player.removeTimeObserver(test)
     }
 }

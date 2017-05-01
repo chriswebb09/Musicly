@@ -165,7 +165,7 @@ struct EqualizerConstants {
     static let widthValMultiplier: CGFloat = 2
     static let heightValMultiplier: CGFloat = 0.1
     static let durationMultiplier: Double = 1.1
-    static let cornerRadii: CGSize = CGSize(width: 10.0, height: 10.0)
+    static let cornerRadii: CGSize = CGSize(width: 0.0, height: 0.0)
 }
 
 struct PlaylistCellConstants {

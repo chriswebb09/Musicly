@@ -11,6 +11,7 @@ final class PlayerViewController: UIViewController {
     
     var playerView: PlayerView = PlayerView()
     var playListItem: PlaylistItem?
+    var menuPop: BottomMenuPopover = BottomMenuPopover()
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
     var index: Int!
@@ -26,7 +27,8 @@ final class PlayerViewController: UIViewController {
         setupBarButton()
         baseControllerSetup()
         baseViewSetup()
-        setupItem(index: index)
+        playListItem = playList?.playlistItem(at: index)
+        setupItem(item: playListItem)
         playerView.delegate = self
     }
     
@@ -53,7 +55,7 @@ final class PlayerViewController: UIViewController {
         let store = tabbar.store
         store?.setupItem(with: trackAdded)
     }
-       
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.removeFromSuperview()
@@ -68,39 +70,51 @@ final class PlayerViewController: UIViewController {
 
 extension PlayerViewController: PlayerViewDelegate {
     
-    fileprivate func setupItem(index: Int) {
-        playListItem = playList?.playlistItem(at: index)
-        guard let track = playListItem?.track else { return }
+    func moreButtonTapped() {
+        menuPop.setupPop()
+        UIView.animate(withDuration: 0.15) {
+            self.menuPop.showPopView(viewController: self)
+            self.menuPop.popView.isHidden = false
+        }
+    }
+    
+    fileprivate func setupItem(item: PlaylistItem?) {
+        guard let item = item else { return }
+        guard let track = item.track else { return }
         guard let url = URL(string: track.previewUrl) else { return }
         title = track.artistName
-        let viewModel = PlayerViewModel(track: track, playState: .queued)
-        playerView.configure(with: viewModel)
-        initPlayer(url: url)
+        DispatchQueue.main.async {
+            let viewModel = PlayerViewModel(track: track, playState: .queued)
+            self.playerView.configure(with: viewModel)
+            print("Done!")
+        }
+        self.initPlayer(url: url)
     }
     
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
+        trackPlayer.delegate = self
+        print("before")
         trackPlayer.getTrackDuration { stringValue, floatValue in
-            self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
+            print("Finished")
+            DispatchQueue.main.async {
+                self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
+            }
         }
+        
     }
     
     // MARK: - Player controlers
     
     func playButtonTapped() {
-        trackPlayer.player.play()
+        trackPlayer.play()
         playerView.startEqualizer()
         playerView.setTimer()
-        trackPlayer.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
-            guard let currentItem = self.trackPlayer.player.currentItem else { return }
-            let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(currentItem.duration)
-            let time = fraction / 450
-            self.playerView.updateProgressBar(value: time)
-        }
     }
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
+       
         trackPlayer.player.pause()
     }
     
@@ -109,26 +123,24 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = previous
         trackPlayer.player.pause()
         DispatchQueue.main.async { [unowned self] in
-            if let track = self.playListItem?.track,
-                let url = URL(string: track.previewUrl) {
-                self.title = track.artistName
-                let viewModel = PlayerViewModel(track: track, playState: .queued)
-                self.playerView.configure(with: viewModel)
-                self.initPlayer(url: url)
-                self.playerView.updateProgressBar(value: 0)
-                self.title = track.artistName
-            }
+            guard let track = previous.track, let url = URL(string: track.previewUrl) else { return }
+            let viewModel = PlayerViewModel(track: track, playState: .queued)
+            self.playerView.configure(with: viewModel)
+            self.initPlayer(url: url)
+            self.playerView.updateProgressBar(value: 0)
+            self.title = track.artistName
         }
     }
     
+    
     func skipButtonTapped() {
-        playListItem = playListItem?.next
+        guard let next = playListItem?.next else { return }
+        playListItem = next
         trackPlayer.player.pause()
         DispatchQueue.main.async {
-            guard let track = self.playListItem?.track else { return }
+            guard let track = next.track, let url =  URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
-            guard let url =  URL(string: track.previewUrl) else { return }
             self.initPlayer(url: url)
             self.playerView.updateProgressBar(value: 0)
             self.title = track.artistName
@@ -152,6 +164,17 @@ extension PlayerViewController: PlayerViewDelegate {
             track.thumbs?.thumb = .up
         }
     }
+}
+
+extension PlayerViewController: TrackPlayerDelegate {
+
+    func updateProgress(progress: Double) {
+        DispatchQueue.main.async {
+            self.playerView.updateProgressBar(value: progress)
+        }
+    }
+
+    
 }
 
 extension PlayerViewController: UIViewControllerTransitioningDelegate {

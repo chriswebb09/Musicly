@@ -8,13 +8,29 @@
 
 import UIKit
 
+enum URLRouter {
+    
+    case base, path
+    
+    var url: String {
+        switch self {
+        case .base:
+            return "https://itunes.apple.com"
+        case .path:
+            return "/search?media=music&entity=song&term="
+        }
+    }
+    
+}
+
 final class iTunesAPIClient {
     
     // MARK: - Main search functionality
     
     static func search(for query: String, completion: @escaping (_ responseObject: [String: Any]?, _ error: Error?) -> Void) {
         if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let url = URL(string: "https://itunes.apple.com/search?media=music&entity=song&term=\(encodedQuery)") {
+            let url = URL(string: "\(URLRouter.base.url)\(URLRouter.path.url)\(encodedQuery)") {
+            print(url.absoluteURL)
             URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
                 if let error = error {
                     completion(nil, error)
