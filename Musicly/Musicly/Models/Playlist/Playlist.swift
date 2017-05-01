@@ -51,9 +51,10 @@ class Playlist: Object {
     
     func printAllKeys() {
         var current: PlaylistItem! = head
-        var i = 1
+        var index = 1
         while current != nil {
-            i += 1
+            print(current.track?.previewUrl ?? "track does not have preview url")
+            index += 1
             current = current.next
         }
     }
@@ -62,12 +63,12 @@ class Playlist: Object {
         
         if index >= 0 {
             var trackItem = head
-            var i = index
+            var index = index
             while let trackAt = trackItem, trackItem != nil {
-                if i == 0 {
+                if index == 0 {
                     return trackAt
                 }
-                i -= 1
+                index -= 1
                 trackItem = trackAt.next
             }
         }
