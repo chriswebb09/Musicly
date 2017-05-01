@@ -25,4 +25,12 @@ class TrackList: Object {
     override static func primaryKey() -> String? {
         return "listId"
     }
+    
+    func contains(track: Track) -> Bool {
+        if tracks.contains(track) {
+            return true
+        }
+        
+        return false
+    }
 }

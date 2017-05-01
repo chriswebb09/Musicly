@@ -72,22 +72,22 @@ extension PlayerViewController: MenuDelegate {
     func optionThreeTapped() {
         print("Option one tapped")
     }
-
+    
     func optionTwoTapped() {
         print("Option two tapped")
     }
-
+    
     func optionOneTapped() {
         print("Option three tapped")
     }
-
+    
     
 }
 
 extension PlayerViewController: PlayerViewDelegate {
     
     func moreButtonTapped() {
-        menuPop.popView.delegate = self 
+        menuPop.popView.delegate = self
         menuPop.setupPop()
         UIView.animate(withDuration: 0.15) {
             self.menuPop.showPopView(viewController: self)
@@ -111,13 +111,13 @@ extension PlayerViewController: PlayerViewDelegate {
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
         trackPlayer.delegate = self
-        print("before")
-        trackPlayer.getTrackDuration { stringValue, floatValue in
-            print("Finished")
-            DispatchQueue.main.async {
-                self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
-            }
-        }
+        // print("before")
+        //        trackPlayer.getTrackDuration { stringValue, floatValue in
+        //            print("Finished")
+        //            DispatchQueue.main.async {
+        //                self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
+        //            }
+        //        }
         
     }
     
@@ -131,7 +131,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
-       
+        
         trackPlayer.player.pause()
     }
     
@@ -184,13 +184,22 @@ extension PlayerViewController: PlayerViewDelegate {
 }
 
 extension PlayerViewController: TrackPlayerDelegate {
-
+    
+    func trackDurationCalculated(stringTime: String, timeValue: Float64) {
+        print(stringTime)
+        print("track duration")
+        DispatchQueue.main.async {
+            self.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
+        }
+    }
+    
+    
     func updateProgress(progress: Double) {
         DispatchQueue.main.async {
             self.playerView.updateProgressBar(value: progress)
         }
     }
-
+    
     
 }
 

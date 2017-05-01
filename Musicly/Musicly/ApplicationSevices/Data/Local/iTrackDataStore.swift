@@ -31,7 +31,7 @@ final class iTrackDataStore {
     }
     
     func setupCurrentPlaylist() -> TrackList {
-        var current = realmClient.getFilteredTrackList(predicate: currentPlaylistID!)
+        let current = realmClient.getFilteredTrackList(predicate: currentPlaylistID!)
         return current.last!
     }
     

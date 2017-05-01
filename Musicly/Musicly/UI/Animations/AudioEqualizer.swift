@@ -69,7 +69,7 @@ final class AudioEqualizer {
             animation.repeatCount = HUGE
             animation.isRemovedOnCompletion = false
             
-            let line = createLayer(with: .white)
+            let line = createLayer(with: UIColor(red:0.15, green:0.99, blue:0.99, alpha:1.0))
             let xVal = x + lineSize * EqualizerConstants.xValMultiplier * CGFloat(i) * 0.5
             let yVal = y * EqualizerConstants.yValMutliplier * 0.9
             let widthVal = lineSize * EqualizerConstants.widthValMultiplier * 2

@@ -15,6 +15,7 @@ final class PlaylistViewController: UIViewController {
     
     var playlist: Playlist = Playlist()
     var store: iTrackDataStore?
+    
     var tracklist: TrackList = TrackList() {
         didSet {
             for track in tracklist.tracks {
@@ -22,6 +23,9 @@ final class PlaylistViewController: UIViewController {
                 newItem.track = track
                 if !playlist.contains(playlistItem: newItem) {
                     playlist.append(newPlaylistItem: newItem)
+//                    DispatchQueue.main.async {
+//                        self.collectionView?.reloadData()
+//                    }
                 }
             }
         }

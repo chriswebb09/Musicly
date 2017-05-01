@@ -56,6 +56,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("PlaylistsViewController - cellForItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
         let index = indexPath.row
         let track = trackList[index]

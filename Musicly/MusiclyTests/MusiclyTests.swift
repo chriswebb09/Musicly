@@ -32,18 +32,24 @@ class MusiclyTests: XCTestCase {
             //splashVC.splashView.zoomAnimation()
         }
     }
+//    
+//    func testDataStore() {
+//        let dataSource = iTrackDataStore()
+//        dataSource.setSearch(string: "new")
+//        let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
+//        dataSource.searchForTracks { playlist, error in
+//            XCTAssert(playlist?.itemCount == 49)
+//            expect.fulfill()
+//        }
+//        waitForExpectations(timeout: 4) { error in
+//            if let error = error {
+//                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+//            }
+//        }
+//    }
     
-    func testDataStore() {
-        let dataSource = iTrackDataStore()
-        let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
-        dataSource.searchForTracks { playlist, error in
-            XCTAssert(playlist?.itemCount == 49)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 4) { error in
-            if let error = error {
-                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
-            }
-        }
+    func testTracklistViewController() {
+        
     }
+    
 }

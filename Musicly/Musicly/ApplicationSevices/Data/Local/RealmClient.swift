@@ -16,16 +16,24 @@ class RealmClient {
     var tracks: Results<Track>!
     
     init() {
-        self.realm = try! Realm()
+        do {
+            self.realm = try! Realm()
+        } catch {
+            print("error \(error.localizedDescription)")
+        }
     }
     
     func setObjects(completion: @escaping (_ trackLists: Results<TrackList>, _ tracks: Results<Track>, _ id: String) -> Void) {
-        if let realm = try? Realm() {
-            tracks = realm.objects(Track.self)
-            trackLists = realm.objects(TrackList.self)
-            if let list = trackLists.last {
-                completion(trackLists, tracks, list.listId)
+        do {
+            if let realm = try? Realm() {
+                tracks = realm.objects(Track.self)
+                trackLists = realm.objects(TrackList.self)
+                if let list = trackLists.last {
+                    completion(trackLists, tracks, list.listId)
+                }
             }
+        } catch {
+            print("error \(error.localizedDescription)")
         }
     }
     
@@ -42,24 +50,45 @@ class RealmClient {
     }
     
     func save(list: TrackList) {
-        if let realm = try? Realm() {
-            try! realm.write {
+        
+        do {
+            if let realm = try? Realm() {
+                realm.beginWrite()
                 realm.add(list, update: true)
+                try! realm.commitWrite()
+                //                try! realm.write {
+                
+                // }
             }
+        } catch {
+            print("error \(error.localizedDescription)")
         }
     }
     
     func save(track: Track, playlistID: String) {
         var tracklist: Results<TrackList>!
-        if let realm = try? Realm() {
-            tracklist = realm.objects(TrackList.self).filter("listId == %@", playlistID)
-            guard let lastTracklist = tracklist.last else { return }
-            try! realm.write {
-                lastTracklist.appendToTracks(track: track)
-                realm.add(lastTracklist, update: true)
-                realm.add(tracklist, update: true)
-                realm.refresh()
+        do {
+            if let realm = try? Realm() {
+                tracks = realm.objects(Track.self)
+                print(tracks.contains(track))
+                tracklist = realm.objects(TrackList.self).filter("listId == %@", playlistID)
+                guard let lastTracklist = tracklist.last else { return }
+                
+                if realm.object(ofType: Track.self, forPrimaryKey: track.previewUrl) == nil {
+                    try! realm.write {
+                        lastTracklist.appendToTracks(track: track)
+                        guard !tracklist.contains(lastTracklist) else { return }
+                        realm.add(lastTracklist, update: true)
+                        realm.add(tracklist, update: true)
+                        try! realm.commitWrite()
+                        realm.refresh()
+                    }
+                }
             }
+            
+        } catch {
+            print("error \(error.localizedDescription)")
         }
     }
 }
+

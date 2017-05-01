@@ -22,6 +22,7 @@ class Track: Object {
     dynamic var artworkUrl: String = ""
     dynamic var collectionName: String = ""
     dynamic var downloaded: Bool = false
+   // dynamic var trackId: String = ""
     dynamic var imageData: Data = Data()
     
     let owners = LinkingObjects(

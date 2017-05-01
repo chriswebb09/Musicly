@@ -1,11 +1,3 @@
-//
-//  APIClient.swift
-//  Musically
-//
-//  Created by Christopher Webb-Orenstein on 4/9/17.
-//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
-//
-
 import UIKit
 
 enum URLRouter {
@@ -20,7 +12,17 @@ enum URLRouter {
             return "/search?media=music&entity=song&term="
         }
     }
+}
+
+struct URLConstructor {
     
+    var searchTerm: String
+    
+    func build() -> URL {
+        let encodedQuery = searchTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        let urlString = URLRouter.base.url + URLRouter.path.url + encodedQuery
+        return URL(string: urlString)!
+    }
 }
 
 final class iTunesAPIClient {
@@ -28,23 +30,21 @@ final class iTunesAPIClient {
     // MARK: - Main search functionality
     
     static func search(for query: String, completion: @escaping (_ responseObject: [String: Any]?, _ error: Error?) -> Void) {
-        if let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let url = URL(string: "\(URLRouter.base.url)\(URLRouter.path.url)\(encodedQuery)") {
-            print(url.absoluteURL)
-            URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    do {
-                        let responseObject = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]
-                        DispatchQueue.main.async {
-                            completion(responseObject, nil)
-                        }
-                    } catch {
-                        print(error.localizedDescription)
+        let urlConstructor = URLConstructor(searchTerm: query)
+        
+        URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: urlConstructor.build())) { data, response, error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                do {
+                    let responseObject = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]
+                    DispatchQueue.main.async {
+                        completion(responseObject, nil)
                     }
+                } catch {
+                    print(error.localizedDescription)
                 }
-                }.resume()
-        }
+            }
+            }.resume()
     }
 }

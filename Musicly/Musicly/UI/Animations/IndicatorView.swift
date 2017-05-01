@@ -36,7 +36,8 @@ final class IndicatorView: UIView {
                                y: frame.height * 0.2,
                                width: animationWidth,
                                height: animationHeight)
-        self.color = .white
+        self.color = UIColor(red:0.03, green:0.57, blue:0.82, alpha:1.0)
+        ///self.color = .white
         isHidden = true
     }
     

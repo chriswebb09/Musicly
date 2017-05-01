@@ -11,6 +11,7 @@ import AVFoundation
 
 protocol TrackPlayerDelegate: class {
     func updateProgress(progress: Double)
+    func trackDurationCalculated(stringTime: String, timeValue: Float64)
 }
 
 let audioCache = NSCache<NSString, AVURLAsset>()
@@ -39,53 +40,54 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         return playerItem
     }()
     
-    var test: Any?
+    var timeObserver: Any?
     
     init(url: URL) {
         self.url = url
+        super.init()
+        self.getTrackDuration()
     }
     
-    func setUrlFromString(urlString: String?) {
-        guard let urlString = urlString else { return }
+    func setUrl(from string: String?) {
+        guard let urlString = string else { return }
         self.url = URL(string: urlString)!
+        getTrackDuration()
     }
     
-    func setUrl(url: URL) {
+    func setUrl(with url: URL) {
         self.url = url
+        getTrackDuration()
     }
     
     func play() {
         player.playImmediately(atRate: 1)
     }
     
-    func getTrackDuration(completion: @escaping (_ stringTime: String, _ timeValue: Float64) -> Void) {
+    func getTrackDuration() {
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
-            print("track duration")
             let audioDuration = self.asset.duration
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-            print("audio")
             let minutes = Int(audioDurationSeconds / 60)
             let rem = Int(audioDurationSeconds.truncatingRemainder(dividingBy: 60))
-            DispatchQueue.main.async {
-                print("completion")
-                completion("\(minutes):\(rem + 2)", audioDurationSeconds)
-            }
+            self.delegate?.trackDurationCalculated(stringTime: "\(minutes):\(rem + 2)", timeValue: audioDurationSeconds)
         }
     }
     
     func observePlayTime() {
-        print("observing")
-        test = player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
+        if self.delegate == nil {
+            print("Delegate is not set")
+            return
+        }
+        timeObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 30), queue: .main) { time in
             guard let currentItem = self.player.currentItem else { return }
             let fraction = CMTimeGetSeconds(time) / CMTimeGetSeconds(currentItem.duration)
             let time = fraction / 450
             self.delegate?.updateProgress(progress: time)
-            //self.playerView.updateProgressBar(value: time)
         }
     }
     
     func removePlayTimeObserver() {
-        guard let test = test else { return }
+        guard let test = timeObserver else { return }
         player.removeTimeObserver(test)
     }
 }
