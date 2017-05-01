@@ -12,6 +12,7 @@
 		A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B51EB7879100EDCE6D /* BaseMenuPopover.swift */; };
 		A71A14B91EB7879100EDCE6D /* BottomMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B61EB7879100EDCE6D /* BottomMenu.swift */; };
 		A71A14BA1EB7879100EDCE6D /* MenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B71EB7879100EDCE6D /* MenuOptionView.swift */; };
+		A71A14BC1EB7885F00EDCE6D /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14BB1EB7885F00EDCE6D /* Download.swift */; };
 		A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF231EADDFE50030932E /* TabBarController.swift */; };
 		A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3B1EADE09E0030932E /* SplashView.swift */; };
 		A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3C1EADE09E0030932E /* SplashViewController.swift */; };
@@ -90,6 +91,7 @@
 		A71A14B51EB7879100EDCE6D /* BaseMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseMenuPopover.swift; path = Elements/Menu/BaseMenuPopover.swift; sourceTree = "<group>"; };
 		A71A14B61EB7879100EDCE6D /* BottomMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenu.swift; path = Elements/Menu/BottomMenu.swift; sourceTree = "<group>"; };
 		A71A14B71EB7879100EDCE6D /* MenuOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuOptionView.swift; path = Elements/Menu/MenuOptionView.swift; sourceTree = "<group>"; };
+		A71A14BB1EB7885F00EDCE6D /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Download/Download.swift; sourceTree = "<group>"; };
 		A71ADF231EADDFE50030932E /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = TabBarController/TabBarController.swift; sourceTree = "<group>"; };
 		A71ADF3B1EADE09E0030932E /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashView.swift; path = Screens/Splash/SplashView.swift; sourceTree = "<group>"; };
 		A71ADF3C1EADE09E0030932E /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Screens/Splash/SplashViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +210,14 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		A71A14BD1EB7886500EDCE6D /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				A71A14BB1EB7885F00EDCE6D /* Download.swift */,
+			);
+			name = Download;
+			sourceTree = "<group>";
+		};
 		A71ADF251EADDFFC0030932E /* Popover */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +321,7 @@
 			children = (
 				A7CBC3FC1E9FE57700C95A50 /* iTrack */,
 				A7CBC3FD1E9FE58200C95A50 /* Playlist */,
+				A71A14BD1EB7886500EDCE6D /* Download */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -838,6 +849,7 @@
 				A71ADF571EADE1F00030932E /* PlayerViewDelegate.swift in Sources */,
 				A71ADF411EADE0AF0030932E /* PlaylistCell.swift in Sources */,
 				A7ECBCCF1EB4694F0098CE0E /* AudioEqualizer.swift in Sources */,
+				A71A14BC1EB7885F00EDCE6D /* Download.swift in Sources */,
 				A7C9D1D11EB6525B00CA12CF /* WaitingView.swift in Sources */,
 				A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */,
 				A7ECBCD31EB46A070098CE0E /* DetailView.swift in Sources */,
