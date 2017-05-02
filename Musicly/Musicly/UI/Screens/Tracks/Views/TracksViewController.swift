@@ -9,6 +9,11 @@
  import UIKit
  import RealmSwift
  
+ 
+ enum TrackContentState {
+    case none, loading, loaded, results
+ }
+ 
  private let reuseIdentifier = "trackCell"
  
  final class TracksViewController: UIViewController {
@@ -22,8 +27,22 @@
     var playlist: Playlist = Playlist()
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
-    
+    var contentState: TrackContentState = .none {
+        didSet {
+            switch contentState {
+            case .none:
+                self.view.bringSubview(toFront: emptyView)
+            case .results:
+                self.view.bringSubview(toFront: collectionView!)
+            case.loaded:
+                self.view.bringSubview(toFront: collectionView!)
+            case .loading:
+                return
+            }
+        }
+    }
     var store: iTrackDataStore?
+    var emptyView: EmptyView = EmptyView()
     
     fileprivate var searchBarActive: Bool = false {
         didSet {
@@ -38,13 +57,13 @@
     }
     
     var buttonItem: UIBarButtonItem!
-    var infoLabel: UILabel = UILabel.setupInfoLabel()
+   // var infoLabel: UILabel = UILabel.setupInfoLabel()
     
-    var musicIcon: UIImageView = {
-        var musicIcon = UIImageView()
-        musicIcon.image = #imageLiteral(resourceName: "headphones-blue")
-        return musicIcon
-    }()
+//    var musicIcon: UIImageView = {
+//        var musicIcon = UIImageView()
+//        musicIcon.image = #imageLiteral(resourceName: "headphones-blue")
+//        return musicIcon
+//    }()
     
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -52,6 +71,9 @@
         super.viewDidLoad()
         guard let realmUrl = Realm.Configuration.defaultConfiguration.fileURL else { return }
         print(realmUrl)
+        view.addSubview(emptyView)
+        emptyView.layoutSubviews()
+        emptyView.frame = view.frame
         searchController.delegate = self
         title = "Music.ly"
         commonInit()
@@ -100,10 +122,14 @@
         newLayout.setup()
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
-        view.backgroundColor = CollectionViewAttributes.backgroundColor
-        setupInfoLabel(infoLabel: infoLabel)
-        setupMusicIcon(icon: musicIcon)
-        if let collectionView = collectionView { view.addSubview(collectionView) }
+     //   view.backgroundColor = CollectionViewAttributes.backgroundColor
+//        setupInfoLabel(infoLabel: infoLabel)
+//        setupMusicIcon(icon: musicIcon)
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
+            view.sendSubview(toBack: collectionView)
+            view.bringSubview(toFront: emptyView)
+        }
         collectionViewRegister()
     }
     
@@ -112,7 +138,7 @@
     }
     
     func setSearchBarActive() {
-        self.searchBarActive = true 
+        self.searchBarActive = true
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
@@ -165,11 +191,11 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
-            DispatchQueue.main.async {
-                self.setTrackCell(indexPath: indexPath, cell: cell)
-            }
+        
+        DispatchQueue.main.async {
+            self.setTrackCell(indexPath: indexPath, cell: cell)
         }
+        
         return cell
     }
  }
@@ -205,8 +231,8 @@
     }
     
     func toggle(to: Bool) {
-        infoLabel.isHidden = to
-        musicIcon.isHidden = to
+//        infoLabel.isHidden = to
+//        musicIcon.isHidden = to
     }
     
     fileprivate func setupSearchController() {
@@ -231,6 +257,7 @@
             collectionView.reloadData()
             collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
+                    self.contentState = .results
                     if let collectionView = self.collectionView {
                         collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
                         collectionView.isHidden = false
@@ -287,8 +314,9 @@
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         playlist.removeAll()
         toggle(to: false)
-        setupInfoLabel(infoLabel: infoLabel)
-        setupMusicIcon(icon: musicIcon)
+        contentState = .none
+//        setupInfoLabel(infoLabel: infoLabel)
+//        setupMusicIcon(icon: musicIcon)
         collectionView?.reloadData()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false

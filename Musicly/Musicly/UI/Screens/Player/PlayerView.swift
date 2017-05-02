@@ -58,7 +58,7 @@ final class PlayerView: UIView {
     
     private var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "whitetriangleplay"), for: .normal)
+        playButton.setImage(#imageLiteral(resourceName: "playbutton-white-blue"), for: .normal)
         if let imageView = playButton.imageView {
             imageView.layer.setViewShadow(view: imageView)
             imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
@@ -69,7 +69,7 @@ final class PlayerView: UIView {
     
     private var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-2white"), for: .normal)
+        pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-blue-white"), for: .normal)
         if let imageView = pauseButton.imageView {
             imageView.layer.setViewShadow(view: imageView)
             imageView.layer.shadowPath = UIBezierPath(roundedRect: pauseButton.bounds,
@@ -111,7 +111,7 @@ final class PlayerView: UIView {
     
     private var totalPlayLengthLabel: UILabel = {
         let label = UILabel()
-        if let font = ApplicationConstants.mainFont { label.font = font }
+        if let font = ApplicationConstants.labelFont { label.font = font }
         label.textColor = .white
         label.textAlignment = .right
         return label
@@ -123,7 +123,7 @@ final class PlayerView: UIView {
         let label = UILabel()
         label.text = "0:00"
         label.textAlignment = .left
-        if let font = ApplicationConstants.mainFont { label.font = font }
+        if let font = ApplicationConstants.labelFont { label.font = font }
         label.textColor = .orange
         return label
     }()
@@ -370,9 +370,10 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.16).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.14).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.22).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
+        button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
     // Skip and back button
@@ -420,9 +421,9 @@ final class PlayerView: UIView {
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
-        playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
+        // playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
         setupTrackButtons(button: pauseButton)
-        pauseButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
+        //pauseButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
     private func setupProgressView() {
@@ -497,7 +498,7 @@ final class PlayerView: UIView {
                 if progressView.progress == 1 {
                     stopEqualizer()
                     finishedPlaying(countDict: countDict)
-         
+                    
                     viewModel.time = 0
                     currentPlayLengthLabel.text = "0:00"
                     count = 0

@@ -15,7 +15,7 @@ struct PlayerViewConstants {
     static let backButtonHeightMultiplier: CGFloat = 0.06
     static let backButtonCenterYOffset: CGFloat = -0.08
     static let progressViewWidthMultiplier: CGFloat = 0.6
-    static let progressViewHeightMultiplier: CGFloat = 0.01
+    static let progressViewHeightMultiplier: CGFloat = 0.005
     static let playTimeLabelHeightMutliplier: CGFloat = 0.25
     static let trackTitleViewHeightMultiplier: CGFloat = 0.06
     static let trackTitleLabelHeightMultiplier: CGFloat = 0.6
@@ -52,6 +52,7 @@ struct CollectionViewConstants {
 
 struct ApplicationConstants {
     static let mainFont = UIFont(name: "Avenir-Book", size: 18)
+     static let labelFont = UIFont(name: "Avenir-Book", size: 14)
     static let fontColor = UIColor(red:0.13, green:0.21, blue:0.44, alpha:1.0)
 }
 

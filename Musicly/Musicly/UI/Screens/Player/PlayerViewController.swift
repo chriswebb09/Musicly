@@ -7,11 +7,6 @@ import UIKit
 import RealmSwift
 import AVFoundation
 
-
-enum MenuActive {
-    case none, active, hidden
-}
-
 final class PlayerViewController: UIViewController {
     
     var playerView: PlayerView = PlayerView()

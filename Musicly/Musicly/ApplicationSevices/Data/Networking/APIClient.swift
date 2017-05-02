@@ -71,7 +71,7 @@ extension iTunesAPIClient: URLSessionDelegate {
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64) {
         if let downloadUrl = downloadTask.originalRequest?.url?.absoluteString,
             let download = activeDownloads?[downloadUrl] {
-            download.progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
+            download.progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         }
     }
 }
@@ -79,7 +79,6 @@ extension iTunesAPIClient: URLSessionDelegate {
 extension iTunesAPIClient: URLSessionDownloadDelegate {
 
     internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        
         if let originalURL = downloadTask.originalRequest?.url?.absoluteString {
             let destinationURL = LocalStorageManager.localFilePathForUrl(originalURL)
             let fileManager = FileManager.default
