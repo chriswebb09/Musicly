@@ -7,6 +7,11 @@ import UIKit
 import RealmSwift
 import AVFoundation
 
+
+enum MenuActive {
+    case none, active, hidden
+}
+
 final class PlayerViewController: UIViewController {
     
     var playerView: PlayerView = PlayerView()
@@ -17,6 +22,7 @@ final class PlayerViewController: UIViewController {
     var index: Int!
     var trackPlayer: TrackPlayer!
     let realm = try! Realm()
+    var menuActive: MenuActive = .none
     
     // Gets data from Realm
     
@@ -68,32 +74,66 @@ final class PlayerViewController: UIViewController {
     }
 }
 
+extension PlayerViewController: DownloadDelegate {
+    func downloadProgressUpdated(for progress: Float) {
+        print(progress)
+    }
+}
+
 extension PlayerViewController: MenuDelegate {
-    func optionThreeTapped() {
-        print("Option one tapped")
+    
+    func optionOneTapped() {
+        guard let track = playListItem?.track else { return }
+        let download = Download(url: track.previewUrl)
+        download.delegate = self
+        let client = iTunesAPIClient()
+        client.downloadTrackPreview(for: download)
     }
     
     func optionTwoTapped() {
         print("Option two tapped")
     }
     
-    func optionOneTapped() {
-        print("Option three tapped")
+    func optionThreeTapped() {
+        print("option three")
     }
-    
-    
 }
 
 extension PlayerViewController: PlayerViewDelegate {
     
+    
     func moreButtonTapped() {
+        switch menuActive {
+        case .none:
+            showMenu()
+            menuActive = .active
+        case .active:
+            dismissMenu()
+            menuActive = .active
+        case .hidden:
+            showMenu()
+            menuActive = .hidden
+        }
+    }
+    
+    func showMenu() {
         menuPop.popView.delegate = self
         menuPop.setupPop()
+        playerView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.15) {
             self.menuPop.showPopView(viewController: self)
             self.menuPop.popView.isHidden = false
         }
     }
+    
+    func dismissMenu() {
+        print("touch")
+        menuPop.popView.removeFromSuperview()
+        menuPop.hidePopView(viewController: self)
+        view.sendSubview(toBack: menuPop)
+    }
+    
+    
     
     fileprivate func setupItem(item: PlaylistItem?) {
         guard let item = item else { return }
@@ -111,14 +151,6 @@ extension PlayerViewController: PlayerViewDelegate {
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
         trackPlayer.delegate = self
-        // print("before")
-        //        trackPlayer.getTrackDuration { stringValue, floatValue in
-        //            print("Finished")
-        //            DispatchQueue.main.async {
-        //                self.playerView.setupTimeLabels(totalTime: stringValue, timevalue: Float(floatValue))
-        //            }
-        //        }
-        
     }
     
     // MARK: - Player controlers
@@ -166,6 +198,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func resetPlayerAndSong() {
         print("reset")
+        playerView.viewModel.playState = .queued
     }
     
     // MARK: - Thumbs
@@ -185,22 +218,24 @@ extension PlayerViewController: PlayerViewDelegate {
 
 extension PlayerViewController: TrackPlayerDelegate {
     
+    func trackFinishedPlaying() {
+        print("DONE")
+    }
+    
     func trackDurationCalculated(stringTime: String, timeValue: Float64) {
         print(stringTime)
         print("track duration")
         DispatchQueue.main.async {
             self.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
+            self.playerView.playbuttonEnabled(is: true)
         }
     }
-    
     
     func updateProgress(progress: Double) {
         DispatchQueue.main.async {
             self.playerView.updateProgressBar(value: progress)
         }
     }
-    
-    
 }
 
 extension PlayerViewController: UIViewControllerTransitioningDelegate {

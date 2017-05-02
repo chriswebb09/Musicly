@@ -9,9 +9,14 @@
 import Foundation
 import AVFoundation
 
+extension Notification.Name {
+    static let trackEnded = Notification.Name("trackEnded")
+}
+
 protocol TrackPlayerDelegate: class {
     func updateProgress(progress: Double)
     func trackDurationCalculated(stringTime: String, timeValue: Float64)
+    func trackFinishedPlaying()
 }
 
 let audioCache = NSCache<NSString, AVURLAsset>()
@@ -42,10 +47,21 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     var timeObserver: Any?
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        if let timeObserverToken = timeObserver {
+            player.removeTimeObserver(timeObserverToken)
+            self.timeObserver = nil
+        }
+        
+       // player.removeTimeObserver(timeObserver)
+    }
+    
     init(url: URL) {
         self.url = url
         super.init()
         self.getTrackDuration()
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
     }
     
     func setUrl(from string: String?) {
@@ -84,6 +100,14 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
             let time = fraction / 450
             self.delegate?.updateProgress(progress: time)
         }
+    }
+    
+    func playerItemDidReachEnd(notification: NSNotification) {
+        
+        delegate?.trackFinishedPlaying()
+        player.seek(to: kCMTimeZero)
+        player.pause()
+        
     }
     
     func removePlayTimeObserver() {

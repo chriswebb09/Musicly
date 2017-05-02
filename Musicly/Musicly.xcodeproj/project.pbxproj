@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		802768400C61A741A372161B /* Pods_MusiclyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2DD93AD7AA64BCFA83BEBD /* Pods_MusiclyUITests.framework */; };
 		A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70CF4DD1EA633F3000656AF /* Reusable.swift */; };
+		A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A21EB814A800CA35E4 /* URLConstructor.swift */; };
+		A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A41EB8150600CA35E4 /* URLRouter.swift */; };
+		A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */; };
 		A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B51EB7879100EDCE6D /* BaseMenuPopover.swift */; };
 		A71A14B91EB7879100EDCE6D /* BottomMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B61EB7879100EDCE6D /* BottomMenu.swift */; };
 		A71A14BA1EB7879100EDCE6D /* MenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A14B71EB7879100EDCE6D /* MenuOptionView.swift */; };
@@ -89,6 +92,9 @@
 		A1F3B9D661206A6F91E05C21 /* Pods_MusiclyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusiclyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F52DE761385242BF409E94 /* Pods-MusiclyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusiclyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusiclyUITests/Pods-MusiclyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A70CF4DD1EA633F3000656AF /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		A71A09A21EB814A800CA35E4 /* URLConstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConstructor.swift; sourceTree = "<group>"; };
+		A71A09A41EB8150600CA35E4 /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
+		A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		A71A14B51EB7879100EDCE6D /* BaseMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseMenuPopover.swift; path = Elements/Menu/BaseMenuPopover.swift; sourceTree = "<group>"; };
 		A71A14B61EB7879100EDCE6D /* BottomMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenu.swift; path = Elements/Menu/BottomMenu.swift; sourceTree = "<group>"; };
 		A71A14B71EB7879100EDCE6D /* MenuOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuOptionView.swift; path = Elements/Menu/MenuOptionView.swift; sourceTree = "<group>"; };
@@ -342,6 +348,8 @@
 			isa = PBXGroup;
 			children = (
 				A7C995F41E9EA707004826EE /* APIClient.swift */,
+				A71A09A21EB814A800CA35E4 /* URLConstructor.swift */,
+				A71A09A41EB8150600CA35E4 /* URLRouter.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -376,6 +384,7 @@
 				A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */,
 				A7B349E01EB13D4000B4F9FE /* Player.swift */,
 				A71C04031EB24ECA00941ECB /* RealmClient.swift */,
+				A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -821,6 +830,7 @@
 			files = (
 				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
 				A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */,
+				A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A71C03EE1EB1F75B00941ECB /* TracksViewController.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
@@ -860,6 +870,8 @@
 				A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */,
 				A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */,
 				A71A14B91EB7879100EDCE6D /* BottomMenu.swift in Sources */,
+				A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */,
+				A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */,
 				A71C03E91EB1F74D00941ECB /* TrackCellViewModel.swift in Sources */,
 				A71C03EA1EB1F74D00941ECB /* TracksViewModel.swift in Sources */,
 				A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */,

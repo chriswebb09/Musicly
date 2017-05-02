@@ -44,6 +44,14 @@ final class BottomMenuPopover: BasePopoverMenu {
                 self.layoutIfNeeded()
             }
         }
+        
+        let tap = UIGestureRecognizer(target: self, action: #selector(hidePopView(viewController:)))
+        containerView.addGestureRecognizer(tap)
+    }
+    
+    
+    public override func hidePopView(viewController: UIViewController) {
+        super.hidePopView(viewController: viewController)
     }
     
     func setupPop() {

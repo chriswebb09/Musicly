@@ -195,9 +195,14 @@ final class PlayerView: UIView {
         pauseButton.alpha = 0
     }
     
+    func playbuttonEnabled(is enabled: Bool) {
+        self.playButton.isEnabled = enabled
+    }
+    
     // Setup PlayerView with viewModel
     
     func configure(with viewModel: PlayerViewModel) {
+        playButton.isEnabled = false
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
         let artworkUrl = viewModel.artworkUrl
@@ -236,12 +241,14 @@ final class PlayerView: UIView {
         resetProgressAndTime()
         currentPlayLengthLabel.text = "0:00"
         delegate?.skipButtonTapped()
+        timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
     }
     
     func backButtonTapped() {
         resetProgressAndTime()
+        timer?.invalidate()
         currentPlayLengthLabel.text = "0:00"
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
@@ -481,17 +488,20 @@ final class PlayerView: UIView {
             return
         case .playing:
             if let countDict = timer?.userInfo as? NSMutableDictionary?,
-                let count = countDict?["count"] as? Int {
+                var count = countDict?["count"] as? Int {
                 viewModel.time = count + 1
-                progressVisual += progressIncrementer
-                progressView.progress += progressVisual
-                print(progressVisual)
-                viewModel.progress = progressVisual
+                progressView.progress += progressIncrementer
+                viewModel.progress = progressView.progress
                 countDict?["count"] = viewModel.time
                 currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
                 if progressView.progress == 1 {
                     stopEqualizer()
                     finishedPlaying(countDict: countDict)
+         
+                    viewModel.time = 0
+                    currentPlayLengthLabel.text = "0:00"
+                    count = 0
+                    timer?.invalidate()
                 }
             }
         case .done:
@@ -508,7 +518,6 @@ final class PlayerView: UIView {
         countDict?["count"] = time
         delegate?.resetPlayerAndSong()
         switchButton(button: pauseButton, for: playButton)
-        timer = nil
         viewModel.progress = 0
         animateEqualizer()
     }

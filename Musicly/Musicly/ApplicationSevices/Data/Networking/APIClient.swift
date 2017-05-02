@@ -1,31 +1,16 @@
 import UIKit
 
-enum URLRouter {
+final class iTunesAPIClient: NSObject {
     
-    case base, path
+    var activeDownloads: [String: Download]? = [String: Download]()
     
-    var url: String {
-        switch self {
-        case .base:
-            return "https://itunes.apple.com"
-        case .path:
-            return "/search?media=music&entity=song&term="
+    weak var downloadsSession : URLSession? {
+        get {
+            let config = URLSessionConfiguration.background(withIdentifier: "background")
+            weak var queue = OperationQueue()
+            return URLSession(configuration: config, delegate: self, delegateQueue: queue)
         }
     }
-}
-
-struct URLConstructor {
-    
-    var searchTerm: String
-    
-    func build() -> URL {
-        let encodedQuery = searchTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        let urlString = URLRouter.base.url + URLRouter.path.url + encodedQuery
-        return URL(string: urlString)!
-    }
-}
-
-final class iTunesAPIClient {
     
     // MARK: - Main search functionality
     
@@ -47,4 +32,66 @@ final class iTunesAPIClient {
             }
             }.resume()
     }
+}
+
+
+extension iTunesAPIClient: URLSessionDelegate {
+    
+    func downloadTrackPreview(for download: Download?) {
+        if let download = download,
+            let urlString = download.url,
+            let url = URL(string: urlString) {
+            activeDownloads?[urlString] = download
+            download.downloadTask = downloadsSession?.downloadTask(with: url)
+            download.downloadTask?.resume()
+        }
+    }
+    
+    func startDownload(_ download: Download?) {
+        if let download = download, let url = download.url {
+            activeDownloads?[url] = download
+            if let url = download.url {
+                if URL(string: url) != nil {
+                    downloadTrackPreview(for: download)
+                }
+            }
+        }
+    }
+    
+    internal func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+            appDelegate.backgroundSessionCompletionHandler = nil
+            DispatchQueue.main.async {
+                completionHandler()
+            }
+        }
+    }
+    
+    internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64) {
+        if let downloadUrl = downloadTask.originalRequest?.url?.absoluteString,
+            let download = activeDownloads?[downloadUrl] {
+            download.progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
+        }
+    }
+}
+
+extension iTunesAPIClient: URLSessionDownloadDelegate {
+
+    internal func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        
+        if let originalURL = downloadTask.originalRequest?.url?.absoluteString {
+            let destinationURL = LocalStorageManager.localFilePathForUrl(originalURL)
+            let fileManager = FileManager.default
+            
+            do {
+                if let destinationURL = destinationURL {
+                    try fileManager.copyItem(at: location, to: destinationURL)
+                }
+            } catch let error {
+                print("Could not copy file to disk: \(error.localizedDescription)")
+            }
+        }
+    }
+    
 }

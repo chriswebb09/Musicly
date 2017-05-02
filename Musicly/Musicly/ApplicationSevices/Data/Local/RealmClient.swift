@@ -56,9 +56,6 @@ class RealmClient {
                 realm.beginWrite()
                 realm.add(list, update: true)
                 try! realm.commitWrite()
-                //                try! realm.write {
-                
-                // }
             }
         } catch {
             print("error \(error.localizedDescription)")
