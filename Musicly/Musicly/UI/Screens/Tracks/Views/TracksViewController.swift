@@ -57,13 +57,6 @@
     }
     
     var buttonItem: UIBarButtonItem!
-   // var infoLabel: UILabel = UILabel.setupInfoLabel()
-    
-//    var musicIcon: UIImageView = {
-//        var musicIcon = UIImageView()
-//        musicIcon.image = #imageLiteral(resourceName: "headphones-blue")
-//        return musicIcon
-//    }()
     
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -122,9 +115,6 @@
         newLayout.setup()
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
-     //   view.backgroundColor = CollectionViewAttributes.backgroundColor
-//        setupInfoLabel(infoLabel: infoLabel)
-//        setupMusicIcon(icon: musicIcon)
         if let collectionView = collectionView {
             view.addSubview(collectionView)
             view.sendSubview(toBack: collectionView)
@@ -230,11 +220,6 @@
         searchController.searchBar.resignFirstResponder()
     }
     
-    func toggle(to: Bool) {
-//        infoLabel.isHidden = to
-//        musicIcon.isHidden = to
-    }
-    
     fileprivate func setupSearchController() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
@@ -247,8 +232,6 @@
     
     func searchBarHasInput() {
         guard let collectionView = collectionView else { return }
-        collectionView.backgroundView?.isHidden = true
-        toggle(to: true)
         collectionView.reloadData()
         playlist.removeAll()
         store?.searchForTracks { playlist, error in
@@ -313,10 +296,7 @@
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         playlist.removeAll()
-        toggle(to: false)
         contentState = .none
-//        setupInfoLabel(infoLabel: infoLabel)
-//        setupMusicIcon(icon: musicIcon)
         collectionView?.reloadData()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false

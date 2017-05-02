@@ -48,7 +48,7 @@ class MenuView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         backgroundColor = UIColor(red:0.09, green:0.14, blue:0.31, alpha:1.0)
-        alpha = 0.8
+        alpha = 0.98
         isUserInteractionEnabled = true
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2

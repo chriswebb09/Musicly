@@ -38,9 +38,9 @@ final class BottomMenuPopover: BasePopoverMenu {
             DispatchQueue.main.async {
                 self.popView.alpha = 1
                 self.popView.frame = CGRect(x: viewController.view.bounds.width * 0.002,
-                                            y: viewController.view.bounds.height * 0.7,
+                                            y: viewController.view.bounds.height * 0.58,
                                             width: viewController.view.bounds.width,
-                                            height: viewController.view.bounds.height * 0.3)
+                                            height: viewController.view.bounds.height * 0.42)
                 self.layoutIfNeeded()
             }
         }

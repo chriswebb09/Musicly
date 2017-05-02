@@ -104,10 +104,10 @@ extension PlayerViewController: PlayerViewDelegate {
             menuActive = .active
         case .active:
             dismissMenu()
-            menuActive = .active
+            menuActive = .hidden
         case .hidden:
             showMenu()
-            menuActive = .hidden
+            menuActive = .active
         }
     }
     

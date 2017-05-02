@@ -18,8 +18,6 @@ class BasePopoverMenu: UIView {
     }()
     
     func showPopView(viewController: UIViewController) {
-        //containerView.frame = UIScreen.main.bounds
-        //containerView.center = CGPoint(x: BasePopoverAlertConstants.popViewX, y: BasePopoverAlertConstants.popViewY)
         viewController.view.addSubview(containerView)
     }
     

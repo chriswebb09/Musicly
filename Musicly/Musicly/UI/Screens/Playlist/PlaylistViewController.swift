@@ -23,9 +23,9 @@ final class PlaylistViewController: UIViewController {
                 newItem.track = track
                 if !playlist.contains(playlistItem: newItem) {
                     playlist.append(newPlaylistItem: newItem)
-//                    DispatchQueue.main.async {
-//                        self.collectionView?.reloadData()
-//                    }
+                    //                    DispatchQueue.main.async {
+                    //                        self.collectionView?.reloadData()
+                    //                    }
                 }
             }
         }
