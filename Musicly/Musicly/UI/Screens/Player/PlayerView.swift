@@ -58,13 +58,13 @@ final class PlayerView: UIView {
     
     private var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "play-hollow-white-thick"), for: .normal)
+        playButton.setImage(#imageLiteral(resourceName: "playbutton-test"), for: .normal)
         return playButton
     }()
     
     private var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pause-hollow-white"), for: .normal)
+        pauseButton.setImage(#imageLiteral(resourceName: "pause-button-test"), for: .normal)
         return pauseButton
     }()
     
@@ -80,22 +80,12 @@ final class PlayerView: UIView {
     private var skipButton: UIButton = {
         var skipButton = UIButton()
         skipButton.setImage(#imageLiteral(resourceName: "skip-white-hollow-icon"), for: .normal)
-        if let imageView = skipButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
-                                                      cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
         return skipButton
     }()
     
     private var backButton: UIButton = {
         var backButton = UIButton()
         backButton.setImage(#imageLiteral(resourceName: "back-white-hollow"), for: .normal)
-        if let imageView = backButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
-                                                      cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
         return backButton
     }()
     
@@ -202,7 +192,6 @@ final class PlayerView: UIView {
             trackTitleLabel.text = trackName
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
-            playButton.layer.setViewShadow(view: playButton)
             addSelectors()
         }
     }
@@ -360,7 +349,6 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-       // button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true

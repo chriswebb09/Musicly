@@ -9,9 +9,10 @@ import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
-    var playerView: PlayerView = PlayerView()
+    var playerView = PlayerView()
     var playListItem: PlaylistItem?
-    var menuPop: BottomMenuPopover = BottomMenuPopover()
+    var menuPop = BottomMenuPopover()
+    var loadingPop = LoadingPopover()
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
     var index: Int!
@@ -28,14 +29,10 @@ final class PlayerViewController: UIViewController {
         setupBarButton()
         baseControllerSetup()
         baseViewSetup()
+        showLoadingView()
         playListItem = playList?.playlistItem(at: index)
         setupItem(item: playListItem)
         playerView.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //trackPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil)
     }
     
     private func setupBarButton() {
@@ -146,6 +143,20 @@ extension PlayerViewController: PlayerViewDelegate {
         self.initPlayer(url: url)
     }
     
+    func showLoadingView() {
+        loadingPop.setupPop()
+        UIView.animate(withDuration: 0.5) {
+            self.loadingPop.showPopView(viewController: self)
+            self.loadingPop.popView.isHidden = false
+        }
+    }
+    
+    func hideLoadingView() {
+        loadingPop.popView.removeFromSuperview()
+        loadingPop.hidePopView(viewController: self)
+        view.sendSubview(toBack: loadingPop)
+    }
+    
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
         print(trackPlayer.duration)
@@ -170,6 +181,8 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let previous = playListItem?.previous else { return }
         playListItem = previous
         trackPlayer.player.pause()
+        showLoadingView()
+        self.loadingPop.popView.animate()
         DispatchQueue.main.async { [unowned self] in
             guard let track = previous.track, let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
@@ -185,6 +198,8 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let next = playListItem?.next else { return }
         playListItem = next
         trackPlayer.player.pause()
+        showLoadingView()
+        self.loadingPop.popView.animate()
         DispatchQueue.main.async {
             guard let track = next.track, let url =  URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
@@ -224,11 +239,10 @@ extension PlayerViewController: TrackPlayerDelegate {
     
     func trackDurationCalculated(stringTime: String, timeValue: Float64) {
         print(stringTime)
-        print("GOT DURATION")
-        print("track duration")
         DispatchQueue.main.async {
             self.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
             self.playerView.playbuttonEnabled(is: true)
+            self.hideLoadingView()
         }
     }
     

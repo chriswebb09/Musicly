@@ -8,17 +8,12 @@
 
 import UIKit
 
-
-import UIKit
-
 final class LoadingPopover: BasePopoverAlert {
-    
+
     var popView: LoadingView = {
         let popView = LoadingView()
         popView.layer.cornerRadius = DetailPopoverConstants.cornerRadius
-        popView.backgroundColor = .white
-        popView.layer.borderColor = UIColor.black.cgColor
-        popView.layer.borderWidth = DetailPopoverConstants.borderWidth
+        popView.backgroundColor = .clear
         popView.isUserInteractionEnabled = true
         return popView
     }()
@@ -37,13 +32,6 @@ final class LoadingPopover: BasePopoverAlert {
     
     func setupPop() {
         popView.configureView()
-        guard let popTitle = popView.doneButton.titleLabel else { return }
-        popView.backgroundColor = CollectionViewAttributes.backgroundColor
-        popView.doneButton.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
-        popTitle.font = UIFont(name: "Avenir-Book", size: 20)!
-        popView.doneButton.setTitle("Done", for: .normal)
-        popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
-        popView.doneButton.layer.borderWidth = 1.5
-        popView.layer.borderWidth = 1.5
+        popView.backgroundColor = .clear
     }
 }

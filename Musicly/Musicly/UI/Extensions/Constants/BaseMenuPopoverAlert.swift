@@ -14,7 +14,7 @@ class BaseMenuPopoverAlert: UIView {
         let containerView = UIView()
         containerView.isUserInteractionEnabled = true 
         containerView.backgroundColor = UIColor.black
-        containerView.layer.opacity = 0.2
+        containerView.layer.opacity = 0.05
         return containerView
     }()
     
