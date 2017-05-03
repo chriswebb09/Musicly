@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class BallAnimation {
     
     var size: CGSize
@@ -20,8 +22,6 @@ class BallAnimation {
         let layer: CAShapeLayer = CAShapeLayer()
         var path: UIBezierPath = UIBezierPath()
         let lineWidth: CGFloat = 2
-        
-        
         path.addArc(withCenter: CGPoint(x: size.width / 2, y: size.height / 2),
                     radius: size.width / 2,
                     startAngle: 0,
@@ -31,9 +31,7 @@ class BallAnimation {
         layer.backgroundColor = nil
         layer.path = path.cgPath
         layer.frame = CGRect(x: 0, y: 0, width: size.width / 2, height: size.height / 2)
-        
         return layer
-        
     }
     
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class DetailView: UIView {
+final class NewPlaylistView: UIView {
     
     // Input for playlist name
     

@@ -61,7 +61,6 @@ final class PlaylistViewController: UIViewController {
     private func commonInit() {
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
-        print(tracklist)
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()

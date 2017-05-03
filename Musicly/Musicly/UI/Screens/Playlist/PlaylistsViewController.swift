@@ -5,7 +5,7 @@ private let reuseIdentifier = "PlaylistCell"
 
 final class PlaylistsViewController: UIViewController {
     
-    let detailPop = DetailPopover()
+    let detailPop = NewPlaylistPopover()
     var collectionView : UICollectionView?
     var tabController: TabBarController!
     var store: iTrackDataStore!
@@ -15,9 +15,10 @@ final class PlaylistsViewController: UIViewController {
     override func viewDidLoad() {
         title = "Playlists"
         self.collectionView = setupPlaylistCollectionView()
-        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote-1").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup()
+      
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]

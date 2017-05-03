@@ -1,17 +1,20 @@
 //
-//  PlaylistPopover.swift
+//  LoadingPopover.swift
 //  Musicly
 //
-//  Created by Christopher Webb-Orenstein on 4/23/17.
+//  Created by Christopher Webb-Orenstein on 5/3/17.
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
 import UIKit
 
-final class NewPlaylistPopover: BasePopoverAlert {
+
+import UIKit
+
+final class LoadingPopover: BasePopoverAlert {
     
-    var popView: NewPlaylistView = {
-        let popView = NewPlaylistView()
+    var popView: LoadingView = {
+        let popView = LoadingView()
         popView.layer.cornerRadius = DetailPopoverConstants.cornerRadius
         popView.backgroundColor = .white
         popView.layer.borderColor = UIColor.black.cgColor
@@ -44,6 +47,3 @@ final class NewPlaylistPopover: BasePopoverAlert {
         popView.layer.borderWidth = 1.5
     }
 }
-
-
-

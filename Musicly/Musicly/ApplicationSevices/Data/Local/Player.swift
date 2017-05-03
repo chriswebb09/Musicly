@@ -20,15 +20,12 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     lazy var asset: AVURLAsset = {
         var asset: AVURLAsset = AVURLAsset(url: self.url)
         asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
-        asset.addObserver(self, forKeyPath: "duration", options: .new, context: nil)
         return asset
     }()
     
     lazy var player: AVPlayer = {
         var player: AVPlayer = AVPlayer(playerItem: self.playerItem)
         player.actionAtItemEnd = AVPlayerActionAtItemEnd.none
-        print("Player")
-        player.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         return player
     }()
     
@@ -55,32 +52,9 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     var timeObserver: Any?
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
-        player.removeObserver(self, forKeyPath: "status")
         if let timeObserverToken = timeObserver {
             player.removeTimeObserver(timeObserverToken)
             self.timeObserver = nil
-        }
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "status" {
-            print("Change at keyPath = \(keyPath) for \(object)")
-            print(player.status.rawValue)
-        }
-        
-        if keyPath == "duration" {
-            print("Change at keyPath = \(keyPath) for \(object)")
-            print(asset.duration)
-        }
-        
-        if keyPath == "playbackBufferEmpty" {
-            
-            print("Change at keyPath = \(keyPath) for \(object)")
-        }
-        
-        if keyPath == "playbackLikelyToKeepUp" {
-            print("Change at keyPath = \(keyPath) for \(object)")
         }
     }
     
@@ -88,7 +62,6 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         self.url = url
         super.init()
         self.getTrackDuration()
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
     }
     
     func setUrl(from string: String?) {

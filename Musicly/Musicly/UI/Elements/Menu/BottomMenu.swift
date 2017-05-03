@@ -92,7 +92,7 @@ class MenuView: UIView {
         optionThreeView.setText(string: "Delete From Phone")
         optionOneView.setIconImage(image: #imageLiteral(resourceName: "cloud-circle-white"))
         optionTwoView.setIconImage(image: #imageLiteral(resourceName: "circle-x-white"))
-        optionThreeView.setIconImage(image: #imageLiteral(resourceName: "check-circle-white-2"))
+        optionThreeView.setIconImage(image: #imageLiteral(resourceName: "dot-circle-icon-white"))
         addSelectors()
     }
     
