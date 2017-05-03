@@ -9,8 +9,6 @@
 import Foundation
 import AVFoundation
 
-
-
 let audioCache = NSCache<NSString, AVURLAsset>()
 
 final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
@@ -18,7 +16,6 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     var url: URL
     
     weak var delegate: TrackPlayerDelegate?
-    
     
     lazy var asset: AVURLAsset = {
         var asset: AVURLAsset = AVURLAsset(url: self.url)
@@ -133,11 +130,9 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
-        
         delegate?.trackFinishedPlaying()
         player.seek(to: kCMTimeZero)
         player.pause()
-        
     }
     
     func removePlayTimeObserver() {

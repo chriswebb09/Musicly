@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol DownloadDelegate: class {
-    func downloadProgressUpdated(for progress: Float)
-}
-
-enum DownloadStatus {
-    case waiting, downloading, finished, cancelled
-}
-
 final class Download {
     
     weak var delegate: DownloadDelegate?

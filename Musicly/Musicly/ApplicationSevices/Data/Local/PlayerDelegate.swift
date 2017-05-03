@@ -15,6 +15,3 @@ protocol TrackPlayerDelegate: class {
 }
 
 
-extension Notification.Name {
-    static let trackEnded = Notification.Name("trackEnded")
-}

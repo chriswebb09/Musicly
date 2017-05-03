@@ -82,7 +82,6 @@ class RealmClient {
                     }
                 }
             }
-            
         } catch {
             print("error \(error.localizedDescription)")
         }

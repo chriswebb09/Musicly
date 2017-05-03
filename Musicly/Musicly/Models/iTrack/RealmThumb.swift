@@ -10,10 +10,6 @@ import Foundation
 import RealmSwift
 import Realm
 
-enum Thumbs {
-    case up, down, none
-}
-
 class RealmThumb: Object {
     
     var thumb: Thumbs

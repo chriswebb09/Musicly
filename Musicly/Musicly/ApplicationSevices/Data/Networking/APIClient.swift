@@ -34,7 +34,6 @@ final class iTunesAPIClient: NSObject {
     }
 }
 
-
 extension iTunesAPIClient: URLSessionDelegate {
     
     func downloadTrackPreview(for download: Download?) {

@@ -58,13 +58,13 @@ final class PlayerView: UIView {
     
     private var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "play-hollow-white-icon"), for: .normal)
+        playButton.setImage(#imageLiteral(resourceName: "play-hollow-white-thick"), for: .normal)
         return playButton
     }()
     
     private var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pause-circle-icon-white"), for: .normal)
+        pauseButton.setImage(#imageLiteral(resourceName: "pause-hollow-white"), for: .normal)
         return pauseButton
     }()
     
@@ -360,7 +360,7 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
+       // button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
         button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
@@ -400,7 +400,9 @@ final class PlayerView: UIView {
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
+        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
         setupTrackButtons(button: pauseButton)
+        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
     }
     
     private func setupProgressView() {
