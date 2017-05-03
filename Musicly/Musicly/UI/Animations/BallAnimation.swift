@@ -16,7 +16,6 @@ class BallAnimation {
         self.size = size
     }
     
-    
     func layerWith(size: CGSize, color: UIColor) -> CALayer {
         let layer: CAShapeLayer = CAShapeLayer()
         var path: UIBezierPath = UIBezierPath()

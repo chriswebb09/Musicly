@@ -8,24 +8,6 @@
 
 import UIKit
 
-struct EdgeAttributes {
-    static let edgeForStandard = UIEdgeInsets(top:80, left: 5, bottom: 5, right: 5)
-    static let sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
-}
-
-struct SmallLayoutProperties {
-    static let minimumInteritemSpacing: CGFloat = 5.0
-    static let minimumLineSpacing: CGFloat = 10.0
-}
-
-struct MainLayoutProperties {
-    
-}
-
-struct HeaderViewProperties {
-    static let frame = CGRect(x:0 , y:0, width: UIScreen.main.bounds.width, height:50)
-}
-
 struct CollectionViewAttributes {
     static let backgroundColor = UIColor(red:0.95, green:0.96, blue:0.98, alpha:1.0)
 }
@@ -41,16 +23,6 @@ struct NavigationBarAttributes {
 
 struct BasePopConstants {
     static let heightMultiplier: CGFloat = 0.25
-}
-
-struct BasePopoverAlertConstants {
-    static let popViewX = UIScreen.main.bounds.width / 2
-    static let popViewY = UIScreen.main.bounds.height / 2
-    static let containerOpacity: Float = 0.4
-}
-
-struct SplashConstants {
-    static let animationDuration: Double = 0.004
 }
 
 enum RowSize {

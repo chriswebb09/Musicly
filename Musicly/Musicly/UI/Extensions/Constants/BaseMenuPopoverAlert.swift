@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasePopoverAlert: UIView {
+class BaseMenuPopoverAlert: UIView {
     
     let containerView: UIView = {
         let containerView = UIView()

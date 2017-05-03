@@ -69,7 +69,6 @@ final class BallIndicatorView: UIView {
                 self.animationRect?.size = CGSize(width: minEdge, height: minEdge)
                 if let animation = animation {
                     animation.setUpAnimation(in: layer, size: CGSize(width: minEdge / 4, height: minEdge / 4), color: color!)
-                    //animation.setUpAnimation(in: layer, color: color!)
                 }
             }
         }
