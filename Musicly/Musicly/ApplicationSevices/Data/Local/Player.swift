@@ -9,15 +9,7 @@
 import Foundation
 import AVFoundation
 
-extension Notification.Name {
-    static let trackEnded = Notification.Name("trackEnded")
-}
 
-protocol TrackPlayerDelegate: class {
-    func updateProgress(progress: Double)
-    func trackDurationCalculated(stringTime: String, timeValue: Float64)
-    func trackFinishedPlaying()
-}
 
 let audioCache = NSCache<NSString, AVURLAsset>()
 
@@ -27,16 +19,19 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     weak var delegate: TrackPlayerDelegate?
     
+    
     lazy var asset: AVURLAsset = {
         var asset: AVURLAsset = AVURLAsset(url: self.url)
         asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
+        asset.addObserver(self, forKeyPath: "duration", options: .new, context: nil)
         return asset
     }()
     
     lazy var player: AVPlayer = {
         var player: AVPlayer = AVPlayer(playerItem: self.playerItem)
         player.actionAtItemEnd = AVPlayerActionAtItemEnd.none
-        
+        print("Player")
+        player.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         return player
     }()
     
@@ -45,16 +40,51 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         return playerItem
     }()
     
+    var currentTime: Double {
+        get {
+            return CMTimeGetSeconds(player.currentTime())
+        }
+        set {
+            let newTime = CMTimeMakeWithSeconds(newValue, 1)
+            player.seek(to: newTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        }
+    }
+    
+    var duration: Double {
+        guard let currentItem = player.currentItem else { return 0.0 }
+        return CMTimeGetSeconds(currentItem.duration)
+    }
+    
     var timeObserver: Any?
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        player.removeObserver(self, forKeyPath: "status")
         if let timeObserverToken = timeObserver {
             player.removeTimeObserver(timeObserverToken)
             self.timeObserver = nil
         }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "status" {
+            print("Change at keyPath = \(keyPath) for \(object)")
+            print(player.status.rawValue)
+        }
         
-       // player.removeTimeObserver(timeObserver)
+        if keyPath == "duration" {
+            print("Change at keyPath = \(keyPath) for \(object)")
+            print(asset.duration)
+        }
+        
+        if keyPath == "playbackBufferEmpty" {
+            
+            print("Change at keyPath = \(keyPath) for \(object)")
+        }
+        
+        if keyPath == "playbackLikelyToKeepUp" {
+            print("Change at keyPath = \(keyPath) for \(object)")
+        }
     }
     
     init(url: URL) {

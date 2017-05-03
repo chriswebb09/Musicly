@@ -14,22 +14,39 @@ class MenuOptionView: UIView {
         let option = UILabel()
         option.textColor = .white
         option.backgroundColor = .clear
-        option.textAlignment = .center
+        option.font = UIFont(name: "Avenir-Book", size: 15)
+        option.textAlignment = .right
         return option
+    }()
+    
+    var iconView: UIImageView = {
+        var icon = UIImageView()
+        return icon
     }()
     
     func setText(string: String) {
         optionLabel.text = string
     }
     
+    func setIconImage(image: UIImage) {
+        iconView.image = image 
+    }
+    
     func setupConstraints() {
         backgroundColor = .clear
         addSubview(optionLabel)
         optionLabel.translatesAutoresizingMaskIntoConstraints = false
-        optionLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         optionLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        optionLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: UIScreen.main.bounds.width * -0.1).isActive = true
         optionLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
-        optionLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        optionLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4).isActive = true
+        
+        addSubview(iconView)
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        iconView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: UIScreen.main.bounds.width * 0.25).isActive = true
+        iconView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.35).isActive = true
+        iconView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.08).isActive = true
     }
     
 }

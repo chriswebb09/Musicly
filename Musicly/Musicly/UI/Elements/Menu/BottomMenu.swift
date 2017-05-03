@@ -24,6 +24,7 @@ class MenuView: UIView {
         optionOne.isUserInteractionEnabled = true
         optionOne.layer.borderColor = UIColor.white.cgColor
         optionOne.layer.borderWidth = 1
+      //  optionOne.setIconImage(image: #imageLiteral(resourceName: "cloud-icon-white"))
         return optionOne
     }()
     
@@ -86,9 +87,12 @@ class MenuView: UIView {
     func configureView() {
         layoutSubviews()
         setupConstraints()
-        optionOneView.setText(string: "Download")
+        optionOneView.setText(string: "Download To Phone")
         optionTwoView.setText(string: "Remove From Playlist")
-        optionThreeView.setText(string: "Delete")
+        optionThreeView.setText(string: "Delete From Phone")
+        optionOneView.setIconImage(image: #imageLiteral(resourceName: "cloud-circle-white"))
+        optionTwoView.setIconImage(image: #imageLiteral(resourceName: "circle-x-white"))
+        optionThreeView.setIconImage(image: #imageLiteral(resourceName: "check-circle-white-2"))
         addSelectors()
     }
     
@@ -98,21 +102,21 @@ class MenuView: UIView {
         optionOneView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         optionOneView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         optionOneView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        optionOneView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.33).isActive = true
+        optionOneView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3).isActive = true
         
         addSubview(optionTwoView)
         optionTwoView.translatesAutoresizingMaskIntoConstraints = false
         optionTwoView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         optionTwoView.topAnchor.constraint(equalTo: optionOneView.bottomAnchor).isActive = true
         optionTwoView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        optionTwoView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.33).isActive = true
+        optionTwoView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3).isActive = true
         
         addSubview(optionThreeView)
         optionThreeView.translatesAutoresizingMaskIntoConstraints = false
         optionThreeView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         optionThreeView.topAnchor.constraint(equalTo: optionTwoView.bottomAnchor).isActive = true
         optionThreeView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        optionThreeView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.34).isActive = true
+        optionThreeView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3).isActive = true
         
     }
 }

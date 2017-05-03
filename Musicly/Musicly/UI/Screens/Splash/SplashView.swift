@@ -17,6 +17,7 @@ final class SplashView: UIView {
     var logoImageView: UIImageView = {
         let image = #imageLiteral(resourceName: "speakerblue")
         let imageView = UIImageView(image: image)
+        imageView.isHidden = true 
         return imageView
     }()
     

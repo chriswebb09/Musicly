@@ -33,6 +33,11 @@ final class PlayerViewController: UIViewController {
         playerView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //trackPlayer.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil)
+    }
+    
     private func setupBarButton() {
         let rightButtonImage = #imageLiteral(resourceName: "orange-record-small").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         rightButtonItem = UIBarButtonItem.init(image: rightButtonImage, style: .done, target: self, action: #selector(add))
@@ -128,8 +133,6 @@ extension PlayerViewController: PlayerViewDelegate {
         view.sendSubview(toBack: menuPop)
     }
     
-    
-    
     fileprivate func setupItem(item: PlaylistItem?) {
         guard let item = item else { return }
         guard let track = item.track else { return }
@@ -145,6 +148,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
+        print(trackPlayer.duration)
         trackPlayer.delegate = self
     }
     
@@ -154,11 +158,11 @@ extension PlayerViewController: PlayerViewDelegate {
         trackPlayer.play()
         playerView.startEqualizer()
         playerView.setTimer()
+        print(trackPlayer.currentTime)
     }
     
     func pauseButtonTapped() {
         playerView.stopEqualizer()
-        
         trackPlayer.player.pause()
     }
     
@@ -191,6 +195,7 @@ extension PlayerViewController: PlayerViewDelegate {
         }
     }
     
+    
     func resetPlayerAndSong() {
         print("reset")
         playerView.viewModel.playState = .queued
@@ -219,6 +224,7 @@ extension PlayerViewController: TrackPlayerDelegate {
     
     func trackDurationCalculated(stringTime: String, timeValue: Float64) {
         print(stringTime)
+        print("GOT DURATION")
         print("track duration")
         DispatchQueue.main.async {
             self.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
@@ -227,6 +233,7 @@ extension PlayerViewController: TrackPlayerDelegate {
     }
     
     func updateProgress(progress: Double) {
+        print(trackPlayer.currentTime)
         DispatchQueue.main.async {
             self.playerView.updateProgressBar(value: progress)
         }

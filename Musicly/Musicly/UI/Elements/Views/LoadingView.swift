@@ -12,5 +12,9 @@ class LoadingView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        let ball = IndicatorView(frame: frame, color: .blue, padding: 40)
+        addSubview(ball)
+        bringSubview(toFront: ball)
+        ball.startAnimating()
     }
 }

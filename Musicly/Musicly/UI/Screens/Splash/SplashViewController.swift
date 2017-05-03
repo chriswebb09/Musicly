@@ -37,6 +37,29 @@ final class SplashViewController: UIViewController {
         return animation
     }
     
+    func squishx() -> CABasicAnimation {
+        let animationY = CABasicAnimation(keyPath: "transform.scale.x")
+        animationY.duration = 0.4
+        animationY.fromValue = 0.5
+        animationY.toValue = 5
+        animationY.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        animationY.autoreverses = true
+        animationY.repeatCount = 2
+        return animationY
+    }
+    
+    func squishY() -> CABasicAnimation {
+        let animationY = CABasicAnimation(keyPath: "transform.scale.y")
+        animationY.duration = 0.4
+        animationY.fromValue = 1
+        animationY.toValue = 0.5
+        animationY.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        animationY.autoreverses = true
+        animationY.repeatCount = 2
+        return animationY
+    }
+    
+    //let indicatior = BallIndicatorView(frame: SplashViewf)
     // Shared setup for animations
     
     private func setupSlowAnimation(animation: CABasicAnimation) {
@@ -45,13 +68,14 @@ final class SplashViewController: UIViewController {
         animation.toValue = 1.5
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.autoreverses = true
-        animation.repeatCount = 3
+        animation.repeatCount = 2
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        CATransaction.begin()
         
+        super.viewDidAppear(animated)
+        
+        CATransaction.begin()
         CATransaction.setCompletionBlock {
             let duration: TimeInterval = SplashConstants.animationDuration
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
@@ -61,10 +85,16 @@ final class SplashViewController: UIViewController {
             }
         }
         
+        let squishX = self.squishx()
+        let squishY = self.squishY()
         let animateXSlow = self.animateXSlow()
         let animateYSlow = self.animateYSlow()
-        splashView?.layer.add(animateXSlow, forKey: nil)
-        splashView?.layer.add(animateYSlow, forKey: nil)
+        
+        let wobbleAnimationGroup: CAAnimationGroup = CAAnimationGroup()
+        wobbleAnimationGroup.animations = [animateXSlow, animateYSlow, squishX, animateYSlow, squishY]
+        wobbleAnimationGroup.duration = animateYSlow.beginTime + animateYSlow.duration + squishY.duration + squishX.duration
+        wobbleAnimationGroup.repeatCount = 2
+        splashView?.layer.add(wobbleAnimationGroup, forKey: nil)
         CATransaction.commit()
     }
     

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		802768400C61A741A372161B /* Pods_MusiclyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2DD93AD7AA64BCFA83BEBD /* Pods_MusiclyUITests.framework */; };
 		A70CF4DE1EA633F3000656AF /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70CF4DD1EA633F3000656AF /* Reusable.swift */; };
+		A7168BFE1EB94DE800B64F09 /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7168BFD1EB94DE800B64F09 /* PlayerDelegate.swift */; };
+		A7168C001EB9548E00B64F09 /* PlayerViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7168BFF1EB9548E00B64F09 /* PlayerViewConstants.swift */; };
 		A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A21EB814A800CA35E4 /* URLConstructor.swift */; };
 		A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A41EB8150600CA35E4 /* URLRouter.swift */; };
 		A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */; };
@@ -39,6 +41,8 @@
 		A71C03F71EB2024700941ECB /* BasePopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03F51EB2024700941ECB /* BasePopView.swift */; };
 		A71C03FD1EB202CB00941ECB /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */; };
 		A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C04031EB24ECA00941ECB /* RealmClient.swift */; };
+		A71F026C1EB966B20012490D /* BallAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F026B1EB966B20012490D /* BallAnimation.swift */; };
+		A71F026E1EB976740012490D /* BallAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F026D1EB976740012490D /* BallAnimationView.swift */; };
 		A7234EC71EB5073E0069AD27 /* PlaylistItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7234EC61EB5073E0069AD27 /* PlaylistItemLayout.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A74441691EB1208B00FEB3F2 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */; };
@@ -93,6 +97,8 @@
 		A1F3B9D661206A6F91E05C21 /* Pods_MusiclyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusiclyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5F52DE761385242BF409E94 /* Pods-MusiclyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusiclyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusiclyUITests/Pods-MusiclyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A70CF4DD1EA633F3000656AF /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		A7168BFD1EB94DE800B64F09 /* PlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
+		A7168BFF1EB9548E00B64F09 /* PlayerViewConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewConstants.swift; sourceTree = "<group>"; };
 		A71A09A21EB814A800CA35E4 /* URLConstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConstructor.swift; sourceTree = "<group>"; };
 		A71A09A41EB8150600CA35E4 /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
 		A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
@@ -123,6 +129,8 @@
 		A71C03F51EB2024700941ECB /* BasePopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopView.swift; path = Extensions/BasePopView.swift; sourceTree = "<group>"; };
 		A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Textfield+Extension.swift"; sourceTree = "<group>"; };
 		A71C04031EB24ECA00941ECB /* RealmClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
+		A71F026B1EB966B20012490D /* BallAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BallAnimation.swift; path = Animations/BallAnimation.swift; sourceTree = "<group>"; };
+		A71F026D1EB976740012490D /* BallAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BallAnimationView.swift; path = Animations/BallAnimationView.swift; sourceTree = "<group>"; };
 		A7234EC61EB5073E0069AD27 /* PlaylistItemLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItemLayout.swift; path = Screens/Playlist/PlaylistItemLayout.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A74441681EB1208B00FEB3F2 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistViewController.swift; path = Screens/Playlist/PlaylistViewController.swift; sourceTree = "<group>"; };
@@ -279,6 +287,8 @@
 			children = (
 				A71C03F11EB1F79A00941ECB /* IndicatorView.swift */,
 				A7ECBCCE1EB4694F0098CE0E /* AudioEqualizer.swift */,
+				A71F026B1EB966B20012490D /* BallAnimation.swift */,
+				A71F026D1EB976740012490D /* BallAnimationView.swift */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -385,6 +395,7 @@
 				A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */,
 				A70CF4DD1EA633F3000656AF /* Reusable.swift */,
 				A7CA202B1EAC67BE00EF69A1 /* String+Extension.swift */,
+				A7168BFF1EB9548E00B64F09 /* PlayerViewConstants.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +405,7 @@
 			children = (
 				A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */,
 				A7B349E01EB13D4000B4F9FE /* Player.swift */,
+				A7168BFD1EB94DE800B64F09 /* PlayerDelegate.swift */,
 				A71C04031EB24ECA00941ECB /* RealmClient.swift */,
 				A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */,
 			);
@@ -846,10 +858,13 @@
 				A71C03EE1EB1F75B00941ECB /* TracksViewController.swift in Sources */,
 				A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */,
 				A71A14C11EB78E4400EDCE6D /* NSError+Extension.swift in Sources */,
+				A7168C001EB9548E00B64F09 /* PlayerViewConstants.swift in Sources */,
 				A71C03ED1EB1F75B00941ECB /* TrackCell.swift in Sources */,
+				A71F026C1EB966B20012490D /* BallAnimation.swift in Sources */,
 				A71C03FD1EB202CB00941ECB /* Textfield+Extension.swift in Sources */,
 				A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */,
 				A71ADF581EADE1F00030932E /* PlayerViewModel.swift in Sources */,
+				A7168BFE1EB94DE800B64F09 /* PlayerDelegate.swift in Sources */,
 				A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
 				A7ECBCD21EB46A070098CE0E /* DetailPopover.swift in Sources */,
@@ -868,6 +883,7 @@
 				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
 				A71C03F61EB2024700941ECB /* BasePopoverAlert.swift in Sources */,
 				A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */,
+				A71F026E1EB976740012490D /* BallAnimationView.swift in Sources */,
 				A71A14BA1EB7879100EDCE6D /* MenuOptionView.swift in Sources */,
 				A71ADF561EADE1F00030932E /* PlayerViewController.swift in Sources */,
 				A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */,

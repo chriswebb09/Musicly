@@ -58,23 +58,13 @@ final class PlayerView: UIView {
     
     private var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "playbutton-white-blue"), for: .normal)
-        if let imageView = playButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
-                                                      cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
+        playButton.setImage(#imageLiteral(resourceName: "play-hollow-white-icon"), for: .normal)
         return playButton
     }()
     
     private var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pausebutton-blue-white"), for: .normal)
-        if let imageView = pauseButton.imageView {
-            imageView.layer.setViewShadow(view: imageView)
-            imageView.layer.shadowPath = UIBezierPath(roundedRect: pauseButton.bounds,
-                                                      cornerRadius: imageView.layer.cornerRadius).cgPath
-        }
+        pauseButton.setImage(#imageLiteral(resourceName: "pause-circle-icon-white"), for: .normal)
         return pauseButton
     }()
     
@@ -89,7 +79,7 @@ final class PlayerView: UIView {
     
     private var skipButton: UIButton = {
         var skipButton = UIButton()
-        skipButton.setImage(#imageLiteral(resourceName: "skipiconwhite"), for: .normal)
+        skipButton.setImage(#imageLiteral(resourceName: "skip-white-hollow-icon"), for: .normal)
         if let imageView = skipButton.imageView {
             imageView.layer.setViewShadow(view: imageView)
             imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
@@ -100,7 +90,7 @@ final class PlayerView: UIView {
     
     private var backButton: UIButton = {
         var backButton = UIButton()
-        backButton.setImage(#imageLiteral(resourceName: "backiconwhite"), for: .normal)
+        backButton.setImage(#imageLiteral(resourceName: "back-white-hollow"), for: .normal)
         if let imageView = backButton.imageView {
             imageView.layer.setViewShadow(view: imageView)
             imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds,
@@ -370,9 +360,9 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.22).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
+        button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
@@ -381,10 +371,10 @@ final class PlayerView: UIView {
     private func setupSkipButtons() {
         skipButtonsSharedLayout(button: skipButton)
         skipButton.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.15).isActive = true
-        skipButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
+        skipButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
         skipButtonsSharedLayout(button: backButton)
         backButton.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.15).isActive = true
-        backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * PlayerViewConstants.backButtonCenterYOffset).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
     }
     
     func skipButtonsSharedLayout(button: UIButton) {
@@ -406,24 +396,11 @@ final class PlayerView: UIView {
         equalView.startAnimating()
     }
     
-    // Stops equalizer animations
-    
-    func stopEqualizer() {
-        equalizerBackgroundView.alpha = 0
-        equalView?.stopAnimating()
-    }
-    
-    func moreButtonTapped() {
-        delegate?.moreButtonTapped()
-    }
-    
     // Setups up play and pause buttons
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
-        // playButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor, constant: UIScreen.main.bounds.width * 0.025).isActive = true
         setupTrackButtons(button: pauseButton)
-        //pauseButton.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
     private func setupProgressView() {
@@ -432,7 +409,7 @@ final class PlayerView: UIView {
         progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.progressViewWidthMultiplier).isActive = true
         progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.progressViewHeightMultiplier).isActive = true
         progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.2).isActive = true
+        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.16).isActive = true
     }
     
     private func setupTimeLengthLabels() {
@@ -447,7 +424,19 @@ final class PlayerView: UIView {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.playTimeLabelHeightMutliplier).isActive = true
         timeLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.2).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.16).isActive = true
+    }
+
+    
+    // Stops equalizer animations
+    
+    func stopEqualizer() {
+        equalizerBackgroundView.alpha = 0
+        equalView?.stopAnimating()
+    }
+    
+    func moreButtonTapped() {
+        delegate?.moreButtonTapped()
     }
     
     // Configures all subview
