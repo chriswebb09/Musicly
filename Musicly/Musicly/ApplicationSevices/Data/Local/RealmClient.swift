@@ -50,7 +50,6 @@ class RealmClient {
     }
     
     func save(list: TrackList) {
-        
         do {
             if let realm = try? Realm() {
                 realm.beginWrite()

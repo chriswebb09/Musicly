@@ -33,7 +33,7 @@ final class TabBarController: UITabBarController {
         tabFrame.size.height = tabBarHeight
         tabFrame.origin.y = view.frame.size.height - tabBarHeight
         tabBar.frame = tabFrame
-        tabBar.isTranslucent = false
+        tabBar.isTranslucent = true
     }
     
     private func setupTabs() {

@@ -145,10 +145,8 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func showLoadingView() {
         loadingPop.setupPop()
-        UIView.animate(withDuration: 0.5) {
-            self.loadingPop.showPopView(viewController: self)
-            self.loadingPop.popView.isHidden = false
-        }
+        loadingPop.showPopView(viewController: self)
+        loadingPop.popView.isHidden = false
     }
     
     func hideLoadingView() {
@@ -182,7 +180,7 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = previous
         trackPlayer.player.pause()
         showLoadingView()
-        self.loadingPop.popView.animate()
+        loadingPop.popView.animate()
         DispatchQueue.main.async { [unowned self] in
             guard let track = previous.track, let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)

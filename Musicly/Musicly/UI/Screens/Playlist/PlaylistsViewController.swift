@@ -18,7 +18,7 @@ final class PlaylistsViewController: UIViewController {
         rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup()
-      
+        
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
@@ -52,12 +52,10 @@ extension PlaylistsViewController: UICollectionViewDataSource {
                 self.trackList = Array(tracklists)
             }
         }
-        dump(trackList)
         return trackList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("PlaylistsViewController - cellForItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PlaylistCell
         let index = indexPath.row
         let track = trackList[index]

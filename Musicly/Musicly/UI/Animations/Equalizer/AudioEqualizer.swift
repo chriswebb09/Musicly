@@ -5,6 +5,7 @@
 //  Created by Christopher Webb-Orenstein on 4/29/17.
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
+// Credit: NVActivityIndicatorView
 
 import UIKit
 

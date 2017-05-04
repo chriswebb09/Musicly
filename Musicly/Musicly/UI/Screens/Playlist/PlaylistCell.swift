@@ -75,7 +75,10 @@ final class PlaylistCell: UICollectionViewCell {
         }
         listTypeLabel.text = "Playlist"
         playlistNameLabel.text = "\(playlistName)"
-        if Int(numberOfTracks)! < 2 {
+        
+        guard let numberOfTracks = Int(numberOfTracks) else { return }
+        
+        if numberOfTracks < 2 {
             numberOfSongsLabel.text = "\(numberOfTracks) Track"
         } else {
             numberOfSongsLabel.text = "\(numberOfTracks) Tracks"
@@ -102,7 +105,7 @@ final class PlaylistCell: UICollectionViewCell {
         contentView.addSubview(cellImage)
         cellImage.translatesAutoresizingMaskIntoConstraints = false
         cellImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
-        cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1).isActive = true
+        cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15).isActive = true
         cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: contentView.bounds.width * -0.06).isActive = true
         cellImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         

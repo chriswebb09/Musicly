@@ -31,7 +31,7 @@ final class NewPlaylistView: UIView {
         return titleLabel
     }()
     
-   private var detailsTextView: UITextView = {
+    private var detailsTextView: UITextView = {
         var detailsTextView = UITextView()
         detailsTextView.sizeToFit()
         detailsTextView.textAlignment = .center

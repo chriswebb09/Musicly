@@ -37,6 +37,7 @@
 		A71C03EE1EB1F75B00941ECB /* TracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03EC1EB1F75B00941ECB /* TracksViewController.swift */; };
 		A71C03FD1EB202CB00941ECB /* Textfield+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */; };
 		A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C04031EB24ECA00941ECB /* RealmClient.swift */; };
+		A71EF3271EBABE9200713669 /* AnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71EF3261EBABE9200713669 /* AnimationDelegate.swift */; };
 		A71F027A1EB9820B0012490D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F02791EB9820B0012490D /* UIColor+Extension.swift */; };
 		A71F02921EB986A40012490D /* BasePopoverAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F02901EB986A40012490D /* BasePopoverAlert.swift */; };
 		A71F02931EB986A40012490D /* BasePopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F02911EB986A40012490D /* BasePopView.swift */; };
@@ -80,7 +81,7 @@
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
 		A7C995B41E9EA6D0004826EE /* MusiclyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995B31E9EA6D0004826EE /* MusiclyTests.swift */; };
 		A7C995BF1E9EA6D0004826EE /* MusiclyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995BE1E9EA6D0004826EE /* MusiclyUITests.swift */; };
-		A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */; };
+		A7C995D71E9EA6DF004826EE /* TrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995CE1E9EA6DF004826EE /* TrackDataStore.swift */; };
 		A7C995EC1E9EA6F6004826EE /* StyleAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */; };
 		A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */; };
 		A7C995F51E9EA707004826EE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C995F41E9EA707004826EE /* APIClient.swift */; };
@@ -147,6 +148,7 @@
 		A71C03EC1EB1F75B00941ECB /* TracksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TracksViewController.swift; path = Musicly/UI/Screens/Tracks/Views/TracksViewController.swift; sourceTree = SOURCE_ROOT; };
 		A71C03FC1EB202CB00941ECB /* Textfield+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Textfield+Extension.swift"; sourceTree = "<group>"; };
 		A71C04031EB24ECA00941ECB /* RealmClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
+		A71EF3261EBABE9200713669 /* AnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimationDelegate.swift; path = Animations/AnimationDelegate.swift; sourceTree = "<group>"; };
 		A71F02791EB9820B0012490D /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		A71F02901EB986A40012490D /* BasePopoverAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopoverAlert.swift; path = Elements/Popover/Base/BasePopoverAlert.swift; sourceTree = "<group>"; };
 		A71F02911EB986A40012490D /* BasePopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePopView.swift; path = Elements/Popover/Base/BasePopView.swift; sourceTree = "<group>"; };
@@ -196,7 +198,7 @@
 		A7C995BA1E9EA6D0004826EE /* MusiclyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusiclyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C995BE1E9EA6D0004826EE /* MusiclyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusiclyUITests.swift; sourceTree = "<group>"; };
 		A7C995C01E9EA6D0004826EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTrackDataStore.swift; sourceTree = "<group>"; };
+		A7C995CE1E9EA6DF004826EE /* TrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDataStore.swift; sourceTree = "<group>"; };
 		A7C995E11E9EA6F6004826EE /* StyleAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleAttributes.swift; sourceTree = "<group>"; };
 		A7C995E71E9EA6F6004826EE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		A7C995F41E9EA707004826EE /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -382,6 +384,15 @@
 			name = Delegate;
 			sourceTree = "<group>";
 		};
+		A71EF3251EBAB2A000713669 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				A7B349E01EB13D4000B4F9FE /* Player.swift */,
+				A7168BFD1EB94DE800B64F09 /* PlayerDelegate.swift */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
 		A71F027F1EB9827C0012490D /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +432,7 @@
 			children = (
 				A72AE35A1EBA55840022C6B3 /* BallAnimation.swift */,
 				A72AE35B1EBA55840022C6B3 /* BallAnimationView.swift */,
+				A71EF3261EBABE9200713669 /* AnimationDelegate.swift */,
 			);
 			name = Ball;
 			sourceTree = "<group>";
@@ -500,9 +512,8 @@
 		A73268C71E9EB65A00B48CD9 /* Local */ = {
 			isa = PBXGroup;
 			children = (
-				A7C995CE1E9EA6DF004826EE /* iTrackDataStore.swift */,
-				A7B349E01EB13D4000B4F9FE /* Player.swift */,
-				A7168BFD1EB94DE800B64F09 /* PlayerDelegate.swift */,
+				A7C995CE1E9EA6DF004826EE /* TrackDataStore.swift */,
+				A71EF3251EBAB2A000713669 /* Player */,
 				A71C04031EB24ECA00941ECB /* RealmClient.swift */,
 				A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */,
 			);
@@ -991,7 +1002,7 @@
 				A71F02AE1EB986BB0012490D /* EqualizerConstants.swift in Sources */,
 				A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */,
 				A72AE35C1EBA55840022C6B3 /* BallAnimation.swift in Sources */,
-				A7C995D71E9EA6DF004826EE /* iTrackDataStore.swift in Sources */,
+				A7C995D71E9EA6DF004826EE /* TrackDataStore.swift in Sources */,
 				A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */,
 				A72AE3561EBA4F010022C6B3 /* Thumbs.swift in Sources */,
 				A71A14BA1EB7879100EDCE6D /* MenuOptionView.swift in Sources */,
@@ -1014,6 +1025,7 @@
 				A7ECBCD31EB46A070098CE0E /* DetailView.swift in Sources */,
 				A7ADE8171EAD7CAC004F299E /* RealmThumb.swift in Sources */,
 				A71A14B91EB7879100EDCE6D /* BottomMenu.swift in Sources */,
+				A71EF3271EBABE9200713669 /* AnimationDelegate.swift in Sources */,
 				A71F02A81EB986BB0012490D /* ButtonConstants.swift in Sources */,
 				A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */,
 				A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */,

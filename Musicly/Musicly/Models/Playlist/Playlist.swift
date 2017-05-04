@@ -60,7 +60,6 @@ class Playlist: Object {
     }
     
     func playlistItem(at index: Int) -> PlaylistItem? {
-        
         if index >= 0 {
             var trackItem = head
             var index = index

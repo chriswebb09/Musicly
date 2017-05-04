@@ -349,7 +349,7 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.2).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.23).isActive = true
         button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
@@ -388,9 +388,9 @@ final class PlayerView: UIView {
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
-        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
+        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.24).isActive = true
         setupTrackButtons(button: pauseButton)
-        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.2).isActive = true
+        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.24).isActive = true
     }
     
     private func setupProgressView() {
@@ -416,7 +416,7 @@ final class PlayerView: UIView {
         timeLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.16).isActive = true
     }
-
+    
     
     // Stops equalizer animations
     

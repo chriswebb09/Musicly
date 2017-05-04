@@ -22,7 +22,7 @@ class LoadingView: UIView {
     func configureView() {
         layoutSubviews()
         setupConstraints()
-        backgroundColor = .clear
+        layer.borderWidth = 2
     }
     
     func animate() {
@@ -30,11 +30,8 @@ class LoadingView: UIView {
     }
     
     private func setupConstraints() {
-        print(UIScreen.main.bounds.height)
-        print(UIScreen.main.bounds.width)
-        print(UIScreen.main.bounds.height - 200)
-        var newFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 1.3, height: UIScreen.main.bounds.width)
-        ball = BallIndicatorView(frame: newFrame, color: .white, padding: 100)
+        var newFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.width / 2)
+        ball = BallIndicatorView(frame: newFrame, color: .white, padding: 80)
         addSubview(ball!)
         bringSubview(toFront: ball!)
         ball?.startAnimating()

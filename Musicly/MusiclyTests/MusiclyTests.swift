@@ -15,8 +15,6 @@ class MusiclyTests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-       // XCUIApplication().launch()
-       // let app = XCUIApplication()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -32,22 +30,24 @@ class MusiclyTests: XCTestCase {
             //splashVC.splashView.zoomAnimation()
         }
     }
-//    
-//    func testDataStore() {
-//        let dataSource = iTrackDataStore()
-//        dataSource.setSearch(string: "new")
-//        let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
-//        dataSource.searchForTracks { playlist, error in
-//            XCTAssert(playlist?.itemCount == 49)
-//            expect.fulfill()
-//        }
-//        waitForExpectations(timeout: 4) { error in
-//            if let error = error {
-//                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
-//            }
-//        }
-//    }
     
+    
+    func testDataStore() {
+        let dataStore = iTrackDataStore()
+        dataStore.setSearch(string: "new")
+        let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
+        dataStore.searchForTracks { playlist, error in
+            XCTAssert(playlist?.itemCount == 50)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 4) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+
+    }
+
     func testTracklistViewController() {
         
     }
