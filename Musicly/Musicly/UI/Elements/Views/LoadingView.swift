@@ -25,8 +25,12 @@ final class LoadingView: UIView {
         layer.borderWidth = 2
     }
     
-    func animate() {
+    func startAnimating() {
         ball?.startAnimating()
+    }
+    
+    func stopAnimating() {
+        ball?.stopAnimating()
     }
     
     private func setupConstraints() {

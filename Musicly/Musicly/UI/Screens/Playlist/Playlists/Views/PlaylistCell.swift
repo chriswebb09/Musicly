@@ -103,6 +103,7 @@ final class PlaylistCell: UICollectionViewCell {
     private func setupCellImage(image: UIImageView) {
         contentView.addSubview(cellImage)
         cellImage.translatesAutoresizingMaskIntoConstraints = false
+        cellImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true 
         cellImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
         cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.101).isActive = true
         cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: contentView.bounds.width * -0.06).isActive = true

@@ -10,20 +10,19 @@ final class PlaylistsViewController: UIViewController {
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
-    var trackList: [TrackList] = [TrackList]()
+    let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    var trackList: [TrackList] = []
     
     override func viewDidLoad() {
         title = "Playlists"
         setupPlaylistCollectionView()
-        let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        detailPop.delegate = self
         rightBarButtonItem = UIBarButtonItem.init(image: buttonImage, style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup(with: collectionView)
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
-        let tabbar = tabBarController as! TabBarController
-        store = tabbar.store
     }
     
     func collectionViewSetup(with collectionView: UICollectionView) {
@@ -47,9 +46,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let tracklists = store.trackLists {
-            DispatchQueue.main.async {
-                self.trackList = Array(tracklists)
-            }
+            trackList = Array(tracklists)
         }
         return trackList.count
     }
@@ -70,16 +67,19 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     }
     
     func pop() {
-        detailPop.setupPop()
-        detailPop.delegate = self
-        UIView.animate(withDuration: 0.15) {
-            self.detailPop.showPopView(viewController: self)
+        UIView.animate(withDuration: 0.15) { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.detailPop.showPopView(viewController: strongSelf)
+            strongSelf.detailPop.popView.isHidden = false
         }
         detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
     }
     
     func hidePop() {
         detailPop.hidePopView(viewController: self)
+        collectionView.reloadData()
     }
 }
 
@@ -87,29 +87,32 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
+        destinationVC.store = store
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
-        destinationVC.tracklist = store.setupCurrentPlaylist()
-        dump(trackList)
-        DispatchQueue.main.async {
-            self.navigationController?.pushViewController(destinationVC, animated: false)
+        destinationVC.tracklist = trackList[indexPath.row]
+        if trackList[indexPath.row].tracks.count > 0 {
+            destinationVC.contentState = .results
         }
+        navigationController?.pushViewController(destinationVC, animated: false)
     }
+    
+    
 }
 
 extension PlaylistsViewController: PlaylistCreatorDelegate {
+    
     func userDidEnterPlaylistName(name: String) {
         store.createNewList(name: name)
         if let tracklists = store.trackLists, let last = tracklists.last {
             trackList.append(last)
         }
-        //detailPop.hidePopView(viewController: self)
         DispatchQueue.main.async {
             self.trackList = self.store.lists
             self.collectionView.reloadData()
         }
     }
-
+    
     
 }
 
@@ -122,12 +125,8 @@ extension PlaylistsViewController: UITextFieldDelegate {
     
     func setupPlaylistCollectionView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .vertical
-            flowLayout.minimumLineSpacing = 10
-        }
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         layout.itemSize = PlaylistViewControllerConstants.itemSize
+        collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
     }
 }

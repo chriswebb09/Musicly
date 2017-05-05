@@ -26,19 +26,26 @@ class BasePopView: UIView {
         return searchLabel
     }()
     
-    private func setupConstraints() {
+   private func setupHeadBanner(headBanner: UIView) {
         addSubview(headBanner)
         headBanner.translatesAutoresizingMaskIntoConstraints = false
         headBanner.topAnchor.constraint(equalTo: topAnchor).isActive = true
         headBanner.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         headBanner.heightAnchor.constraint(equalTo: heightAnchor, multiplier: BasePopConstants.heightMultiplier).isActive = true
         headBanner.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        
+    }
+    
+    private func setupAlertLabel(label: UILabel) {
         addSubview(alertLabel)
         alertLabel.translatesAutoresizingMaskIntoConstraints = false
         alertLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         alertLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         alertLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: BasePopConstants.heightMultiplier).isActive = true
         alertLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+    }
+    
+    private func setupConstraints() {
+        setupHeadBanner(headBanner: headBanner)
+        setupAlertLabel(label: alertLabel)
     }
 }

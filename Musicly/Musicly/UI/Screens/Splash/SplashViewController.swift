@@ -79,7 +79,10 @@ final class SplashViewController: UIViewController {
         CATransaction.setCompletionBlock {
             let duration: TimeInterval = SplashConstants.animationDuration
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-                self?.splashView?.zoomAnimation() {
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.splashView?.zoomAnimation() {
                     print("animating")
                 }
             }

@@ -18,12 +18,14 @@ class BasePopoverAlert: UIView {
     }()
     
     func showPopView(viewController: UIViewController) {
+        containerView.isHidden = false 
         containerView.frame = UIScreen.main.bounds
         containerView.center = CGPoint(x: BasePopoverAlertConstants.popViewX, y: BasePopoverAlertConstants.popViewY)
         viewController.view.addSubview(containerView)
     }
     
-    func hidePopView(viewController:UIViewController){
+    func hidePopView(viewController: UIViewController){
         viewController.view.sendSubview(toBack: containerView)
+        containerView.isHidden = true
     }
 }

@@ -20,28 +20,34 @@ final class BottomMenuPopover: BasePopoverMenu {
     
     public override func showPopView(viewController: UIViewController) {
         super.showPopView(viewController: viewController)
-        DispatchQueue.main.async {
-            self.popView.frame = CGRect(x: viewController.view.bounds.width,
-                                        y: viewController.view.bounds.height * 6.5,
-                                        width: viewController.view.bounds.width * 0,
-                                        height: viewController.view.bounds.height * 0)
-            self.popView.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.height * 0.45)
-            self.layoutIfNeeded()
-            print(self.popView.frame)
-            self.popView.alpha = 0
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.popView.frame = CGRect(x: viewController.view.bounds.width,
+                                              y: viewController.view.bounds.height * 6.5,
+                                              width: viewController.view.bounds.width * 0,
+                                              height: viewController.view.bounds.height * 0)
+            strongSelf.popView.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.height * 0.45)
+            strongSelf.layoutIfNeeded()
+            print(strongSelf.popView.frame)
+            strongSelf.popView.alpha = 0
         }
         
         viewController.view.addSubview(popView)
         viewController.view.bringSubview(toFront: popView)
         
         UIView.animate(withDuration: 5) {
-            DispatchQueue.main.async {
-                self.popView.alpha = 1
-                self.popView.frame = CGRect(x: viewController.view.bounds.width * 0.002,
-                                            y: viewController.view.bounds.height * 0.58,
-                                            width: viewController.view.bounds.width,
-                                            height: viewController.view.bounds.height * 0.42)
-                self.layoutIfNeeded()
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.popView.alpha = 1
+                strongSelf.popView.frame = CGRect(x: viewController.view.bounds.width * 0.002,
+                                                  y: viewController.view.bounds.height * 0.58,
+                                                  width: viewController.view.bounds.width,
+                                                  height: viewController.view.bounds.height * 0.42)
+                strongSelf.layoutIfNeeded()
             }
         }
         

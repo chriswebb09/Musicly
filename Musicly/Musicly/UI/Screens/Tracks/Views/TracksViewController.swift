@@ -108,6 +108,8 @@
         newLayout.setup()
         collectionView.collectionViewLayout = newLayout
         collectionView.frame = UIScreen.main.bounds
+        guard let tabbarHeight = self.tabBarController?.tabBar.frame.height else { return }
+        collectionView.contentInset =  UIEdgeInsets(top: 0, left: 0, bottom: tabbarHeight + 20, right: 0)
         view.addSubview(collectionView)
         view.sendSubview(toBack: collectionView)
         view.bringSubview(toFront: emptyView)
@@ -115,7 +117,9 @@
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        DispatchQueue.main.async { self.collectionView.reloadData() }
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     func setSearchBarActive() {
@@ -161,13 +165,13 @@
  extension TracksViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            let destinationViewController: PlayerViewController = PlayerViewController()
-            destinationViewController.playList = self.playlist
-            destinationViewController.hidesBottomBarWhenPushed = true
-            destinationViewController.index = indexPath.row
-            self.navigationController?.pushViewController(destinationViewController, animated: false)
-        }
+        
+        let destinationViewController: PlayerViewController = PlayerViewController()
+        destinationViewController.playList = self.playlist
+        destinationViewController.hidesBottomBarWhenPushed = true
+        destinationViewController.index = indexPath.row
+        navigationController?.pushViewController(destinationViewController, animated: false)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -195,17 +199,14 @@
         searchBarActive = false
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if !searchBarActive {
-            collectionView.reloadData()
-            searchBarActive = true
-        }
-        searchController.searchBar.resignFirstResponder()
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBarSearchButtonClicked")
+        DispatchQueue.main.async {
+            self.navigationItem.rightBarButtonItems = []
+        }
+        
         if !searchBarActive {
-            searchBarActive = true
+            //searchBarActive = true
             collectionView.reloadData()
         }
         searchController.searchBar.resignFirstResponder()

@@ -8,10 +8,6 @@
 
 import UIKit
 
-enum PlaylistCreatorState {
-    case enabled, hidden
-}
-
 final class NewPlaylistPopover: BasePopoverAlert {
     
     weak var delegate: PlaylistCreatorDelegate?
@@ -30,6 +26,7 @@ final class NewPlaylistPopover: BasePopoverAlert {
     
     public override func showPopView(viewController: UIViewController) {
         super.showPopView(viewController: viewController)
+        setupPop()
         popoverState = .enabled
         popView.frame = CGRect(x: DetailPopoverConstants.popViewFrameX,
                                y: DetailPopoverConstants.popViewFrameY,

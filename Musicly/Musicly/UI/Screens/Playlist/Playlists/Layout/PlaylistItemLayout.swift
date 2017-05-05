@@ -11,7 +11,8 @@ import UIKit
 final class PlaylistItemLayout: UICollectionViewFlowLayout {
     
     func setup() {
-        sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
+        
+        sectionInset = UIEdgeInsets(top: 15, left: 20, bottom: 40, right: 20)
         itemSize = RowSize.item.rawValue
         minimumInteritemSpacing = 5
         minimumLineSpacing = 25

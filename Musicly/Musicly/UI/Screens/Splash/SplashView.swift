@@ -47,8 +47,11 @@ final class SplashView: UIView {
         let duration: TimeInterval = animationDuration
         alpha = LogoConstants.startAlpha
         UIView.animate(withDuration: duration, animations:{ [weak self] in
-            self?.logoImageView.transform = LogoConstants.zoomOutTranform
-            self?.alpha = 0
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.logoImageView.transform = LogoConstants.zoomOutTranform
+            strongSelf.alpha = 0
             }, completion: { finished in
                 DispatchQueue.main.async {
                     weak var appDelegate = UIApplication.shared.delegate as? AppDelegate

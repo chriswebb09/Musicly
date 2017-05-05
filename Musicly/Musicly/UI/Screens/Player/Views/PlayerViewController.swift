@@ -116,9 +116,12 @@ extension PlayerViewController: PlayerViewDelegate {
         menuPop.popView.delegate = self
         menuPop.setupPop()
         playerView.isUserInteractionEnabled = true
-        UIView.animate(withDuration: 0.15) {
-            self.menuPop.showPopView(viewController: self)
-            self.menuPop.popView.isHidden = false
+        UIView.animate(withDuration: 0.15) { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.menuPop.showPopView(viewController: strongSelf)
+            strongSelf.menuPop.popView.isHidden = false
         }
     }
     
@@ -133,9 +136,12 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let track = item.track else { return }
         guard let url = URL(string: track.previewUrl) else { return }
         title = track.artistName
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
-            self.playerView.configure(with: viewModel)
+            strongSelf.playerView.configure(with: viewModel)
         }
         initPlayer(url: url)
     }
@@ -174,14 +180,17 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = previous
         trackPlayer.player.pause()
         showLoadingView()
-        loadingPop.popView.animate()
-        DispatchQueue.main.async { [unowned self] in
+        loadingPop.popView.startAnimating()
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
             guard let track = previous.track, let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
-            self.playerView.configure(with: viewModel)
-            self.initPlayer(url: url)
-            self.playerView.updateProgressBar(value: 0)
-            self.title = track.artistName
+            strongSelf.playerView.configure(with: viewModel)
+            strongSelf.initPlayer(url: url)
+            strongSelf.playerView.updateProgressBar(value: 0)
+            strongSelf.title = track.artistName
         }
     }
     
@@ -191,14 +200,17 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = next
         trackPlayer.player.pause()
         showLoadingView()
-        loadingPop.popView.animate()
-        DispatchQueue.main.async { [unowned self] in
+        loadingPop.popView.startAnimating()
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
             guard let track = next.track, let url =  URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
-            self.playerView.configure(with: viewModel)
-            self.initPlayer(url: url)
-            self.playerView.updateProgressBar(value: 0)
-            self.title = track.artistName
+            strongSelf.playerView.configure(with: viewModel)
+            strongSelf.initPlayer(url: url)
+            strongSelf.playerView.updateProgressBar(value: 0)
+            strongSelf.title = track.artistName
         }
     }
     
@@ -230,16 +242,23 @@ extension PlayerViewController: TrackPlayerDelegate {
     
     func trackDurationCalculated(stringTime: String, timeValue: Float64) {
         print(stringTime)
-        DispatchQueue.main.async {
-            self.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
-            self.playerView.playbuttonEnabled(is: true)
-            self.hideLoadingView()
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.loadingPop.popView.stopAnimating()
+            strongSelf.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
+            strongSelf.playerView.playbuttonEnabled(is: true)
+            strongSelf.hideLoadingView()
         }
     }
     
     func updateProgress(progress: Double) {
-        DispatchQueue.main.async {
-            self.playerView.updateProgressBar(value: progress)
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.playerView.updateProgressBar(value: progress)
         }
     }
 }
