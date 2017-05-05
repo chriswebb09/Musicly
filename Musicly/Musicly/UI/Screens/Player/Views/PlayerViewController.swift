@@ -98,7 +98,6 @@ extension PlayerViewController: MenuDelegate {
 
 extension PlayerViewController: PlayerViewDelegate {
     
-    
     func moreButtonTapped() {
         switch menuActive {
         case .none:

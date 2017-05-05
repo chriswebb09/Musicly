@@ -31,6 +31,7 @@ final class MenuOptionView: UIView {
     
     func setupConstraints() {
         backgroundColor = .clear
+        
         addSubview(optionLabel)
         optionLabel.translatesAutoresizingMaskIntoConstraints = false
         optionLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
