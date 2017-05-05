@@ -65,13 +65,13 @@ final class PlaylistViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        view.frame = UIScreen.main.bounds
         view.addSubview(emptyView)
         emptyView.frame = view.frame
         emptyView.configure()
         image = image.withRenderingMode(.alwaysOriginal)
         title = tracklist.listName
         commonInit()
+        view.sendSubview(toBack: collectionView)
         let tabController = self.tabBarController as! TabBarController
         store = tabController.store
     }
@@ -123,6 +123,9 @@ extension PlaylistViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(playlist.itemCount)
         dump(emptyView)
+        if playlist.itemCount > 0 {
+            contentState = .results
+        }
         return playlist.itemCount
     }
     

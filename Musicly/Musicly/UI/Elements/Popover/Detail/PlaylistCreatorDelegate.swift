@@ -9,5 +9,6 @@
 import Foundation
 
 protocol PlaylistCreatorDelegate: class {
+    func userDidEnterPlaylistName(name: String)
     
 }

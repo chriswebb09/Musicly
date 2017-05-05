@@ -8,7 +8,15 @@
 
 import UIKit
 
+enum PlaylistCreatorState {
+    case enabled, hidden
+}
+
 final class NewPlaylistPopover: BasePopoverAlert {
+    
+    weak var delegate: PlaylistCreatorDelegate?
+    
+    var popoverState: PlaylistCreatorState = .hidden
     
     var popView: NewPlaylistView = {
         let popView = NewPlaylistView()
@@ -22,6 +30,7 @@ final class NewPlaylistPopover: BasePopoverAlert {
     
     public override func showPopView(viewController: UIViewController) {
         super.showPopView(viewController: viewController)
+        popoverState = .enabled
         popView.frame = CGRect(x: DetailPopoverConstants.popViewFrameX,
                                y: DetailPopoverConstants.popViewFrameY,
                                width: DetailPopoverConstants.popViewFrameWidth,
@@ -30,6 +39,7 @@ final class NewPlaylistPopover: BasePopoverAlert {
         popView.clipsToBounds = true
         viewController.view.addSubview(popView)
         viewController.view.bringSubview(toFront: popView)
+        popView.isHidden = true 
     }
     
     func setupPop() {
@@ -42,6 +52,15 @@ final class NewPlaylistPopover: BasePopoverAlert {
         popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
         popView.doneButton.layer.borderWidth = 1.5
         popView.layer.borderWidth = 1.5
+    }
+    
+    override func hidePopView(viewController: UIViewController) {
+        guard let listname = popView.playlistNameField.text else { return }
+        popoverState = .hidden
+        delegate?.userDidEnterPlaylistName(name: listname)
+        super.hidePopView(viewController: viewController)
+        popView.isHidden = true
+        viewController.view.sendSubview(toBack: popView)
     }
 }
 

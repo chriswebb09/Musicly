@@ -15,10 +15,10 @@ final class PlaylistsViewController: UIViewController {
     override func viewDidLoad() {
         title = "Playlists"
         setupPlaylistCollectionView()
-        rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
+        let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        rightBarButtonItem = UIBarButtonItem.init(image: buttonImage, style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
-        collectionViewSetup()
-        
+        collectionViewSetup(with: collectionView)
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
         navigationItem.rightBarButtonItems = [rightButtonItem]
@@ -26,7 +26,7 @@ final class PlaylistsViewController: UIViewController {
         store = tabbar.store
     }
     
-    func collectionViewSetup() {
+    func collectionViewSetup(with collectionView: UICollectionView) {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -71,26 +71,15 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     
     func pop() {
         detailPop.setupPop()
+        detailPop.delegate = self
         UIView.animate(withDuration: 0.15) {
             self.detailPop.showPopView(viewController: self)
-            self.detailPop.popView.isHidden = false
         }
         detailPop.popView.doneButton.addTarget(self, action: #selector(hidePop), for: .touchUpInside)
     }
     
     func hidePop() {
-        guard let nameText = detailPop.popView.playlistNameField.text else { return }
-        store.createNewList(name: nameText)
-        if let tracklists = store.trackLists, let last = tracklists.last {
-            trackList.append(last)
-        }
         detailPop.hidePopView(viewController: self)
-        detailPop.popView.isHidden = true
-        view.sendSubview(toBack: detailPop)
-        DispatchQueue.main.async {
-            self.trackList = self.store.lists
-            self.collectionView.reloadData()
-        }
     }
 }
 
@@ -106,6 +95,22 @@ extension PlaylistsViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(destinationVC, animated: false)
         }
     }
+}
+
+extension PlaylistsViewController: PlaylistCreatorDelegate {
+    func userDidEnterPlaylistName(name: String) {
+        store.createNewList(name: name)
+        if let tracklists = store.trackLists, let last = tracklists.last {
+            trackList.append(last)
+        }
+        //detailPop.hidePopView(viewController: self)
+        DispatchQueue.main.async {
+            self.trackList = self.store.lists
+            self.collectionView.reloadData()
+        }
+    }
+
+    
 }
 
 extension PlaylistsViewController: UITextFieldDelegate {

@@ -21,7 +21,7 @@ class BasePopoverMenu: UIView {
         viewController.view.addSubview(containerView)
     }
     
-    func hidePopView(viewController:UIViewController){
+    func hidePopView(viewController: UIViewController){
         viewController.view.sendSubview(toBack: containerView)
     }
 }
