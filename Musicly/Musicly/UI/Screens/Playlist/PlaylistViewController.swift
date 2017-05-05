@@ -55,7 +55,8 @@ final class PlaylistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItems = [buttonItem!]
+        guard let buttonItem = buttonItem else { return }
+        navigationItem.rightBarButtonItems = [buttonItem]
     }
     
     private func commonInit() {
@@ -88,8 +89,6 @@ final class PlaylistViewController: UIViewController {
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
-        setupInfoLabel(infoLabel: infoLabel)
-        setupMusicIcon(icon: musicIcon)
         if let collectionView = collectionView { view.addSubview(collectionView) }
     }
 }

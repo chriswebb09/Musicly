@@ -68,15 +68,17 @@ class Track: Object {
     }
     
     static func saveAlbumImageData(from urlString: String) -> Data {
-        let url = URL(string: urlString)!
+        
         var albumImageData = Data()
-        URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
-            guard let data = data, error == nil else { return }
-            albumImageData = data
-            while albumImageData.isEmpty {
-                print("downloading")
-            }
+        if let url = URL(string: urlString) {
+            URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
+                guard let data = data, error == nil else { return }
+                albumImageData = data
+                while albumImageData.isEmpty {
+                    print("downloading")
+                }
             }.resume()
+        }
         return albumImageData
     }
     

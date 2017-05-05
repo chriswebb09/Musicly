@@ -38,7 +38,8 @@ final class BallIndicatorView: UIView {
                                y: frame.size.height,
                                width: animationWidth,
                                height: animationHeight)
-        self.padding = padding!
+        guard let padding = padding else { return }
+        self.padding = padding
         self.color = color
         isHidden = true
     }
@@ -69,6 +70,7 @@ final class BallIndicatorView: UIView {
         
         layer.sublayers = nil
         animationRect.size = CGSize(width: minEdge, height: minEdge)
-        animationType.setUpAnimation(in: layer, size: animationRect.size, color: color!)
+        guard let color = color else { return }
+        animationType.setUpAnimation(in: layer, size: animationRect.size, color: color)
     }
 }

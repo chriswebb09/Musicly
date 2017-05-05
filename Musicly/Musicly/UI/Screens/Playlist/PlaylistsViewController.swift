@@ -102,6 +102,7 @@ extension PlaylistsViewController: UICollectionViewDelegate {
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
         destinationVC.tracklist = store.setupCurrentPlaylist()
+        dump(trackList)
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(destinationVC, animated: false)
         }

@@ -151,6 +151,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func hideLoadingView() {
         loadingPop.popView.removeFromSuperview()
+        loadingPop.removeFromSuperview()
         loadingPop.hidePopView(viewController: self)
         view.sendSubview(toBack: loadingPop)
     }

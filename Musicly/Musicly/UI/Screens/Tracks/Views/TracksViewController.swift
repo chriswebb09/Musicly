@@ -9,11 +9,6 @@
  import UIKit
  import RealmSwift
  
- 
- enum TrackContentState {
-    case none, loading, loaded, results
- }
- 
  private let reuseIdentifier = "trackCell"
  
  final class TracksViewController: UIViewController {
@@ -57,7 +52,6 @@
     }
     
     var buttonItem: UIBarButtonItem!
-    
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {

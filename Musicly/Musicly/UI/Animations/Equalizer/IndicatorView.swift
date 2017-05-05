@@ -66,7 +66,8 @@ final class IndicatorView: UIView {
             if let minEdge  = minEdge {
                 self.animationRect?.size = CGSize(width: minEdge, height: minEdge)
                 if let animation = animation {
-                    animation.setUpAnimation(in: layer, color: color!)
+                    guard let color = color else { return }
+                    animation.setUpAnimation(in: layer, color: color)
                 }
             }
         }

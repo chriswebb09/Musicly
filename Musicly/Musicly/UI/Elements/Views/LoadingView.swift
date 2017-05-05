@@ -32,8 +32,9 @@ class LoadingView: UIView {
     private func setupConstraints() {
         var newFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.width / 2)
         ball = BallIndicatorView(frame: newFrame, color: .white, padding: 80)
-        addSubview(ball!)
-        bringSubview(toFront: ball!)
-        ball?.startAnimating()
+        guard let ball = ball else { return }
+        addSubview(ball)
+        bringSubview(toFront: ball)
+        ball.startAnimating()
     }
 }

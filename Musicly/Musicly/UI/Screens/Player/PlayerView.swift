@@ -388,9 +388,9 @@ final class PlayerView: UIView {
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
-        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.24).isActive = true
+        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
         setupTrackButtons(button: pauseButton)
-        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.24).isActive = true
+        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
     }
     
     private func setupProgressView() {

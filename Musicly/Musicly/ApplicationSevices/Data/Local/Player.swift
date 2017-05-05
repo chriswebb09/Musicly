@@ -66,7 +66,8 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     
     func setUrl(from string: String?) {
         guard let urlString = string else { return }
-        self.url = URL(string: urlString)!
+        guard let url = URL(string: urlString) else { return }
+        self.url = url
         getTrackDuration()
     }
     
