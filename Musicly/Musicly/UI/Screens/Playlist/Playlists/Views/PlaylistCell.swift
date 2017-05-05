@@ -107,11 +107,13 @@ final class PlaylistCell: UICollectionViewCell {
         contentView.addSubview(cellImage)
         cellImage.translatesAutoresizingMaskIntoConstraints = false
         cellImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
-        cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1).isActive = true
+        cellImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.101).isActive = true
         cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: contentView.bounds.width * -0.06).isActive = true
         cellImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        sharedLayoutProperties(view: playlistArtView)
+        contentView.addSubview(playlistArtView)
+        playlistArtView.translatesAutoresizingMaskIntoConstraints = false
+        playlistArtView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         playlistArtView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.24).isActive = true
         playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.65).isActive = true

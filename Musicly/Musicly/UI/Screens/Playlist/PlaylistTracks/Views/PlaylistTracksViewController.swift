@@ -13,8 +13,41 @@ private let reuseIdentifier = "trackCell"
 
 final class PlaylistViewController: UIViewController {
     
-    var playlist: Playlist = Playlist()
+    fileprivate var image = #imageLiteral(resourceName: "search-button")
+    var buttonItem: UIBarButtonItem?
     var store: iTrackDataStore?
+    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    var playlist: Playlist = Playlist() {
+        didSet {
+            if playlist.itemCount > 0 {
+                contentState = .results
+            } else {
+                contentState = .none
+            }
+        }
+    }
+    
+    var contentState: TrackContentState = .none {
+        didSet {
+            switch contentState {
+            case .none:
+                self.view.bringSubview(toFront: emptyView)
+            case .results:
+                self.view.bringSubview(toFront: collectionView)
+            case.loaded:
+                self.view.bringSubview(toFront: collectionView)
+            case .loading:
+                return
+            }
+        }
+    }
+    
+    var emptyView = EmptyView() {
+        didSet {
+            emptyView.configure()
+        }
+    }
     
     var tracklist: TrackList = TrackList() {
         didSet {
@@ -28,21 +61,14 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    fileprivate var image = #imageLiteral(resourceName: "search-button")
-    var buttonItem: UIBarButtonItem?
-    var infoLabel: UILabel = UILabel.setupInfoLabel()
-    
-    var musicIcon: UIImageView = {
-        var musicIcon = UIImageView()
-        musicIcon.image = #imageLiteral(resourceName: "headphones-blue")
-        return musicIcon
-    }()
-    
-    var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .clear
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+        view.frame = UIScreen.main.bounds
+        view.addSubview(emptyView)
+        emptyView.frame = view.frame
+        emptyView.configure()
         image = image.withRenderingMode(.alwaysOriginal)
         title = tracklist.listName
         commonInit()
@@ -62,7 +88,7 @@ final class PlaylistViewController: UIViewController {
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        collectionView.backgroundColor = CollectionViewConstants.backgroundColor
         collectionViewRegister()
     }
     
@@ -75,18 +101,18 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func collectionViewRegister() {
-        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
+        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     private func setupCollectionView() {
         let newLayout = PlaylistItemLayout()
         newLayout.setup()
-        collectionView?.collectionViewLayout = newLayout
-        collectionView?.frame = UIScreen.main.bounds
+        collectionView.collectionViewLayout = newLayout
+        collectionView.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
-        if let collectionView = collectionView { view.addSubview(collectionView) }
+        view.addSubview(collectionView)
     }
 }
 
@@ -96,6 +122,7 @@ extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(playlist.itemCount)
+        dump(emptyView)
         return playlist.itemCount
     }
     
@@ -134,12 +161,16 @@ extension PlaylistViewController {
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
+        cellAnimation(cell: cell, finalFrame: finalFrame)
+        return cell
+    }
+    
+    func cellAnimation(cell: TrackCell, finalFrame: CGRect) {
         UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
             cell.frame = finalFrame
         }, completion: { finished in
             cell.alpha = 1
         })
-        return cell
     }
 }
 
@@ -147,8 +178,4 @@ extension PlaylistViewController {
 
 extension PlaylistViewController: UICollectionViewDelegate {
     
-    func toggle(to: Bool) {
-        infoLabel.isHidden = to
-        musicIcon.isHidden = to
-    }
 }

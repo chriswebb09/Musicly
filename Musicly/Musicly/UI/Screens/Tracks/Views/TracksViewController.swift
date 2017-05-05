@@ -13,15 +13,18 @@
  
  final class TracksViewController: UIViewController {
     
+    var buttonItem: UIBarButtonItem!
+    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var playlist: Playlist = Playlist()
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    var store: iTrackDataStore?
+    var emptyView: EmptyView = EmptyView()
+    
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
         }
     }
-    
-    var playlist: Playlist = Playlist()
-    
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     var contentState: TrackContentState = .none {
         didSet {
@@ -38,10 +41,6 @@
         }
     }
     
-    var store: iTrackDataStore?
-    
-    var emptyView: EmptyView = EmptyView()
-    
     fileprivate var searchBarActive: Bool = false {
         didSet {
             if searchBarActive == true {
@@ -53,9 +52,6 @@
             }
         }
     }
-    
-    var buttonItem: UIBarButtonItem!
-    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()

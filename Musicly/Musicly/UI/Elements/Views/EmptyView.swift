@@ -25,6 +25,10 @@ final class EmptyView: UIView {
         backgroundColor = CollectionViewAttributes.backgroundColor
     }
     
+    func configure() {
+        layoutSubviews()
+    }
+    
     func setupMusicIcon(icon: UIView) {
         addSubview(icon)
         icon.translatesAutoresizingMaskIntoConstraints = false
