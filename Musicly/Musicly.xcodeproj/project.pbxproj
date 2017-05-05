@@ -94,6 +94,7 @@
 		A7CBC3FA1E9FD21100C95A50 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */; };
 		A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC4041E9FE62300C95A50 /* Track.swift */; };
 		A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC40A1E9FE63000C95A50 /* Playlist.swift */; };
+		A7E94CA91EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E94CA81EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift */; };
 		A7ECBCD21EB46A070098CE0E /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ECBCD01EB46A070098CE0E /* DetailPopover.swift */; };
 		A7ECBCD31EB46A070098CE0E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ECBCD11EB46A070098CE0E /* DetailView.swift */; };
 		A7F8353D1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F8353C1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift */; };
@@ -216,6 +217,7 @@
 		A7CBC3F91E9FD21100C95A50 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A7CBC4041E9FE62300C95A50 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = iTrack/Track.swift; sourceTree = "<group>"; };
 		A7CBC40A1E9FE63000C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Playlist/Playlist.swift; sourceTree = "<group>"; };
+		A7E94CA81EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistsViewControllerDataSource.swift; path = Screens/Playlist/Playlists/PlaylistsViewControllerDataSource.swift; sourceTree = "<group>"; };
 		A7ECBCD01EB46A070098CE0E /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailPopover.swift; path = Elements/Popover/Detail/DetailPopover.swift; sourceTree = "<group>"; };
 		A7ECBCD11EB46A070098CE0E /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailView.swift; path = Elements/Popover/Detail/DetailView.swift; sourceTree = "<group>"; };
 		A7F8353C1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistTracksViewControllerModel.swift; path = Screens/Playlist/PlaylistTracks/PlaylistTracksViewControllerModel.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 				A77702A71EBC2A890002E644 /* PlaylistItemLayout.swift */,
 				A77702A11EBC2A620002E644 /* PlaylistCell.swift */,
 				A77702A31EBC2A620002E644 /* PlaylistsViewController.swift */,
+				A7E94CA81EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift */,
 			);
 			name = Playlists;
 			sourceTree = "<group>";
@@ -1079,6 +1082,7 @@
 				A77702A61EBC2A620002E644 /* PlaylistsViewController.swift in Sources */,
 				A71F02A91EB986BB0012490D /* CALayerConstants.swift in Sources */,
 				A71C03EA1EB1F74D00941ECB /* TracksViewModel.swift in Sources */,
+				A7E94CA91EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift in Sources */,
 				A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */,
 				A777029A1EBC29830002E644 /* PlayerViewDelegate.swift in Sources */,
 				A7C995F51E9EA707004826EE /* APIClient.swift in Sources */,

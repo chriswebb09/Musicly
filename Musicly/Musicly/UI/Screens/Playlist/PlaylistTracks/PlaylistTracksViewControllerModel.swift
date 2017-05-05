@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlaylistTracksViewControllerModel {
+class TracksPlaylistDataSource {
     
     var playlist = Playlist()
     var store: iTrackDataStore! 
@@ -60,5 +60,14 @@ class PlaylistTracksViewControllerModel {
         guard let url = URL(string: track.artworkUrl) else { return nil }
         var cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
         return cellModel
+    }
+    
+    func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
+        var rowTime: Double
+        if let index = indexPath {
+            rowTime = getRowTime(indexPath: index)
+            let cellModel = self.cellModel(for: index)
+            cell.configureCell(with: cellModel!, withTime: rowTime)
+        }
     }
 }

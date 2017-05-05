@@ -11,11 +11,11 @@ import RealmSwift
 
 private let reuseIdentifier = "trackCell"
 
+enum ViewState {
+    case showEmptyView, showCollectionView
+}
 
 final class PlaylistViewController: UIViewController {
-    
-    var playlist: Playlist!
-    var store: iTrackDataStore?
     
     var emptyView = EmptyView() {
         didSet {
@@ -23,22 +23,28 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    var viewModel: PlaylistTracksViewControllerModel!
-    
-    var tracklist: TrackList!
-    
-    var contentState: TrackContentState = .none {
+    var dataSource: TracksPlaylistDataSource! {
         didSet {
-            switch contentState {
+            switch dataSource.state {
             case .none:
-                self.view.bringSubview(toFront: emptyView)
-                print("None")
-            case .results:
-                self.view.bringSubview(toFront: collectionView!)
-            case.loaded:
-                self.view.bringSubview(toFront: collectionView!)
+                viewState = .showEmptyView
             case .loading:
-                return
+                viewState = .showEmptyView
+            case .results:
+                viewState = .showCollectionView
+            case .loaded:
+                viewState = .showCollectionView
+            }
+        }
+    }
+    
+    var viewState: ViewState = .showEmptyView {
+        didSet {
+            switch viewState {
+            case .showEmptyView:
+                view.bringSubview(toFront: emptyView)
+            case.showCollectionView:
+                view.bringSubview(toFront: collectionView!)
             }
         }
     }
@@ -49,12 +55,8 @@ final class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.playlist = viewModel.playlist
-        self.tracklist = viewModel.tracklist
-        self.contentState = viewModel.state
-        self.store = viewModel.store
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        title = viewModel.title
+        title = dataSource.title
         commonInit()
     }
     
@@ -68,7 +70,7 @@ final class PlaylistViewController: UIViewController {
         view.addSubview(emptyView)
         emptyView.frame = view.frame
         emptyView.configure()
-        buttonItem = UIBarButtonItem(image: viewModel.image, style: .plain, target: self, action: #selector(goToSearch))
+        buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
@@ -105,16 +107,7 @@ final class PlaylistViewController: UIViewController {
 extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.count
-    }
-    
-    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
-        var rowTime: Double
-        if let index = indexPath {
-            rowTime = viewModel.getRowTime(indexPath: index)
-            let cellModel = viewModel.cellModel(for: index)
-            cell.configureCell(with: cellModel!, withTime: rowTime)
-        }
+        return dataSource.count
     }
 }
 
@@ -122,7 +115,7 @@ extension PlaylistViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationViewController: PlayerViewController = PlayerViewController()
-        destinationViewController.playList = playlist
+        destinationViewController.playList = dataSource.playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         destinationViewController.index = indexPath.row
         navigationController?.pushViewController(destinationViewController, animated: false)
@@ -130,16 +123,20 @@ extension PlaylistViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        setTrackCell(indexPath: indexPath, cell: cell)
+        dataSource.setTrackCell(indexPath: indexPath, cell: cell)
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
+        cellAnimation(cell: cell, finalFrame: finalFrame)
+        return cell
+    }
+    
+    func cellAnimation(cell: TrackCell, finalFrame: CGRect) {
         UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
             cell.frame = finalFrame
         }, completion: { finished in
             cell.alpha = 1
         })
-        return cell
     }
 }
 

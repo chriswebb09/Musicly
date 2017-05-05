@@ -14,12 +14,11 @@
  final class TracksViewController: UIViewController {
     
     var buttonItem: UIBarButtonItem!
+    var dataSource: TracksViewControllerDataSource!
+   
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var playlist: Playlist = Playlist()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
-    var store: iTrackDataStore?
     var emptyView: EmptyView = EmptyView()
-    let image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
@@ -64,9 +63,6 @@
         searchController.delegate = self
         title = "Music.ly"
         commonInit()
-        let tabController = tabBarController as! TabBarController
-        tabController.store = iTrackDataStore()
-        store = tabController.store
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +71,7 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: image,
+        buttonItem = UIBarButtonItem(image: dataSource.image,
                                      style: .plain,
                                      target: self,
                                      action: #selector(navigationBarSetup))
@@ -138,12 +134,12 @@
  extension TracksViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return playlist.itemCount
+        return dataSource.playlist.itemCount
     }
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         var rowTime: Double
-        if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
+        if let index = indexPath, let track = dataSource.playlist.playlistItem(at: index.row)?.track {
             if index.row > 10 {
                 rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
             } else {
@@ -168,7 +164,7 @@
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let destinationViewController: PlayerViewController = PlayerViewController()
-        destinationViewController.playList = playlist
+        destinationViewController.playList = dataSource.playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         destinationViewController.index = indexPath.row
         navigationController?.pushViewController(destinationViewController, animated: false)
@@ -187,7 +183,7 @@
  extension TracksViewController: UISearchControllerDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        playlist.removeAll()
+        dataSource.playlist.removeAll()
         searchBar.setShowsCancelButton(true, animated: true)
         searchBarActive = true
     }
@@ -219,11 +215,11 @@
     
     func searchBarHasInput() {
         collectionView.reloadData()
-        playlist.removeAll()
-        store?.searchForTracks { [weak self] playlist, error in
+        dataSource.playlist.removeAll()
+        dataSource.store.searchForTracks { [weak self] playlist, error in
             guard let playlist = playlist else { return }
             guard let strongSelf = self else { return }
-            strongSelf.playlist = playlist
+            strongSelf.dataSource.playlist = playlist
             strongSelf.collectionView.reloadData()
             strongSelf.collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
@@ -239,7 +235,7 @@
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let barText = searchBar.text else { return }
-        store?.setSearch(string: barText)
+        dataSource.store.setSearch(string: barText)
         searchBarActive = true
         if barText != "" { searchBarHasInput() }
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
@@ -256,13 +252,13 @@
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = searchController.searchBar.text
         if searchString != nil {
-            playlist.removeAll()
+            dataSource.playlist.removeAll()
             if let searchString = searchString {
-                store?.setSearch(string: searchString)
-                self.store?.searchForTracks { [weak self] tracks, error in
+                dataSource.store.setSearch(string: searchString)
+                self.dataSource.store?.searchForTracks { [weak self] tracks, error in
                     guard let strongSelf = self else { return }
                     guard let tracks = tracks else { return }
-                    strongSelf.playlist = tracks
+                    strongSelf.dataSource.playlist = tracks
                 }
             }
         }
@@ -279,7 +275,7 @@
  extension TracksViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        playlist.removeAll()
+        dataSource.playlist.removeAll()
         contentState = .none
         collectionView.reloadData()
         navigationItem.setRightBarButton(buttonItem, animated: false)
