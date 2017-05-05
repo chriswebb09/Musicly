@@ -282,7 +282,7 @@ final class PlayerView: UIView {
         equalizerView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.08).isActive = true
     }
     
-    func setupEqualizerBackgroundView() {
+    private func setupEqualizerBackgroundView() {
         equalizerView.addSubview(equalizerBackgroundView)
         equalizerBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         equalizerBackgroundView.heightAnchor.constraint(equalTo: equalizerView.heightAnchor).isActive = true
@@ -361,7 +361,7 @@ final class PlayerView: UIView {
         backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
     }
     
-    func skipButtonsSharedLayout(button: UIButton) {
+    private func skipButtonsSharedLayout(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.backButtonWidthMultiplier).isActive = true
@@ -405,14 +405,13 @@ final class PlayerView: UIView {
         currentPlayLengthLabel.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
     }
     
-    func timeLabelsSharedLayout(timeLabel: UILabel) {
+    private func timeLabelsSharedLayout(timeLabel: UILabel) {
         controlsView.addSubview(timeLabel)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.playTimeLabelHeightMutliplier).isActive = true
         timeLabel.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.15).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.16).isActive = true
     }
-    
     
     // Stops equalizer animations
     
@@ -427,7 +426,7 @@ final class PlayerView: UIView {
     
     // Configures all subview
     
-    fileprivate func setupViews() {
+    private func setupViews() {
         setupTrackTitleView()
         setupArtworkView()
         setupAlbumArtworkView()
@@ -555,7 +554,7 @@ final class PlayerView: UIView {
     
     // Toggles play and pause button
     
-    func switchButton(button: UIButton?, for currentButton: UIButton?) {
+    private func switchButton(button: UIButton?, for currentButton: UIButton?) {
         guard let button = button, let currentButton = currentButton else { return }
         controlsView.bringSubview(toFront: currentButton)
         controlsView.sendSubview(toBack: button)
