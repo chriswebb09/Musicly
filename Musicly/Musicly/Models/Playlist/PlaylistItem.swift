@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class PlaylistItem: Object {
+final class PlaylistItem: Object {
     var track: Track?
     var next: PlaylistItem?
     weak var previous: PlaylistItem?

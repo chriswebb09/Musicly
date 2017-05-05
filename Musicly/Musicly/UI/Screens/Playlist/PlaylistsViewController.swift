@@ -6,7 +6,7 @@ private let reuseIdentifier = "PlaylistCell"
 final class PlaylistsViewController: UIViewController {
     
     let detailPop = NewPlaylistPopover()
-    var collectionView : UICollectionView?
+    lazy var collectionView : UICollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: UICollectionViewFlowLayout())
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
@@ -14,7 +14,7 @@ final class PlaylistsViewController: UIViewController {
     
     override func viewDidLoad() {
         title = "Playlists"
-        self.collectionView = setupPlaylistCollectionView()
+        setupPlaylistCollectionView()
         rightBarButtonItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
         collectionViewSetup()
@@ -27,11 +27,10 @@ final class PlaylistsViewController: UIViewController {
     }
     
     func collectionViewSetup() {
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        collectionView?.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.backgroundColor = PlaylistViewControllerConstants.backgroundColor
-        guard let collectionView = collectionView else { return }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(PlaylistCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.backgroundColor = PlaylistViewControllerConstants.backgroundColor
         view.addSubview(collectionView)
     }
     
@@ -39,7 +38,7 @@ final class PlaylistsViewController: UIViewController {
         super.viewWillAppear(animated)
         store = tabController.store
         DispatchQueue.main.async {
-            self.collectionView?.reloadData()
+            self.collectionView.reloadData()
         }
     }
 }
@@ -90,7 +89,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
         view.sendSubview(toBack: detailPop)
         DispatchQueue.main.async {
             self.trackList = self.store.lists
-            self.collectionView?.reloadData()
+            self.collectionView.reloadData()
         }
     }
 }
@@ -116,15 +115,14 @@ extension PlaylistsViewController: UITextFieldDelegate {
         return true
     }
     
-    func setupPlaylistCollectionView() -> UICollectionView {
+    func setupPlaylistCollectionView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
             flowLayout.minimumLineSpacing = 10
         }
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         layout.itemSize = PlaylistViewControllerConstants.itemSize
-        return collectionView
     }
 }

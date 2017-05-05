@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class RealmThumb: Object {
+final class RealmThumb: Object {
     
     var thumb: Thumbs
     

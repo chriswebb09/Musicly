@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MenuOptionView: UIView {
+final class MenuOptionView: UIView {
     
-    var optionLabel: UILabel = {
+    private var optionLabel: UILabel = {
         let option = UILabel()
         option.textColor = .white
         option.backgroundColor = .clear
@@ -19,17 +19,14 @@ class MenuOptionView: UIView {
         return option
     }()
     
-    var iconView: UIImageView = {
+    private var iconView: UIImageView = {
         var icon = UIImageView()
         return icon
     }()
     
-    func setText(string: String) {
-        optionLabel.text = string
-    }
-    
-    func setIconImage(image: UIImage) {
-        iconView.image = image 
+    func set(with text: String, and icon: UIImage) {
+        self.optionLabel.text = text
+        self.iconView.image = icon
     }
     
     func setupConstraints() {

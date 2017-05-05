@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TracksViewModel {
+final class TracksViewModel {
     
     var stateLabelsHidden: Bool?
     var playlist: Playlist?

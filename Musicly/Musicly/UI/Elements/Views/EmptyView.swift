@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyView: UIView {
+final class EmptyView: UIView {
     
     var infoLabel: UILabel = UILabel.setupInfoLabel()
     

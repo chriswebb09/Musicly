@@ -22,21 +22,24 @@
     var playlist: Playlist = Playlist()
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
+    
     var contentState: TrackContentState = .none {
         didSet {
             switch contentState {
             case .none:
                 self.view.bringSubview(toFront: emptyView)
             case .results:
-                self.view.bringSubview(toFront: collectionView!)
+                self.view.bringSubview(toFront: collectionView)
             case.loaded:
-                self.view.bringSubview(toFront: collectionView!)
+                self.view.bringSubview(toFront: collectionView)
             case .loading:
                 return
             }
         }
     }
+    
     var store: iTrackDataStore?
+    
     var emptyView: EmptyView = EmptyView()
     
     fileprivate var searchBarActive: Bool = false {
@@ -52,7 +55,7 @@
     }
     
     var buttonItem: UIBarButtonItem!
-    var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,11 +83,11 @@
                                      target: self,
                                      action: #selector(navigationBarSetup))
         edgesForExtendedLayout = []
-        collectionView?.isHidden = true
+        collectionView.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        collectionView.backgroundColor = CollectionViewConstants.backgroundColor
         setupSearchController()
     }
     func navigationBarSetup() {
@@ -99,26 +102,24 @@
     }
     
     private func collectionViewRegister() {
-        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
+        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     private func setupCollectionView() {
         let newLayout: TrackItemsFlowLayout = TrackItemsFlowLayout()
         newLayout.setup()
-        collectionView?.collectionViewLayout = newLayout
-        collectionView?.frame = UIScreen.main.bounds
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-            view.sendSubview(toBack: collectionView)
-            view.bringSubview(toFront: emptyView)
-        }
+        collectionView.collectionViewLayout = newLayout
+        collectionView.frame = UIScreen.main.bounds
+        view.addSubview(collectionView)
+        view.sendSubview(toBack: collectionView)
+        view.bringSubview(toFront: emptyView)
         collectionViewRegister()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        DispatchQueue.main.async { self.collectionView?.reloadData() }
+        DispatchQueue.main.async { self.collectionView.reloadData() }
     }
     
     func setSearchBarActive() {
@@ -200,7 +201,7 @@
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if !searchBarActive {
-            collectionView?.reloadData()
+            collectionView.reloadData()
             searchBarActive = true
         }
         searchController.searchBar.resignFirstResponder()
@@ -209,7 +210,7 @@
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !searchBarActive {
             searchBarActive = true
-            collectionView?.reloadData()
+            collectionView.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
     }
@@ -225,20 +226,17 @@
     }
     
     func searchBarHasInput() {
-        guard let collectionView = collectionView else { return }
         collectionView.reloadData()
         playlist.removeAll()
         store?.searchForTracks { playlist, error in
             guard let playlist = playlist else { return }
             self.playlist = playlist
-            collectionView.reloadData()
-            collectionView.performBatchUpdates ({
+            self.collectionView.reloadData()
+            self.collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
                     self.contentState = .results
-                    if let collectionView = self.collectionView {
-                        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-                        collectionView.isHidden = false
-                    }
+                    self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
+                    self.collectionView.isHidden = false
                 }
             }, completion: { finished in
                 print(finished)
@@ -253,7 +251,7 @@
         if barText != "" { searchBarHasInput() }
         navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
         UIView.animate(withDuration: 1.8) {
-            self.collectionView?.alpha = 1
+            self.collectionView.alpha = 1
         }
     }
  }
@@ -276,7 +274,7 @@
                 }
             }
         }
-        collectionView?.reloadData()
+        collectionView.reloadData()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -291,7 +289,7 @@
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         playlist.removeAll()
         contentState = .none
-        collectionView?.reloadData()
+        collectionView.reloadData()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         searchBarActive = false
     }

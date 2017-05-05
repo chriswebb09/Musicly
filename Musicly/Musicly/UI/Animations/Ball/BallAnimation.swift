@@ -9,7 +9,7 @@
 
 import UIKit
 
-class BallAnimation: AnimationDelegate {
+final class BallAnimation: AnimationDelegate {
     
     var size: CGSize
     

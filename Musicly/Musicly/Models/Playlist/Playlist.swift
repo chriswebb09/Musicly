@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class Playlist: Object {
+final class Playlist: Object {
     
     private var head: PlaylistItem?
     

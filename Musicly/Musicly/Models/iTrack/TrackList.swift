@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class TrackList: Object {
+final class TrackList: Object {
     
     dynamic var listId: String = ""
     dynamic var listName: String = ""

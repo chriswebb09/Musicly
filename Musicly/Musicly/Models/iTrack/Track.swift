@@ -10,7 +10,7 @@ import Foundation
 import Realm
 import RealmSwift
 
-class Track: Object {
+final class Track: Object {
     
     var thumbs: RealmThumb?
     
@@ -77,7 +77,7 @@ class Track: Object {
                 while albumImageData.isEmpty {
                     print("downloading")
                 }
-            }.resume()
+                }.resume()
         }
         return albumImageData
     }

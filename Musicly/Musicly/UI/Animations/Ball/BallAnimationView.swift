@@ -56,14 +56,14 @@ final class BallIndicatorView: UIView {
         }
     }
     
-    final func stopAnimating() {
+    func stopAnimating() {
         isHidden = true
         isAnimating = false
         layer.sublayers?.removeAll()
     }
 
     
-    private final func setUpAnimation(ballAnimation: BallAnimation) {
+    private func setUpAnimation(ballAnimation: BallAnimation) {
         let animationType: AnimationDelegate = ballAnimation
         var animationRect: CGRect = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(padding / 3, padding / 3, padding / 3, padding / 3))
         let minEdge = min(animationRect.width, animationRect.height)

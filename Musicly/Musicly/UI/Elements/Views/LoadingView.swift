@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingView: UIView {
+final class LoadingView: UIView {
     
     var ball: BallIndicatorView?
     
@@ -30,7 +30,7 @@ class LoadingView: UIView {
     }
     
     private func setupConstraints() {
-        var newFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.width / 2)
+        let newFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.width / 2)
         ball = BallIndicatorView(frame: newFrame, color: .white, padding: 80)
         guard let ball = ball else { return }
         addSubview(ball)

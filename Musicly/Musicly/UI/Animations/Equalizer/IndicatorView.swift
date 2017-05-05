@@ -10,7 +10,6 @@ final class IndicatorView: UIView {
     
     var color: UIColor? = .white
     var animationRect: CGRect?
-    
     var animating: Bool { return isAnimating }
     
     private(set) public var isAnimating: Bool = false {
@@ -27,9 +26,6 @@ final class IndicatorView: UIView {
     init(frame: CGRect?, color: UIColor? = nil, padding: CGFloat? = nil) {
         super.init(frame: frame!)
         guard let frame = frame else { return }
-        
-        
-        
         let animationWidth = frame.size.width * 1.8
         let animationHeight = frame.height * 1.45
         animationRect = CGRect(x: frame.size.width * 6,
@@ -37,11 +33,10 @@ final class IndicatorView: UIView {
                                width: animationWidth,
                                height: animationHeight)
         self.color = UIColor(red:0.03, green:0.57, blue:0.82, alpha:1.0)
-        ///self.color = .white
         isHidden = true
     }
     
-    final func startAnimating() {
+    func startAnimating() {
         isHidden = false
         isAnimating = true
         layer.speed = 1
@@ -53,13 +48,13 @@ final class IndicatorView: UIView {
         }
     }
     
-    final func stopAnimating() {
+    func stopAnimating() {
         isHidden = true
         isAnimating = false
         layer.sublayers?.removeAll()
     }
     
-    final func setUpAnimation(animation: AudioEqualizer?) {
+    func setUpAnimation(animation: AudioEqualizer?) {
         if let animationRect = animationRect {
             let minEdge: CGFloat? = max(animationRect.width, animationRect.height)
             layer.sublayers = nil
