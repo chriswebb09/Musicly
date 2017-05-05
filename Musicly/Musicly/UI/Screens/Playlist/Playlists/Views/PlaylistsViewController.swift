@@ -87,10 +87,15 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
+         let model = PlaylistTracksViewControllerModel()
+        model.tracklist = trackList[indexPath.row]
+        destinationVC.viewModel = model
         destinationVC.store = store
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
         destinationVC.tracklist = trackList[indexPath.row]
+       
+        
         if trackList[indexPath.row].tracks.count > 0 {
             destinationVC.contentState = .results
         }
@@ -107,13 +112,14 @@ extension PlaylistsViewController: PlaylistCreatorDelegate {
         if let tracklists = store.trackLists, let last = tracklists.last {
             trackList.append(last)
         }
-        DispatchQueue.main.async {
-            self.trackList = self.store.lists
-            self.collectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.trackList = strongSelf.store.lists
+            strongSelf.collectionView.reloadData()
         }
     }
-    
-    
 }
 
 extension PlaylistsViewController: UITextFieldDelegate {

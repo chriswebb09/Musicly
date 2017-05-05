@@ -19,6 +19,7 @@
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     var store: iTrackDataStore?
     var emptyView: EmptyView = EmptyView()
+    let image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
@@ -74,7 +75,7 @@
     }
     
     func commonInit() {
-        buttonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal),
+        buttonItem = UIBarButtonItem(image: image,
                                      style: .plain,
                                      target: self,
                                      action: #selector(navigationBarSetup))
@@ -167,7 +168,7 @@
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let destinationViewController: PlayerViewController = PlayerViewController()
-        destinationViewController.playList = self.playlist
+        destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         destinationViewController.index = indexPath.row
         navigationController?.pushViewController(destinationViewController, animated: false)
@@ -176,11 +177,7 @@
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        
-        DispatchQueue.main.async {
-            self.setTrackCell(indexPath: indexPath, cell: cell)
-        }
-        
+        setTrackCell(indexPath: indexPath, cell: cell)
         return cell
     }
  }
@@ -204,9 +201,7 @@
         DispatchQueue.main.async {
             self.navigationItem.rightBarButtonItems = []
         }
-        
         if !searchBarActive {
-            //searchBarActive = true
             collectionView.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
@@ -225,15 +220,16 @@
     func searchBarHasInput() {
         collectionView.reloadData()
         playlist.removeAll()
-        store?.searchForTracks { playlist, error in
+        store?.searchForTracks { [weak self] playlist, error in
             guard let playlist = playlist else { return }
-            self.playlist = playlist
-            self.collectionView.reloadData()
-            self.collectionView.performBatchUpdates ({
+            guard let strongSelf = self else { return }
+            strongSelf.playlist = playlist
+            strongSelf.collectionView.reloadData()
+            strongSelf.collectionView.performBatchUpdates ({
                 DispatchQueue.main.async {
-                    self.contentState = .results
-                    self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-                    self.collectionView.isHidden = false
+                    strongSelf.contentState = .results
+                    strongSelf.collectionView.reloadItems(at: strongSelf.collectionView.indexPathsForVisibleItems)
+                    strongSelf.collectionView.isHidden = false
                 }
             }, completion: { finished in
                 print(finished)
@@ -263,11 +259,10 @@
             playlist.removeAll()
             if let searchString = searchString {
                 store?.setSearch(string: searchString)
-                store?.searchForTracks { tracks, error in
-                    self.store?.searchForTracks { tracks, error in
-                        guard let tracks = tracks else { return }
-                        self.playlist = tracks
-                    }
+                self.store?.searchForTracks { [weak self] tracks, error in
+                    guard let strongSelf = self else { return }
+                    guard let tracks = tracks else { return }
+                    strongSelf.playlist = tracks
                 }
             }
         }

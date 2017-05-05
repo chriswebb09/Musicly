@@ -41,14 +41,6 @@ final class NewPlaylistPopover: BasePopoverAlert {
     
     func setupPop() {
         popView.configureView()
-        guard let popTitle = popView.doneButton.titleLabel else { return }
-        popView.backgroundColor = CollectionViewAttributes.backgroundColor
-        popView.doneButton.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
-        popTitle.font = UIFont(name: "Avenir-Book", size: 20)!
-        popView.doneButton.setTitle("Done", for: .normal)
-        popView.doneButton.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
-        popView.doneButton.layer.borderWidth = 1.5
-        popView.layer.borderWidth = 1.5
     }
     
     override func hidePopView(viewController: UIViewController) {

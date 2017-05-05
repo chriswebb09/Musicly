@@ -43,7 +43,13 @@ final class NewPlaylistView: UIView {
         var button = UIButton()
         button.tintColor = .white
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel!.font = UIFont(name: "Avenir-Book", size: 20)!
+        button.setTitleColor(PlaylistViewControllerConstants.mainColor, for: .normal)
+        button.setTitle("Done", for: .normal)
+        button.layer.borderColor = PlaylistViewControllerConstants.mainColor.cgColor
+        button.layer.borderWidth = 1.5
+        if let popTitle = button.titleLabel, let font = UIFont(name: "Avenir-Book", size: 20) {
+            popTitle.font = font
+        }
         return button
     }()
     
@@ -58,10 +64,7 @@ final class NewPlaylistView: UIView {
     
     private func configureShadow(for layer: CALayer) {
         layer.cornerRadius = DetailViewConstants.cornerRadius
-        layer.borderWidth = DetailViewConstants.borderWidth
-        layer.borderColor = UIColor.clear.cgColor
         layer.shadowColor = UIColor.lightGray.cgColor
-        layer.shadowRadius = DetailViewConstants.borderWidth
         layer.shadowOpacity = DetailViewConstants.shadowOpacity
         layer.masksToBounds = true
         layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath

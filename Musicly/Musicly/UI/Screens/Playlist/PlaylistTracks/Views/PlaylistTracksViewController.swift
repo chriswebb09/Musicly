@@ -14,15 +14,7 @@ private let reuseIdentifier = "trackCell"
 
 final class PlaylistViewController: UIViewController {
     
-    var playlist: Playlist = Playlist() {
-        didSet {
-            if playlist.itemCount > 0 {
-                contentState = .results
-            } else {
-                contentState = .none
-            }
-        }
-    }
+    var playlist: Playlist!
     var store: iTrackDataStore?
     var emptyView = EmptyView() {
         didSet {
@@ -30,17 +22,9 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    var tracklist: TrackList = TrackList() {
-        didSet {
-            for track in tracklist.tracks {
-                let newItem = PlaylistItem()
-                newItem.track = track
-                if !playlist.contains(playlistItem: newItem) {
-                    playlist.append(newPlaylistItem: newItem)
-                }
-            }
-        }
-    }
+    var viewModel: PlaylistTracksViewControllerModel!
+    
+    var tracklist: TrackList!
     
     var contentState: TrackContentState = .none {
         didSet {
@@ -65,10 +49,8 @@ final class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
-        view.addSubview(emptyView)
-        emptyView.frame = view.frame
-        emptyView.configure()
+        self.playlist = viewModel.playlist
+        self.tracklist = viewModel.tracklist
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         title = tracklist.listName
         commonInit()
@@ -80,6 +62,10 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func commonInit() {
+        view.backgroundColor = .clear
+        view.addSubview(emptyView)
+        emptyView.frame = view.frame
+        emptyView.configure()
         buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
         setupCollectionView()
@@ -117,18 +103,13 @@ final class PlaylistViewController: UIViewController {
 extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(playlist.itemCount)
-        return playlist.itemCount
+        return viewModel.count
     }
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         var rowTime: Double
         if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
-            if index.row > 10 {
-                rowTime = (Double(index.row % 10)) / CollectionViewConstants.rowTimeDivider
-            } else {
-                rowTime = (Double(index.row)) / CollectionViewConstants.rowTimeDivider
-            }
+            rowTime = viewModel.getRowTime(indexPath: index)
             if let url = URL(string: track.artworkUrl) {
                 let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
                 cell.configureCell(with: viewModel, withTime: rowTime)

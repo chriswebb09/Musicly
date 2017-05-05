@@ -96,6 +96,7 @@
 		A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CBC40A1E9FE63000C95A50 /* Playlist.swift */; };
 		A7ECBCD21EB46A070098CE0E /* DetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ECBCD01EB46A070098CE0E /* DetailPopover.swift */; };
 		A7ECBCD31EB46A070098CE0E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ECBCD11EB46A070098CE0E /* DetailView.swift */; };
+		A7F8353D1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F8353C1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift */; };
 		BB2634885F3F26D76E4058D8 /* Pods_MusiclyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F3B9D661206A6F91E05C21 /* Pods_MusiclyTests.framework */; };
 		E8255C1EF1DF0B54D05B149F /* Pods_Musicly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049711FAEBCF9F15C01DA033 /* Pods_Musicly.framework */; };
 /* End PBXBuildFile section */
@@ -217,6 +218,7 @@
 		A7CBC40A1E9FE63000C95A50 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Playlist/Playlist.swift; sourceTree = "<group>"; };
 		A7ECBCD01EB46A070098CE0E /* DetailPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailPopover.swift; path = Elements/Popover/Detail/DetailPopover.swift; sourceTree = "<group>"; };
 		A7ECBCD11EB46A070098CE0E /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailView.swift; path = Elements/Popover/Detail/DetailView.swift; sourceTree = "<group>"; };
+		A7F8353C1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistTracksViewControllerModel.swift; path = Screens/Playlist/PlaylistTracks/PlaylistTracksViewControllerModel.swift; sourceTree = "<group>"; };
 		C0CC79972E792E6914215932 /* Pods-Musicly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Musicly.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Musicly/Pods-Musicly.debug.xcconfig"; sourceTree = "<group>"; };
 		C38E2BC5607BB57CAC66B696 /* Pods-MusiclyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusiclyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusiclyTests/Pods-MusiclyTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA2DD93AD7AA64BCFA83BEBD /* Pods_MusiclyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusiclyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -605,6 +607,7 @@
 			isa = PBXGroup;
 			children = (
 				A77702A91EBC2A980002E644 /* PlaylistTracksViewController.swift */,
+				A7F8353C1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift */,
 			);
 			name = Playlist;
 			sourceTree = "<group>";
@@ -1021,6 +1024,7 @@
 				A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */,
 				A71F02B21EB986BB0012490D /* PlaylistViewControllerConstants.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
+				A7F8353D1EBCE9F0008CA4E3 /* PlaylistTracksViewControllerModel.swift in Sources */,
 				A7ECBCD21EB46A070098CE0E /* DetailPopover.swift in Sources */,
 				A71A09A91EB81FC200CA35E4 /* MenuActive.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
