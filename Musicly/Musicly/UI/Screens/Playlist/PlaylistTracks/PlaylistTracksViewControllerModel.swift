@@ -11,7 +11,7 @@ import UIKit
 class PlaylistTracksViewControllerModel {
     
     var playlist = Playlist()
-    
+    var store: iTrackDataStore! 
     var tracklist = TrackList() {
         didSet {
             
@@ -29,6 +29,8 @@ class PlaylistTracksViewControllerModel {
         return playlist.itemCount
     }
     
+    var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
+    
     var state: TrackContentState {
         if count > 0 {
             return .results
@@ -37,6 +39,9 @@ class PlaylistTracksViewControllerModel {
         }
     }
     
+    var title: String {
+         return tracklist.listName
+    }
     
     func getRowTime(indexPath: IndexPath) -> Double {
         var rowTime: Double = 0
@@ -45,7 +50,15 @@ class PlaylistTracksViewControllerModel {
         } else {
             rowTime = (Double(indexPath.row)) / CollectionViewConstants.rowTimeDivider
         }
-        
         return rowTime
+    }
+    
+    
+    func cellModel(for indexPath: IndexPath) -> TrackCellViewModel? {
+        guard let track = playlist.playlistItem(at: indexPath.row)?.track else { return nil }
+        let name = track.trackName
+        guard let url = URL(string: track.artworkUrl) else { return nil }
+        var cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
+        return cellModel
     }
 }

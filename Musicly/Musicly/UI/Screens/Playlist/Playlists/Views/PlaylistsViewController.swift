@@ -89,13 +89,11 @@ extension PlaylistsViewController: UICollectionViewDelegate {
         let destinationVC = PlaylistViewController()
          let model = PlaylistTracksViewControllerModel()
         model.tracklist = trackList[indexPath.row]
+        model.store = store
         destinationVC.viewModel = model
-        destinationVC.store = store
         destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
         destinationVC.tracklist = trackList[indexPath.row]
-       
-        
         if trackList[indexPath.row].tracks.count > 0 {
             destinationVC.contentState = .results
         }

@@ -16,6 +16,7 @@ final class PlaylistViewController: UIViewController {
     
     var playlist: Playlist!
     var store: iTrackDataStore?
+    
     var emptyView = EmptyView() {
         didSet {
             emptyView.configure()
@@ -42,7 +43,6 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    fileprivate var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     var buttonItem: UIBarButtonItem?
     
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -51,8 +51,10 @@ final class PlaylistViewController: UIViewController {
         super.viewDidLoad()
         self.playlist = viewModel.playlist
         self.tracklist = viewModel.tracklist
+        self.contentState = viewModel.state
+        self.store = viewModel.store
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        title = tracklist.listName
+        title = viewModel.title
         commonInit()
     }
     
@@ -66,7 +68,7 @@ final class PlaylistViewController: UIViewController {
         view.addSubview(emptyView)
         emptyView.frame = view.frame
         emptyView.configure()
-        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
+        buttonItem = UIBarButtonItem(image: viewModel.image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
@@ -108,12 +110,10 @@ extension PlaylistViewController: UICollectionViewDataSource {
     
     fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
         var rowTime: Double
-        if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
+        if let index = indexPath {
             rowTime = viewModel.getRowTime(indexPath: index)
-            if let url = URL(string: track.artworkUrl) {
-                let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-                cell.configureCell(with: viewModel, withTime: rowTime)
-            }
+            let cellModel = viewModel.cellModel(for: index)
+            cell.configureCell(with: cellModel!, withTime: rowTime)
         }
     }
 }
@@ -130,10 +130,7 @@ extension PlaylistViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
-            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-            cell.configureCell(with: cellViewModel, withTime: 0)
-        }
+        setTrackCell(indexPath: indexPath, cell: cell)
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
