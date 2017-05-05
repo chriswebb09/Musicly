@@ -8,16 +8,12 @@
 
 import UIKit
 
-enum FileState {
-    case queued, playing, done, paused
-}
-
 final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     
-    var progressIncrementer: Float = 0
-    var progressVisual: Float = 0
+    private var progressIncrementer: Float = 0
+    private var progressVisual: Float = 0
     
     // Sets functionality for view from viewModel
     
@@ -374,7 +370,7 @@ final class PlayerView: UIView {
     
     // Kicks off Equalizer animation sequence
     
-    func startEqualizer() {
+    private func startEqualizer() {
         equalView = IndicatorView(frame: equalizerView.frame, color: .gray, padding: 0)
         guard let equalView = equalView else { return }
         equalView.alpha = 0.8
@@ -420,12 +416,12 @@ final class PlayerView: UIView {
     
     // Stops equalizer animations
     
-    func stopEqualizer() {
+    private func stopEqualizer() {
         equalizerBackgroundView.alpha = 0
         equalView?.stopAnimating()
     }
     
-    func moreButtonTapped() {
+    @objc private func moreButtonTapped() {
         delegate?.moreButtonTapped()
     }
     
@@ -493,7 +489,7 @@ final class PlayerView: UIView {
     
     // On song completed playing
     
-    func finishedPlaying(countDict: NSMutableDictionary?) {
+    private func finishedPlaying(countDict: NSMutableDictionary?) {
         viewModel.playState = .done
         countDict?["count"] = time
         delegate?.resetPlayerAndSong()
@@ -504,7 +500,7 @@ final class PlayerView: UIView {
     
     // Animate disappearance of Equalizer
     
-    func animateEqualizer() {
+    private func animateEqualizer() {
         UIView.animate(withDuration: 0.5) {
             self.playButton.alpha = 1
             self.equalView?.alpha = 0
@@ -512,7 +508,7 @@ final class PlayerView: UIView {
         }
     }
     
-    func pauseTime() {
+    private func pauseTime() {
         if let countDict = timer?.userInfo as? NSMutableDictionary?,
             let count = countDict?["count"] as? Int {
             countDict?["count"] = count
@@ -534,13 +530,15 @@ final class PlayerView: UIView {
     
     // Timer
     
-    func setTimer() {
+    private func setTimer() {
         timer?.invalidate()
         let timerDic: NSMutableDictionary = ["count": viewModel.time]
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
     }
     
     @objc private func playButtonTapped() {
+        setTimer()
+        startEqualizer()
         viewModel.playState = .playing
         delegate?.playButtonTapped()
         switchButton(button: playButton, for: pauseButton)
@@ -548,6 +546,7 @@ final class PlayerView: UIView {
     
     @objc private func pauseButtonTapped() {
         viewModel.playState = .paused
+        stopEqualizer()
         pauseTime()
         delegate?.pauseButtonTapped()
         currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)

@@ -38,6 +38,7 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         get {
             return CMTimeGetSeconds(player.currentTime())
         }
+        
         set {
             let newTime = CMTimeMakeWithSeconds(newValue, 1)
             player.seek(to: newTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
@@ -62,6 +63,11 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         self.url = url
         super.init()
         self.getTrackDuration()
+    }
+    
+    convenience override init() {
+        self.init()
+        self.url = URL(string: "test")!
     }
     
     func setUrl(from string: String?) {

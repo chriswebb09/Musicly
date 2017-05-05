@@ -16,7 +16,7 @@ final class PlayerViewController: UIViewController {
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
     var index: Int!
-    var trackPlayer: TrackPlayer!
+    lazy var trackPlayer = TrackPlayer()
     let realm = try! Realm()
     var menuActive: MenuActive = .none
     
@@ -53,7 +53,7 @@ final class PlayerViewController: UIViewController {
     }
     
     func add() {
-        guard let trackAdded = self.playListItem?.track else { return }
+        guard let trackAdded = playListItem?.track else { return }
         let tabbar = tabBarController as! TabBarController
         let store = tabbar.store
         store?.setupItem(with: trackAdded)
@@ -124,7 +124,6 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func dismissMenu() {
-        print("touch")
         menuPop.popView.removeFromSuperview()
         menuPop.hidePopView(viewController: self)
         view.sendSubview(toBack: menuPop)
@@ -138,9 +137,8 @@ extension PlayerViewController: PlayerViewDelegate {
         DispatchQueue.main.async {
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
-            print("Done!")
         }
-        self.initPlayer(url: url)
+        initPlayer(url: url)
     }
     
     func showLoadingView() {
@@ -158,7 +156,6 @@ extension PlayerViewController: PlayerViewDelegate {
     
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
-        print(trackPlayer.duration)
         trackPlayer.delegate = self
     }
     
@@ -166,13 +163,10 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func playButtonTapped() {
         trackPlayer.play()
-        playerView.startEqualizer()
-        playerView.setTimer()
         print(trackPlayer.currentTime)
     }
     
     func pauseButtonTapped() {
-        playerView.stopEqualizer()
         trackPlayer.player.pause()
     }
     
@@ -198,8 +192,8 @@ extension PlayerViewController: PlayerViewDelegate {
         playListItem = next
         trackPlayer.player.pause()
         showLoadingView()
-        self.loadingPop.popView.animate()
-        DispatchQueue.main.async {
+        loadingPop.popView.animate()
+        DispatchQueue.main.async { [unowned self] in
             guard let track = next.track, let url =  URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             self.playerView.configure(with: viewModel)
@@ -211,7 +205,6 @@ extension PlayerViewController: PlayerViewDelegate {
     
     
     func resetPlayerAndSong() {
-        print("reset")
         playerView.viewModel.playState = .queued
     }
     
@@ -246,7 +239,6 @@ extension PlayerViewController: TrackPlayerDelegate {
     }
     
     func updateProgress(progress: Double) {
-        print(trackPlayer.currentTime)
         DispatchQueue.main.async {
             self.playerView.updateProgressBar(value: progress)
         }
