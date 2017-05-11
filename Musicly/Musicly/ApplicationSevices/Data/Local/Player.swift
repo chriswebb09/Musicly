@@ -82,7 +82,7 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         getTrackDuration()
     }
     
-    func play() {
+    func play(player: AVPlayer) {
         player.playImmediately(atRate: 1)
     }
     

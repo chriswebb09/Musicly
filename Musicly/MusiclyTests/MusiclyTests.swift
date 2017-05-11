@@ -45,11 +45,49 @@ class MusiclyTests: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
         }
-
     }
-
-    func testTracklistViewController() {
-        
+    
+    func testSearchBarHasContent() {
+        let controller = TracksViewController()
+        let searchBar = UISearchBar()
+        searchBar.text = "hello"
+        XCTAssertTrue(controller.searchBarHasInput(searchBar: searchBar))
     }
+    
+    
+    func testRemoveAllItemsFromPlaylist() {
+        let dataStore = iTrackDataStore()
+        dataStore.setSearch(string: "new")
+        let expect = expectation(description: "Removes all items in array.")
+        dataStore.searchForTracks { playlist, error in
+           var testList = playlist
+            testList?.removeAll()
+            XCTAssert(testList?.itemCount == 0)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 4) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
+    
+    func testSearchBarActive() {
+        let controller = TracksViewController()
+        controller.setSearchBarActive(isActive: true)
+        XCTAssertTrue(controller.searchBarActive)
+    }
+    
+    func testSearchButton() {
+        var responder: Bool = false
+        let controller = TracksViewController()
+        let store = iTrackDataStore()
+        controller.store = store
+        controller.setupSearchController(with: controller.searchBar)
+        controller.navigationBarSetup()
+        responder = controller.searchController.searchBar.isFirstResponder
+        XCTAssertTrue(controller.searchController.searchBar.isFirstResponder == true)
+    }
+    
     
 }

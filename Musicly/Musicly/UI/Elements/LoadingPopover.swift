@@ -31,7 +31,7 @@ final class LoadingPopover: BasePopoverAlert {
         viewController.view.bringSubview(toFront: popView)
     }
     
-    func setupPop() {
+    func setupPop(popView: LoadingView) {
         popView.configureView()
         popView.backgroundColor = .clear
     }

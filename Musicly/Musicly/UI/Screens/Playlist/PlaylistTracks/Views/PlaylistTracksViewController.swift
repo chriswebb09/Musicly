@@ -9,11 +9,19 @@
 import UIKit
 import RealmSwift
 
-private let reuseIdentifier = "trackCell"
-
-enum ViewState {
-    case showEmptyView, showCollectionView
+protocol TrackCellCollectionProtocol {
+    func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String)
 }
+
+extension TrackCellCollectionProtocol {
+    func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String) {
+        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.dataSource = viewController as? UICollectionViewDataSource
+        collectionView.delegate = viewController as? UICollectionViewDelegate
+    }
+}
+
+private let reuseIdentifier = "trackCell"
 
 final class PlaylistViewController: UIViewController {
     
@@ -55,6 +63,8 @@ final class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dump(dataSource.playlist)
+        dump(dataSource.tracklist)
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         title = dataSource.title
         commonInit()
@@ -66,39 +76,29 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func commonInit() {
-        view.backgroundColor = .clear
-        view.addSubview(emptyView)
-        emptyView.frame = view.frame
-        emptyView.configure()
+        setupEmptyView(emptyView: emptyView, for: view)
         buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
-        setupCollectionView()
+        setupCollectionView(newLayout: PlaylistItemLayout())
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
-        collectionViewRegister()
+        collectionViewRegister(collectionView: collectionView!, viewController: self, identifier: reuseIdentifier)
     }
     
     func goToSearch() {
-        tabBarController?.selectedIndex = 0
-        let navController = tabBarController?.viewControllers?[0] as! UINavigationController
+        let tabController = tabBarController as! TabBarController
+        tabController.selectedIndex = 0
+        let navController = tabController.viewControllers?[0] as! UINavigationController
         let controller = navController.viewControllers[0] as! TracksViewController
         controller.navigationBarSetup()
-        navigationController?.popViewController(animated: false)
     }
     
-    private func collectionViewRegister() {
-        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-    }
-    
-    private func setupCollectionView() {
-        let newLayout = PlaylistItemLayout()
+    private func setupCollectionView(newLayout: PlaylistItemLayout) {
         newLayout.setup()
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         if let collectionView = collectionView { view.addSubview(collectionView) }
     }
 }
@@ -111,13 +111,14 @@ extension PlaylistViewController: UICollectionViewDataSource {
     }
 }
 
-extension PlaylistViewController {
+extension PlaylistViewController: TrackCellCollectionProtocol {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationViewController: PlayerViewController = PlayerViewController()
+        let destinationViewController = PlayerViewController()
         destinationViewController.playList = dataSource.playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         destinationViewController.index = indexPath.row
+        destinationViewController.parentIsPlaylist = true
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
@@ -140,8 +141,9 @@ extension PlaylistViewController {
     }
 }
 
+
 // MARK: - UICollectionViewDelegate
-extension PlaylistViewController: UICollectionViewDelegate {
+extension PlaylistViewController: UICollectionViewDelegate, EmptyViewProtocol {
     
 }
 

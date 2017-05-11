@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TrackContentState {
+public enum TrackContentState {
     case none, loading, loaded, results
 }
  

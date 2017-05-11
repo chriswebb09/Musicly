@@ -12,7 +12,7 @@ typealias completion = () -> Void
 
 final class SplashView: UIView {
     
-    var animationDuration: Double = 0.2
+    var animationDuration: Double = 0.5
     
     var logoImageView: UIImageView = {
         let image = #imageLiteral(resourceName: "speakerblue")
@@ -21,6 +21,28 @@ final class SplashView: UIView {
         return imageView
     }()
     
+    var speakerZero: UIImageView = {
+        let image = #imageLiteral(resourceName: "speakerblue-0")
+        let imageView = UIImageView(image: image)
+       // imageView.alpha = 0
+        return imageView
+    }()
+    
+    var speakerOne: UIImageView = {
+        let image = #imageLiteral(resourceName: "speakerblue-1")
+        let imageView = UIImageView(image: image)
+        imageView.alpha = 0
+        return imageView
+    }()
+    
+    var speakerTwo: UIImageView = {
+        let image = #imageLiteral(resourceName: "speakerblue-2")
+        let imageView = UIImageView(image: image)
+       imageView.alpha = 0
+        return imageView
+    }()
+    
+    
     // MARK: - Configure
     
     override func layoutSubviews() {
@@ -28,11 +50,12 @@ final class SplashView: UIView {
         addSubview(logoImageView)
         logoImageView.isOpaque = true
         frame = UIScreen.main.bounds
-        setupConstraints()
+        setupConstraints(logoImageView: logoImageView)
         backgroundColor = .white
     }
     
-    private func setupConstraints() {
+    
+    func setupImageView(logoImageView: UIImageView) {
         addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: LogoConstants.logoImageWidth).isActive = true
@@ -41,10 +64,25 @@ final class SplashView: UIView {
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
+    
+    private func setupConstraints(logoImageView: UIImageView) {
+        addSubview(logoImageView)
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        logoImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: LogoConstants.logoImageWidth).isActive = true
+        logoImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: LogoConstants.logoImageHeight).isActive = true
+        logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        setupImageView(logoImageView: speakerZero)
+        setupImageView(logoImageView: speakerOne)
+        setupImageView(logoImageView: speakerTwo)
+    }
+    
     // MARK: - Animation
     
     func zoomAnimation(_ handler: completion? = nil) {
         let duration: TimeInterval = animationDuration
+        speakerZero.isHidden = true 
+        logoImageView.isHidden = false
         alpha = LogoConstants.startAlpha
         UIView.animate(withDuration: duration, animations:{ [weak self] in
             guard let strongSelf = self else {

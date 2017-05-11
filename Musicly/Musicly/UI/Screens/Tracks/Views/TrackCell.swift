@@ -57,11 +57,11 @@ final internal class TrackCell: UICollectionViewCell {
     
     private func viewConfigurations() {
         setShadow()
-        setupAlbumArt()
-        setupTrackInfoLabel()
+        setupAlbumArt(albumArtView: albumArtView)
+        setupTrackInfoLabel(trackNameLabel: trackNameLabel)
     }
     
-    private func setupAlbumArt() {
+    private func setupAlbumArt(albumArtView: UIImageView) {
         contentView.addSubview(albumArtView)
         albumArtView.translatesAutoresizingMaskIntoConstraints = false
         albumArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: TrackCellConstants.albumHeightMultiplier).isActive = true
@@ -69,7 +69,7 @@ final internal class TrackCell: UICollectionViewCell {
         albumArtView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
-    private func setupTrackInfoLabel() {
+    private func setupTrackInfoLabel(trackNameLabel: UILabel) {
         contentView.addSubview(trackNameLabel)
         trackNameLabel.translatesAutoresizingMaskIntoConstraints = false
         trackNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: TrackCellConstants.labelHeightMultiplier).isActive = true

@@ -52,7 +52,7 @@ final class PlaylistCell: UICollectionViewCell {
         setupContentViewLayerStyle(for: contentView)
         setupShadow(layer: layer)
         DispatchQueue.main.async {
-            self.playlistArtView.setRounded()
+            self.playlistArtView.setRounded(frame: self.playlistArtView.frame)
         }
     }
     
@@ -114,7 +114,7 @@ final class PlaylistCell: UICollectionViewCell {
         playlistArtView.translatesAutoresizingMaskIntoConstraints = false
         playlistArtView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: contentView.bounds.width * 0.06).isActive = true
         playlistArtView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        playlistArtView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.24).isActive = true
+        playlistArtView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.255).isActive = true
         playlistArtView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.65).isActive = true
     }
     

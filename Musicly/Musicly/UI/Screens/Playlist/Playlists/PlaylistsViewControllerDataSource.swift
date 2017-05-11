@@ -9,7 +9,6 @@
 import UIKit
 
 class PlaylistsViewControllerDataSource {
-    
     var tracklist: [TrackList] = []
     var store: iTrackDataStore!
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)

@@ -14,19 +14,22 @@ class TracksPlaylistDataSource {
     var store: iTrackDataStore! 
     var tracklist = TrackList() {
         didSet {
-            
+            playlist.id = tracklist.listId
+            playlist.name = tracklist.listName
             for track in tracklist.tracks {
                 let newItem = PlaylistItem()
                 newItem.track = track
                 if !playlist.contains(playlistItem: newItem) {
-                    playlist.append(newPlaylistItem: newItem)
+                    DispatchQueue.main.async {
+                        self.playlist.append(newPlaylistItem: newItem)
+                    }
                 }
             }
         }
     }
     
     var count: Int {
-        return playlist.itemCount
+        return tracklist.tracks.count
     }
     
     var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
@@ -43,14 +46,13 @@ class TracksPlaylistDataSource {
          return tracklist.listName
     }
     
-    func getRowTime(indexPath: IndexPath) -> Double {
-        var rowTime: Double = 0
+    func getRowTime(indexPath: IndexPath, for rowTime: Double) -> Double {
         if indexPath.row > 10 {
-            rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
+            return (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
         } else {
-            rowTime = (Double(indexPath.row)) / CollectionViewConstants.rowTimeDivider
+            return (Double(indexPath.row)) / CollectionViewConstants.rowTimeDivider
         }
-        return rowTime
+       
     }
     
     
@@ -58,14 +60,14 @@ class TracksPlaylistDataSource {
         guard let track = playlist.playlistItem(at: indexPath.row)?.track else { return nil }
         let name = track.trackName
         guard let url = URL(string: track.artworkUrl) else { return nil }
-        var cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
+        let cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
         return cellModel
     }
     
     func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
-        var rowTime: Double
+        var rowTime: Double = 0
         if let index = indexPath {
-            rowTime = getRowTime(indexPath: index)
+            rowTime = getRowTime(indexPath: index, for: rowTime)
             let cellModel = self.cellModel(for: index)
             cell.configureCell(with: cellModel!, withTime: rowTime)
         }

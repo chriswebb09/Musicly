@@ -18,25 +18,5 @@ import RealmSwift
 class MusiclyAPISpec: QuickSpec {
     
     override func spec() {
-        
-        describe("requests") {
-            beforeSuite {
-                // Implement
-            }
-            
-            afterSuite {
-                // Implement
-            }
-            
-            it("returns some data") {
-                let store = iTrackDataStore()
-                store.setSearch(string: "New")
-                store.searchForTracks { tracks, errors in
-                    print(tracks)
-                }
-                expect(store.tracks.count).to(beTruthy())
-            }
-            
-        }
     }
 }

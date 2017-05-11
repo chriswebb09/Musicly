@@ -18,8 +18,6 @@ class RealmClient {
     init() {
         do {
             self.realm = try! Realm()
-        } catch {
-            print("error \(error.localizedDescription)")
         }
     }
     
@@ -32,8 +30,6 @@ class RealmClient {
                     completion(trackLists, tracks, list.listId)
                 }
             }
-        } catch {
-            print("error \(error.localizedDescription)")
         }
     }
     
@@ -56,8 +52,6 @@ class RealmClient {
                 realm.add(list, update: true)
                 try! realm.commitWrite()
             }
-        } catch {
-            print("error \(error.localizedDescription)")
         }
     }
     
@@ -66,8 +60,8 @@ class RealmClient {
         do {
             if let realm = try? Realm() {
                 tracks = realm.objects(Track.self)
-                print(tracks.contains(track))
                 tracklist = realm.objects(TrackList.self).filter("listId == %@", playlistID)
+                
                 guard let lastTracklist = tracklist.last else { return }
                 
                 if realm.object(ofType: Track.self, forPrimaryKey: track.previewUrl) == nil {
@@ -81,8 +75,6 @@ class RealmClient {
                     }
                 }
             }
-        } catch {
-            print("error \(error.localizedDescription)")
         }
     }
 }

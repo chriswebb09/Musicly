@@ -8,42 +8,26 @@
 
 import UIKit
 
-import UIKit
-
 class TracksViewControllerDataSource {
     
-    var playlist = Playlist()
-    var store: iTrackDataStore!
-    var tracklist = TrackList() {
+    var playlist = Playlist() {
         didSet {
             
-            for track in tracklist.tracks {
-                let newItem = PlaylistItem()
-                newItem.track = track
-                if !playlist.contains(playlistItem: newItem) {
-                    playlist.append(newPlaylistItem: newItem)
-                }
-            }
         }
     }
-    
-    var count: Int {
+    var store: iTrackDataStore! {
+        didSet {
+            
+        }
+    }
+
+    public var count: Int {
         return playlist.itemCount
     }
     
     var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
-    var state: TrackContentState {
-        if count > 0 {
-            return .results
-        } else {
-            return .none
-        }
-    }
-    
-    var title: String {
-        return tracklist.listName
-    }
+    public var state: TrackContentState = .results
     
     func getRowTime(indexPath: IndexPath) -> Double {
         var rowTime: Double = 0
@@ -60,7 +44,7 @@ class TracksViewControllerDataSource {
         guard let track = playlist.playlistItem(at: indexPath.row)?.track else { return nil }
         let name = track.trackName
         guard let url = URL(string: track.artworkUrl) else { return nil }
-        var cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
+        let cellModel = TrackCellViewModel(trackName: name, albumImageUrl: url)
         return cellModel
     }
     
@@ -73,3 +57,5 @@ class TracksViewControllerDataSource {
         }
     }
 }
+
+

@@ -17,18 +17,24 @@ final class Download {
     
     var progress: Float = 0.0 {
         didSet {
-            updateProgress()
+            updateProgress(with: progress)
         }
     }
     
     // Gives float for download progress - for delegate
     
-    private func updateProgress() {
+    private func updateProgress(with value: Float) {
         delegate?.downloadProgressUpdated(for: progress)
     }
     
     init(url: String) {
         self.url = url
+    }
+    
+    func getProgress(completion: @escaping (Float) -> Void) {
+        if progress > 0 {
+            completion(progress)
+        }
     }
 }
 

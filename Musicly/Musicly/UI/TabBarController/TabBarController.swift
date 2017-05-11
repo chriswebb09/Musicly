@@ -38,13 +38,11 @@ final class TabBarController: UITabBarController {
     
     private func setupTabs() {
         super.viewDidLoad()
-        setupControllers()
+        setupControllers(tracksController: TracksViewController(), playlistController: PlaylistsViewController())
     }
     
-    private func setupControllers() {
+    private func setupControllers(tracksController: TracksViewController, playlistController: PlaylistsViewController) {
         UITabBar.appearance().tintColor = UIColor.orange
-        let tracksController = TracksViewController()
-        let playlistController = PlaylistsViewController()
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistsViewController: playlistController)
         let controllers = [searchTab, playlistTab]
@@ -63,7 +61,6 @@ final class TabBarController: UITabBarController {
         let selectedImage = #imageLiteral(resourceName: "orangedj")
         let dataSource = TracksViewControllerDataSource()
         dataSource.store = store
-        tracksViewController.dataSource = dataSource
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         
         let tracksTab = UINavigationController(rootViewController: tracksViewController)
@@ -73,7 +70,7 @@ final class TabBarController: UITabBarController {
     private func setupPlaylistTab(playlistsViewController: PlaylistsViewController) -> UINavigationController {
         let selectedImage = #imageLiteral(resourceName: "orange-soundwave")
         let normalImage = #imageLiteral(resourceName: "blue-soundwave")
-        var dataSource = PlaylistsViewControllerDataSource()
+        let dataSource = PlaylistsViewControllerDataSource()
         dataSource.store = store
         playlistsViewController.dataSource = dataSource
         playlistsViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))

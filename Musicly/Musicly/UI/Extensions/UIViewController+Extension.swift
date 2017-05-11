@@ -16,31 +16,12 @@ extension UIViewController {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.textColor
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for tracks...", attributes: [NSForegroundColorAttributeName: UIColor.white])
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
-        
     }
     
     func setSearchBarColor(searchBar: UISearchBar) {
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = .white
     }
-    
-//    func setupMusicIcon(icon: UIView) {
-//        view.addSubview(icon)
-//        icon.translatesAutoresizingMaskIntoConstraints = false
-//        icon.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.22).isActive = true
-//        icon.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35).isActive = true
-//        icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        icon.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * -0.04).isActive = true
-//    }
-//    
-//    func setupInfoLabel(infoLabel: UILabel) {
-//        view.addSubview(infoLabel)
-//        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-//        infoLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
-//        infoLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-//        infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: UIScreen.main.bounds.height * 0.12).isActive = true
-//    }
 }
 
 extension UINavigationController {

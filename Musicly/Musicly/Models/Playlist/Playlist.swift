@@ -41,12 +41,18 @@ final class Playlist: Object {
     
     func append(newPlaylistItem: PlaylistItem?) {
         itemCount += 1
+        
+        guard head != nil else {
+            head = newPlaylistItem
+            return 
+        }
         if let lastItem = last {
             newPlaylistItem?.previous = lastItem
             lastItem.next = newPlaylistItem
-        } else if head == nil {
-            head = newPlaylistItem
         }
+//        else if head == nil {
+//            head = newPlaylistItem
+//        }
     }
     
     func printAllKeys() {

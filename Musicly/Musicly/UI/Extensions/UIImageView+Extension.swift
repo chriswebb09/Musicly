@@ -30,7 +30,7 @@ extension UIImageView {
             }.resume()
     }
     
-    func setRounded() {
+    func setRounded(frame: CGRect) {
         let radius = frame.height / 2
         layer.cornerRadius = radius
         layer.masksToBounds = true

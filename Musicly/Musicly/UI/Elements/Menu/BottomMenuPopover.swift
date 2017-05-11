@@ -43,7 +43,7 @@ final class BottomMenuPopover: BasePopoverMenu {
                     return
                 }
                 strongSelf.popView.alpha = 1
-                strongSelf.popView.frame = CGRect(x: viewController.view.bounds.width * 0.002,
+                strongSelf.popView.frame = CGRect(x: viewController.view.bounds.width * 0.001,
                                                   y: viewController.view.bounds.height * 0.58,
                                                   width: viewController.view.bounds.width,
                                                   height: viewController.view.bounds.height * 0.42)

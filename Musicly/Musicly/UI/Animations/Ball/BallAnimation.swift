@@ -32,6 +32,7 @@ final class BallAnimation: AnimationDelegate {
     }
     
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
+        
         let circleSpacing: CGFloat = 40
         let circleSize: CGFloat = (size.width - 2 * circleSpacing) / 3
         let x: CGFloat = (layer.bounds.size.width - size.width)

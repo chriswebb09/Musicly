@@ -16,8 +16,8 @@ final class iTunesAPIClient: NSObject {
     
     static func search(for query: String, completion: @escaping (_ responseObject: [String: Any]?, _ error: Error?) -> Void) {
         let urlConstructor = URLConstructor(searchTerm: query)
-        
-        URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: urlConstructor.build())) { data, response, error in
+        guard let url = urlConstructor.build(searchTerm: urlConstructor.searchTerm) else { return }
+        URLSession(configuration: .ephemeral).dataTask(with: URLRequest(url: url)) { data, response, error in
             if let error = error {
                 completion(nil, error)
             } else {

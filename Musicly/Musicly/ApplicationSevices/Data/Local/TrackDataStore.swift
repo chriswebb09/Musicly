@@ -30,13 +30,13 @@ final class iTrackDataStore {
         }
     }
     
-    func setupCurrentPlaylist() -> TrackList {
-        let current = realmClient.getFilteredTrackList(predicate: currentPlaylistID!)
-        return current.last!
+    func setupCurrentPlaylist(currentPlaylistID: String) -> TrackList? {
+        let current = realmClient.getFilteredTrackList(predicate: currentPlaylistID)
+        guard let last = current.last else { return nil }
+        return last
     }
     
-    func setCurrentPlaylist() -> TrackList? {
-        guard let currentPlaylistID = currentPlaylistID else { return nil }
+    func setCurrentPlaylist(currentPlaylistID: String) -> TrackList? {
         for list in lists {
             if list.listId == currentPlaylistID {
                 currentPlaylist = list
@@ -46,11 +46,9 @@ final class iTrackDataStore {
         return nil
     }
     
-    func setupItem(with track: Track) {
-        if let currentPlaylistID = currentPlaylistID {
-            track.playlistID = currentPlaylistID
-            realmClient.save(track: track, playlistID: currentPlaylistID)
-        }
+    func setupItem(with track: Track, currentPlaylistID: String) {
+        track.playlistID = currentPlaylistID
+        realmClient.save(track: track, playlistID: currentPlaylistID)
     }
     
     func setSearch(string: String?) {
@@ -59,12 +57,10 @@ final class iTrackDataStore {
     
     // Creates new TrackList
     
-    func createNewList(name: String) {
-        let date = Date()
+    func createNewList(newList: TrackList, name: String, date: Date, uid: String) {
         let stringDate = String(describing: date)
-        let newList = TrackList()
         newList.listName = name
-        newList.listId = UUID().uuidString
+        newList.listId = uid
         newList.date = stringDate
         lists.append(newList)
         realmClient.save(list: newList)
