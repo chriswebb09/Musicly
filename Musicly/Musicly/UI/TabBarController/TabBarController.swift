@@ -36,31 +36,29 @@ final class TabBarController: UITabBarController {
     
     private func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
-        let tracksController = TracksViewController()
+        let tracksController = TopBarController()
         let playlistController = PlaylistsViewController()
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
-        let controllers = [searchTab, playlistTab]
-        setTabTitles(controllers: controllers)
+        //let controllers = [searchTab, playlistTab]
+        setTabTitles(controller: searchTab, navController: playlistTab)
     }
     
-    private func setTabTitles(controllers: [UINavigationController]) {
-        viewControllers = controllers
+    private func setTabTitles(controller: UIViewController, navController: UINavigationController) {
+        viewControllers = [controller, navController]
         tabBar.items?[0].title = "Tracks"
         tabBar.items?[1].title = "Playlist"
         selectedIndex = 0
     }
     
-    private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
+    private func setupSearchTab(tracksViewController: TopBarController) -> TopBarController {
         let normalImage = #imageLiteral(resourceName: "blue-dj")
         let selectedImage = #imageLiteral(resourceName: "orangedj")
         var dataSource = ListControllerDataSource()
         dataSource.store = self.store
         tracksViewController.dataSource = dataSource
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
-        
-        let tracksTab = UINavigationController(rootViewController: tracksViewController)
-        return tracksTab
+        return tracksViewController
     }
     
     private func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {

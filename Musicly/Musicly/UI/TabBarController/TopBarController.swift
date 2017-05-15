@@ -1,0 +1,70 @@
+//
+//  TopBarController.swift
+//  Musicly
+//
+//  Created by Christopher Webb-Orenstein on 5/15/17.
+//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
+//
+
+import UIKit
+
+
+class TopBarController: UITabBarController {
+    
+    
+    let yStatusBar = UIApplication.shared.statusBarFrame.size.height + 45
+    
+     var dataSource = ListControllerDataSource()
+    
+    var store: iTrackDataStore?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .darkGray
+        store = iTrackDataStore()
+        setupTabs()
+        super.viewDidLoad()
+        tabBar.barTintColor = UIColor.darkGray
+        self.tabBar.frame = CGRect(x: 0, y: yStatusBar, width: tabBar.frame.size.width, height: tabBar.frame.size.height / 2)
+    }
+    
+    private func setupTabs() {
+        super.viewDidLoad()
+        setupControllers()
+    }
+
+    private func setupControllers() {
+        UITabBar.appearance().tintColor = UIColor.orange
+        let tracksController = TracksViewController()
+        let playlistController = TracksViewController()
+        let searchTab = setupSearchTab(tracksViewController: tracksController)
+        let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
+        let controllers = [searchTab, playlistTab]
+        setTabTitles(controllers: controllers)
+    }
+    
+    private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
+        var dataSource = ListControllerDataSource()
+        dataSource.store = self.store
+        tracksViewController.dataSource = dataSource
+        tracksViewController.tabBarItem = UITabBarItem(title: "One", image: nil, selectedImage: nil)
+        let tracksTab = UINavigationController(rootViewController: tracksViewController)
+        return tracksTab
+    }
+    
+    private func setupPlaylistTab(playlistViewController: TracksViewController) -> UINavigationController {
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        playlistViewController.dataSource = dataSource
+        playlistViewController.tabBarItem = UITabBarItem(title: "Two", image: nil, selectedImage: nil)
+        let playlistTab = UINavigationController(rootViewController: playlistViewController)
+        return playlistTab
+    }
+    
+    private func setTabTitles(controllers: [UINavigationController]) {
+        viewControllers = controllers
+        tabBar.items?[0].title = "Tracks"
+        tabBar.items?[1].title = "Playlist"
+        selectedIndex = 0
+    }
+}

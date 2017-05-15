@@ -2,7 +2,7 @@ import UIKit
 
 struct PlayerViewModel {
     
-     var timer: Timer?
+    var timer: Timer?
     
     var thumbs: Thumbs {
         didSet {
@@ -17,6 +17,7 @@ struct PlayerViewModel {
     
     var currentPlayTimeColor: UIColor = .orange
     var totalPlayTimeColor: UIColor
+    
     var progress: Float = 0
     var progressIncrementer: Float = 0
     
@@ -27,11 +28,15 @@ struct PlayerViewModel {
             print(playState)
         }
     }
+    
     var trackName: String
+    
     var thumbsUpImage: UIImage
     var thumbsDownImage: UIImage
+    
     var time: Int = 0
     var totalTime: Int = 0
+    
     var totalTimeString: String = ""
     var artworkUrlString: String
     
@@ -45,7 +50,6 @@ struct PlayerViewModel {
         self.artworkUrlString = track.artworkUrl
         self.trackName = track.trackName
     }
-    
     
     mutating func resetProgress() {
         self.progress = 0

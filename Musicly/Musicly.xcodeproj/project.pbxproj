@@ -87,6 +87,7 @@
 		A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ADE8181EAD7CE8004F299E /* TrackList.swift */; };
 		A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B073721EA974E800DCC576 /* PlaylistItem.swift */; };
 		A7B26D271ECA3AA800D1AF2D /* FileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B26D261ECA3AA800D1AF2D /* FileState.swift */; };
+		A7B26D291ECA621400D1AF2D /* TopBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B26D281ECA621400D1AF2D /* TopBarController.swift */; };
 		A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B349E01EB13D4000B4F9FE /* Player.swift */; };
 		A7C995A61E9EA6CF004826EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A51E9EA6CF004826EE /* Assets.xcassets */; };
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
@@ -211,6 +212,7 @@
 		A7ADE8181EAD7CE8004F299E /* TrackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackList.swift; path = iTrack/TrackList.swift; sourceTree = "<group>"; };
 		A7B073721EA974E800DCC576 /* PlaylistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItem.swift; path = Playlist/PlaylistItem.swift; sourceTree = "<group>"; };
 		A7B26D261ECA3AA800D1AF2D /* FileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileState.swift; path = States/FileState.swift; sourceTree = "<group>"; };
+		A7B26D281ECA621400D1AF2D /* TopBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopBarController.swift; path = TabBarController/TopBarController.swift; sourceTree = "<group>"; };
 		A7B349E01EB13D4000B4F9FE /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C995A51E9EA6CF004826EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				A71ADF231EADDFE50030932E /* TabBarController.swift */,
+				A7B26D281ECA621400D1AF2D /* TopBarController.swift */,
 			);
 			name = TabBarController;
 			sourceTree = "<group>";
@@ -1168,6 +1171,7 @@
 				A71A14B91EB7879100EDCE6D /* BottomMenu.swift in Sources */,
 				A71EF3271EBABE9200713669 /* AnimationDelegate.swift in Sources */,
 				A71F02A81EB986BB0012490D /* ButtonConstants.swift in Sources */,
+				A7B26D291ECA621400D1AF2D /* TopBarController.swift in Sources */,
 				A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */,
 				A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */,
 				A72AE3501EBA4D5D0022C6B3 /* DownloadDelegate.swift in Sources */,
