@@ -14,7 +14,7 @@ struct PlayerViewModel {
     
     var currentPlayTimeColor: UIColor = .orange
     var totalPlayTimeColor: UIColor
-    var progress: Float
+    var progress: Float = 0
     var playState: FileState {
         didSet {
             currentPlayTimeColor = playState == .done ? .white : .orange
@@ -25,9 +25,9 @@ struct PlayerViewModel {
     var trackName: String
     var thumbsUpImage: UIImage
     var thumbsDownImage: UIImage
-    var time: Int
-    var totalTime: Int
-    var totalTimeString: String
+    var time: Int = 0
+    var totalTime: Int = 0
+    var totalTimeString: String = ""
     var artworkUrlString: String {
         didSet {
             self.artworkUrl = URL(string: artworkUrlString)
@@ -40,10 +40,6 @@ struct PlayerViewModel {
         self.playState = playState
         self.currentPlayTimeColor = .orange
         self.totalPlayTimeColor = .white
-        self.time = 0
-        self.progress = 0
-        self.totalTimeString = ""
-        self.totalTime = 0
         self.thumbs = .none
         self.thumbsDownImage = UIImage()
         self.thumbsUpImage = UIImage()
