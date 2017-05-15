@@ -42,16 +42,5 @@ class ListControllerDataSource {
             return .none
         }
     }
-    
-    
-    func getRowTime(indexPath: IndexPath) -> Double {
-        var rowTime: Double = 0
-        if indexPath.row > 10 {
-            rowTime = (Double(indexPath.row % 10)) / CollectionViewConstants.rowTimeDivider
-        } else {
-            rowTime = (Double(indexPath.row)) / CollectionViewConstants.rowTimeDivider
-        }
-        
-        return rowTime
-    }
+
 }
