@@ -54,7 +54,7 @@ class RealmClient {
             }
         }
     }
-    
+ 
     func save(track: Track, playlistID: String) {
         var tracklist: Results<TrackList>!
         do {

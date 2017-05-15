@@ -22,6 +22,10 @@ final class TrackList: Object {
         tracks.append(track)
     }
     
+    func removeFromTracks() -> Track? {
+        return tracks.removeLast()
+    }
+    
     override static func primaryKey() -> String? {
         return "listId"
     }
@@ -33,4 +37,32 @@ final class TrackList: Object {
         
         return false
     }
+    
+    
+    
+    func save() {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(self)
+            }
+        } catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+}
+
+extension TrackList: IteratorProtocol {
+
+    func next() -> Track? {
+        return removeFromTracks()
+    }
+
+    typealias Element = Track
+}
+
+
+extension TrackList: Sequence {
+    
 }

@@ -1,72 +1,51 @@
-//
-//  PlaylistViewController.swift
-//  Musicly
-//
-//  Created by Christopher Webb-Orenstein on 4/26/17.
-//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
-//
 
 import UIKit
 import RealmSwift
 
-protocol TrackCellCollectionProtocol {
-    func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String)
-}
-
-extension TrackCellCollectionProtocol {
-    func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String) {
-        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: identifier)
-        collectionView.dataSource = viewController as? UICollectionViewDataSource
-        collectionView.delegate = viewController as? UICollectionViewDelegate
-    }
-}
-
 private let reuseIdentifier = "trackCell"
+
 
 final class PlaylistViewController: UIViewController {
     
+    var playlist: Playlist!
+    var store: iTrackDataStore?
     var emptyView = EmptyView() {
         didSet {
             emptyView.configure()
         }
     }
     
-    var dataSource: TracksPlaylistDataSource! {
+    var viewModel: PlaylistTracksViewControllerModel!
+    
+    var tracklist: TrackList!
+    
+    var contentState: TrackContentState = .none {
         didSet {
-            switch dataSource.state {
+            switch contentState {
             case .none:
-                viewState = .showEmptyView
-            case .loading:
-                viewState = .showEmptyView
+                self.view.bringSubview(toFront: emptyView)
+                print("None")
             case .results:
-                viewState = .showCollectionView
-            case .loaded:
-                viewState = .showCollectionView
+                self.view.bringSubview(toFront: collectionView!)
+            case.loaded:
+                self.view.bringSubview(toFront: collectionView!)
+            case .loading:
+                return
             }
         }
     }
     
-    var viewState: ViewState = .showEmptyView {
-        didSet {
-            switch viewState {
-            case .showEmptyView:
-                view.bringSubview(toFront: emptyView)
-            case.showCollectionView:
-                view.bringSubview(toFront: collectionView!)
-            }
-        }
-    }
-    
+    fileprivate var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     var buttonItem: UIBarButtonItem?
     
     var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dump(dataSource.playlist)
-        dump(dataSource.tracklist)
+        self.playlist = viewModel.playlist
+        self.tracklist = viewModel.tracklist
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        title = dataSource.title
+        title = tracklist.listName
         commonInit()
     }
     
@@ -76,29 +55,39 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func commonInit() {
-        setupEmptyView(emptyView: emptyView, for: view)
-        buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
+        view.backgroundColor = .clear
+        view.addSubview(emptyView)
+        emptyView.frame = view.frame
+        emptyView.configure()
+        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
-        setupCollectionView(newLayout: PlaylistItemLayout())
+        setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        collectionViewRegister(collectionView: collectionView!, viewController: self, identifier: reuseIdentifier)
+        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        collectionViewRegister()
     }
     
     func goToSearch() {
-        let tabController = tabBarController as! TabBarController
-        tabController.selectedIndex = 0
-        let navController = tabController.viewControllers?[0] as! UINavigationController
+        tabBarController?.selectedIndex = 0
+        let navController = tabBarController?.viewControllers?[0] as! UINavigationController
         let controller = navController.viewControllers[0] as! TracksViewController
         controller.navigationBarSetup()
+        navigationController?.popViewController(animated: false)
     }
     
-    private func setupCollectionView(newLayout: PlaylistItemLayout) {
+    private func collectionViewRegister() {
+        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+    }
+    
+    private func setupCollectionView() {
+        let newLayout = PlaylistItemLayout()
         newLayout.setup()
         collectionView?.collectionViewLayout = newLayout
         collectionView?.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
         if let collectionView = collectionView { view.addSubview(collectionView) }
     }
 }
@@ -107,43 +96,50 @@ final class PlaylistViewController: UIViewController {
 extension PlaylistViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return viewModel.count
+    }
+    
+    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
+        var rowTime: Double
+        if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
+            rowTime = viewModel.getRowTime(indexPath: index)
+            if let url = URL(string: track.artworkUrl) {
+                let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
+                cell.configureCell(with: viewModel, withTime: rowTime)
+            }
+        }
     }
 }
 
-extension PlaylistViewController: TrackCellCollectionProtocol {
+extension PlaylistViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationViewController = PlayerViewController()
-        destinationViewController.playList = dataSource.playlist
+        let destinationViewController: PlayerViewController = PlayerViewController()
+        destinationViewController.playList = playlist
         destinationViewController.hidesBottomBarWhenPushed = true
         destinationViewController.index = indexPath.row
-        destinationViewController.parentIsPlaylist = true
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        dataSource.setTrackCell(indexPath: indexPath, cell: cell)
+        if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
+            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
+            cell.configureCell(with: cellViewModel, withTime: 0)
+        }
         let finalFrame = cell.frame
         let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
         if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
-        cellAnimation(cell: cell, finalFrame: finalFrame)
-        return cell
-    }
-    
-    func cellAnimation(cell: TrackCell, finalFrame: CGRect) {
         UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
             cell.frame = finalFrame
         }, completion: { finished in
             cell.alpha = 1
         })
+        return cell
     }
 }
 
-
 // MARK: - UICollectionViewDelegate
-extension PlaylistViewController: UICollectionViewDelegate, EmptyViewProtocol {
+extension PlaylistViewController: UICollectionViewDelegate {
     
 }
-

@@ -82,6 +82,19 @@ final class Track: Object {
         return albumImageData
     }
     
+    
+    func save() {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(self)
+            }
+        } catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    
     override static func primaryKey() -> String? {
         return "previewUrl"
     }
