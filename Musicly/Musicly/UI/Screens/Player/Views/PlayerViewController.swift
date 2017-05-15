@@ -4,18 +4,6 @@
 
 import UIKit
 
-class PlayerControllerModel {
-    var index: Int
-    var playlist: Playlist!
-    var parentIsPlaylist: Bool = false
-    var menuActive: MenuActive = .none
-    var playListItem: PlaylistItem?
-    
-    init(index: Int) {
-        self.index = index
-    }
-}
-
 final class PlayerViewController: UIViewController {
     
     var model: PlayerControllerModel?
@@ -25,6 +13,7 @@ final class PlayerViewController: UIViewController {
     var loadingPop = LoadingPopover()
     
     var rightButtonItem: UIBarButtonItem!
+    
     lazy var trackPlayer = TrackPlayer()
     
     override func viewDidLoad() {
