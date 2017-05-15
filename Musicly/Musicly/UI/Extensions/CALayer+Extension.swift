@@ -29,4 +29,15 @@ extension CALayer {
         shadowRadius = 5
         shadowOpacity = 0.7
     }
+    
+    
+    func setupPlaylistCellShadow(bounds: CGRect, cornerRadius: CGFloat) {
+        shadowColor = UIColor.lightGray.cgColor
+        shadowOffset = PlaylistCellConstants.shadowOffset
+        shadowRadius = PlaylistCellConstants.borderWidth
+        shadowOpacity = PlaylistCellConstants.shadowOpacity
+        masksToBounds = false
+        shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
+    }
 }
+

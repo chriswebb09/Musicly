@@ -49,27 +49,11 @@ final class PlaylistCell: UICollectionViewCell {
         super.layoutSubviews()
         isUserInteractionEnabled = true
         backgroundColor = .white
-        setupContentViewLayerStyle(for: contentView)
-        setupShadow(layer: layer)
+        setupPlaylistCellContentViewLayerStyle(for: contentView)
+        layer.setupPlaylistCellShadow(bounds: bounds, cornerRadius: contentView.layer.cornerRadius)
         DispatchQueue.main.async {
             self.playlistArtView.setRounded(frame: self.playlistArtView.frame)
         }
-    }
-    
-    func setupContentViewLayerStyle(for contentView: UIView) {
-        contentView.layer.cornerRadius = PlaylistCellConstants.cornerRadius
-        contentView.layer.borderWidth = PlaylistCellConstants.borderWidth
-        contentView.layer.borderColor = UIColor.clear.cgColor
-        contentView.layer.masksToBounds = true
-    }
-    
-    func setupShadow(layer: CALayer) {
-        layer.shadowColor = UIColor.lightGray.cgColor
-        layer.shadowOffset = PlaylistCellConstants.shadowOffset
-        layer.shadowRadius = PlaylistCellConstants.borderWidth
-        layer.shadowOpacity = PlaylistCellConstants.shadowOpacity
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
     
     func configure(playlistName: String, artUrl: URL?, numberOfTracks: String) {
