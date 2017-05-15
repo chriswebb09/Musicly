@@ -3,35 +3,38 @@
 //  Musicly
 
 import UIKit
-import RealmSwift
+
+class PlayerControllerModel {
+    var index: Int
+    var playlist: Playlist!
+    var parentIsPlaylist: Bool = false
+    var menuActive: MenuActive = .none
+    var playListItem: PlaylistItem?
+    
+    init(index: Int) {
+        self.index = index
+    }
+}
 
 final class PlayerViewController: UIViewController {
     
-    var playerView = PlayerView()
-    var playListItem: PlaylistItem?
+    var model: PlayerControllerModel?
     
+    var playerView = PlayerView()
     var menuPop = BottomMenuPopover()
     var loadingPop = LoadingPopover()
     
-    var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
-    var index: Int!
     lazy var trackPlayer = TrackPlayer()
-    
-    var menuActive: MenuActive = .none
-    var parentIsPlaylist: Bool = false
-    
-    // Gets data from Realm
-    
-    var playlistList: Results<TrackList>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !parentIsPlaylist { setupBarButton() }
+        guard let model = model else { return }
+        if !model.parentIsPlaylist { setupBarButton() }
         baseControllerSetup()
         showLoadingView(loadingPop: loadingPop)
-        playListItem = playList?.playlistItem(at: index)
-        setupItem(item: playListItem)
+        model.playListItem = model.playlist.playlistItem(at: model.index)
+        setupItem(item: model.playListItem)
         playerView.delegate = self
     }
     
@@ -54,7 +57,7 @@ final class PlayerViewController: UIViewController {
     }
     
     func add() {
-        guard let trackAdded = playListItem?.track else { return }
+        guard let model = model, let trackAdded = model.playListItem?.track else { return }
         let tabbar = tabBarController as! TabBarController
         let store = tabbar.store
         guard let currentID = store?.currentPlaylistID else { return }
@@ -76,10 +79,10 @@ final class PlayerViewController: UIViewController {
 extension PlayerViewController: MenuDelegate {
     
     func optionOneTapped() {
-        guard let track = playListItem?.track else { return }
+        let client = iTunesAPIClient()
+        guard let model = model, let track = model.playListItem?.track else { return }
         let download = Download(url: track.previewUrl)
         download.delegate = self
-        let client = iTunesAPIClient()
         client.downloadTrackPreview(for: download)
     }
     
@@ -95,16 +98,17 @@ extension PlayerViewController: MenuDelegate {
 extension PlayerViewController: PlayerViewDelegate {
     
     func moreButtonTapped() {
-        switch menuActive {
+        guard let model = model else { return }
+        switch model.menuActive {
         case .none:
             showMenu()
-            menuActive = .active
+            model.menuActive = .active
         case .active:
             dismissMenu()
-            menuActive = .hidden
+            model.menuActive = .hidden
         case .hidden:
             showMenu()
-            menuActive = .active
+            model.menuActive = .active
         }
     }
     
@@ -126,9 +130,7 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     fileprivate func setupItem(item: PlaylistItem?) {
-        guard let item = item else { return }
-        guard let track = item.track else { return }
-        guard let url = URL(string: track.previewUrl) else { return }
+        guard let item = item, let track = item.track, let url = URL(string: track.previewUrl) else { return }
         title = track.artistName
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -171,8 +173,7 @@ extension PlayerViewController: PlayerViewDelegate {
         trackPlayer.player.pause()
         showLoadingView(loadingPop: loadingPop)
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            guard let url = URL(string: track.previewUrl) else { return }
+            guard let strongSelf = self, let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             strongSelf.playerView.configure(with: viewModel)
             strongSelf.initPlayer(url: url)
@@ -182,16 +183,14 @@ extension PlayerViewController: PlayerViewDelegate {
     }
     
     func backButtonTapped() {
-        guard let previous = playListItem?.previous else { return }
-        playListItem = previous
-        guard let track = previous.track else { return }
+        guard let model = model, let previous = model.playListItem?.previous, let track = previous.track else { return }
+        model.playListItem = previous
         changeTrack(track: track)
     }
     
     func skipButtonTapped() {
-        guard let next = playListItem?.next else { return }
-        playListItem = next
-        guard let track = next.track else { return }
+        guard let model = model, let next = model.playListItem?.next, let track = next.track else { return }
+        model.playListItem = next
         changeTrack(track: track)
     }
     
@@ -202,13 +201,13 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Thumbs
     
     func thumbsDownTapped() {
-        if let playlistItem = playListItem, let track = playlistItem.track {
+        if let model = model, let playlistItem = model.playListItem, let track = playlistItem.track {
             track.thumbs?.thumb = .down
         }
     }
     
     func thumbsUpTapped() {
-        if let playlistItem = playListItem, let track = playlistItem.track {
+        if let model = model, let playlistItem = model.playListItem, let track = playlistItem.track {
             track.thumbs?.thumb = .up
         }
     }

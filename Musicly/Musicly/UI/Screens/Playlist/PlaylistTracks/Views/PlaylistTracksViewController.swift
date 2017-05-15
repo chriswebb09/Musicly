@@ -94,8 +94,8 @@ extension PlaylistViewController: UICollectionViewDataSource {
 extension PlaylistViewController: OpenPlayerProtocol {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var destinationViewController = setup(playlist: viewModel.playlist, index: indexPath.row)
-        destinationViewController.index = indexPath.row
-        destinationViewController.playListItem = viewModel.playlist.playlistItem(at: indexPath.row)
+//        destinationViewController.index = indexPath.row
+        destinationViewController.model?.playListItem = viewModel.playlist.playlistItem(at: indexPath.row)
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
 }

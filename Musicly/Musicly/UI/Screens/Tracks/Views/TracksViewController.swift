@@ -144,7 +144,6 @@
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationViewController = setup(playlist: dataSource.playlist, index: indexPath.row)
         navigationController?.pushViewController(destinationViewController, animated: false)
-        
     }
     
  }
