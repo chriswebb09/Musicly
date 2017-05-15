@@ -180,9 +180,11 @@ final class PlayerView: UIView {
     
     func configure(with viewModel: PlayerViewModel) {
         playButton.isEnabled = false
+        dump(viewModel)
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
-        if let url = viewModel.artworkUrl {
+        print(viewModel.artworkUrl)
+        if let url = URL(string: viewModel.artworkUrlString) {
             albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = viewModel.trackName
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)

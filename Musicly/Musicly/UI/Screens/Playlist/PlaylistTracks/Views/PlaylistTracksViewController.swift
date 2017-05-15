@@ -31,10 +31,9 @@ final class PlaylistViewController: UIViewController {
         }
     }
     
-    fileprivate var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     var buttonItem: UIBarButtonItem?
     
-      lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,28 +52,15 @@ final class PlaylistViewController: UIViewController {
         view.addSubview(emptyView)
         emptyView.frame = view.frame
         emptyView.configure()
-        buttonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(goToSearch))
+        buttonItem = UIBarButtonItem(image: viewModel.image, style: .plain, target: self, action: #selector(goToSearch))
         edgesForExtendedLayout = []
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
         collectionView.backgroundColor = CollectionViewConstants.backgroundColor
-        collectionViewRegister()
+        collectionViewRegister(collectionView: collectionView, viewController: self, identifier: reuseIdentifier)
     }
     
-    func goToSearch() {
-        tabBarController?.selectedIndex = 0
-        let navController = tabBarController?.viewControllers?[0] as! UINavigationController
-        let controller = navController.viewControllers[0] as! TracksViewController
-        controller.navigationBarSetup()
-        navigationController?.popViewController(animated: false)
-    }
-    
-    private func collectionViewRegister() {
-        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-    }
     
     private func setupCollectionView() {
         let newLayout = PlaylistItemLayout()
@@ -86,6 +72,17 @@ final class PlaylistViewController: UIViewController {
     }
 }
 
+extension PlaylistViewController: TrackCellCollectionProtocol {
+
+    func goToSearch() {
+        tabBarController?.selectedIndex = 0
+        let navController = tabBarController?.viewControllers?[0] as! UINavigationController
+        let controller = navController.viewControllers[0] as! TracksViewController
+        controller.navigationBarSetup()
+        navigationController?.popViewController(animated: false)
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 extension PlaylistViewController: UICollectionViewDataSource {
     
@@ -94,10 +91,11 @@ extension PlaylistViewController: UICollectionViewDataSource {
     }
 }
 
-
 extension PlaylistViewController: OpenPlayerProtocol {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var destinationViewController = setup(playlist: viewModel.playlist, index: indexPath.row)
+        destinationViewController.index = indexPath.row
+        destinationViewController.playListItem = viewModel.playlist.playlistItem(at: indexPath.row)
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
 }

@@ -30,6 +30,7 @@ struct PlayerViewModel {
     var totalTimeString: String = ""
     var artworkUrlString: String {
         didSet {
+            print(artworkUrlString)
             self.artworkUrl = URL(string: artworkUrlString)
         }
     }
