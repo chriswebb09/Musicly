@@ -7,17 +7,13 @@ private let reuseIdentifier = "trackCell"
 
 final class PlaylistViewController: UIViewController {
     
-    var playlist: Playlist!
-    var store: iTrackDataStore?
     var emptyView = EmptyView() {
         didSet {
             emptyView.configure()
         }
     }
     
-    var viewModel: PlaylistTracksViewControllerModel!
-    
-    var tracklist: TrackList!
+    var viewModel: ListControllerDataSource!
     
     var contentState: TrackContentState = .none {
         didSet {
@@ -26,9 +22,9 @@ final class PlaylistViewController: UIViewController {
                 self.view.bringSubview(toFront: emptyView)
                 print("None")
             case .results:
-                self.view.bringSubview(toFront: collectionView!)
+                self.view.bringSubview(toFront: collectionView)
             case.loaded:
-                self.view.bringSubview(toFront: collectionView!)
+                self.view.bringSubview(toFront: collectionView)
             case .loading:
                 return
             }
@@ -38,14 +34,12 @@ final class PlaylistViewController: UIViewController {
     fileprivate var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     var buttonItem: UIBarButtonItem?
     
-    var collectionView : UICollectionView? = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+      lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.playlist = viewModel.playlist
-        self.tracklist = viewModel.tracklist
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        title = tracklist.listName
+        title = viewModel.tracklist.listName
         commonInit()
     }
     
@@ -64,7 +58,7 @@ final class PlaylistViewController: UIViewController {
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
         setupDefaultUI()
-        collectionView?.backgroundColor = CollectionViewConstants.backgroundColor
+        collectionView.backgroundColor = CollectionViewConstants.backgroundColor
         collectionViewRegister()
     }
     
@@ -77,18 +71,18 @@ final class PlaylistViewController: UIViewController {
     }
     
     private func collectionViewRegister() {
-        collectionView?.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
+        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     private func setupCollectionView() {
         let newLayout = PlaylistItemLayout()
         newLayout.setup()
-        collectionView?.collectionViewLayout = newLayout
-        collectionView?.frame = UIScreen.main.bounds
+        collectionView.collectionViewLayout = newLayout
+        collectionView.frame = UIScreen.main.bounds
         view.backgroundColor = CollectionViewAttributes.backgroundColor
-        if let collectionView = collectionView { view.addSubview(collectionView) }
+        view.addSubview(collectionView)
     }
 }
 
@@ -98,32 +92,21 @@ extension PlaylistViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
-    
-    fileprivate func setTrackCell(indexPath: IndexPath?, cell: TrackCell) {
-        var rowTime: Double
-        if let index = indexPath, let track = playlist.playlistItem(at: index.row)?.track {
-            rowTime = viewModel.getRowTime(indexPath: index)
-            if let url = URL(string: track.artworkUrl) {
-                let viewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-                cell.configureCell(with: viewModel, withTime: rowTime)
-            }
-        }
+}
+
+
+extension PlaylistViewController: OpenPlayerProtocol {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var destinationViewController = setup(playlist: viewModel.playlist, index: indexPath.row)
+        navigationController?.pushViewController(destinationViewController, animated: false)
     }
 }
 
-extension PlaylistViewController {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationViewController: PlayerViewController = PlayerViewController()
-        destinationViewController.playList = playlist
-        destinationViewController.hidesBottomBarWhenPushed = true
-        destinationViewController.index = indexPath.row
-        navigationController?.pushViewController(destinationViewController, animated: false)
-    }
+extension PlaylistViewController: TrackCellCreator {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        if let track = playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
+        if let track = viewModel.playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
             let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
             cell.configureCell(with: cellViewModel, withTime: 0)
         }

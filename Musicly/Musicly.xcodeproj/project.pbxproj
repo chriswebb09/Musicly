@@ -64,8 +64,9 @@
 		A72E9C621EBE6A13002C0774 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72E9C611EBE6A13002C0774 /* ViewState.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
 		A734B5091EC95EBA00C1BA02 /* TrackCellCollectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A734B5081EC95EBA00C1BA02 /* TrackCellCollectionProtocol.swift */; };
-		A734B50D1EC9643300C1BA02 /* BaseTracksListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A734B50C1EC9643300C1BA02 /* BaseTracksListController.swift */; };
-		A73F62921EC98D3300930741 /* BaseTracksListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62911EC98D3300930741 /* BaseTracksListDataSource.swift */; };
+		A73F62941EC99EEF00930741 /* ListControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62931EC99EEF00930741 /* ListControllerDataSource.swift */; };
+		A73F62961EC9A4FC00930741 /* OpenPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62951EC9A4FC00930741 /* OpenPlayerProtocol.swift */; };
+		A73F62981EC9A52F00930741 /* TrackCellCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62971EC9A52F00930741 /* TrackCellCreator.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
 		A777028B1EBC05D90002E644 /* TrackContentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A777028A1EBC05D90002E644 /* TrackContentState.swift */; };
@@ -188,8 +189,9 @@
 		A72E9C611EBE6A13002C0774 /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewState.swift; path = Screens/Playlist/PlaylistTracks/ViewState.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		A734B5081EC95EBA00C1BA02 /* TrackCellCollectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCollectionProtocol.swift; path = Screens/Playlist/PlaylistTracks/TrackCellCollectionProtocol.swift; sourceTree = "<group>"; };
-		A734B50C1EC9643300C1BA02 /* BaseTracksListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTracksListController.swift; path = Musicly/UI/Screens/BaseTracksListController.swift; sourceTree = SOURCE_ROOT; };
-		A73F62911EC98D3300930741 /* BaseTracksListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTracksListDataSource.swift; path = Screens/BaseTracksListDataSource.swift; sourceTree = "<group>"; };
+		A73F62931EC99EEF00930741 /* ListControllerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListControllerDataSource.swift; path = Musicly/UI/Screens/ListControllerDataSource.swift; sourceTree = SOURCE_ROOT; };
+		A73F62951EC9A4FC00930741 /* OpenPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenPlayerProtocol.swift; path = Screens/OpenPlayerProtocol.swift; sourceTree = "<group>"; };
+		A73F62971EC9A52F00930741 /* TrackCellCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCreator.swift; path = Screens/TrackCellCreator.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
 		A777028A1EBC05D90002E644 /* TrackContentState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackContentState.swift; path = Musicly/UI/Screens/Tracks/Models/TrackContentState.swift; sourceTree = SOURCE_ROOT; };
@@ -520,6 +522,7 @@
 			children = (
 				A71C03EF1EB1F76A00941ECB /* Views */,
 				A71C03F01EB1F77100941ECB /* Models */,
+				A73F62931EC99EEF00930741 /* ListControllerDataSource.swift */,
 			);
 			path = Tracks;
 			sourceTree = "<group>";
@@ -565,7 +568,6 @@
 		A73268C91E9ECAFB00B48CD9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				A734B50E1EC9676100C1BA02 /* BaseTracksList */,
 				A71F027F1EB9827C0012490D /* Constants */,
 				A71C03F31EB1F7A900941ECB /* Animations */,
 				A73268C61E9EB61500B48CD9 /* Extensions */,
@@ -575,6 +577,8 @@
 				A7BB42FE1EA85E6A00A205CA /* Playlist */,
 				A71ADF261EADE0020030932E /* TabBarController */,
 				A7F6C67C1EBE42E60028FD19 /* Elements */,
+				A73F62951EC9A4FC00930741 /* OpenPlayerProtocol.swift */,
+				A73F62971EC9A52F00930741 /* TrackCellCreator.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -585,15 +589,6 @@
 				A73268C31E9EB5D100B48CD9 /* Data */,
 			);
 			path = ApplicationSevices;
-			sourceTree = "<group>";
-		};
-		A734B50E1EC9676100C1BA02 /* BaseTracksList */ = {
-			isa = PBXGroup;
-			children = (
-				A734B50C1EC9643300C1BA02 /* BaseTracksListController.swift */,
-				A73F62911EC98D3300930741 /* BaseTracksListDataSource.swift */,
-			);
-			name = BaseTracksList;
 			sourceTree = "<group>";
 		};
 		A74441671EB11FDD00FEB3F2 /* Playlists */ = {
@@ -1052,6 +1047,7 @@
 				A777029D1EBC29920002E644 /* FileState.swift in Sources */,
 				A71C03ED1EB1F75B00941ECB /* TrackCell.swift in Sources */,
 				A71F02A61EB986BB0012490D /* BaseAlertPopoverConstant.swift in Sources */,
+				A73F62961EC9A4FC00930741 /* OpenPlayerProtocol.swift in Sources */,
 				A77702AA1EBC2A980002E644 /* PlaylistTracksViewController.swift in Sources */,
 				A71F02AA1EB986BB0012490D /* CollectionViewConstants.swift in Sources */,
 				A72E9C621EBE6A13002C0774 /* ViewState.swift in Sources */,
@@ -1071,10 +1067,10 @@
 				A72AE3541EBA4DA20022C6B3 /* Notification+Extension.swift in Sources */,
 				A7B35F591EB3AEC2008A12C8 /* TrackItemsLayout.swift in Sources */,
 				A71F02AC1EB986BB0012490D /* DetailViewConstants.swift in Sources */,
-				A73F62921EC98D3300930741 /* BaseTracksListDataSource.swift in Sources */,
 				A71F02B41EB986BB0012490D /* TabBarConstants.swift in Sources */,
 				A71F02B11EB986BB0012490D /* PlaylistConstants.swift in Sources */,
 				A7C995F21E9EA6F6004826EE /* UIImageView+Extension.swift in Sources */,
+				A73F62941EC99EEF00930741 /* ListControllerDataSource.swift in Sources */,
 				A71F02B31EB986BB0012490D /* SplashConstants.swift in Sources */,
 				A7DFF74F1EC95DD000CD3372 /* EmptyViewProtocol.swift in Sources */,
 				A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */,
@@ -1100,7 +1096,6 @@
 				A71A09AD1EB8200C00CA35E4 /* EmptyView.swift in Sources */,
 				A71F02931EB986A40012490D /* BasePopView.swift in Sources */,
 				A72AE3601EBA55980022C6B3 /* AudioEqualizer.swift in Sources */,
-				A734B50D1EC9643300C1BA02 /* BaseTracksListController.swift in Sources */,
 				A72AE3611EBA55980022C6B3 /* IndicatorView.swift in Sources */,
 				A71A09AE1EB8200C00CA35E4 /* LoadingView.swift in Sources */,
 				A71F02AB1EB986BB0012490D /* DetailPopoverConstants.swift in Sources */,
@@ -1123,6 +1118,7 @@
 				A71C03E91EB1F74D00941ECB /* TrackCellViewModel.swift in Sources */,
 				A72AE3651EBA5A8D0022C6B3 /* AppDelegate.swift in Sources */,
 				A77702A61EBC2A620002E644 /* PlaylistsViewController.swift in Sources */,
+				A73F62981EC9A52F00930741 /* TrackCellCreator.swift in Sources */,
 				A71F02A91EB986BB0012490D /* CALayerConstants.swift in Sources */,
 				A71C03EA1EB1F74D00941ECB /*  TracksViewControllerDatasource.swift in Sources */,
 				A7E94CA91EBCF6E500E75461 /* PlaylistsViewControllerDataSource.swift in Sources */,

@@ -87,21 +87,17 @@ extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationVC = PlaylistViewController()
-        let model = PlaylistTracksViewControllerModel()
-        model.tracklist = trackList[indexPath.row]
-        destinationVC.viewModel = model
-        destinationVC.store = store
-        destinationVC.title = trackList[indexPath.row].listName
         store.currentPlaylistID = trackList[indexPath.row].listId
-        destinationVC.tracklist = trackList[indexPath.row]
-        
-        
-        if trackList[indexPath.row].tracks.count > 0 {
-            destinationVC.contentState = .results
+        let model = ListControllerDataSource()
+        model.store = store
+        model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId)!
+        destinationVC.title = trackList[indexPath.row].listName
+        destinationVC.viewModel = model
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(destinationVC, animated: false)
         }
-        navigationController?.pushViewController(destinationVC, animated: false)
     }
-    
+
     
 }
 

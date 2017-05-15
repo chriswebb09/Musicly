@@ -1,14 +1,16 @@
 //
-//  PlaylistTracksViewControllerModel.swift
+//  ListControllerDataSource.swift
 //  Musicly
 //
-//  Created by Christopher Webb-Orenstein on 5/5/17.
+//  Created by Christopher Webb-Orenstein on 5/15/17.
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
 
 import UIKit
 
-class PlaylistTracksViewControllerModel {
+class ListControllerDataSource {
+    
+    let image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
     var playlist = Playlist()
     
@@ -53,5 +55,3 @@ class PlaylistTracksViewControllerModel {
         return rowTime
     }
 }
-
-
