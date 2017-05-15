@@ -14,6 +14,7 @@ final internal class TrackCell: UICollectionViewCell {
         didSet {
             guard let viewModel = viewModel else { return }
             trackNameLabel.text = viewModel.trackName
+            albumArtView.downloadImage(url: viewModel.albumImageUrl)
         }
     }
     
@@ -44,7 +45,6 @@ final internal class TrackCell: UICollectionViewCell {
     func configureCell(with model: TrackCellViewModel, withTime: Double) {
         alpha = 0
         viewModel  = model
-        albumArtView.downloadImage(url: model.albumImageUrl)
         layoutSubviews()
     }
     

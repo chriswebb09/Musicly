@@ -2,10 +2,8 @@
 //  PlayerViewController.swift
 //  Musicly
 
-
 import UIKit
 import RealmSwift
-import AVFoundation
 
 final class PlayerViewController: UIViewController {
     
