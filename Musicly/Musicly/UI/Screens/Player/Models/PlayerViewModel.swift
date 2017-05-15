@@ -23,13 +23,16 @@ struct PlayerViewModel {
         }
     }
     var trackName: String
-    var albumArt: UIImage
     var thumbsUpImage: UIImage
     var thumbsDownImage: UIImage
     var time: Int
     var totalTime: Int
     var totalTimeString: String
-    var artworkUrlString: String
+    var artworkUrlString: String {
+        didSet {
+            self.artworkUrl = URL(string: artworkUrlString)
+        }
+    }
     
     var artworkUrl: URL?
     
@@ -44,10 +47,8 @@ struct PlayerViewModel {
         self.thumbs = .none
         self.thumbsDownImage = UIImage()
         self.thumbsUpImage = UIImage()
-        self.albumArt = UIImage()
         self.artworkUrlString = track.artworkUrl
         self.trackName = track.trackName
-        self.artworkUrl = URL(string: artworkUrlString)
     }
     
     
