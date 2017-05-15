@@ -1,7 +1,7 @@
 import UIKit
 import RealmSwift
 
-private let reuseIdentifier = "PlaylistCell"
+private let reuseIdentifier: String = "PlaylistCell"
 
 final class PlaylistsViewController: UIViewController {
     
@@ -98,8 +98,6 @@ extension PlaylistsViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(destinationVC, animated: false)
         }
     }
-
-    
 }
 
 extension PlaylistsViewController: PlaylistCreatorDelegate {

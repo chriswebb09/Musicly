@@ -2,8 +2,6 @@
  import UIKit
  import RealmSwift
  
- private let reuseIdentifier = "trackCell"
- 
  final class TracksViewController: BaseListViewController {
     var buttonItem: UIBarButtonItem!
     fileprivate let searchController = UISearchController(searchResultsController: nil)

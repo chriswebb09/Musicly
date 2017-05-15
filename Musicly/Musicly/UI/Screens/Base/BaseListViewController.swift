@@ -12,7 +12,6 @@ import RealmSwift
 
 private let reuseIdentifier = "trackCell"
 
-
 class BaseListViewController: UIViewController {
     
     var dataSource: ListControllerDataSource!
