@@ -11,21 +11,18 @@ import RealmSwift
 
 final class iTrackDataStore {
     
-    typealias playlistCompletion = (_ playlist: Playlist? , _ error: Error?) -> Void
-    
     fileprivate var searchTerm: String?
+    
     var realmClient = RealmClient()
-    var newTracks = [Track]()
     var trackLists: Results<TrackList>!
-    var tracks: Results<Track>!
     var lists = [TrackList]()
+    
     var currentPlaylistID: String?
     var currentPlaylist: TrackList?
     
     init() {
         realmClient.setObjects { trackLists, tracks, id in
             self.trackLists = trackLists
-            self.tracks = tracks
             self.currentPlaylistID = id
         }
     }
@@ -64,7 +61,7 @@ final class iTrackDataStore {
     
     // Hit with search terms, parse json and return objects
     
-    func searchForTracks(completion: @escaping playlistCompletion) {
+    func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
         
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in

@@ -1,6 +1,9 @@
 import UIKit
 
 struct PlayerViewModel {
+    
+     var timer: Timer?
+    
     var thumbs: Thumbs {
         didSet {
             thumbsUpImage = thumbs == .up ? #imageLiteral(resourceName: "thumbsupiconorange") : #imageLiteral(resourceName: "thumbsupblue")
@@ -15,6 +18,8 @@ struct PlayerViewModel {
     var currentPlayTimeColor: UIColor = .orange
     var totalPlayTimeColor: UIColor
     var progress: Float = 0
+    var progressIncrementer: Float = 0
+    
     var playState: FileState {
         didSet {
             currentPlayTimeColor = playState == .done ? .white : .orange
@@ -43,10 +48,10 @@ struct PlayerViewModel {
     
     
     mutating func resetProgress() {
-        self.progress = 0 
+        self.progress = 0
     }
     
     mutating func resetTime() {
-        self.time = 0 
+        self.time = 0
     }
 }

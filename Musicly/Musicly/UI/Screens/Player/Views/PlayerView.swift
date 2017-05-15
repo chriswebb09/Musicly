@@ -12,9 +12,6 @@ final class PlayerView: UIView {
     
     weak var delegate: PlayerViewDelegate?
     
-    private var progressIncrementer: Float = 0
-    private var progressVisual: Float = 0
-    
     // Sets functionality for view from viewModel
     
     var viewModel: PlayerViewModel! {
@@ -29,7 +26,7 @@ final class PlayerView: UIView {
         }
     }
     
-    private var timer: Timer?
+    //    private var timer: Timer?
     
     // MARK: - Cover art
     
@@ -98,7 +95,7 @@ final class PlayerView: UIView {
     
     private var currentPlayLengthLabel: UILabel = {
         let label = UILabel()
-        // label.text = "0:00"
+       
         label.textAlignment = .left
         if let font = ApplicationConstants.labelFont { label.font = font }
         label.textColor = .orange
@@ -183,7 +180,7 @@ final class PlayerView: UIView {
         dump(viewModel)
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
-      
+        
         if let url = URL(string: viewModel.artworkUrlString) {
             albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = viewModel.trackName
@@ -217,14 +214,14 @@ final class PlayerView: UIView {
         resetProgressAndTime()
         currentPlayLengthLabel.text = viewModel.defaultTimeString
         delegate?.skipButtonTapped()
-        timer?.invalidate()
+        viewModel.timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
     }
     
     func backButtonTapped() {
         resetProgressAndTime()
-        timer?.invalidate()
+        viewModel.timer?.invalidate()
         currentPlayLengthLabel.text = viewModel.defaultTimeString
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
@@ -447,7 +444,7 @@ final class PlayerView: UIView {
     
     func setupTimeLabels(totalTime: String?, timevalue: Float) {
         guard let totalTime = totalTime else { return }
-        progressIncrementer = timevalue / 920
+        viewModel.progressIncrementer = timevalue / 920
         viewModel.totalTimeString = totalTime
     }
     
@@ -463,10 +460,10 @@ final class PlayerView: UIView {
         case .queued:
             return
         case .playing:
-            guard let countDict = timer?.userInfo as? NSMutableDictionary else { return }
+            guard let countDict = viewModel.timer?.userInfo as? NSMutableDictionary else { return }
             guard var count = countDict["count"] as? Int else { return }
             viewModel.time = count + 1
-            progressView.progress += progressIncrementer
+            progressView.progress += viewModel.progressIncrementer
             viewModel.progress = progressView.progress
             countDict["count"] = viewModel.time
             currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
@@ -492,7 +489,7 @@ final class PlayerView: UIView {
         switchButton(button: pauseButton, for: playButton)
         viewModel.resetProgress()
         stopEqualizer()
-        timer?.invalidate()
+        viewModel.timer?.invalidate()
     }
     
     // Animate disappearance of Equalizer
@@ -506,12 +503,12 @@ final class PlayerView: UIView {
     }
     
     private func pauseTime() {
-        if let countDict = timer?.userInfo as? NSMutableDictionary?,
+        if let countDict = viewModel.timer?.userInfo as? NSMutableDictionary?,
             let count = countDict?["count"] as? Int {
             countDict?["count"] = count
             viewModel.time = count
             currentPlayLengthLabel.text = String(describing: count)
-            timer?.invalidate()
+            viewModel.timer?.invalidate()
         }
     }
     
@@ -528,9 +525,9 @@ final class PlayerView: UIView {
     // Timer
     
     private func setTimer() {
-        timer?.invalidate()
+        viewModel.timer?.invalidate()
         let timerDic: NSMutableDictionary = ["count": viewModel.time]
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
+        viewModel.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
     }
     
     @objc private func playButtonTapped() {
@@ -562,3 +559,4 @@ final class PlayerView: UIView {
         button.alpha = 0
     }
 }
+
