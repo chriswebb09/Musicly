@@ -9,7 +9,6 @@
 import UIKit
 
 protocol OpenPlayerProtocol {
-    
     func setup(playlist: Playlist, index: Int) -> PlayerViewController
 }
 
