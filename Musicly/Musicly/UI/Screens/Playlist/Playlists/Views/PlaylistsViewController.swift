@@ -106,7 +106,10 @@ extension PlaylistsViewController: PlaylistCreatorDelegate {
     
     func userDidEnterPlaylistName(name: String) {
         var tracklist = TrackList()
-        store.createNewList(newList: tracklist, name: name, date: NSDate() as Date, uid: UUID().uuidString)
+        tracklist.listName = name
+        tracklist.listId = UUID().uuidString
+        tracklist.date = String(describing: Date())
+        store.createNewList(newList: tracklist)
         if let tracklists = store.trackLists, let last = tracklists.last {
             trackList.append(last)
         }

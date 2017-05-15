@@ -57,11 +57,7 @@ final class iTrackDataStore {
     
     // Creates new TrackList
     
-    func createNewList(newList: TrackList, name: String, date: Date, uid: String) {
-        let stringDate = String(describing: date)
-        newList.listName = name
-        newList.listId = uid
-        newList.date = stringDate
+    func createNewList(newList: TrackList) {
         lists.append(newList)
         realmClient.save(list: newList)
     }
@@ -69,14 +65,12 @@ final class iTrackDataStore {
     // Hit with search terms, parse json and return objects
     
     func searchForTracks(completion: @escaping playlistCompletion) {
-        print(searchTerm)
+        
         if let searchTerm = searchTerm {
             iTunesAPIClient.search(for: searchTerm) { data, error in
-                print(data)
                 if let error = error {
                     completion(nil, error)
                 } else if let data = data {
-                    print(data)
                     let tracksData = data["results"] as! [[String: Any]]
                     let playlist: Playlist? = Playlist()
                     tracksData.forEach {
@@ -85,7 +79,7 @@ final class iTrackDataStore {
                         newItem?.track = track
                         playlist?.append(newPlaylistItem: newItem)
                     }
-                    print(playlist)
+                    
                     completion(playlist, nil)
                 } else {
                     completion(nil, NSError.generalParsingError(domain: ""))
