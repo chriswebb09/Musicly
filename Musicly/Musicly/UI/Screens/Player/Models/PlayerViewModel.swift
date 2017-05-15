@@ -15,6 +15,11 @@ struct PlayerViewModel {
             thumbsDownImage = thumbs == .down ? #imageLiteral(resourceName: "thumbsdownorange") : #imageLiteral(resourceName: "thumbsdownblue")
         }
     }
+    
+    var defaultTimeString: String {
+        return "0:00"
+    }
+    
     var currentPlayTimeColor: UIColor = .orange
     var totalPlayTimeColor: UIColor
     var progress: Float
@@ -32,7 +37,9 @@ struct PlayerViewModel {
     var time: Int
     var totalTime: Int
     var totalTimeString: String
-    var artworkUrl: String
+    var artworkUrlString: String
+    
+    var artworkUrl: URL?
     
     init(track: Track, playState: FileState) {
         self.playState = playState
@@ -46,7 +53,17 @@ struct PlayerViewModel {
         self.thumbsDownImage = UIImage()
         self.thumbsUpImage = UIImage()
         self.albumArt = UIImage()
-        self.artworkUrl = track.artworkUrl
+        self.artworkUrlString = track.artworkUrl
         self.trackName = track.trackName
+        self.artworkUrl = URL(string: artworkUrlString)
+    }
+    
+    
+    mutating func resetProgress() {
+        self.progress = 0 
+    }
+    
+    mutating func resetTime() {
+        self.time = 0 
     }
 }

@@ -25,6 +25,7 @@ final class PlayerView: UIView {
             totalPlayLengthLabel.text = viewModel.totalTimeString
             thumbsUpButton.setImage(viewModel.thumbsUpImage, for: .normal)
             thumbsDownButton.setImage(viewModel.thumbsDownImage, for: .normal)
+            currentPlayLengthLabel.text = viewModel.defaultTimeString
         }
     }
     
@@ -97,7 +98,7 @@ final class PlayerView: UIView {
     
     private var currentPlayLengthLabel: UILabel = {
         let label = UILabel()
-        label.text = "0:00"
+        // label.text = "0:00"
         label.textAlignment = .left
         if let font = ApplicationConstants.labelFont { label.font = font }
         label.textColor = .orange
@@ -181,11 +182,9 @@ final class PlayerView: UIView {
         playButton.isEnabled = false
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
-        let artworkUrl = viewModel.artworkUrl
-        if let url = URL(string: artworkUrl) {
-            let trackName = viewModel.trackName
+        if let url = viewModel.artworkUrl {
             albumArtworkView.downloadImage(url: url)
-            trackTitleLabel.text = trackName
+            trackTitleLabel.text = viewModel.trackName
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
             addSelectors()
@@ -206,15 +205,15 @@ final class PlayerView: UIView {
     
     func resetProgressAndTime() {
         delegate?.resetPlayerAndSong()
-        viewModel.progress = 0
-        viewModel.time = 0
+        viewModel.resetProgress()
+        viewModel.resetTime()
     }
     
     // Skip and back button functionality
     
     func skipButtonTapped() {
         resetProgressAndTime()
-        currentPlayLengthLabel.text = "0:00"
+        currentPlayLengthLabel.text = viewModel.defaultTimeString
         delegate?.skipButtonTapped()
         timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
@@ -224,7 +223,7 @@ final class PlayerView: UIView {
     func backButtonTapped() {
         resetProgressAndTime()
         timer?.invalidate()
-        currentPlayLengthLabel.text = "0:00"
+        currentPlayLengthLabel.text = viewModel.defaultTimeString
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer()
@@ -462,22 +461,15 @@ final class PlayerView: UIView {
         case .queued:
             return
         case .playing:
-            if let countDict = timer?.userInfo as? NSMutableDictionary?,
-                var count = countDict?["count"] as? Int {
-                viewModel.time = count + 1
-                progressView.progress += progressIncrementer
-                viewModel.progress = progressView.progress
-                countDict?["count"] = viewModel.time
-                currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
-                if progressView.progress == 1 {
-                    stopEqualizer()
-                    finishedPlaying(countDict: countDict)
-                    
-                    viewModel.time = 0
-                    currentPlayLengthLabel.text = "0:00"
-                    count = 0
-                    timer?.invalidate()
-                }
+            guard let countDict = timer?.userInfo as? NSMutableDictionary else { return }
+            guard var count = countDict["count"] as? Int else { return }
+            viewModel.time = count + 1
+            progressView.progress += progressIncrementer
+            viewModel.progress = progressView.progress
+            countDict["count"] = viewModel.time
+            currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
+            if progressView.progress == 1 {
+                finishedPlaying(countDict: countDict, time: 0)
             }
         case .done:
             return
@@ -488,13 +480,17 @@ final class PlayerView: UIView {
     
     // On song completed playing
     
-    private func finishedPlaying(countDict: NSMutableDictionary?) {
+    private func finishedPlaying(countDict: NSMutableDictionary?, time: Int) {
         viewModel.playState = .done
+        
         countDict?["count"] = time
         delegate?.resetPlayerAndSong()
+        viewModel.resetTime()
+        currentPlayLengthLabel.text = "0:00"
         switchButton(button: pauseButton, for: playButton)
-        viewModel.progress = 0
-        animateEqualizer()
+        viewModel.resetProgress()
+        stopEqualizer()
+        timer?.invalidate()
     }
     
     // Animate disappearance of Equalizer

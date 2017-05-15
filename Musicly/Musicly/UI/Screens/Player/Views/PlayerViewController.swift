@@ -11,13 +11,15 @@ final class PlayerViewController: UIViewController {
     
     var playerView = PlayerView()
     var playListItem: PlaylistItem?
+    
     var menuPop = BottomMenuPopover()
     var loadingPop = LoadingPopover()
+    
     var playList: Playlist?
     var rightButtonItem: UIBarButtonItem!
     var index: Int!
     lazy var trackPlayer = TrackPlayer()
-    let realm = try! Realm()
+    
     var menuActive: MenuActive = .none
     var parentIsPlaylist: Bool = false
     
@@ -27,12 +29,8 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !parentIsPlaylist {
-            setupBarButton()
-        }
-        
+        if !parentIsPlaylist { setupBarButton() }
         baseControllerSetup()
-        baseViewSetup(playerView: playerView)
         showLoadingView(loadingPop: loadingPop)
         playListItem = playList?.playlistItem(at: index)
         setupItem(item: playListItem)
@@ -48,6 +46,7 @@ final class PlayerViewController: UIViewController {
     private func baseControllerSetup() {
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
+        baseViewSetup(playerView: playerView)
     }
     
     private func baseViewSetup(playerView: PlayerView) {
@@ -71,10 +70,6 @@ final class PlayerViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func actionClose(_ tap: UITapGestureRecognizer) {
-        presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-
     override func downloadProgressUpdated(for progress: Float) {
         print(progress)
     }
@@ -120,9 +115,7 @@ extension PlayerViewController: PlayerViewDelegate {
         menuPop.setupPop()
         playerView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.15) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             strongSelf.menuPop.showPopView(viewController: strongSelf)
             strongSelf.menuPop.popView.isHidden = false
         }
@@ -140,9 +133,7 @@ extension PlayerViewController: PlayerViewDelegate {
         guard let url = URL(string: track.previewUrl) else { return }
         title = track.artistName
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             strongSelf.playerView.configure(with: viewModel)
         }
@@ -182,9 +173,7 @@ extension PlayerViewController: PlayerViewDelegate {
         trackPlayer.player.pause()
         showLoadingView(loadingPop: loadingPop)
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             guard let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
             strongSelf.playerView.configure(with: viewModel)
@@ -236,9 +225,7 @@ extension PlayerViewController: TrackPlayerDelegate {
     func trackDurationCalculated(stringTime: String, timeValue: Float64) {
         print(stringTime)
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             strongSelf.loadingPop.popView.stopAnimating(ball: strongSelf.loadingPop.popView.ball!)
             strongSelf.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
             strongSelf.playerView.playbuttonEnabled(is: true)
@@ -248,9 +235,7 @@ extension PlayerViewController: TrackPlayerDelegate {
     
     func updateProgress(progress: Double) {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             strongSelf.playerView.updateProgressBar(value: progress)
         }
     }
