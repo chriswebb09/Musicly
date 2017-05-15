@@ -26,7 +26,7 @@ struct BasePopConstants {
 }
 
 enum RowSize {
-    case header, track, item, largeLayout, smallLayout
+    case header, track, largeLayout, smallLayout
     
     var rawValue: CGSize {
         switch self {
@@ -34,8 +34,6 @@ enum RowSize {
             return CGSize(width: 100, height: 50)
         case .track:
             return CGSize(width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width / 2)
-        case .item:
-            return CGSize(width: (UIScreen.main.bounds.size.width - 40)/2.2, height: ((UIScreen.main.bounds.size.width - 40) / 2))
         case .smallLayout:
             return CGSize(width: (UIScreen.main.bounds.size.width - 40)/2.2, height: ((UIScreen.main.bounds.size.width - 40) / 2))
         case .largeLayout:
