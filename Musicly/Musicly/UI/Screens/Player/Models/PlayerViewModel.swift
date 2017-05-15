@@ -28,14 +28,7 @@ struct PlayerViewModel {
     var time: Int = 0
     var totalTime: Int = 0
     var totalTimeString: String = ""
-    var artworkUrlString: String {
-        didSet {
-            print(artworkUrlString)
-            self.artworkUrl = URL(string: artworkUrlString)
-        }
-    }
-    
-    var artworkUrl: URL?
+    var artworkUrlString: String
     
     init(track: Track, playState: FileState) {
         self.playState = playState

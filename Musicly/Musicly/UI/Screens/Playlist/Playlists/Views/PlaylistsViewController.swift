@@ -93,7 +93,7 @@ extension PlaylistsViewController: UICollectionViewDelegate {
         model.store = store
         model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId)!
         destinationVC.title = trackList[indexPath.row].listName
-        destinationVC.viewModel = model
+        destinationVC.dataSource = model
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(destinationVC, animated: false)
         }

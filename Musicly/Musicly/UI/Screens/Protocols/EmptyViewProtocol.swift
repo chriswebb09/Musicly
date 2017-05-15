@@ -14,6 +14,7 @@ import UIKit
 
  extension EmptyViewProtocol {
     func setupEmptyView(emptyView: EmptyView, for view: UIView) {
+        view.backgroundColor = .clear
         view.addSubview(emptyView)
         emptyView.layoutSubviews()
         emptyView.frame = view.frame

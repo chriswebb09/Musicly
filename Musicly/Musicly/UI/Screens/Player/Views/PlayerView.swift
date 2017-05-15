@@ -183,7 +183,7 @@ final class PlayerView: UIView {
         dump(viewModel)
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
-        print(viewModel.artworkUrl)
+      
         if let url = URL(string: viewModel.artworkUrlString) {
             albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = viewModel.trackName

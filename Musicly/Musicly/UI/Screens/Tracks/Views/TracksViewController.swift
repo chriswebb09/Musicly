@@ -4,35 +4,13 @@
  
  private let reuseIdentifier = "trackCell"
  
- final class TracksViewController: UIViewController {
-    
-    var dataSource: ListControllerDataSource!
+ final class TracksViewController: BaseListViewController {
     var buttonItem: UIBarButtonItem!
-    
-    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
-    
-    var emptyView: EmptyView = EmptyView()
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
             searchBar.returnKeyType = .done
-        }
-    }
-    
-    var contentState: TrackContentState = .none {
-        didSet {
-            switch contentState {
-            case .none:
-                self.view.bringSubview(toFront: emptyView)
-            case .results:
-                self.view.bringSubview(toFront: collectionView)
-            case.loaded:
-                self.view.bringSubview(toFront: collectionView)
-            case .loading:
-                return
-            }
         }
     }
     
@@ -52,9 +30,6 @@
         super.viewDidLoad()
         guard let realmUrl = Realm.Configuration.defaultConfiguration.fileURL else { return }
         print(realmUrl)
-        view.addSubview(emptyView)
-        emptyView.layoutSubviews()
-        emptyView.frame = view.frame
         searchController.delegate = self
         title = "Music.ly"
         commonInit()
@@ -70,7 +45,6 @@
                                      style: .plain,
                                      target: self,
                                      action: #selector(navigationBarSetup))
-        edgesForExtendedLayout = []
         collectionView.isHidden = true
         setupCollectionView()
         navigationItem.setRightBarButton(buttonItem, animated: false)
@@ -78,6 +52,7 @@
         collectionView.backgroundColor = CollectionViewConstants.backgroundColor
         setupSearchController()
     }
+    
     func navigationBarSetup() {
         navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
@@ -88,22 +63,9 @@
         navigationItem.rightBarButtonItem?.tintColor = .white
         searchBar.becomeFirstResponder()
     }
-    
-    private func setupCollectionView() {
-        let newLayout: TrackItemsFlowLayout = TrackItemsFlowLayout()
-        newLayout.setup()
-        collectionView.collectionViewLayout = newLayout
-        collectionView.frame = UIScreen.main.bounds
-        guard let tabbarHeight = self.tabBarController?.tabBar.frame.height else { return }
-        collectionView.contentInset =  UIEdgeInsets(top: 0, left: 0, bottom: tabbarHeight + 20, right: 0)
-        view.addSubview(collectionView)
-        view.sendSubview(toBack: collectionView)
-        view.bringSubview(toFront: emptyView)
-        collectionViewRegister(collectionView: collectionView, viewController: self, identifier: reuseIdentifier)
-    }
  }
  
- extension TracksViewController: TrackCellCollectionProtocol {
+ extension TracksViewController {
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -129,14 +91,7 @@
     }
  }
  
- extension TracksViewController: TrackCellCreator {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        setTrackCell(indexPath: indexPath, cell: cell, playlist: dataSource.playlist)
-        return cell
-    }
- }
- 
+ //
  // MARK: - UICollectionViewDelegate
  
  extension TracksViewController: UICollectionViewDelegate, OpenPlayerProtocol {
