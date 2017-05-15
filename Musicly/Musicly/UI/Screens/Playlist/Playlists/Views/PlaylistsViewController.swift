@@ -12,6 +12,7 @@ final class PlaylistsViewController: UIViewController {
     var rightBarButtonItem: UIBarButtonItem!
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     var trackList: [TrackList] = []
+    var dataSource: ListControllerDataSource!
     
     override func viewDidLoad() {
         title = "Playlists"

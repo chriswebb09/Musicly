@@ -66,6 +66,9 @@ final class TabBarController: UITabBarController {
     private func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
         let selectedImage = #imageLiteral(resourceName: "orange-soundwave")
         let normalImage = #imageLiteral(resourceName: "blue-soundwave")
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        playlistViewController.dataSource = dataSource
         playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         playlistViewController.tabBarItem.selectedImage = selectedImage
         let playlistTab = UINavigationController(rootViewController: playlistViewController)
