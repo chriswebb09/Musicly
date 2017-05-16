@@ -10,7 +10,7 @@ import UIKit
 
 struct PlayerViewConstants {
     static let backButtonWidthMultiplier: CGFloat = 0.12
-    static let backButtonHeightMultiplier: CGFloat = 0.12
+    static let backButtonHeightMultiplier: CGFloat = 0.11
     static let backButtonCenterYOffset: CGFloat = -0.08
     static let progressViewWidthMultiplier: CGFloat = 0.6
     static let progressViewHeightMultiplier: CGFloat = 0.005

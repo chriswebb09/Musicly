@@ -38,7 +38,7 @@ final class PlayerView: UIView {
     
     private var artworkView: UIView = {
         var artworkView = UIView()
-        artworkView.backgroundColor = .appBlue
+        artworkView.backgroundColor = UIColor(red:0.94, green:0.95, blue:0.98, alpha:1.0)
         return artworkView
     }()
     
@@ -52,13 +52,13 @@ final class PlayerView: UIView {
     
     private var playButton: UIButton = {
         var playButton = UIButton()
-        playButton.setImage(#imageLiteral(resourceName: "playbutton-test"), for: .normal)
+        playButton.setImage(#imageLiteral(resourceName: "bordered-white-play"), for: .normal)
         return playButton
     }()
     
     private var pauseButton: UIButton = {
         var pauseButton = UIButton()
-        pauseButton.setImage(#imageLiteral(resourceName: "pause-button-test"), for: .normal)
+        pauseButton.setImage(#imageLiteral(resourceName: "white-bordered-pause"), for: .normal)
         return pauseButton
     }()
     
@@ -106,7 +106,8 @@ final class PlayerView: UIView {
     
     private var trackTitleView: UIView = {
         let trackTitleView = UIView()
-        trackTitleView.backgroundColor = .white
+        trackTitleView.backgroundColor = .appBlue
+            //UIColor(red:0.94, green:0.95, blue:0.98, alpha:1.0)
         return trackTitleView
     }()
     
@@ -121,7 +122,7 @@ final class PlayerView: UIView {
     
     private var preferencesView: UIView = {
         let preferencesView = UIView()
-        preferencesView.backgroundColor = .white
+        preferencesView.backgroundColor = .appBlue
         return preferencesView
     }()
     
@@ -343,8 +344,8 @@ final class PlayerView: UIView {
     private func setupTrackButtons(button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.23).isActive = true
-        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
+        button.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: 0.27).isActive = true
+        button.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.03).isActive = true
         button.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
     }
     
@@ -352,11 +353,11 @@ final class PlayerView: UIView {
     
     private func setupSkipButtons() {
         skipButtonsSharedLayout(button: skipButton)
-        skipButton.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.15).isActive = true
-        skipButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
+        skipButton.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.16).isActive = true
+        skipButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.03).isActive = true
         skipButtonsSharedLayout(button: backButton)
         backButton.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.15).isActive = true
-        backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.05).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.03).isActive = true
     }
     
     private func skipButtonsSharedLayout(button: UIButton) {
@@ -382,9 +383,9 @@ final class PlayerView: UIView {
     
     private func setupControlButtons() {
         setupTrackButtons(button: playButton)
-        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
+        playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.25).isActive = true
         setupTrackButtons(button: pauseButton)
-        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.22).isActive = true
+        pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.25).isActive = true
     }
     
     private func setupProgressView() {
