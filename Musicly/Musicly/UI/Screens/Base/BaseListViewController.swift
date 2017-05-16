@@ -39,20 +39,22 @@ class BaseListViewController: UIViewController {
     }
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-}
 
-extension BaseListViewController: TrackCellCollectionProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyView(emptyView: emptyView, for: view)
         edgesForExtendedLayout = []
         setupCollectionView()
+        collectionView.isHidden = true
         setupDefaultUI()
         collectionView.backgroundColor = CollectionViewConstants.backgroundColor
         collectionViewRegister(collectionView: collectionView, viewController: self, identifier: reuseIdentifier)
     }
-    
+}
+
+extension BaseListViewController: TrackCellCollectionProtocol {
+
     func setupCollectionView() {
         let newLayout: TrackItemsFlowLayout = TrackItemsFlowLayout()
         newLayout.setup()
@@ -63,7 +65,6 @@ extension BaseListViewController: TrackCellCollectionProtocol {
         view.addSubview(collectionView)
         view.sendSubview(toBack: collectionView)
         view.bringSubview(toFront: emptyView)
-        collectionViewRegister(collectionView: collectionView, viewController: self, identifier: reuseIdentifier)
     }
 }
 

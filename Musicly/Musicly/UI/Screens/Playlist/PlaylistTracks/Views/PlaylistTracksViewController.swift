@@ -23,12 +23,8 @@ final class PlaylistViewController: BaseListViewController {
     
     private func commonInit() {
         buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
-        
         navigationItem.setRightBarButton(buttonItem, animated: false)
     }
-}
-
-extension PlaylistViewController {
     
     func goToSearch() {
         tabBarController?.selectedIndex = 0

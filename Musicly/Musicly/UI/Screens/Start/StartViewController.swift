@@ -2,7 +2,7 @@ import UIKit
 
 class StartViewController: UIViewController {
     
-    let startView = StartView()
+    var startView: StartView = StartView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -3,7 +3,9 @@
  import RealmSwift
  
  final class TracksViewController: BaseListViewController {
+    
     var buttonItem: UIBarButtonItem!
+    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     fileprivate var searchBar = UISearchBar() {
@@ -30,7 +32,9 @@
         print(realmUrl)
         searchController.delegate = self
         title = "Music.ly"
-        commonInit()
+        buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(navigationBarSetup))
+        navigationItem.setRightBarButton(buttonItem, animated: false)
+        setupSearchController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,32 +42,22 @@
         if let searchBarText = searchBar.text, searchBarText.characters.count > 0 { searchBarActive = true }
     }
     
-    func commonInit() {
-        buttonItem = UIBarButtonItem(image: dataSource.image,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(navigationBarSetup))
-        collectionView.isHidden = true
-        setupCollectionView()
-        navigationItem.setRightBarButton(buttonItem, animated: false)
-        setupDefaultUI()
-        collectionView.backgroundColor = CollectionViewConstants.backgroundColor
-        setupSearchController()
-    }
-    
-    func navigationBarSetup() {
-        navigationController?.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
+    func setupNavigationBar(navController: UINavigationController, searchController: UISearchController) {
+        navController.navigationBar.barTintColor = NavigationBarAttributes.navBarTint
         searchController.hidesNavigationBarDuringPresentation = false
         searchBar = searchController.searchBar
         navigationItem.titleView = searchBar
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = .white
         navigationItem.rightBarButtonItem?.tintColor = .white
+    }
+    
+    func navigationBarSetup() {
+        guard let navController = self.navigationController else { return }
+        setupNavigationBar(navController: navController, searchController: searchController)
         searchBar.becomeFirstResponder()
     }
- }
- 
- extension TracksViewController {
+    
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -135,15 +129,22 @@
         }
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let barText = searchBar.text else { return }
-        dataSource.store?.setSearch(string: barText)
+    func searchOnTextChange(text: String) {
+        dataSource.store?.setSearch(string: text)
         searchBarActive = true
-        if barText != "" { searchBarHasInput() }
-        navigationController?.navigationBar.topItem?.title = "Search: \(barText)"
+        
+        if text != "" { searchBarHasInput() }
+        navigationController?.navigationBar.topItem?.title = "Search: \(text)"
+        
         UIView.animate(withDuration: 1.8) {
             self.collectionView.alpha = 1
         }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let barText = searchBar.text else { return }
+        searchOnTextChange(text: barText)
     }
  }
  

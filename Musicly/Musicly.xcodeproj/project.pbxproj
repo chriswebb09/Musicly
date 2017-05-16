@@ -76,6 +76,7 @@
 		A75C01301ECADF2100AD0FF3 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C012E1ECADF2100AD0FF3 /* CreateAccountViewController.swift */; };
 		A75C01331ECADF3200AD0FF3 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01311ECADF3200AD0FF3 /* LogInView.swift */; };
 		A75C01341ECADF3200AD0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */; };
+		A75C01361ECAF5E100AD0FF3 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
 		A777028D1EBC1F800002E644 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A777028C1EBC1F800002E644 /* MenuDelegate.swift */; };
@@ -206,6 +207,7 @@
 		A75C012E1ECADF2100AD0FF3 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Screens/CreateAccount/CreateAccountViewController.swift; sourceTree = "<group>"; };
 		A75C01311ECADF3200AD0FF3 /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInView.swift; path = Screens/LogIn/LogInView.swift; sourceTree = "<group>"; };
 		A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/LogIn/LoginViewController.swift; sourceTree = "<group>"; };
+		A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonFactory.swift; path = Elements/ButtonFactory.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
 		A777028C1EBC1F800002E644 /* MenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDelegate.swift; path = Elements/Menu/MenuDelegate.swift; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 				A7F6C67D1EBE43390028FD19 /* Textfield+Extension.swift */,
 				A71A09AA1EB81FDE00CA35E4 /* Views */,
 				A71ADF251EADDFFC0030932E /* Popover */,
+				A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1191,6 +1194,7 @@
 				A71F02B01EB986BB0012490D /* PlayerViewConstants.swift in Sources */,
 				A71F02AD1EB986BB0012490D /* EdgeAttributeConstants.swift in Sources */,
 				A75C012B1ECADF1100AD0FF3 /* StartView.swift in Sources */,
+				A75C01361ECAF5E100AD0FF3 /* ButtonFactory.swift in Sources */,
 				A777028D1EBC1F800002E644 /* MenuDelegate.swift in Sources */,
 				A7F6C67B1EBE2B520028FD19 /* UICollectionViewCell+Extension.swift in Sources */,
 				A70776EE1ECA38410028A72B /* BaseListViewController.swift in Sources */,

@@ -6,11 +6,15 @@ private let reuseIdentifier: String = "PlaylistCell"
 final class PlaylistsViewController: UIViewController {
     
     let detailPop = NewPlaylistPopover()
+    
     lazy var collectionView : UICollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+    
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
+    
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    
     var trackList: [TrackList] = []
     var dataSource: ListControllerDataSource!
     
