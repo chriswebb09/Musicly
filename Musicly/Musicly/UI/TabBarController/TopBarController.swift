@@ -14,25 +14,26 @@ class TopBarController: UITabBarController {
     
     let yStatusBar = UIApplication.shared.statusBarFrame.size.height + 45
     
-     var dataSource = ListControllerDataSource()
+    var dataSource = ListControllerDataSource()
     
-    var store: iTrackDataStore?
+    var store: iTrackDataStore? = iTrackDataStore()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        view.backgroundColor = .darkGray
-        store = iTrackDataStore()
-        setupTabs()
-        super.viewDidLoad()
-        tabBar.barTintColor = UIColor.darkGray
-        self.tabBar.frame = CGRect(x: 0, y: yStatusBar, width: tabBar.frame.size.width, height: tabBar.frame.size.height / 2)
+      //  let tabBar = self.tabBar
+        print(self.tabBar)
+        self.tabBar.selectionIndicatorImage = UIImage().createSelectionIndicator(color: UIColor.blue, size: CGSize(width: self.tabBar.frame.width/CGFloat(self.tabBar.items!.count), height: self.tabBar.frame.height), lineWidth: 2.0)
+//        tabBar.selectionIndicatorImage = UIImage().createSelectionIndicator(color: UIColor.blue, size: CGSize(width: tabBar.frame.width/CGFloat(tabBar.items!.count), height: tabBar.frame.height), lineWidth: 2.0)
+//        
+//        self.tabBar.frame = CGRect(x: 0, y: yStatusBar, width: tabBar.frame.size.width, height: tabBar.frame.size.height / 2)
     }
     
     private func setupTabs() {
         super.viewDidLoad()
         setupControllers()
     }
-
+    
     private func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
         let tracksController = TracksViewController()
@@ -47,13 +48,18 @@ class TopBarController: UITabBarController {
         var dataSource = ListControllerDataSource()
         dataSource.store = self.store
         tracksViewController.dataSource = dataSource
-        let itemSize = CGSize(width: tabBar.frame.width / 2, height: tabBar.frame.height)
-        var itemFrame = CGRect(x: tabBar.frame.minX, y: tabBar.frame.minY, width: tabBar.frame.width / 2, height: tabBar.frame.height)
-        tracksViewController.tabBarItem = UITabBarItem(title: "One", image: UIImage().makeImageWithColorAndSize(color: .blue, size: itemSize), tag: 1)
+        
+        tracksViewController.tabBarItem = UITabBarItem(title: "Two", image: nil, selectedImage: #imageLiteral(resourceName: "Rectangle 2").withRenderingMode(.alwaysOriginal))
+        //return tracksViewController
+        
+        
+        //  let itemSize = CGSize(width: tabBar.frame.width / 2, height: tabBar.frame.height)
+        // var itemFrame = CGRect(x: tabBar.frame.minX, y: tabBar.frame.minY, width: tabBar.frame.width / 2, height: tabBar.frame.height)
+        //tracksViewController.tabBarItem = UITabBarItem(title: "One", image: UIImage().makeImageWithColorAndSize(color: .blue, size: itemSize), tag: 1)
         //tracksViewController.tabBarItem = UITabBarItem()
         
         
-            //UITabBarItem(title: "One", image: nil, selectedImage: nil)
+        //UITabBarItem(title: "One", image: nil, selectedImage: nil)
         let tracksTab = UINavigationController(rootViewController: tracksViewController)
         return tracksTab
     }
@@ -62,7 +68,7 @@ class TopBarController: UITabBarController {
         let dataSource = ListControllerDataSource()
         dataSource.store = store
         playlistViewController.dataSource = dataSource
-        playlistViewController.tabBarItem = UITabBarItem(title: "Two", image: nil, selectedImage: nil)
+        playlistViewController.tabBarItem = UITabBarItem(title: "Two", image: nil, selectedImage: #imageLiteral(resourceName: "Rectangle 2").withRenderingMode(.alwaysOriginal))
         let playlistTab = UINavigationController(rootViewController: playlistViewController)
         return playlistTab
     }
@@ -74,4 +80,21 @@ class TopBarController: UITabBarController {
         selectedIndex = 0
     }
 }
+
+extension UIImage {
+    func createSelectionIndicator(color: UIColor, size: CGSize, lineWidth: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(CGRect(origin: CGPoint(x: 0,y :size.height - lineWidth), size: CGSize(width: size.width, height: lineWidth)))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+}
+
+//override func viewDidLoad() {
+//    super.viewDidLoad()
+//    let tabBar = self.tabBarController!.tabBar
+//    tabBar.selectionIndicatorImage = UIImage().createSelectionIndicator(color: UIColor.blue, size: CGSize(width: tabBar.frame.width/CGFloat(tabBar.items!.count), height: tabBar.frame.height), lineWidth: 2.0)
+//}
 

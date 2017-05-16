@@ -72,6 +72,12 @@
 		A73F629F1EC9A65900930741 /* OpenPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */; };
 		A73F62A01EC9A65900930741 /* TrackCellCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629D1EC9A65900930741 /* TrackCellCreator.swift */; };
 		A73F62A21EC9A68D00930741 /* TrackCellCollectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */; };
+		A75C011B1ECAC97200AD0FF3 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C011A1ECAC97200AD0FF3 /* StartView.swift */; };
+		A75C011D1ECAC98100AD0FF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C011C1ECAC98100AD0FF3 /* StartViewController.swift */; };
+		A75C01201ECAC9AA00AD0FF3 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C011F1ECAC9AA00AD0FF3 /* CreateAccountView.swift */; };
+		A75C01221ECAC9C300AD0FF3 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01211ECAC9C300AD0FF3 /* CreateAccountViewController.swift */; };
+		A75C01251ECAC9EB00AD0FF3 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01241ECAC9EB00AD0FF3 /* LogInView.swift */; };
+		A75C01271ECAC9FC00AD0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01261ECAC9FC00AD0FF3 /* LoginViewController.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
 		A777028D1EBC1F800002E644 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A777028C1EBC1F800002E644 /* MenuDelegate.swift */; };
@@ -198,6 +204,12 @@
 		A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenPlayerProtocol.swift; path = Screens/Protocols/OpenPlayerProtocol.swift; sourceTree = "<group>"; };
 		A73F629D1EC9A65900930741 /* TrackCellCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCreator.swift; path = Screens/Protocols/TrackCellCreator.swift; sourceTree = "<group>"; };
 		A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCollectionProtocol.swift; path = Screens/Protocols/TrackCellCollectionProtocol.swift; sourceTree = "<group>"; };
+		A75C011A1ECAC97200AD0FF3 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartView.swift; path = Screens/StartView.swift; sourceTree = "<group>"; };
+		A75C011C1ECAC98100AD0FF3 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = Screens/StartViewController.swift; sourceTree = "<group>"; };
+		A75C011F1ECAC9AA00AD0FF3 /* CreateAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountView.swift; path = Screens/CreateAccountView.swift; sourceTree = "<group>"; };
+		A75C01211ECAC9C300AD0FF3 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = Screens/CreateAccountViewController.swift; sourceTree = "<group>"; };
+		A75C01241ECAC9EB00AD0FF3 /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInView.swift; path = Screens/LogInView.swift; sourceTree = "<group>"; };
+		A75C01261ECAC9FC00AD0FF3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/LoginViewController.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
 		A777028C1EBC1F800002E644 /* MenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDelegate.swift; path = Elements/Menu/MenuDelegate.swift; sourceTree = "<group>"; };
@@ -649,6 +661,9 @@
 				A7F6C67C1EBE42E60028FD19 /* Elements */,
 				A70776E21EC9E33A0028A72B /* Protocols */,
 				A70776EC1ECA372A0028A72B /* Base */,
+				A75C011E1ECAC98500AD0FF3 /* Start */,
+				A75C01231ECAC9CB00AD0FF3 /* CreateAccount */,
+				A75C01281ECACA0200AD0FF3 /* Login */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -668,6 +683,33 @@
 				A70776E61EC9E4C00028A72B /* Model */,
 			);
 			name = Playlists;
+			sourceTree = "<group>";
+		};
+		A75C011E1ECAC98500AD0FF3 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				A75C011A1ECAC97200AD0FF3 /* StartView.swift */,
+				A75C011C1ECAC98100AD0FF3 /* StartViewController.swift */,
+			);
+			name = Start;
+			sourceTree = "<group>";
+		};
+		A75C01231ECAC9CB00AD0FF3 /* CreateAccount */ = {
+			isa = PBXGroup;
+			children = (
+				A75C011F1ECAC9AA00AD0FF3 /* CreateAccountView.swift */,
+				A75C01211ECAC9C300AD0FF3 /* CreateAccountViewController.swift */,
+			);
+			name = CreateAccount;
+			sourceTree = "<group>";
+		};
+		A75C01281ECACA0200AD0FF3 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				A75C01241ECAC9EB00AD0FF3 /* LogInView.swift */,
+				A75C01261ECAC9FC00AD0FF3 /* LoginViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		A77702901EBC26DF0002E644 /* Realm */ = {
@@ -1111,6 +1153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A71F02921EB986A40012490D /* BasePopoverAlert.swift in Sources */,
+				A75C011B1ECAC97200AD0FF3 /* StartView.swift in Sources */,
 				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
 				A7B26D2B1ECA68E500D1AF2D /* TopBarItem.swift in Sources */,
 				A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */,
@@ -1121,6 +1164,7 @@
 				A70777031ECA39CA0028A72B /* TrackItemsLayout.swift in Sources */,
 				A71A14C11EB78E4400EDCE6D /* NSError+Extension.swift in Sources */,
 				A72AE35D1EBA55840022C6B3 /* BallAnimationView.swift in Sources */,
+				A75C01201ECAC9AA00AD0FF3 /* CreateAccountView.swift in Sources */,
 				A71F02A61EB986BB0012490D /* BaseAlertPopoverConstant.swift in Sources */,
 				A70777011ECA39930028A72B /* TrackContentState.swift in Sources */,
 				A77702AA1EBC2A980002E644 /* PlaylistTracksViewController.swift in Sources */,
@@ -1136,6 +1180,7 @@
 				A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */,
 				A71F02B21EB986BB0012490D /* PlaylistViewControllerConstants.swift in Sources */,
 				A7CBC4071E9FE62300C95A50 /* Track.swift in Sources */,
+				A75C01221ECAC9C300AD0FF3 /* CreateAccountViewController.swift in Sources */,
 				A7ECBCD21EB46A070098CE0E /* DetailPopover.swift in Sources */,
 				A71A09A91EB81FC200CA35E4 /* MenuActive.swift in Sources */,
 				A7CA202C1EAC67BE00EF69A1 /* String+Extension.swift in Sources */,
@@ -1174,6 +1219,7 @@
 				A72AE3611EBA55980022C6B3 /* IndicatorView.swift in Sources */,
 				A71A09AE1EB8200C00CA35E4 /* LoadingView.swift in Sources */,
 				A71F02AB1EB986BB0012490D /* DetailPopoverConstants.swift in Sources */,
+				A75C011D1ECAC98100AD0FF3 /* StartViewController.swift in Sources */,
 				A71F02A71EB986BB0012490D /* BaseMenuPopoverAlert.swift in Sources */,
 				A72AE3521EBA4D710022C6B3 /* DownloadStatus.swift in Sources */,
 				A71A14BC1EB7885F00EDCE6D /* Download.swift in Sources */,
@@ -1194,6 +1240,7 @@
 				A7B26D271ECA3AA800D1AF2D /* FileState.swift in Sources */,
 				A72AE3651EBA5A8D0022C6B3 /* AppDelegate.swift in Sources */,
 				A77702A61EBC2A620002E644 /* PlaylistsViewController.swift in Sources */,
+				A75C01271ECAC9FC00AD0FF3 /* LoginViewController.swift in Sources */,
 				A73F62A01EC9A65900930741 /* TrackCellCreator.swift in Sources */,
 				A71F02A91EB986BB0012490D /* CALayerConstants.swift in Sources */,
 				A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */,
@@ -1202,6 +1249,7 @@
 				A72E9C601EBE6423002C0774 /* UISearchBar+Extension.swift in Sources */,
 				A73F62A21EC9A68D00930741 /* TrackCellCollectionProtocol.swift in Sources */,
 				A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */,
+				A75C01251ECAC9EB00AD0FF3 /* LogInView.swift in Sources */,
 				A77702981EBC29750002E644 /* PlayerViewController.swift in Sources */,
 				A70776F81ECA38DD0028A72B /* PlaylistCell.swift in Sources */,
 			);
