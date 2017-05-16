@@ -13,7 +13,8 @@ final class PlaylistViewController: BaseListViewController {
         }
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         title = dataSource.tracklist.listName
-        commonInit()
+        buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
+        commonInit(buttonItem: buttonItem!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,8 +22,7 @@ final class PlaylistViewController: BaseListViewController {
         navigationItem.rightBarButtonItems = [buttonItem!]
     }
     
-    private func commonInit() {
-        buttonItem = UIBarButtonItem(image: dataSource.image, style: .plain, target: self, action: #selector(goToSearch))
+    private func commonInit(buttonItem: UIBarButtonItem) {
         navigationItem.setRightBarButton(buttonItem, animated: false)
     }
     

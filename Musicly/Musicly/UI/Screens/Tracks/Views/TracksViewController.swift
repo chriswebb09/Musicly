@@ -6,7 +6,7 @@
     
     var buttonItem: UIBarButtonItem!
     
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: nil)
     
     fileprivate var searchBar = UISearchBar() {
         didSet {
@@ -14,7 +14,7 @@
         }
     }
     
-    fileprivate var searchBarActive: Bool = false {
+    var searchBarActive: Bool = false {
         didSet {
             if searchBarActive == true {
                 navigationItem.rightBarButtonItems = []
@@ -99,7 +99,7 @@
         searchController.searchBar.resignFirstResponder()
     }
     
-    fileprivate func setupSearchController() {
+    func setupSearchController() {
         setSearchBarColor(searchBar: searchBar)
         searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
@@ -129,12 +129,12 @@
         }
     }
     
-    func searchOnTextChange(text: String) {
+    func searchOnTextChange(text: String, store: iTrackDataStore, navController: UINavigationController) {
         dataSource.store?.setSearch(string: text)
         searchBarActive = true
         
         if text != "" { searchBarHasInput() }
-        navigationController?.navigationBar.topItem?.title = "Search: \(text)"
+        navController.navigationBar.topItem?.title = "Search: \(text)"
         
         UIView.animate(withDuration: 1.8) {
             self.collectionView.alpha = 1
@@ -143,8 +143,8 @@
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let barText = searchBar.text else { return }
-        searchOnTextChange(text: barText)
+        guard let barText = searchBar.text, let store = dataSource.store, let navcontroller = self.navigationController else { return }
+        searchOnTextChange(text: barText, store: store, navController: navcontroller)
     }
  }
  

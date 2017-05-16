@@ -95,7 +95,7 @@ final class PlayerView: UIView {
     
     private var currentPlayLengthLabel: UILabel = {
         let label = UILabel()
-       
+        
         label.textAlignment = .left
         if let font = ApplicationConstants.labelFont { label.font = font }
         label.textColor = .orange
@@ -107,7 +107,7 @@ final class PlayerView: UIView {
     private var trackTitleView: UIView = {
         let trackTitleView = UIView()
         trackTitleView.backgroundColor = .appBlue
-            //UIColor(red:0.94, green:0.95, blue:0.98, alpha:1.0)
+        //UIColor(red:0.94, green:0.95, blue:0.98, alpha:1.0)
         return trackTitleView
     }()
     
@@ -178,10 +178,8 @@ final class PlayerView: UIView {
     
     func configure(with viewModel: PlayerViewModel) {
         playButton.isEnabled = false
-        dump(viewModel)
         self.viewModel = viewModel
         self.viewModel.thumbs = .none
-        
         if let url = URL(string: viewModel.artworkUrlString) {
             albumArtworkView.downloadImage(url: url)
             trackTitleLabel.text = viewModel.trackName
@@ -217,7 +215,7 @@ final class PlayerView: UIView {
         delegate?.skipButtonTapped()
         viewModel.timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
-        stopEqualizer()
+        stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
     }
     
     func backButtonTapped() {
@@ -226,14 +224,14 @@ final class PlayerView: UIView {
         currentPlayLengthLabel.text = viewModel.defaultTimeString
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
-        stopEqualizer()
+        stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
     }
     
     func setPlayState(state: FileState) {
         viewModel.playState = state
     }
     
-    private func setupTrackTitleView() {
+    private func setupTrackTitleView(trackTitleView: UIView) {
         addSubview(trackTitleView)
         trackTitleView.translatesAutoresizingMaskIntoConstraints = false
         trackTitleView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -247,7 +245,7 @@ final class PlayerView: UIView {
         view.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
     
-    private func setupTrackTitleLabel() {
+    private func setupTrackTitleLabel(trackTitleLabel: UILabel) {
         trackTitleView.addSubview(trackTitleLabel)
         trackTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         trackTitleLabel.widthAnchor.constraint(equalTo: trackTitleView.widthAnchor).isActive = true
@@ -257,14 +255,14 @@ final class PlayerView: UIView {
     
     // MARK: - Cover art setup
     
-    private func setupArtworkView() {
+    private func setupArtworkView(artworkView: UIView) {
         sharedTitleArtLayout(view: artworkView)
         artworkView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: PlayerViewConstants.artworkViewHeightMultiplier).isActive = true
         artworkView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         artworkView.topAnchor.constraint(equalTo: trackTitleView.bottomAnchor).isActive = true
     }
     
-    private func setupAlbumArtworkView() {
+    private func setupAlbumArtworkView(albumArtworkView: UIImageView) {
         artworkView.addSubview(albumArtworkView)
         albumArtworkView.translatesAutoresizingMaskIntoConstraints = false
         albumArtworkView.widthAnchor.constraint(equalTo: artworkView.widthAnchor, multiplier: PlayerViewConstants.albumWidthMultiplier).isActive = true
@@ -273,7 +271,7 @@ final class PlayerView: UIView {
         albumArtworkView.centerYAnchor.constraint(equalTo: artworkView.centerYAnchor).isActive = true
     }
     
-    private func setupEqualizerView() {
+    private func setupEqualizerView(equalizerView: UIView) {
         artworkView.addSubview(equalizerView)
         equalizerView.translatesAutoresizingMaskIntoConstraints = false
         equalizerView.widthAnchor.constraint(equalTo: artworkView.widthAnchor).isActive = true
@@ -281,7 +279,7 @@ final class PlayerView: UIView {
         equalizerView.heightAnchor.constraint(equalTo: artworkView.heightAnchor, multiplier: 0.08).isActive = true
     }
     
-    private func setupEqualizerBackgroundView() {
+    private func setupEqualizerBackgroundView(equalizerBackgroundView: UIView) {
         equalizerView.addSubview(equalizerBackgroundView)
         equalizerBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         equalizerBackgroundView.heightAnchor.constraint(equalTo: equalizerView.heightAnchor).isActive = true
@@ -292,7 +290,7 @@ final class PlayerView: UIView {
     
     // MARK: - Preferences setup
     
-    private func setupPreferencesView() {
+    private func setupPreferencesView(preferencesView: UIView) {
         addSubview(preferencesView)
         preferencesView.translatesAutoresizingMaskIntoConstraints = false
         preferencesView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -300,7 +298,7 @@ final class PlayerView: UIView {
         preferencesView.topAnchor.constraint(equalTo: artworkView.bottomAnchor).isActive = true
     }
     
-    private func setupArtistBioButton() {
+    private func setupArtistBioButton(artistInfoButton: UIButton) {
         preferencesView.addSubview(artistInfoButton)
         artistInfoButton.translatesAutoresizingMaskIntoConstraints = false
         artistInfoButton.widthAnchor.constraint(equalTo: preferencesView.widthAnchor, multiplier: PlayerViewConstants.artistInfoWidthMultiplier).isActive = true
@@ -311,13 +309,13 @@ final class PlayerView: UIView {
     
     // Thumbs
     
-    private func setupThumbsUpButton() {
+    private func setupThumbsUpButton(thumbsUpButton: UIButton) {
         thumbsButtonSetup(thumbs: thumbsUpButton)
         thumbsUpButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * PlayerViewConstants.thumbsUpLeftOffset).isActive = true
         thumbsUpButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
     }
     
-    private func setupThumbsDownButton() {
+    private func setupThumbsDownButton(thumbsDownButton: UIButton) {
         thumbsButtonSetup(thumbs: thumbsDownButton)
         thumbsDownButton.leftAnchor.constraint(equalTo: preferencesView.leftAnchor, constant: UIScreen.main.bounds.width * PlayerViewConstants.thumbsDownLeftOffset).isActive = true
         thumbsDownButton.centerYAnchor.constraint(equalTo: preferencesView.centerYAnchor).isActive = true
@@ -333,7 +331,7 @@ final class PlayerView: UIView {
     
     // MARK: - Music controls setup
     
-    private func setupControlsView() {
+    private func setupControlsView(controlsView: UIView) {
         addSubview(controlsView)
         controlsView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
@@ -351,16 +349,16 @@ final class PlayerView: UIView {
     
     // Skip and back button
     
-    private func setupSkipButtons() {
-        skipButtonsSharedLayout(button: skipButton)
+    private func setupSkipButtons(skipButton: UIButton, backButton: UIButton) {
+        skipButtonsSharedLayout(controlsView: controlsView, button: skipButton)
         skipButton.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.16).isActive = true
         skipButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.03).isActive = true
-        skipButtonsSharedLayout(button: backButton)
+        skipButtonsSharedLayout(controlsView: controlsView, button: backButton)
         backButton.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.15).isActive = true
         backButton.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.03).isActive = true
     }
     
-    private func skipButtonsSharedLayout(button: UIButton) {
+    private func skipButtonsSharedLayout(controlsView: UIView, button: UIButton) {
         controlsView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.backButtonWidthMultiplier).isActive = true
@@ -369,7 +367,7 @@ final class PlayerView: UIView {
     
     // Kicks off Equalizer animation sequence
     
-    private func startEqualizer() {
+    private func startEqualizer(equalizerView: UIView, equalizerBackgroundView: UIView) {
         equalView = IndicatorView(frame: equalizerView.frame, color: .gray, padding: 0)
         guard let equalView = equalView else { return }
         equalView.alpha = 0.8
@@ -381,30 +379,30 @@ final class PlayerView: UIView {
     
     // Setups up play and pause buttons
     
-    private func setupControlButtons() {
+    private func setupControlButtons(playButton: UIButton, pauseButton: UIButton) {
         setupTrackButtons(button: playButton)
         playButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.25).isActive = true
         setupTrackButtons(button: pauseButton)
         pauseButton.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: 0.25).isActive = true
     }
     
-    private func setupProgressView() {
+    private func setupProgressView(controlsView: UIView, progressView: UIProgressView) {
         controlsView.addSubview(progressView)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.widthAnchor.constraint(equalTo: controlsView.widthAnchor, multiplier: PlayerViewConstants.progressViewWidthMultiplier).isActive = true
         progressView.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.progressViewHeightMultiplier).isActive = true
         progressView.centerXAnchor.constraint(equalTo: controlsView.centerXAnchor).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.16).isActive = true
+        progressView.centerYAnchor.constraint(equalTo: controlsView.centerYAnchor, constant: UIScreen.main.bounds.height * -0.165).isActive = true
     }
     
-    private func setupTimeLengthLabels() {
-        timeLabelsSharedLayout(timeLabel: totalPlayLengthLabel)
+    private func setupTimeLengthLabels(controlsView: UIView, totalPlaylengthLabel: UILabel) {
+        timeLabelsSharedLayout(controlsView: controlsView, timeLabel: totalPlaylengthLabel)
         totalPlayLengthLabel.rightAnchor.constraint(equalTo: controlsView.rightAnchor, constant: UIScreen.main.bounds.width * -0.07).isActive = true
-        timeLabelsSharedLayout(timeLabel: currentPlayLengthLabel)
+        timeLabelsSharedLayout(controlsView: controlsView, timeLabel: currentPlayLengthLabel)
         currentPlayLengthLabel.leftAnchor.constraint(equalTo: controlsView.leftAnchor, constant: UIScreen.main.bounds.width * 0.07).isActive = true
     }
     
-    private func timeLabelsSharedLayout(timeLabel: UILabel) {
+    private func timeLabelsSharedLayout(controlsView: UIView, timeLabel: UILabel) {
         controlsView.addSubview(timeLabel)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.heightAnchor.constraint(equalTo: controlsView.heightAnchor, multiplier: PlayerViewConstants.playTimeLabelHeightMutliplier).isActive = true
@@ -414,9 +412,9 @@ final class PlayerView: UIView {
     
     // Stops equalizer animations
     
-    private func stopEqualizer() {
+    private func stopEqualizer(equalView: IndicatorView, equalizerBackgroundView: UIView) {
         equalizerBackgroundView.alpha = 0
-        equalView?.stopAnimating()
+        equalView.stopAnimating()
     }
     
     @objc private func moreButtonTapped() {
@@ -426,21 +424,21 @@ final class PlayerView: UIView {
     // Configures all subview
     
     private func setupViews() {
-        setupTrackTitleView()
-        setupArtworkView()
-        setupAlbumArtworkView()
-        setupEqualizerView()
-        setupEqualizerBackgroundView()
-        setupPreferencesView()
-        setupArtistBioButton()
-        setupThumbsUpButton()
-        setupThumbsDownButton()
-        setupControlsView()
-        setupTrackTitleLabel()
-        setupControlButtons()
-        setupSkipButtons()
-        setupProgressView()
-        setupTimeLengthLabels()
+        setupTrackTitleView(trackTitleView: trackTitleView)
+        setupArtworkView(artworkView: artworkView)
+        setupAlbumArtworkView(albumArtworkView: albumArtworkView)
+        setupEqualizerView(equalizerView: equalizerView)
+        setupEqualizerBackgroundView(equalizerBackgroundView: equalizerBackgroundView)
+        setupPreferencesView(preferencesView: preferencesView)
+        setupArtistBioButton(artistInfoButton: artistInfoButton)
+        setupThumbsUpButton(thumbsUpButton: thumbsUpButton)
+        setupThumbsDownButton(thumbsDownButton: thumbsDownButton)
+        setupControlsView(controlsView: controlsView)
+        setupTrackTitleLabel(trackTitleLabel: trackTitleLabel)
+        setupControlButtons(playButton: playButton, pauseButton: pauseButton)
+        setupSkipButtons(skipButton: skipButton, backButton: backButton)
+        setupProgressView(controlsView: controlsView, progressView: progressView)
+        setupTimeLengthLabels(controlsView: controlsView, totalPlaylengthLabel: totalPlayLengthLabel)
     }
     
     func setupTimeLabels(totalTime: String?, timevalue: Float) {
@@ -489,7 +487,7 @@ final class PlayerView: UIView {
         currentPlayLengthLabel.text = "0:00"
         switchButton(button: pauseButton, for: playButton)
         viewModel.resetProgress()
-        stopEqualizer()
+        stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
         viewModel.timer?.invalidate()
     }
     
@@ -499,18 +497,19 @@ final class PlayerView: UIView {
         UIView.animate(withDuration: 0.5) {
             self.playButton.alpha = 1
             self.equalView?.alpha = 0
-            self.stopEqualizer()
+            self.stopEqualizer(equalView: self.equalView!, equalizerBackgroundView: self.equalizerBackgroundView)
         }
     }
     
-    private func pauseTime() {
-        if let countDict = viewModel.timer?.userInfo as? NSMutableDictionary?,
-            let count = countDict?["count"] as? Int {
-            countDict?["count"] = count
+    private func pauseTime(countdict: NSMutableDictionary) {
+        
+        if let count = countdict["count"] as? Int {
+            countdict["count"] = count
             viewModel.time = count
             currentPlayLengthLabel.text = String(describing: count)
             viewModel.timer?.invalidate()
         }
+        
     }
     
     @objc private func thumbsUpTapped() {
@@ -525,15 +524,15 @@ final class PlayerView: UIView {
     
     // Timer
     
-    private func setTimer() {
+    private func setTimer(timerDict: NSMutableDictionary) {
         viewModel.timer?.invalidate()
-        let timerDic: NSMutableDictionary = ["count": viewModel.time]
-        viewModel.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDic, repeats: true)
+        viewModel.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDict, repeats: true)
     }
     
     @objc private func playButtonTapped() {
-        setTimer()
-        startEqualizer()
+        let timerDic: NSMutableDictionary = ["count": viewModel.time]
+        setTimer(timerDict: timerDic)
+        startEqualizer(equalizerView: equalizerView, equalizerBackgroundView: equalizerBackgroundView)
         viewModel.playState = .playing
         delegate?.playButtonTapped()
         switchButton(button: playButton, for: pauseButton)
@@ -541,8 +540,9 @@ final class PlayerView: UIView {
     
     @objc private func pauseButtonTapped() {
         viewModel.playState = .paused
-        stopEqualizer()
-        pauseTime()
+        stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
+        let countDict = viewModel.timer?.userInfo as? NSMutableDictionary
+        pauseTime(countdict: countDict!)
         delegate?.pauseButtonTapped()
         currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
         switchButton(button: pauseButton, for: playButton)

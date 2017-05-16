@@ -11,23 +11,24 @@ import RealmSwift
 
 final class iTrackDataStore {
     
-    fileprivate var searchTerm: String?
+   var searchTerm: String?
     
-    var realmClient = RealmClient()
+    var realmClient: RealmClient
     var trackLists: Results<TrackList>!
     var lists = [TrackList]()
     
     var currentPlaylistID: String?
     var currentPlaylist: TrackList?
     
-    init() {
+    init(realmClient: RealmClient) {
+        self.realmClient = realmClient
         realmClient.setObjects { trackLists, tracks, id in
             self.trackLists = trackLists
             self.currentPlaylistID = id
         }
     }
     
-    func setupCurrentPlaylist(currentPlaylistID: String) -> TrackList? {
+    func setupCurrentPlaylist(currentPlaylistID: String, realmClient: RealmClient) -> TrackList? {
         let current = realmClient.getFilteredTrackList(predicate: currentPlaylistID)
         guard let last = current.last else { return nil }
         return last
@@ -43,7 +44,7 @@ final class iTrackDataStore {
         return nil
     }
     
-    func setupItem(with track: Track, currentPlaylistID: String) {
+    func setupItem(with track: Track, currentPlaylistID: String, realmClient: RealmClient) {
         track.playlistID = currentPlaylistID
         realmClient.save(track: track, playlistID: currentPlaylistID)
     }
@@ -54,7 +55,7 @@ final class iTrackDataStore {
     
     // Creates new TrackList
     
-    func createNewList(newList: TrackList) {
+    func createNewList(newList: TrackList, realmClient: RealmClient) {
         lists.append(newList)
         realmClient.save(list: newList)
     }

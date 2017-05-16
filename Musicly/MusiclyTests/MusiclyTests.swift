@@ -33,7 +33,8 @@ class MusiclyTests: XCTestCase {
     
     
     func testDataStore() {
-        let dataStore = iTrackDataStore()
+        let realmClient = RealmClient()
+        let dataStore = iTrackDataStore(realmClient: realmClient)
         dataStore.setSearch(string: "new")
         let expect = expectation(description: "Data store calls APIClient to access server data and returns iTrack data array.")
         dataStore.searchForTracks { playlist, error in
@@ -47,20 +48,13 @@ class MusiclyTests: XCTestCase {
         }
     }
     
-    func testSearchBarHasContent() {
-        let controller = TracksViewController()
-        let searchBar = UISearchBar()
-        searchBar.text = "hello"
-        XCTAssertTrue(controller.searchBarHasInput(searchBar: searchBar))
-    }
-    
-    
     func testRemoveAllItemsFromPlaylist() {
-        let dataStore = iTrackDataStore()
+        var realmClient = RealmClient()
+        let dataStore = iTrackDataStore(realmClient: realmClient)
         dataStore.setSearch(string: "new")
         let expect = expectation(description: "Removes all items in array.")
         dataStore.searchForTracks { playlist, error in
-           var testList = playlist
+            var testList = playlist
             testList?.removeAll()
             XCTAssert(testList?.itemCount == 0)
             expect.fulfill()
@@ -74,20 +68,58 @@ class MusiclyTests: XCTestCase {
     
     func testSearchBarActive() {
         let controller = TracksViewController()
-        controller.setSearchBarActive(isActive: true)
+        controller.setSearchBarActive()
         XCTAssertTrue(controller.searchBarActive)
     }
     
-    func testSearchButton() {
-        var responder: Bool = false
+    func testForSearchController() {
         let controller = TracksViewController()
-        let store = iTrackDataStore()
-        controller.store = store
-        controller.setupSearchController(with: controller.searchBar)
-        controller.navigationBarSetup()
-        responder = controller.searchController.searchBar.isFirstResponder
-        XCTAssertTrue(controller.searchController.searchBar.isFirstResponder == true)
+        let realmClient = RealmClient()
+        let store = iTrackDataStore(realmClient: realmClient)
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        controller.dataSource = dataSource
+        controller.viewDidLoad()
+        XCTAssertNotNil(controller.searchController)
+    }
+    
+    func testSearchForBar() {
+        let controller = TracksViewController()
+        let realmClient = RealmClient()
+        let store = iTrackDataStore(realmClient: realmClient)
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        controller.dataSource = dataSource
+        controller.viewDidLoad()
+        XCTAssertNotNil(controller.searchController.searchBar)
+    }
+    
+    func testForSearchText() {
+        let controller = TracksViewController()
+        let realmClient = RealmClient()
+        let store = iTrackDataStore(realmClient: realmClient)
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        controller.dataSource = dataSource
+        controller.viewDidLoad()
+        controller.searchController.searchBar.text = "Hi"
+        controller.searchBarTextDidBeginEditing(searchBar: controller.searchController.searchBar)
+        XCTAssertNotNil(controller.searchController.searchBar.text)
     }
     
     
+    func testSearchOnTextChange() {
+        let controller = TracksViewController()
+        let realmClient = RealmClient()
+        let store = iTrackDataStore(realmClient: realmClient)
+        let dataSource = ListControllerDataSource()
+        dataSource.store = store
+        controller.dataSource = dataSource
+        controller.viewDidLoad()
+        guard let navController = controller.navigationController else { return }
+        controller.searchOnTextChange(text: "hello", store: dataSource.store, navController: navController)
+        XCTAssert(controller.dataSource.store.searchTerm == "hello")
+
+    }
 }
+

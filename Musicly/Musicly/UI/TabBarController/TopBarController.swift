@@ -16,7 +16,7 @@ class TopBarController: UITabBarController {
     
     var dataSource = ListControllerDataSource()
     
-    var store: iTrackDataStore? = iTrackDataStore()
+    var store: iTrackDataStore? = iTrackDataStore(realmClient: RealmClient())
     
     override func viewDidLoad() {
         

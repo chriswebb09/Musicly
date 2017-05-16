@@ -62,7 +62,7 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     init(url: URL) {
         self.url = url
         super.init()
-        self.getTrackDuration()
+        self.getTrackDuration(asset: self.asset)
     }
     
     convenience override init() {
@@ -74,19 +74,19 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         guard let urlString = string else { return }
         guard let url = URL(string: urlString) else { return }
         self.url = url
-        getTrackDuration()
+        getTrackDuration(asset: self.asset)
     }
     
     func setUrl(with url: URL) {
         self.url = url
-        getTrackDuration()
+        getTrackDuration(asset: self.asset)
     }
     
     func play(player: AVPlayer) {
         player.playImmediately(atRate: 1)
     }
     
-    func getTrackDuration() {
+    func getTrackDuration(asset: AVURLAsset) {
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
             let audioDuration = self.asset.duration
             let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
@@ -115,7 +115,7 @@ final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
         player.pause()
     }
     
-    func removePlayTimeObserver() {
+    func removePlayTimeObserver(timeObserver: Any?) {
         guard let test = timeObserver else { return }
         player.removeTimeObserver(test)
     }

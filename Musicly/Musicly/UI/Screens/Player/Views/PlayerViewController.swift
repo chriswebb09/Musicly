@@ -36,10 +36,10 @@ final class PlayerViewController: UIViewController {
     private func baseControllerSetup() {
         edgesForExtendedLayout = []
         navigationController?.isNavigationBarHidden = false
-        baseViewSetup(playerView: playerView)
+        baseViewSetup(playerView: playerView, view: view)
     }
     
-    private func baseViewSetup(playerView: PlayerView) {
+    private func baseViewSetup(playerView: PlayerView, view: UIView) {
         view.addSubview(playerView)
         playerView.frame = UIScreen.main.bounds
         playerView.layoutSubviews()
@@ -50,7 +50,8 @@ final class PlayerViewController: UIViewController {
         let tabbar = tabBarController as! TabBarController
         let store = tabbar.store
         guard let currentID = store?.currentPlaylistID else { return }
-        store?.setupItem(with: trackAdded, currentPlaylistID: currentID)
+        guard let client = store?.realmClient else { return }
+        store?.setupItem(with: trackAdded, currentPlaylistID: currentID, realmClient: client)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -213,6 +214,7 @@ extension PlayerViewController: TrackPlayerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.loadingPop.popView.stopAnimating(ball: strongSelf.loadingPop.popView.ball!)
+            guard let viewModel = self?.playerView.viewModel else { return }
             strongSelf.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
             strongSelf.playerView.playbuttonEnabled(is: true)
             strongSelf.hideLoadingView()

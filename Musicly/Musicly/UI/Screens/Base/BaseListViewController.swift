@@ -45,7 +45,7 @@ class BaseListViewController: UIViewController {
         super.viewDidLoad()
         setupEmptyView(emptyView: emptyView, for: view)
         edgesForExtendedLayout = []
-        setupCollectionView()
+        setupCollectionView(collectionView: collectionView, view: view, newLayout: TrackItemsFlowLayout())
         collectionView.isHidden = true
         setupDefaultUI()
         collectionView.backgroundColor = CollectionViewConstants.backgroundColor
@@ -55,8 +55,7 @@ class BaseListViewController: UIViewController {
 
 extension BaseListViewController: TrackCellCollectionProtocol {
 
-    func setupCollectionView() {
-        let newLayout: TrackItemsFlowLayout = TrackItemsFlowLayout()
+    func setupCollectionView(collectionView: UICollectionView, view: UIView, newLayout: TrackItemsFlowLayout) {
         newLayout.setup()
         collectionView.collectionViewLayout = newLayout
         collectionView.frame = UIScreen.main.bounds

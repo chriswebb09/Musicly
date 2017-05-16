@@ -95,7 +95,7 @@ extension PlaylistsViewController: UICollectionViewDelegate {
         store.currentPlaylistID = trackList[indexPath.row].listId
         let model = ListControllerDataSource()
         model.store = store
-        model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId)!
+        model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId, realmClient: store.realmClient)!
         destinationVC.title = trackList[indexPath.row].listName
         destinationVC.dataSource = model
         DispatchQueue.main.async {
@@ -111,7 +111,7 @@ extension PlaylistsViewController: PlaylistCreatorDelegate {
         tracklist.listName = name
         tracklist.listId = UUID().uuidString
         tracklist.date = String(describing: Date())
-        store.createNewList(newList: tracklist)
+        store.createNewList(newList: tracklist, realmClient: store.realmClient)
         if let tracklists = store.trackLists, let last = tracklists.last {
             trackList.append(last)
         }

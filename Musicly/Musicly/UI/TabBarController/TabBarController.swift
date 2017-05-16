@@ -9,7 +9,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        store = iTrackDataStore()
+        store = iTrackDataStore(realmClient: RealmClient())
         setupTabs()
     }
     
