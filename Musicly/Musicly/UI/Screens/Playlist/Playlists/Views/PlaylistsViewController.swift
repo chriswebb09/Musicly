@@ -23,8 +23,8 @@ final class PlaylistsViewController: UIViewController {
         detailPop.delegate = self
         rightBarButtonItem = UIBarButtonItem.init(image: buttonImage, style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
-        dataSource = ListControllerDataSource()
-        dataSource.store = tabController.store
+        dataSource = ListControllerDataSource(store: tabController.store!)
+//        dataSource.store = tabController.store
         collectionViewSetup(with: collectionView)
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
@@ -90,9 +90,10 @@ extension PlaylistsViewController: UICollectionViewDataSource {
 extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationVC = PlaylistViewController()
+        let model = ListControllerDataSource(store: store)
+        let destinationVC = PlaylistViewController(dataSource: model)
         store.currentPlaylistID = trackList[indexPath.row].listId
-        let model = ListControllerDataSource()
+        
         model.store = store
         model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId, realmClient: store.realmClient)!
         destinationVC.title = trackList[indexPath.row].listName

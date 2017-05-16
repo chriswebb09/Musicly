@@ -24,6 +24,20 @@ extension UIViewController {
     }
 }
 
+extension UIViewController {
+    
+    func showError(_ title: String, message: String) {
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+        let OKString = NSLocalizedString("OK", comment: "OK")
+        let OKAction = UIAlertAction(title: OKString, style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+}
+
 extension UINavigationController {
     
     func index(of type: UIViewController.Type)-> Int? {

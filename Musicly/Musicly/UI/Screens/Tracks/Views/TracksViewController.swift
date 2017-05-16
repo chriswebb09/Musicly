@@ -129,7 +129,7 @@
     }
     
     func searchOnTextChange(text: String, store: iTrackDataStore, navController: UINavigationController) {
-        dataSource.store?.setSearch(string: text)
+        dataSource.store.setSearch(string: text)
         searchBarActive = true
         if text != "" { searchBarHasInput() }
         navController.navigationBar.topItem?.title = "Search: \(text)"
@@ -139,8 +139,8 @@
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let barText = searchBar.text, let store = dataSource.store, let navcontroller = self.navigationController else { return }
-        searchOnTextChange(text: barText, store: store, navController: navcontroller)
+        guard let barText = searchBar.text, let navcontroller = self.navigationController else { return }
+        searchOnTextChange(text: barText, store: dataSource.store, navController: navcontroller)
     }
  }
  
@@ -153,8 +153,8 @@
         if searchString != nil {
             dataSource.playlist.removeAll()
             if let searchString = searchString {
-                self.dataSource.store?.setSearch(string: searchString)
-                self.dataSource.store?.searchForTracks { [weak self] tracks, error in
+                self.dataSource.store.setSearch(string: searchString)
+                self.dataSource.store.searchForTracks { [weak self] tracks, error in
                     guard let strongSelf = self, let tracks = tracks else { return }
                     strongSelf.dataSource.playlist = tracks
                 }

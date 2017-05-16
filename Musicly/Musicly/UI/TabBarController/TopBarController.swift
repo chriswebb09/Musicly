@@ -14,9 +14,8 @@ class TopBarController: UITabBarController {
     
     let yStatusBar = UIApplication.shared.statusBarFrame.size.height + 45
     
-    var dataSource = ListControllerDataSource()
-    
-    var store: iTrackDataStore? = iTrackDataStore(realmClient: RealmClient())
+    var store: iTrackDataStore = iTrackDataStore(realmClient: RealmClient())
+    var dataSource = ListControllerDataSource(store: iTrackDataStore(realmClient: RealmClient()))
     
     override func viewDidLoad() {
         
@@ -32,8 +31,8 @@ class TopBarController: UITabBarController {
     
     private func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
-        let tracksController = TracksViewController()
-        let playlistController = TracksViewController()
+        let tracksController = TracksViewController(dataSource: dataSource)
+        let playlistController = TracksViewController(dataSource: dataSource)
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
         let controllers = [searchTab, playlistTab]
@@ -41,7 +40,7 @@ class TopBarController: UITabBarController {
     }
     
     private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
-        let dataSource = ListControllerDataSource()
+        let dataSource = ListControllerDataSource(store: store)
         dataSource.store = self.store
         tracksViewController.dataSource = dataSource
         
@@ -51,8 +50,8 @@ class TopBarController: UITabBarController {
     }
     
     private func setupPlaylistTab(playlistViewController: TracksViewController) -> UINavigationController {
-        let dataSource = ListControllerDataSource()
-        dataSource.store = store
+        let dataSource = ListControllerDataSource(store: store)
+      //  dataSource.store = store
         playlistViewController.dataSource = dataSource
         playlistViewController.tabBarItem = UITabBarItem(title: "Two", image: nil, selectedImage: #imageLiteral(resourceName: "Rectangle 2").withRenderingMode(.alwaysOriginal))
         let playlistTab = UINavigationController(rootViewController: playlistViewController)

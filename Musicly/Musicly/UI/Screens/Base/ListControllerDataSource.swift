@@ -8,9 +8,22 @@
 
 import UIKit
 
-class ListControllerDataSource {
+protocol DataSourceProtocol {
+    var count: Int { get }
+    var store: iTrackDataStore { get }
+}
+
+protocol TracksDataSource: DataSourceProtocol {
+    var playlist: Playlist { get set }
+    var tracklist: TrackList { get set }
+    var state: TrackContentState { get }
+    var image: UIImage { get }
     
-    let image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
+    func cellInstance(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
+}
+
+class ListControllerDataSource: TracksDataSource {
+    var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
     var playlist = Playlist()
     
@@ -29,7 +42,8 @@ class ListControllerDataSource {
         }
     }
     
-    var store: iTrackDataStore!
+    var store: iTrackDataStore
+    
     
     var count: Int {
         return playlist.itemCount
@@ -41,6 +55,10 @@ class ListControllerDataSource {
         } else {
             return .none
         }
+    }
+    
+    init(store: iTrackDataStore) {
+        self.store = store
     }
     
     func cellInstance(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {

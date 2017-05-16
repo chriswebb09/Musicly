@@ -8,8 +8,13 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 
 let audioCache = NSCache<NSString, AVURLAsset>()
+
+struct Player {
+    static let radio = MPMoviePlayerController()
+}
 
 final class TrackPlayer: NSObject, AVAssetResourceLoaderDelegate {
     

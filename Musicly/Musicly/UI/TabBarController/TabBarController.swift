@@ -36,7 +36,8 @@ final class TabBarController: UITabBarController {
     
     private func setupControllers() {
         UITabBar.appearance().tintColor = UIColor.orange
-        let tracksController = TracksViewController()
+        let dataSource = ListControllerDataSource(store: store!)
+        let tracksController = TracksViewController(dataSource: dataSource)
         let playlistController = PlaylistsViewController()
         let searchTab = setupSearchTab(tracksViewController: tracksController)
         let playlistTab = setupPlaylistTab(playlistViewController: playlistController)
@@ -54,8 +55,8 @@ final class TabBarController: UITabBarController {
     private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
         let normalImage = #imageLiteral(resourceName: "blue-dj")
         let selectedImage = #imageLiteral(resourceName: "orangedj")
-        let dataSource = ListControllerDataSource()
-        dataSource.store = self.store
+        let dataSource = ListControllerDataSource(store: store!)
+        //dataSource.store = self.store!
         tracksViewController.dataSource = dataSource
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         
@@ -66,8 +67,8 @@ final class TabBarController: UITabBarController {
     private func setupPlaylistTab(playlistViewController: PlaylistsViewController) -> UINavigationController {
         let selectedImage = #imageLiteral(resourceName: "orange-soundwave")
         let normalImage = #imageLiteral(resourceName: "blue-soundwave")
-        let dataSource = ListControllerDataSource()
-        dataSource.store = store
+        let dataSource = ListControllerDataSource(store: store!)
+        dataSource.store = store!
         playlistViewController.dataSource = dataSource
         playlistViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))
         playlistViewController.tabBarItem.selectedImage = selectedImage

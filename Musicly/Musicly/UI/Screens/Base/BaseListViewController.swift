@@ -12,7 +12,16 @@ import RealmSwift
 
 class BaseListViewController: UIViewController {
     
-    var dataSource: ListControllerDataSource!
+    var dataSource: TracksDataSource
+    
+    init(dataSource: TracksDataSource) {
+        self.dataSource = dataSource
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     var contentState: TrackContentState = .none {
         didSet {
@@ -40,6 +49,12 @@ class BaseListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if CLEAR_CACHES
+            let cachesFolderItems = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+            for item in cachesFolderItems {
+                try? FileManager.default.removeItem(atPath: item)
+            }
+        #endif
         setupEmptyView(emptyView: emptyView, for: view)
         edgesForExtendedLayout = []
         setupCollectionView(collectionView: collectionView, view: view, newLayout: TrackItemsFlowLayout())
