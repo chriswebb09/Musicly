@@ -42,7 +42,6 @@ class BaseListViewController: UIViewController {
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyView(emptyView: emptyView, for: view)
