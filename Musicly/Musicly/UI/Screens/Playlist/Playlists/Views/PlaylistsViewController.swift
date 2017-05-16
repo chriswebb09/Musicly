@@ -8,7 +8,7 @@ final class PlaylistsViewController: UIViewController {
     let detailPop = NewPlaylistPopover()
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: UICollectionViewFlowLayout())
-    
+    var dataSource: ListControllerDataSource!
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
@@ -16,14 +16,15 @@ final class PlaylistsViewController: UIViewController {
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     
     var trackList: [TrackList] = []
-    var dataSource: ListControllerDataSource!
-    
+
     override func viewDidLoad() {
         title = "Playlists"
         setupPlaylistCollectionView()
         detailPop.delegate = self
         rightBarButtonItem = UIBarButtonItem.init(image: buttonImage, style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
+        dataSource = ListControllerDataSource()
+        dataSource.store = tabController.store
         collectionViewSetup(with: collectionView)
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
@@ -73,9 +74,7 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     
     func pop() {
         UIView.animate(withDuration: 0.15) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             strongSelf.detailPop.showPopView(viewController: strongSelf)
             strongSelf.detailPop.popView.isHidden = false
         }
@@ -116,9 +115,7 @@ extension PlaylistsViewController: PlaylistCreatorDelegate {
             trackList.append(last)
         }
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+            guard let strongSelf = self else { return }
             strongSelf.trackList = strongSelf.store.lists
             strongSelf.collectionView.reloadData()
         }
