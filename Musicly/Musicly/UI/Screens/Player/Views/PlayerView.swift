@@ -460,7 +460,7 @@ final class PlayerView: UIView {
             return
         case .playing:
             guard let countDict = viewModel.timer?.userInfo as? NSMutableDictionary else { return }
-            guard var count = countDict["count"] as? Int else { return }
+            guard let count = countDict["count"] as? Int else { return }
             viewModel.time = count + 1
             progressView.progress += viewModel.progressIncrementer
             viewModel.progress = progressView.progress

@@ -14,7 +14,6 @@ class CustomTabBarItem: UIView {
     
     override init (frame : CGRect) {
         super.init(frame : frame)
-        
     }
     
     convenience init () {
@@ -26,39 +25,13 @@ class CustomTabBarItem: UIView {
     }
     
     func setup(item: UITabBarItem) {
-        
         guard let image = item.image else {
             fatalError("add images to tabbar items")
         }
-        
-        // create imageView centered within a container
         iconView = UIImageView(frame: CGRect(x: (self.frame.width-image.size.width)/2, y: (self.frame.height-image.size
             .height)/2, width: self.frame.width, height: self.frame.height))
-        
         iconView.image = image
         iconView.sizeToFit()
-        
         self.addSubview(iconView)
     }
-    
 }
-
-//class TopBarItem: UIView {
-//    
-//    var titleLabel: UILabel!
-//    var imageView: UIImageView!
-//    
-//    func makeLabel() {
-//        titleLabel = UILabel(frame: CGRect.zero)
-//        titleLabel.textAlignment = .center
-//        titleLabel.numberOfLines = 0
-//        titleLabel.font = UIFont(name: "Helvetica", size: 10)
-//        addSubview(titleLabel)
-//    }
-//    
-//    func makeImageView(icon: UIImage) {
-//        imageView = UIImageView(frame: CGRect.zero)
-//        imageView.image = icon
-//        addSubview(imageView)
-//    }
-//}

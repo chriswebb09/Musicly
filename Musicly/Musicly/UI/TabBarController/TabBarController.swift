@@ -54,7 +54,7 @@ final class TabBarController: UITabBarController {
     private func setupSearchTab(tracksViewController: TracksViewController) -> UINavigationController {
         let normalImage = #imageLiteral(resourceName: "blue-dj")
         let selectedImage = #imageLiteral(resourceName: "orangedj")
-        var dataSource = ListControllerDataSource()
+        let dataSource = ListControllerDataSource()
         dataSource.store = self.store
         tracksViewController.dataSource = dataSource
         tracksViewController.tabBarItem = UITabBarItem(title: nil, image: normalImage.withRenderingMode(.alwaysOriginal), selectedImage: selectedImage.withRenderingMode(.alwaysTemplate))

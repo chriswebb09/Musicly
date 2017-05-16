@@ -107,7 +107,7 @@ extension PlaylistsViewController: UICollectionViewDelegate {
 extension PlaylistsViewController: PlaylistCreatorDelegate {
     
     func userDidEnterPlaylistName(name: String) {
-        var tracklist = TrackList()
+        let tracklist = TrackList()
         tracklist.listName = name
         tracklist.listId = UUID().uuidString
         tracklist.date = String(describing: Date())

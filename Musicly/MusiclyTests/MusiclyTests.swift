@@ -1,11 +1,3 @@
-//
-//  MusiclyTests.swift
-//  MusiclyTests
-//
-//  Created by Christopher Webb-Orenstein on 4/12/17.
-//  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
-//
-
 import XCTest
 import AVFoundation
 @testable import Musicly
@@ -18,7 +10,6 @@ class MusiclyTests: XCTestCase {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
