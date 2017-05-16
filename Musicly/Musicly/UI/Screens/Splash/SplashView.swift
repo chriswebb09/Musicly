@@ -24,21 +24,6 @@ final class SplashView: UIView {
     var speakerZero: UIImageView = {
         let image = #imageLiteral(resourceName: "speakerblue-0")
         let imageView = UIImageView(image: image)
-       // imageView.alpha = 0
-        return imageView
-    }()
-    
-    var speakerOne: UIImageView = {
-        let image = #imageLiteral(resourceName: "speakerblue-1")
-        let imageView = UIImageView(image: image)
-        imageView.alpha = 0
-        return imageView
-    }()
-    
-    var speakerTwo: UIImageView = {
-        let image = #imageLiteral(resourceName: "speakerblue-2")
-        let imageView = UIImageView(image: image)
-       imageView.alpha = 0
         return imageView
     }()
     
@@ -53,7 +38,6 @@ final class SplashView: UIView {
         setupConstraints(logoImageView: logoImageView)
         backgroundColor = .white
     }
-    
     
     func setupImageView(logoImageView: UIImageView) {
         addSubview(logoImageView)
@@ -73,21 +57,17 @@ final class SplashView: UIView {
         logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         setupImageView(logoImageView: speakerZero)
-        setupImageView(logoImageView: speakerOne)
-        setupImageView(logoImageView: speakerTwo)
     }
     
     // MARK: - Animation
     
     func zoomAnimation(_ handler: completion? = nil) {
         let duration: TimeInterval = animationDuration
-        speakerZero.isHidden = true 
+        speakerZero.isHidden = true
         logoImageView.isHidden = false
         alpha = LogoConstants.startAlpha
-        UIView.animate(withDuration: duration, animations:{ [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
+        UIView.animate(withDuration: duration, animations: { [weak self] in
+            guard let strongSelf = self else { return }
             strongSelf.logoImageView.transform = LogoConstants.zoomOutTranform
             strongSelf.alpha = 0
             }, completion: { finished in

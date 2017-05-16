@@ -35,7 +35,6 @@ struct PlayerViewModel {
     var thumbsDownImage: UIImage
     
     var time: Int = 0
-    var totalTime: Int = 0
     
     var totalTimeString: String = ""
     var artworkUrlString: String

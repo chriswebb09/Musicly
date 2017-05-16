@@ -15,22 +15,12 @@ class MusiclyTests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testPerformanceExample() {
-        let splashVC = SplashViewController()
-        splashVC.viewDidLoad()
-        self.measure {
-            //splashVC.splashView.zoomAnimation()
-        }
-    }
-    
     
     func testDataStore() {
         let realmClient = RealmClient()

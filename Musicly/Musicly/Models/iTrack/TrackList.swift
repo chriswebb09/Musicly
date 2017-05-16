@@ -38,8 +38,6 @@ final class TrackList: Object {
         return false
     }
     
-    
-    
     func save() {
         do {
             let realm = try Realm()
