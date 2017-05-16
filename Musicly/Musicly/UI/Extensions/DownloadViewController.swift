@@ -13,6 +13,4 @@ extension UIViewController: DownloadDelegate {
     func downloadProgressUpdated(for progress: Float) {
         print(progress)
     }
-
-    
 }

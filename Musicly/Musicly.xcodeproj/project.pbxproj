@@ -77,6 +77,7 @@
 		A75C01341ECADF3200AD0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */; };
 		A75C01361ECAF5E100AD0FF3 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */; };
 		A75C01381ECB199C00AD0FF3 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01371ECB199C00AD0FF3 /* Reusable.swift */; };
+		A75C013A1ECB25AD00AD0FF3 /* CellRespresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
 		A777028D1EBC1F800002E644 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A777028C1EBC1F800002E644 /* MenuDelegate.swift */; };
@@ -207,6 +208,7 @@
 		A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/LogIn/LoginViewController.swift; sourceTree = "<group>"; };
 		A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonFactory.swift; path = Elements/ButtonFactory.swift; sourceTree = "<group>"; };
 		A75C01371ECB199C00AD0FF3 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reusable.swift; path = Screens/Protocols/Reusable.swift; sourceTree = "<group>"; };
+		A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellRespresentable.swift; path = Screens/Protocols/CellRespresentable.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
 		A777028C1EBC1F800002E644 /* MenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDelegate.swift; path = Elements/Menu/MenuDelegate.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */,
 				A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */,
 				A75C01371ECB199C00AD0FF3 /* Reusable.swift */,
+				A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -1210,6 +1213,7 @@
 				A71F02A81EB986BB0012490D /* ButtonConstants.swift in Sources */,
 				A7B26D291ECA621400D1AF2D /* TopBarController.swift in Sources */,
 				A71A09A71EB8162800CA35E4 /* LocalStorageManager.swift in Sources */,
+				A75C013A1ECB25AD00AD0FF3 /* CellRespresentable.swift in Sources */,
 				A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */,
 				A72AE3501EBA4D5D0022C6B3 /* DownloadDelegate.swift in Sources */,
 				A7F6C67E1EBE43390028FD19 /* Textfield+Extension.swift in Sources */,

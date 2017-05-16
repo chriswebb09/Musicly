@@ -13,14 +13,6 @@ protocol TrackCellCollectionProtocol {
     func setupEmptyView(emptyView: EmptyView, for view: UIView)
 }
 
-extension UICollectionView {
-    
-    func tetherToController(controller: UIViewController) {
-        self.dataSource = controller as? UICollectionViewDataSource
-        self.delegate = controller as? UICollectionViewDelegate
-    }
-}
-
 extension TrackCellCollectionProtocol {
     
     func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String) {

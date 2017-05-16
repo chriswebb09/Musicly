@@ -16,18 +16,7 @@ extension Reusable where Self: UICollectionViewCell  {
     }
 }
 
-extension UICollectionViewCell: Reusable {}
-
-extension UICollectionView {
+extension UICollectionViewCell: Reusable {
     
-    func register<T: UICollectionViewCell>(_ :T.Type) where T: Reusable {
-        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
-    }
-    
-    func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("Could not deque cell")
-        }
-        return cell
-    }
 }
+

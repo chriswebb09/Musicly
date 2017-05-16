@@ -9,7 +9,9 @@
 import UIKit
 
 extension UICollectionViewCell {
+    
     static var identifier: String { return String(describing: self) }
+    
 }
 
 
@@ -22,4 +24,29 @@ extension UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
+}
+
+extension UICollectionView {
+    
+    func setup(with newLayout: TrackItemsFlowLayout) {
+        newLayout.setup()
+        collectionViewLayout = newLayout
+        frame = UIScreen.main.bounds
+    }
+    
+    func tetherToController(controller: UIViewController) {
+        self.dataSource = controller as? UICollectionViewDataSource
+        self.delegate = controller as? UICollectionViewDelegate
+    }
+    
+    func register<T: UICollectionViewCell>(_ :T.Type) where T: Reusable {
+        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+    }
+    
+    func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: Reusable {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Could not deque cell")
+        }
+        return cell
+    }
 }

@@ -10,10 +10,6 @@
 import UIKit
 import RealmSwift
 
-protocol CellRepresentable {
-    func cellInstance(_ tableView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
-}
-
 class BaseListViewController: UIViewController {
     
     var dataSource: ListControllerDataSource!
@@ -57,9 +53,7 @@ class BaseListViewController: UIViewController {
 extension BaseListViewController: TrackCellCollectionProtocol {
     
     func setupCollectionView(collectionView: UICollectionView, view: UIView, newLayout: TrackItemsFlowLayout) {
-        newLayout.setup()
-        collectionView.collectionViewLayout = newLayout
-        collectionView.frame = UIScreen.main.bounds
+        collectionView.setup(with: newLayout)
         guard let tabbarHeight = self.tabBarController?.tabBar.frame.height else { return }
         collectionView.contentInset =  UIEdgeInsets(top: 0, left: 0, bottom: tabbarHeight + 20, right: 0)
         view.addSubview(collectionView)
@@ -86,3 +80,5 @@ extension BaseListViewController:  UICollectionViewDataSource  {
         return dataSource.cellInstance(collectionView: collectionView, indexPath:indexPath)
     }
 }
+
+

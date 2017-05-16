@@ -113,8 +113,7 @@
         collectionView.reloadData()
         dataSource.playlist.removeAll()
         dataSource.store.searchForTracks { [weak self] playlist, error in
-            guard let playlist = playlist else { return }
-            guard let strongSelf = self else { return }
+            guard let playlist = playlist, let strongSelf = self else { return }
             strongSelf.dataSource.playlist = playlist
             strongSelf.collectionView.reloadData()
             strongSelf.collectionView.performBatchUpdates ({
@@ -132,14 +131,11 @@
     func searchOnTextChange(text: String, store: iTrackDataStore, navController: UINavigationController) {
         dataSource.store?.setSearch(string: text)
         searchBarActive = true
-        
         if text != "" { searchBarHasInput() }
         navController.navigationBar.topItem?.title = "Search: \(text)"
-        
         UIView.animate(withDuration: 1.8) {
             self.collectionView.alpha = 1
         }
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -159,8 +155,7 @@
             if let searchString = searchString {
                 self.dataSource.store?.setSearch(string: searchString)
                 self.dataSource.store?.searchForTracks { [weak self] tracks, error in
-                    guard let strongSelf = self else { return }
-                    guard let tracks = tracks else { return }
+                    guard let strongSelf = self, let tracks = tracks else { return }
                     strongSelf.dataSource.playlist = tracks
                 }
             }
