@@ -80,16 +80,6 @@
     }
  }
  
- // MARK: - UICollectionViewDataSource
- 
- extension TracksViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.playlist.itemCount
-    }
- }
- 
- //
  // MARK: - UICollectionViewDelegate
  
  extension TracksViewController: UICollectionViewDelegate, OpenPlayerProtocol {

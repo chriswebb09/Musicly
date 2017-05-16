@@ -1,6 +1,12 @@
 import UIKit
 
+protocol CreateAccountDelegate: class {
+    func createAcccount(with username: String, email: String, password: String)
+}
+
 class CreateAccountView: UIView {
+    
+    weak var delegate: CreateAccountDelegate?
     
     var titleLabel: UILabel = {
         let titleLabel = UILabel()

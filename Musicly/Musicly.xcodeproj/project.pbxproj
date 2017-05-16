@@ -68,9 +68,7 @@
 		A72E9C601EBE6423002C0774 /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72E9C5F1EBE6423002C0774 /* UISearchBar+Extension.swift */; };
 		A72E9C621EBE6A13002C0774 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72E9C611EBE6A13002C0774 /* ViewState.swift */; };
 		A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */; };
-		A73F629E1EC9A65900930741 /* EmptyViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629B1EC9A65900930741 /* EmptyViewProtocol.swift */; };
 		A73F629F1EC9A65900930741 /* OpenPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */; };
-		A73F62A01EC9A65900930741 /* TrackCellCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629D1EC9A65900930741 /* TrackCellCreator.swift */; };
 		A73F62A21EC9A68D00930741 /* TrackCellCollectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */; };
 		A75C012B1ECADF1100AD0FF3 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01291ECADF1100AD0FF3 /* StartView.swift */; };
 		A75C012C1ECADF1100AD0FF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C012A1ECADF1100AD0FF3 /* StartViewController.swift */; };
@@ -200,9 +198,7 @@
 		A72E9C5F1EBE6423002C0774 /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		A72E9C611EBE6A13002C0774 /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewState.swift; path = Screens/Playlist/PlaylistTracks/ViewState.swift; sourceTree = "<group>"; };
 		A73268CC1E9EFE8500B48CD9 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CALayer+Extension.swift"; path = "Musicly/UI/Extensions/CALayer+Extension.swift"; sourceTree = SOURCE_ROOT; };
-		A73F629B1EC9A65900930741 /* EmptyViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyViewProtocol.swift; path = Screens/Protocols/EmptyViewProtocol.swift; sourceTree = "<group>"; };
 		A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenPlayerProtocol.swift; path = Screens/Protocols/OpenPlayerProtocol.swift; sourceTree = "<group>"; };
-		A73F629D1EC9A65900930741 /* TrackCellCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCreator.swift; path = Screens/Protocols/TrackCellCreator.swift; sourceTree = "<group>"; };
 		A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCollectionProtocol.swift; path = Screens/Protocols/TrackCellCollectionProtocol.swift; sourceTree = "<group>"; };
 		A75C01291ECADF1100AD0FF3 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartView.swift; path = Screens/Start/StartView.swift; sourceTree = "<group>"; };
 		A75C012A1ECADF1100AD0FF3 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = Screens/Start/StartViewController.swift; sourceTree = "<group>"; };
@@ -311,10 +307,8 @@
 		A70776E21EC9E33A0028A72B /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				A73F629B1EC9A65900930741 /* EmptyViewProtocol.swift */,
 				A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */,
 				A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */,
-				A73F629D1EC9A65900930741 /* TrackCellCreator.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -1156,7 +1150,6 @@
 				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
 				A7B26D2B1ECA68E500D1AF2D /* TopBarItem.swift in Sources */,
 				A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */,
-				A73F629E1EC9A65900930741 /* EmptyViewProtocol.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A75C012F1ECADF2100AD0FF3 /* CreateAccountView.swift in Sources */,
 				A71C03EE1EB1F75B00941ECB /* TracksViewController.swift in Sources */,
@@ -1241,7 +1234,6 @@
 				A7B26D271ECA3AA800D1AF2D /* FileState.swift in Sources */,
 				A72AE3651EBA5A8D0022C6B3 /* AppDelegate.swift in Sources */,
 				A77702A61EBC2A620002E644 /* PlaylistsViewController.swift in Sources */,
-				A73F62A01EC9A65900930741 /* TrackCellCreator.swift in Sources */,
 				A71F02A91EB986BB0012490D /* CALayerConstants.swift in Sources */,
 				A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */,
 				A777029A1EBC29830002E644 /* PlayerViewDelegate.swift in Sources */,

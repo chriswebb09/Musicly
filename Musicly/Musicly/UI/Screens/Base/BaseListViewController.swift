@@ -41,7 +41,7 @@ class BaseListViewController: UIViewController {
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
 }
 
-extension BaseListViewController: EmptyViewProtocol, TrackCellCollectionProtocol {
+extension BaseListViewController: TrackCellCollectionProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ extension BaseListViewController: EmptyViewProtocol, TrackCellCollectionProtocol
     }
 }
 
-extension BaseListViewController: TrackCellCreator {
+extension BaseListViewController:  UICollectionViewDataSource  {
     
     @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
@@ -84,5 +84,9 @@ extension BaseListViewController: TrackCellCreator {
             cell.alpha = 1
         })
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.playlist.itemCount
     }
 }

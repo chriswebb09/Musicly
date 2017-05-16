@@ -39,14 +39,6 @@ extension PlaylistViewController {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-extension PlaylistViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.playlist.itemCount
-    }
-}
-
 extension PlaylistViewController: OpenPlayerProtocol {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
