@@ -8,53 +8,19 @@
 
 import UIKit
 
-protocol DataSourceProtocol {
-    var count: Int { get }
-    var store: iTrackDataStore { get }
-}
-
-protocol TracksDataSource: DataSourceProtocol {
-    var playlist: Playlist { get set }
-    var tracklist: TrackList { get set }
-    var state: TrackContentState { get }
-    var image: UIImage { get }
-    
-    func cellInstance(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
-}
-
-class ListControllerDataSource: TracksDataSource {
+class ListControllerDataSource: TracksDataSource, PlaylistCreatorProtocol {
     var image = #imageLiteral(resourceName: "search-button").withRenderingMode(.alwaysOriginal)
     
     var playlist = Playlist()
     
     var tracklist = TrackList() {
         didSet {
-            for track in tracklist.tracks {
-                let newItem = PlaylistItem()
-                newItem.track = track
-                if !playlist.contains(playlistItem: newItem) {
-                    DispatchQueue.main.async {
-                        self.playlist.append(newPlaylistItem: newItem)
-                    }
-                    
-                }
-            }
+            playlist = getPlaylist(from: tracklist)
         }
     }
-    
     var store: iTrackDataStore
-    
-    
     var count: Int {
         return playlist.itemCount
-    }
-    
-    var state: TrackContentState {
-        if count > 0 {
-            return .results
-        } else {
-            return .none
-        }
     }
     
     init(store: iTrackDataStore) {
@@ -72,5 +38,12 @@ class ListControllerDataSource: TracksDataSource {
         }
         return cell
     }
-    
+
+}
+
+extension ListControllerDataSource: TrackStateProtocol {
+
+    var state: TrackContentState {
+        return getState(for: count)
+    }
 }

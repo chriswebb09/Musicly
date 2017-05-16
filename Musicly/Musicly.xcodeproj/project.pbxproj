@@ -70,6 +70,8 @@
 		A73F629F1EC9A65900930741 /* OpenPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */; };
 		A73F62A21EC9A68D00930741 /* TrackCellCollectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */; };
 		A73F9AEA1ECB4FC50008114D /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F9AE91ECB4FC50008114D /* Configurable.swift */; };
+		A73F9AEC1ECB92C80008114D /* TrackStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F9AEB1ECB92C80008114D /* TrackStateProtocol.swift */; };
+		A73F9AEE1ECB931C0008114D /* PlaylistCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F9AED1ECB931C0008114D /* PlaylistCreatorProtocol.swift */; };
 		A75C012B1ECADF1100AD0FF3 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01291ECADF1100AD0FF3 /* StartView.swift */; };
 		A75C012C1ECADF1100AD0FF3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C012A1ECADF1100AD0FF3 /* StartViewController.swift */; };
 		A75C012F1ECADF2100AD0FF3 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C012D1ECADF2100AD0FF3 /* CreateAccountView.swift */; };
@@ -204,6 +206,8 @@
 		A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenPlayerProtocol.swift; path = Screens/Protocols/OpenPlayerProtocol.swift; sourceTree = "<group>"; };
 		A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackCellCollectionProtocol.swift; path = Screens/Protocols/TrackCellCollectionProtocol.swift; sourceTree = "<group>"; };
 		A73F9AE91ECB4FC50008114D /* Configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configurable.swift; path = Screens/Protocols/Configurable.swift; sourceTree = "<group>"; };
+		A73F9AEB1ECB92C80008114D /* TrackStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStateProtocol.swift; path = Screens/Protocols/TrackStateProtocol.swift; sourceTree = "<group>"; };
+		A73F9AED1ECB931C0008114D /* PlaylistCreatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistCreatorProtocol.swift; path = Screens/Protocols/PlaylistCreatorProtocol.swift; sourceTree = "<group>"; };
 		A75C01291ECADF1100AD0FF3 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartView.swift; path = Screens/Start/StartView.swift; sourceTree = "<group>"; };
 		A75C012A1ECADF1100AD0FF3 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = Screens/Start/StartViewController.swift; sourceTree = "<group>"; };
 		A75C012D1ECADF2100AD0FF3 /* CreateAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountView.swift; path = Screens/CreateAccount/CreateAccountView.swift; sourceTree = "<group>"; };
@@ -320,6 +324,8 @@
 				A75C01371ECB199C00AD0FF3 /* Reusable.swift */,
 				A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */,
 				A73F9AE91ECB4FC50008114D /* Configurable.swift */,
+				A73F9AEB1ECB92C80008114D /* TrackStateProtocol.swift */,
+				A73F9AED1ECB931C0008114D /* PlaylistCreatorProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -1178,6 +1184,7 @@
 				A70776F91ECA38DD0028A72B /* TrackCell.swift in Sources */,
 				A71F02AC1EB986BB0012490D /* DetailViewConstants.swift in Sources */,
 				A71F02B41EB986BB0012490D /* TabBarConstants.swift in Sources */,
+				A73F9AEE1ECB931C0008114D /* PlaylistCreatorProtocol.swift in Sources */,
 				A73F9AEA1ECB4FC50008114D /* Configurable.swift in Sources */,
 				A71F02B11EB986BB0012490D /* PlaylistConstants.swift in Sources */,
 				A75C013E1ECB2A1700AD0FF3 /* ImageLoadOperation.swift in Sources */,
@@ -1202,6 +1209,7 @@
 				A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */,
 				A72AE3561EBA4F010022C6B3 /* Thumbs.swift in Sources */,
 				A75C01331ECADF3200AD0FF3 /* LogInView.swift in Sources */,
+				A73F9AEC1ECB92C80008114D /* TrackStateProtocol.swift in Sources */,
 				A71A14BA1EB7879100EDCE6D /* MenuOptionView.swift in Sources */,
 				A7CBC40B1E9FE63000C95A50 /* Playlist.swift in Sources */,
 				A77702971EBC29750002E644 /* PlayerView.swift in Sources */,
