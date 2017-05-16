@@ -3,7 +3,7 @@
 
 <h2 align="center">Player</h2>
 <p align="center">
-<img src="https://raw.githubusercontent.com/chriswebb09/Musicly/master/Assets/player-screenshot.png">
+<img src="https://github.com/chriswebb09/Musicly/blob/master/Assets/player-screenshot-2.png?raw=true">
 </p>
 
 ---
