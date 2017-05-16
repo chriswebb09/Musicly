@@ -38,18 +38,3 @@ extension PlaylistViewController {
         navigationController?.popViewController(animated: false)
     }
 }
-
-extension PlaylistViewController: OpenPlayerProtocol {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var destinationViewController = setup(playlist: dataSource.playlist, index: indexPath.row)
-        destinationViewController.model?.playListItem = dataSource.playlist.playlistItem(at: indexPath.row)
-        navigationController?.pushViewController(destinationViewController, animated: false)
-    }
-}
-
-
-// MARK: - UICollectionViewDelegate
-extension PlaylistViewController: UICollectionViewDelegate {
-    
-}

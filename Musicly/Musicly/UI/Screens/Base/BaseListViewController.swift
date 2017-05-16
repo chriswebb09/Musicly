@@ -67,6 +67,15 @@ extension BaseListViewController: TrackCellCollectionProtocol {
     }
 }
 
+extension BaseListViewController: UICollectionViewDelegate, OpenPlayerProtocol {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let destinationViewController = setup(playlist: dataSource.playlist, index: indexPath.row)
+        navigationController?.pushViewController(destinationViewController, animated: false)
+    }
+    
+}
+
 extension BaseListViewController:  UICollectionViewDataSource  {
     
     @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
