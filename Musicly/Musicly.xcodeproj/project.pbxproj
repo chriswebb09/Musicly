@@ -77,6 +77,7 @@
 		A75C01331ECADF3200AD0FF3 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01311ECADF3200AD0FF3 /* LogInView.swift */; };
 		A75C01341ECADF3200AD0FF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */; };
 		A75C01361ECAF5E100AD0FF3 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */; };
+		A75C01381ECB199C00AD0FF3 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01371ECB199C00AD0FF3 /* Reusable.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
 		A777028D1EBC1F800002E644 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A777028C1EBC1F800002E644 /* MenuDelegate.swift */; };
@@ -208,6 +209,7 @@
 		A75C01311ECADF3200AD0FF3 /* LogInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInView.swift; path = Screens/LogIn/LogInView.swift; sourceTree = "<group>"; };
 		A75C01321ECADF3200AD0FF3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/LogIn/LoginViewController.swift; sourceTree = "<group>"; };
 		A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonFactory.swift; path = Elements/ButtonFactory.swift; sourceTree = "<group>"; };
+		A75C01371ECB199C00AD0FF3 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reusable.swift; path = Screens/Protocols/Reusable.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
 		A777028C1EBC1F800002E644 /* MenuDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDelegate.swift; path = Elements/Menu/MenuDelegate.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			children = (
 				A73F62A11EC9A68D00930741 /* TrackCellCollectionProtocol.swift */,
 				A73F629C1EC9A65900930741 /* OpenPlayerProtocol.swift */,
+				A75C01371ECB199C00AD0FF3 /* Reusable.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -1153,6 +1156,7 @@
 				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
 				A7B26D2B1ECA68E500D1AF2D /* TopBarItem.swift in Sources */,
 				A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */,
+				A75C01381ECB199C00AD0FF3 /* Reusable.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,
 				A75C012F1ECADF2100AD0FF3 /* CreateAccountView.swift in Sources */,
 				A71C03EE1EB1F75B00941ECB /* TracksViewController.swift in Sources */,

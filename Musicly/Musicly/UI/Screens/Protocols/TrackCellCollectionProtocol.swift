@@ -17,7 +17,8 @@ protocol TrackCellCollectionProtocol {
 extension TrackCellCollectionProtocol {
     
     func collectionViewRegister(collectionView: UICollectionView, viewController: UIViewController, identifier: String) {
-        collectionView.register(TrackCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(TrackCell.self)
+        //collectionView.register(TrackCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.dataSource = viewController as? UICollectionViewDataSource
         collectionView.delegate = viewController as? UICollectionViewDelegate
     }

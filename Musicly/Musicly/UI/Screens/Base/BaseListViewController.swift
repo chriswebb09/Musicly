@@ -10,8 +10,6 @@
 import UIKit
 import RealmSwift
 
-private let reuseIdentifier = "trackCell"
-
 class BaseListViewController: UIViewController {
     
     var dataSource: ListControllerDataSource!
@@ -39,7 +37,7 @@ class BaseListViewController: UIViewController {
     }
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,12 +47,12 @@ class BaseListViewController: UIViewController {
         collectionView.isHidden = true
         setupDefaultUI()
         collectionView.backgroundColor = CollectionViewConstants.backgroundColor
-        collectionViewRegister(collectionView: collectionView, viewController: self, identifier: reuseIdentifier)
+        collectionViewRegister(collectionView: collectionView, viewController: self, identifier: TrackCell.reuseIdentifier)
     }
 }
 
 extension BaseListViewController: TrackCellCollectionProtocol {
-
+    
     func setupCollectionView(collectionView: UICollectionView, view: UIView, newLayout: TrackItemsFlowLayout) {
         newLayout.setup()
         collectionView.collectionViewLayout = newLayout
@@ -69,33 +67,27 @@ extension BaseListViewController: TrackCellCollectionProtocol {
 
 extension BaseListViewController: UICollectionViewDelegate, OpenPlayerProtocol {
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.playlist.itemCount
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destinationViewController = setup(playlist: dataSource.playlist, index: indexPath.row)
         navigationController?.pushViewController(destinationViewController, animated: false)
     }
-    
 }
 
 extension BaseListViewController:  UICollectionViewDataSource  {
     
     @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TrackCell
-        if let track = dataSource.playlist.playlistItem(at: indexPath.row)?.track, let url = URL(string: track.artworkUrl) {
+        let cell = collectionView.dequeueReusableCell(forIndexPath: indexPath) as TrackCell
+        if let playlistItem = dataSource.playlist.playlistItem(at: indexPath.row),
+            let track = playlistItem.track,
+            let url = URL(string: track.artworkUrl) {
             let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
             cell.configureCell(with: cellViewModel, withTime: 0)
-        }
-        let finalFrame = cell.frame
-        let translation: CGPoint = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-        if translation.y < 0 { cell.frame = CGRect(x: finalFrame.origin.x, y: 50, width: 0, height: 0) }
-        UIView.animate(withDuration: 2.1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-            cell.frame = finalFrame
-        }, completion: { finished in
             cell.alpha = 1
-        })
+        }
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.playlist.itemCount
     }
 }
