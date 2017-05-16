@@ -88,6 +88,7 @@
 		A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B073721EA974E800DCC576 /* PlaylistItem.swift */; };
 		A7B26D271ECA3AA800D1AF2D /* FileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B26D261ECA3AA800D1AF2D /* FileState.swift */; };
 		A7B26D291ECA621400D1AF2D /* TopBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B26D281ECA621400D1AF2D /* TopBarController.swift */; };
+		A7B26D2B1ECA68E500D1AF2D /* TopBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B26D2A1ECA68E500D1AF2D /* TopBarItem.swift */; };
 		A7B349E11EB13D4000B4F9FE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B349E01EB13D4000B4F9FE /* Player.swift */; };
 		A7C995A61E9EA6CF004826EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A51E9EA6CF004826EE /* Assets.xcassets */; };
 		A7C995A91E9EA6CF004826EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7C995A71E9EA6CF004826EE /* LaunchScreen.storyboard */; };
@@ -213,6 +214,7 @@
 		A7B073721EA974E800DCC576 /* PlaylistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistItem.swift; path = Playlist/PlaylistItem.swift; sourceTree = "<group>"; };
 		A7B26D261ECA3AA800D1AF2D /* FileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileState.swift; path = States/FileState.swift; sourceTree = "<group>"; };
 		A7B26D281ECA621400D1AF2D /* TopBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopBarController.swift; path = TabBarController/TopBarController.swift; sourceTree = "<group>"; };
+		A7B26D2A1ECA68E500D1AF2D /* TopBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopBarItem.swift; path = TabBarController/TopBarItem.swift; sourceTree = "<group>"; };
 		A7B349E01EB13D4000B4F9FE /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A7C9959B1E9EA6CF004826EE /* Musicly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C995A51E9EA6CF004826EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -405,7 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				A71ADF231EADDFE50030932E /* TabBarController.swift */,
-				A7B26D281ECA621400D1AF2D /* TopBarController.swift */,
+				A7B26D2C1ECA68ED00D1AF2D /* TopBar */,
 			);
 			name = TabBarController;
 			sourceTree = "<group>";
@@ -690,6 +692,15 @@
 				A71A09A61EB8162800CA35E4 /* LocalStorageManager.swift */,
 			);
 			name = "Local Storage";
+			sourceTree = "<group>";
+		};
+		A7B26D2C1ECA68ED00D1AF2D /* TopBar */ = {
+			isa = PBXGroup;
+			children = (
+				A7B26D281ECA621400D1AF2D /* TopBarController.swift */,
+				A7B26D2A1ECA68E500D1AF2D /* TopBarItem.swift */,
+			);
+			name = TopBar;
 			sourceTree = "<group>";
 		};
 		A7B349DD1EB12A8800B4F9FE /* Playlist */ = {
@@ -1101,6 +1112,7 @@
 			files = (
 				A71F02921EB986A40012490D /* BasePopoverAlert.swift in Sources */,
 				A71C04041EB24ECA00941ECB /* RealmClient.swift in Sources */,
+				A7B26D2B1ECA68E500D1AF2D /* TopBarItem.swift in Sources */,
 				A71A09A51EB8150600CA35E4 /* URLRouter.swift in Sources */,
 				A73F629E1EC9A65900930741 /* EmptyViewProtocol.swift in Sources */,
 				A73268CD1E9EFE8500B48CD9 /* CALayer+Extension.swift in Sources */,

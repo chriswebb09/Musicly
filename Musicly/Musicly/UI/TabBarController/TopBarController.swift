@@ -47,7 +47,13 @@ class TopBarController: UITabBarController {
         var dataSource = ListControllerDataSource()
         dataSource.store = self.store
         tracksViewController.dataSource = dataSource
-        tracksViewController.tabBarItem = UITabBarItem(title: "One", image: nil, selectedImage: nil)
+        let itemSize = CGSize(width: tabBar.frame.width / 2, height: tabBar.frame.height)
+        var itemFrame = CGRect(x: tabBar.frame.minX, y: tabBar.frame.minY, width: tabBar.frame.width / 2, height: tabBar.frame.height)
+        tracksViewController.tabBarItem = UITabBarItem(title: "One", image: UIImage().makeImageWithColorAndSize(color: .blue, size: itemSize), tag: 1)
+        //tracksViewController.tabBarItem = UITabBarItem()
+        
+        
+            //UITabBarItem(title: "One", image: nil, selectedImage: nil)
         let tracksTab = UINavigationController(rootViewController: tracksViewController)
         return tracksTab
     }
@@ -68,3 +74,4 @@ class TopBarController: UITabBarController {
         selectedIndex = 0
     }
 }
+
