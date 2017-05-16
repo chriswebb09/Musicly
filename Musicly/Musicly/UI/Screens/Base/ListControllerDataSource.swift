@@ -42,5 +42,17 @@ class ListControllerDataSource {
             return .none
         }
     }
-
+    
+    func cellInstance(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(forIndexPath: indexPath) as TrackCell
+        if let playlistItem = playlist.playlistItem(at: indexPath.row),
+            let track = playlistItem.track,
+            let url = URL(string: track.artworkUrl) {
+            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
+            cell.configureCell(with: cellViewModel, withTime: 0)
+            cell.alpha = 1
+        }
+        return cell
+    }
+    
 }

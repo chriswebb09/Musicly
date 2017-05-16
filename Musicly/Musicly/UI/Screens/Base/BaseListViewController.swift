@@ -10,6 +10,10 @@
 import UIKit
 import RealmSwift
 
+protocol CellRepresentable {
+    func cellInstance(_ tableView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
+}
+
 class BaseListViewController: UIViewController {
     
     var dataSource: ListControllerDataSource!
@@ -80,14 +84,6 @@ extension BaseListViewController: UICollectionViewDelegate, OpenPlayerProtocol {
 extension BaseListViewController:  UICollectionViewDataSource  {
     
     @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(forIndexPath: indexPath) as TrackCell
-        if let playlistItem = dataSource.playlist.playlistItem(at: indexPath.row),
-            let track = playlistItem.track,
-            let url = URL(string: track.artworkUrl) {
-            let cellViewModel = TrackCellViewModel(trackName: track.trackName, albumImageUrl: url)
-            cell.configureCell(with: cellViewModel, withTime: 0)
-            cell.alpha = 1
-        }
-        return cell
+        return dataSource.cellInstance(collectionView: collectionView, indexPath:indexPath)
     }
 }
