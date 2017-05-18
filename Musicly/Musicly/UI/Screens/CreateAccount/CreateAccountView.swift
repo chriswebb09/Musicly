@@ -10,6 +10,9 @@ class CreateAccountView: UIView {
     
     var titleLabel: UILabel = {
         let titleLabel = UILabel()
+        titleLabel.text = "Create Your Account"
+        titleLabel.textColor = .black
+        titleLabel.textAlignment = .center
         return titleLabel
     }()
     
@@ -35,6 +38,8 @@ class CreateAccountView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        backgroundColor = .white
+        setupTitleLabel(label: titleLabel)
     }
     
     func setupTitleLabel(label: UILabel) {

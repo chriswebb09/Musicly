@@ -8,7 +8,10 @@
 
 import UIKit
 
-struct Coordinator {
-    let window: UIWindow
-    let navCtrl: UINavigationController?
+class AppCoordinator {
+    let navigationController: UINavigationController
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
 }

@@ -73,7 +73,8 @@ final class SplashView: UIView {
             }, completion: { finished in
                 DispatchQueue.main.async {
                     weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    appDelegate?.window?.rootViewController = TabBarController()
+                    let start = UINavigationController(rootViewController: StartViewController())
+                    appDelegate?.window?.rootViewController = start
                 }
                 handler?()
         })
