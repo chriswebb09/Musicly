@@ -15,8 +15,3 @@ extension Reusable where Self: UICollectionViewCell  {
         return String(describing: self)
     }
 }
-
-extension UICollectionViewCell: Reusable {
-    
-}
-

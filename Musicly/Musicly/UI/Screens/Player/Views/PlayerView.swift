@@ -8,23 +8,31 @@
 
 import UIKit
 
-final class PlayerView: UIView {
+final class PlayerView: UIView, Configurable {
+    // Sets functionality for view from viewModel
+    
+    var model: PlayerViewModel? {
+        didSet {
+            guard let model = model else { return }
+            currentPlayLengthLabel.textColor = model.currentPlayTimeColor
+            totalPlayLengthLabel.textColor = model.totalPlayTimeColor
+            progressView.progress = model.progress
+            totalPlayLengthLabel.text = model.totalTimeString
+            thumbsUpButton.setImage(model.thumbsUpImage, for: .normal)
+            thumbsDownButton.setImage(model.thumbsDownImage, for: .normal)
+            currentPlayLengthLabel.text = model.defaultTimeString
+        }
+    }
+    
+   
+    typealias T = PlayerViewModel
+    
     
     weak var delegate: PlayerViewDelegate?
     
-    // Sets functionality for view from viewModel
     
-    var viewModel: PlayerViewModel! {
-        didSet {
-            currentPlayLengthLabel.textColor = viewModel.currentPlayTimeColor
-            totalPlayLengthLabel.textColor = viewModel.totalPlayTimeColor
-            progressView.progress = viewModel.progress
-            totalPlayLengthLabel.text = viewModel.totalTimeString
-            thumbsUpButton.setImage(viewModel.thumbsUpImage, for: .normal)
-            thumbsDownButton.setImage(viewModel.thumbsDownImage, for: .normal)
-            currentPlayLengthLabel.text = viewModel.defaultTimeString
-        }
-    }
+    
+    
     
     //    private var timer: Timer?
     
@@ -175,14 +183,14 @@ final class PlayerView: UIView {
     }
     
     // Setup PlayerView with viewModel
-    
-    func configure(with viewModel: PlayerViewModel) {
+    func configureWith(_ model: PlayerViewModel) {        
         playButton.isEnabled = false
-        self.viewModel = viewModel
-        self.viewModel.thumbs = .none
-        if let url = URL(string: viewModel.artworkUrlString) {
+        self.model = model
+        guard var model = self.model else { return }
+        model.thumbs = .none
+        if let url = URL(string: model.artworkUrlString) {
             albumArtworkView.downloadImage(url: url)
-            trackTitleLabel.text = viewModel.trackName
+            trackTitleLabel.text = model.trackName
             albumArtworkView.layer.setCellShadow(contentView: albumArtworkView)
             trackTitleView.layer.setCellShadow(contentView: trackTitleView)
             addSelectors()
@@ -202,33 +210,37 @@ final class PlayerView: UIView {
     }
     
     func resetProgressAndTime() {
+        guard var model = model else { return }
         delegate?.resetPlayerAndSong()
-        viewModel.resetProgress()
-        viewModel.resetTime()
+        model.resetProgress()
+        model.resetTime()
     }
     
     // Skip and back button functionality
     
     func skipButtonTapped() {
+        guard let model = model else { return }
         resetProgressAndTime()
-        currentPlayLengthLabel.text = viewModel.defaultTimeString
+        currentPlayLengthLabel.text = model.defaultTimeString
         delegate?.skipButtonTapped()
-        viewModel.timer?.invalidate()
+        model.timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
     }
     
     func backButtonTapped() {
+        guard let model = model else { return }
         resetProgressAndTime()
-        viewModel.timer?.invalidate()
-        currentPlayLengthLabel.text = viewModel.defaultTimeString
+        model.timer?.invalidate()
+        currentPlayLengthLabel.text = model.defaultTimeString
         delegate?.backButtonTapped()
         switchButton(button: pauseButton, for: playButton)
         stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
     }
     
     func setPlayState(state: FileState) {
-        viewModel.playState = state
+        guard var model = model else { return }
+        model.playState = state
     }
     
     private func setupTrackTitleView(trackTitleView: UIView) {
@@ -442,30 +454,33 @@ final class PlayerView: UIView {
     }
     
     func setupTimeLabels(totalTime: String?, timevalue: Float) {
+        guard var model = model else { return }
         guard let totalTime = totalTime else { return }
-        viewModel.progressIncrementer = timevalue / 920
-        viewModel.totalTimeString = totalTime
+        model.progressIncrementer = timevalue / 920
+        model.totalTimeString = totalTime
     }
     
     // Gives values to progress bar
     
     func updateProgressBar(value: Double) {
+        guard var model = model else { return }
         let floatValue = Float(value)
-        viewModel.progress += floatValue
+        model.progress += floatValue
     }
     
     @objc private func updateTime() {
-        switch viewModel.playState {
+        guard var model = model else { return }
+        switch model.playState {
         case .queued:
             return
         case .playing:
-            guard let countDict = viewModel.timer?.userInfo as? NSMutableDictionary else { return }
+            guard let countDict = model.timer?.userInfo as? NSMutableDictionary else { return }
             guard let count = countDict["count"] as? Int else { return }
-            viewModel.time = count + 1
-            progressView.progress += viewModel.progressIncrementer
-            viewModel.progress = progressView.progress
-            countDict["count"] = viewModel.time
-            currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
+            model.time = count + 1
+            progressView.progress += model.progressIncrementer
+            model.progress = progressView.progress
+            countDict["count"] = model.time
+            currentPlayLengthLabel.text = String.constructTimeString(time: model.time)
             if progressView.progress == 1 {
                 finishedPlaying(countDict: countDict, time: 0)
             }
@@ -479,16 +494,17 @@ final class PlayerView: UIView {
     // On song completed playing
     
     private func finishedPlaying(countDict: NSMutableDictionary?, time: Int) {
-        viewModel.playState = .done
+        guard var model = model else { return }
+        model.playState = .done
         
         countDict?["count"] = time
         delegate?.resetPlayerAndSong()
-        viewModel.resetTime()
+        model.resetTime()
         currentPlayLengthLabel.text = "0:00"
         switchButton(button: pauseButton, for: playButton)
-        viewModel.resetProgress()
+        model.resetProgress()
         stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
-        viewModel.timer?.invalidate()
+        model.timer?.invalidate()
     }
     
     // Animate disappearance of Equalizer
@@ -502,49 +518,55 @@ final class PlayerView: UIView {
     }
     
     private func pauseTime(countdict: NSMutableDictionary) {
-        
+        guard var model = model else { return }
         if let count = countdict["count"] as? Int {
+            
             countdict["count"] = count
-            viewModel.time = count
+            model.time = count
             currentPlayLengthLabel.text = String(describing: count)
-            viewModel.timer?.invalidate()
+            model.timer?.invalidate()
         }
         
     }
     
     @objc private func thumbsUpTapped() {
-        viewModel.thumbs = .up
+        guard var model = model else { return }
+        model.thumbs = .up
         delegate?.thumbsUpTapped()
     }
     
     @objc private func thumbsDownTapped() {
-        viewModel.thumbs = .down
+        guard var model = model else { return }
+        model.thumbs = .down
         delegate?.thumbsDownTapped()
     }
     
     // Timer
     
     private func setTimer(timerDict: NSMutableDictionary) {
-        viewModel.timer?.invalidate()
-        viewModel.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDict, repeats: true)
+        guard var model = model else { return }
+        model.timer?.invalidate()
+        model.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: timerDict, repeats: true)
     }
     
     @objc private func playButtonTapped() {
-        let timerDic: NSMutableDictionary = ["count": viewModel.time]
+        guard var model = model else { return }
+        let timerDic: NSMutableDictionary = ["count": model.time]
         setTimer(timerDict: timerDic)
         startEqualizer(equalizerView: equalizerView, equalizerBackgroundView: equalizerBackgroundView)
-        viewModel.playState = .playing
+        model.playState = .playing
         delegate?.playButtonTapped()
         switchButton(button: playButton, for: pauseButton)
     }
     
     @objc private func pauseButtonTapped() {
-        viewModel.playState = .paused
+        guard var model = model else { return }
+        model.playState = .paused
         stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
-        let countDict = viewModel.timer?.userInfo as? NSMutableDictionary
+        let countDict = model.timer?.userInfo as? NSMutableDictionary
         pauseTime(countdict: countDict!)
         delegate?.pauseButtonTapped()
-        currentPlayLengthLabel.text = String.constructTimeString(time: viewModel.time)
+        currentPlayLengthLabel.text = String.constructTimeString(time: model.time)
         switchButton(button: pauseButton, for: playButton)
     }
     

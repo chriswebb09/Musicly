@@ -15,7 +15,7 @@ extension UICollectionViewCell {
 }
 
 
-extension UICollectionViewCell {
+extension UICollectionViewCell: Reusable {
     
     func setupPlaylistCellContentViewLayerStyle(for contentView: UIView) {
         contentView.layer.cornerRadius = PlaylistCellConstants.cornerRadius

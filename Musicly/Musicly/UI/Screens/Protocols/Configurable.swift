@@ -11,7 +11,9 @@ import UIKit
 protocol Configurable {
     
     associatedtype T
+    
     var model: T? { get set }
-    func configureWithModel(_: T)
+    
+    func configureWith(_ model: T)
     
 }
