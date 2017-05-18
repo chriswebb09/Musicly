@@ -34,6 +34,8 @@
 		A71AB7BA1ECE5B12006B0178 /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7B91ECE5B12006B0178 /* RealmClient.swift */; };
 		A71AB7BC1ECE5B1A006B0178 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7BB1ECE5B1A006B0178 /* LocalStorageManager.swift */; };
 		A71AB7BE1ECE5B23006B0178 /* TrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7BD1ECE5B23006B0178 /* TrackDataStore.swift */; };
+		A71AB7C01ECE5D6C006B0178 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7BF1ECE5D6C006B0178 /* BaseOperation.swift */; };
+		A71AB7C21ECE5EED006B0178 /* TrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7C11ECE5EED006B0178 /* TrackDelegate.swift */; };
 		A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF231EADDFE50030932E /* TabBarController.swift */; };
 		A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3B1EADE09E0030932E /* SplashView.swift */; };
 		A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3C1EADE09E0030932E /* SplashViewController.swift */; };
@@ -172,6 +174,8 @@
 		A71AB7B91ECE5B12006B0178 /* RealmClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmClient.swift; path = Realm/RealmClient.swift; sourceTree = "<group>"; };
 		A71AB7BB1ECE5B1A006B0178 /* LocalStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalStorageManager.swift; path = LocalStorage/LocalStorageManager.swift; sourceTree = "<group>"; };
 		A71AB7BD1ECE5B23006B0178 /* TrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackDataStore.swift; path = Store/TrackDataStore.swift; sourceTree = "<group>"; };
+		A71AB7BF1ECE5D6C006B0178 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseOperation.swift; path = Data/BaseOperation.swift; sourceTree = "<group>"; };
+		A71AB7C11ECE5EED006B0178 /* TrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackDelegate.swift; path = iTrack/TrackDelegate.swift; sourceTree = "<group>"; };
 		A71ADF231EADDFE50030932E /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = TabBarController/TabBarController.swift; sourceTree = "<group>"; };
 		A71ADF3B1EADE09E0030932E /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashView.swift; path = Screens/Splash/SplashView.swift; sourceTree = "<group>"; };
 		A71ADF3C1EADE09E0030932E /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Screens/Splash/SplashViewController.swift; sourceTree = "<group>"; };
@@ -675,6 +679,7 @@
 			isa = PBXGroup;
 			children = (
 				A73268C31E9EB5D100B48CD9 /* Data */,
+				A71AB7BF1ECE5D6C006B0178 /* BaseOperation.swift */,
 			);
 			path = ApplicationSevices;
 			sourceTree = "<group>";
@@ -844,6 +849,7 @@
 			isa = PBXGroup;
 			children = (
 				A7CBC4041E9FE62300C95A50 /* Track.swift */,
+				A71AB7C11ECE5EED006B0178 /* TrackDelegate.swift */,
 				A7ADE8181EAD7CE8004F299E /* TrackList.swift */,
 				A7ADE8161EAD7CAC004F299E /* RealmThumb.swift */,
 				A72AE3551EBA4F010022C6B3 /* Thumbs.swift */,
@@ -1188,6 +1194,7 @@
 				A7B073731EA974E900DCC576 /* PlaylistItem.swift in Sources */,
 				A72AE3541EBA4DA20022C6B3 /* Notification+Extension.swift in Sources */,
 				A70776F91ECA38DD0028A72B /* TrackCell.swift in Sources */,
+				A71AB7C21ECE5EED006B0178 /* TrackDelegate.swift in Sources */,
 				A71F02AC1EB986BB0012490D /* DetailViewConstants.swift in Sources */,
 				A71F02B41EB986BB0012490D /* TabBarConstants.swift in Sources */,
 				A73F9AEE1ECB931C0008114D /* PlaylistCreatorProtocol.swift in Sources */,
@@ -1212,6 +1219,7 @@
 				A71AB7B71ECE5B09006B0178 /* Player.swift in Sources */,
 				A7ADE8191EAD7CE8004F299E /* TrackList.swift in Sources */,
 				A72AE35C1EBA55840022C6B3 /* BallAnimation.swift in Sources */,
+				A71AB7C01ECE5D6C006B0178 /* BaseOperation.swift in Sources */,
 				A777028F1EBC20300002E644 /* PlaylistCreatorDelegate.swift in Sources */,
 				A71A14B81EB7879100EDCE6D /* BaseMenuPopover.swift in Sources */,
 				A72AE3561EBA4F010022C6B3 /* Thumbs.swift in Sources */,

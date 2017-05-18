@@ -8,17 +8,17 @@
 
 import UIKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
     var backgroundSessionCompletionHandler: (() -> Void)?
     var window: UIWindow?
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let initialViewController = SplashViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
+       
         window?.rootViewController = UINavigationController(rootViewController: initialViewController)
         setupUI()
         window?.makeKeyAndVisible()

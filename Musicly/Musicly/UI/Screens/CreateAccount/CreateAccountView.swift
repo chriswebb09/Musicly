@@ -18,16 +18,19 @@ class CreateAccountView: UIView {
     
     var usernameField: TextFieldExtension = {
         let usernameField = TextFieldExtension()
+        usernameField.layer.borderColor = UIColor.lightGray.cgColor
         return usernameField
     }()
     
     var emailField: TextFieldExtension = {
         let emailField = TextFieldExtension()
+        emailField.layer.borderColor = UIColor.lightGray.cgColor
         return emailField
     }()
     
     var passwordField: TextFieldExtension = {
         let passwordField = TextFieldExtension()
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
         return passwordField
     }()
     

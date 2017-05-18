@@ -35,4 +35,17 @@ final class LoadingPopover: BasePopoverAlert {
         popView.configureView()
         popView.backgroundColor = .clear
     }
+    
+    func showLoadingView(viewController: UIViewController) {
+        setupPop(popView: popView)
+        showPopView(viewController: viewController)
+        popView.isHidden = false
+    }
+    
+    
+    func hideLoadingView(controller: UIViewController) {
+        popView.removeFromSuperview()
+        hidePopView(viewController: controller)
+        controller.view.sendSubview(toBack: self)
+    }
 }

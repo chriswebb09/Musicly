@@ -21,7 +21,7 @@ final class PlayerViewController: UIViewController {
         guard let model = model else { return }
         if !model.parentIsPlaylist { setupBarButton() }
         baseControllerSetup()
-        showLoadingView(loadingPop: loadingPop)
+        loadingPop.showPopView(viewController: self)
         model.playListItem = model.playlist.playlistItem(at: model.index)
         setupItem(item: model.playListItem)
         playerView.delegate = self
@@ -130,19 +130,6 @@ extension PlayerViewController: PlayerViewDelegate {
         initPlayer(url: url)
     }
     
-    func showLoadingView(loadingPop: LoadingPopover) {
-        loadingPop.setupPop(popView: loadingPop.popView)
-        loadingPop.showPopView(viewController: self)
-        loadingPop.popView.isHidden = false
-    }
-    
-    func hideLoadingView() {
-        loadingPop.popView.removeFromSuperview()
-        loadingPop.removeFromSuperview()
-        loadingPop.hidePopView(viewController: self)
-        view.sendSubview(toBack: loadingPop)
-    }
-    
     private func initPlayer(url: URL)  {
         trackPlayer = TrackPlayer(url: url)
         trackPlayer.delegate = self
@@ -161,7 +148,7 @@ extension PlayerViewController: PlayerViewDelegate {
     
     func changeTrack(track: Track) {
         trackPlayer.player.pause()
-        showLoadingView(loadingPop: loadingPop)
+        loadingPop.showPopView(viewController: self)
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self, let url = URL(string: track.previewUrl) else { return }
             let viewModel = PlayerViewModel(track: track, playState: .queued)
@@ -217,7 +204,7 @@ extension PlayerViewController: TrackPlayerDelegate {
             guard let model = self?.playerView.model else { return }
             strongSelf.playerView.setupTimeLabels(totalTime: stringTime, timevalue: Float(timeValue))
             strongSelf.playerView.playbuttonEnabled(is: true)
-            strongSelf.hideLoadingView()
+            strongSelf.loadingPop.hidePopView(viewController: strongSelf)
         }
     }
     

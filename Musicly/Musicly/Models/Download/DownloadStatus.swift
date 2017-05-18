@@ -9,5 +9,5 @@
 import Foundation
 
 enum DownloadStatus {
-    case waiting, downloading, finished, cancelled
+    case pending, downloading, paused, failed, completed
 }

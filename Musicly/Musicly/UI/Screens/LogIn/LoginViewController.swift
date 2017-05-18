@@ -7,8 +7,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.frame = UIScreen.main.bounds
-        view.addSubview(loginView)
         loginView.layoutSubviews()
+        view.addSubview(loginView)
+        dump(loginView.usernameField.bounds)
     }
     
 }

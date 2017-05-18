@@ -3,6 +3,7 @@ import UIKit
 protocol StartViewDelegate: class {
     func continueAsGuestTapped()
     func createAccountTapped()
+    func loginTapped()
 }
 
 class StartView: UIView {
@@ -44,6 +45,7 @@ class StartView: UIView {
         backgroundColor = .white
         createAccount.addTarget(self, action: #selector(createAccountButtonTapped), for: .touchUpInside)
         guestUserButton.addTarget(self, action: #selector(guestUserButtonTapped), for: .touchUpInside)
+        userLoginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
     func guestUserButtonTapped() {
@@ -52,6 +54,10 @@ class StartView: UIView {
     
     func createAccountButtonTapped() {
         delegate?.createAccountTapped()
+    }
+    
+    func loginButtonTapped() {
+        delegate?.loginTapped()
     }
     
     func setupTitleLabel(label: UILabel) {

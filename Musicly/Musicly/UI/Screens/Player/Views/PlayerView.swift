@@ -225,7 +225,10 @@ final class PlayerView: UIView, Configurable {
         delegate?.skipButtonTapped()
         model.timer?.invalidate()
         switchButton(button: pauseButton, for: playButton)
-        stopEqualizer(equalView: equalView!, equalizerBackgroundView: equalizerBackgroundView)
+        if let equalView = equalView {
+            stopEqualizer(equalView: equalView, equalizerBackgroundView: equalizerBackgroundView)
+        }
+    
     }
     
     func backButtonTapped() {
