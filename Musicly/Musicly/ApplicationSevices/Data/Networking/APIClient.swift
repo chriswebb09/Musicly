@@ -1,5 +1,7 @@
 import UIKit
 
+typealias DataTaskCompletionHandler = (Data?, URLResponse?, Error?) -> Void
+
 final class iTunesAPIClient: NSObject {
     
     var activeDownloads: [String: Download]? = [String: Download]()

@@ -14,7 +14,8 @@ protocol OpenPlayerProtocol {
 
 extension OpenPlayerProtocol {
     func setup(playlist: Playlist, index: Int) -> PlayerViewController {
-        let destination = PlayerViewController()
+        var trackPlayer = TrackPlayer()
+        let destination = PlayerViewController(playable: trackPlayer)
         destination.hidesBottomBarWhenPushed = true
         let model = PlayerControllerModel(index: index)
         model.playlist = playlist

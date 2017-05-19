@@ -54,7 +54,11 @@ final class BottomMenuPopover: BasePopoverMenu {
         let tap = UIGestureRecognizer(target: self, action: #selector(hidePopView(viewController:)))
         containerView.addGestureRecognizer(tap)
     }
-    
+}
+
+extension BottomMenuPopover: ViewPop {
+    weak var delegate: PopDelegate? 
+
     
     public override func hidePopView(viewController: UIViewController) {
         super.hidePopView(viewController: viewController)

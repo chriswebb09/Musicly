@@ -3,9 +3,16 @@ import RealmSwift
 
 private let reuseIdentifier: String = "PlaylistCell"
 
+protocol ViewPop {
+    weak var delegate: PopDelegate? { get set }
+    var containerView: UIView { get }
+    func hidePopView(viewController: UIViewController)
+    func showPopView(viewController: UIViewController)
+}
+
 final class PlaylistsViewController: UIViewController {
     
-    let detailPop = NewPlaylistPopover()
+    let detailPop: ViewPop
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: UICollectionViewFlowLayout())
     var dataSource: ListControllerDataSource!
@@ -16,6 +23,15 @@ final class PlaylistsViewController: UIViewController {
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     
     var trackList: [TrackList] = []
+    
+    init(detailPop: ViewPop) {
+        self.detailPop = detailPop
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         title = "Playlists"

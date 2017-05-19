@@ -16,10 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let initialViewController = SplashViewController()
+        //let initialViewController = SplashViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
-       
-        window?.rootViewController = UINavigationController(rootViewController: initialViewController)
+        weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let coordinator = AppCoordinator(navigationController: UINavigationController())
+        //let coordinator = AppCoordinator(navigationController: UINavigationController(rootViewController: initialViewController))
+        window?.rootViewController = coordinator.rootViewController
+        coordinator.splashController.delegate = coordinator
+        coordinator.splash()
         setupUI()
         window?.makeKeyAndVisible()
         return true

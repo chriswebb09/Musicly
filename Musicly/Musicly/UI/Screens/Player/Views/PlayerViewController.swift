@@ -4,6 +4,11 @@
 
 import UIKit
 
+//protocol Playable {
+//    func play()
+//    
+//}
+
 final class PlayerViewController: UIViewController {
     
     var model: PlayerControllerModel?
@@ -14,7 +19,16 @@ final class PlayerViewController: UIViewController {
     
     var rightButtonItem: UIBarButtonItem!
     
-    lazy var trackPlayer = TrackPlayer()
+    var trackPlayer: Playable
+    
+    init(playable: Playable) {
+        self.trackPlayer = playable
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +152,7 @@ extension PlayerViewController: PlayerViewDelegate {
     // MARK: - Player controlers
     
     func playButtonTapped() {
-        trackPlayer.play(player: trackPlayer.player)
+        trackPlayer.play()
         print(trackPlayer.currentTime)
     }
     

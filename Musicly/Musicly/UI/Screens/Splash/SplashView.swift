@@ -10,7 +10,13 @@ import UIKit
 
 typealias completion = () -> Void
 
+protocol SplashViewDelegate: class {
+    func animationHasCompleted()
+}
+
 final class SplashView: UIView {
+    
+    weak var delegate: SplashViewDelegate?
     
     var animationDuration: Double = 0.5
     
@@ -72,10 +78,14 @@ final class SplashView: UIView {
             strongSelf.alpha = 0
             }, completion: { finished in
                 DispatchQueue.main.async {
-                    weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    let coordinator = AppCoordinator(navigationController: UINavigationController(rootViewController: StartViewController()))
-                    appDelegate?.window?.rootViewController = coordinator.navigationController
+                    self.delegate?.animationHasCompleted()
                 }
+                
+//                DispatchQueue.main.async {
+//                    weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+//                    let coordinator = AppCoordinator(navigationController: UINavigationController(rootViewController: StartViewController()))
+//                    appDelegate?.window?.rootViewController = coordinator.navigationController
+//                }
                 handler?()
         })
     }

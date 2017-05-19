@@ -30,7 +30,11 @@ final class LoadingPopover: BasePopoverAlert {
         viewController.view.addSubview(popView)
         viewController.view.bringSubview(toFront: popView)
     }
-    
+}
+
+extension LoadingPopover: ViewPop {
+    weak var delegate: PopDelegate?
+
     func setupPop(popView: LoadingView) {
         popView.configureView()
         popView.backgroundColor = .clear
@@ -49,3 +53,4 @@ final class LoadingPopover: BasePopoverAlert {
         controller.view.sendSubview(toBack: self)
     }
 }
+
