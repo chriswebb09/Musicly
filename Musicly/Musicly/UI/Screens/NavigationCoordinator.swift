@@ -34,7 +34,7 @@ typealias RootViewCoordinator = Coordinator & RootViewControllerProvider
 class AppCoordinator: RootViewCoordinator, SplashControllerDelegate {
     
     func moveToStart() {
-        print("fuck you")
+        print("Start")
     }
     
     var rootViewController: UIViewController
