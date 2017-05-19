@@ -3,7 +3,7 @@ import RealmSwift
 
 final class iTrackDataStore {
     
-   var searchTerm: String?
+    var searchTerm: String?
     
     var realmClient: RealmClient
     var trackLists: Results<TrackList>!
@@ -55,12 +55,10 @@ final class iTrackDataStore {
     // Hit with search terms, parse json and return objects
     
     func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
-        
         if let searchTerm = searchTerm {
-            iTunesAPIClient.search(for: searchTerm) { data, error in
-                if let error = error {
-                    completion(nil, error)
-                } else if let data = data {
+            iTunesAPIClient.search(for: searchTerm) { response in
+                switch response {
+                case .success(let data):
                     let tracksData = data["results"] as! [[String: Any]]
                     let playlist: Playlist? = Playlist()
                     tracksData.forEach {
@@ -69,10 +67,9 @@ final class iTrackDataStore {
                         newItem?.track = track
                         playlist?.append(newPlaylistItem: newItem)
                     }
-                    
                     completion(playlist, nil)
-                } else {
-                    completion(nil, NSError.generalParsingError(domain: ""))
+                case .failed(let error):
+                    completion(nil, error)
                 }
             }
         }

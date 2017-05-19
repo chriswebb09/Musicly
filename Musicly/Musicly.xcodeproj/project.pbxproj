@@ -36,6 +36,7 @@
 		A71AB7BE1ECE5B23006B0178 /* TrackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7BD1ECE5B23006B0178 /* TrackDataStore.swift */; };
 		A71AB7C01ECE5D6C006B0178 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7BF1ECE5D6C006B0178 /* BaseOperation.swift */; };
 		A71AB7C21ECE5EED006B0178 /* TrackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7C11ECE5EED006B0178 /* TrackDelegate.swift */; };
+		A71AB7C41ECE702C006B0178 /* RequestResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AB7C31ECE702C006B0178 /* RequestResults.swift */; };
 		A71ADF241EADDFE50030932E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF231EADDFE50030932E /* TabBarController.swift */; };
 		A71ADF3D1EADE09E0030932E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3B1EADE09E0030932E /* SplashView.swift */; };
 		A71ADF3E1EADE09E0030932E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71ADF3C1EADE09E0030932E /* SplashViewController.swift */; };
@@ -176,6 +177,7 @@
 		A71AB7BD1ECE5B23006B0178 /* TrackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackDataStore.swift; path = Store/TrackDataStore.swift; sourceTree = "<group>"; };
 		A71AB7BF1ECE5D6C006B0178 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseOperation.swift; path = Data/BaseOperation.swift; sourceTree = "<group>"; };
 		A71AB7C11ECE5EED006B0178 /* TrackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackDelegate.swift; path = iTrack/TrackDelegate.swift; sourceTree = "<group>"; };
+		A71AB7C31ECE702C006B0178 /* RequestResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestResults.swift; sourceTree = "<group>"; };
 		A71ADF231EADDFE50030932E /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = TabBarController/TabBarController.swift; sourceTree = "<group>"; };
 		A71ADF3B1EADE09E0030932E /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashView.swift; path = Screens/Splash/SplashView.swift; sourceTree = "<group>"; };
 		A71ADF3C1EADE09E0030932E /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = Screens/Splash/SplashViewController.swift; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 				A71A09A21EB814A800CA35E4 /* URLConstructor.swift */,
 				A71A09A41EB8150600CA35E4 /* URLRouter.swift */,
 				A75C013D1ECB2A1700AD0FF3 /* ImageLoadOperation.swift */,
+				A71AB7C31ECE702C006B0178 /* RequestResults.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1235,6 +1238,7 @@
 				A72AE3601EBA55980022C6B3 /* AudioEqualizer.swift in Sources */,
 				A72AE3611EBA55980022C6B3 /* IndicatorView.swift in Sources */,
 				A71A09AE1EB8200C00CA35E4 /* LoadingView.swift in Sources */,
+				A71AB7C41ECE702C006B0178 /* RequestResults.swift in Sources */,
 				A71AB7BA1ECE5B12006B0178 /* RealmClient.swift in Sources */,
 				A71F02AB1EB986BB0012490D /* DetailPopoverConstants.swift in Sources */,
 				A71F02A71EB986BB0012490D /* BaseMenuPopoverAlert.swift in Sources */,
