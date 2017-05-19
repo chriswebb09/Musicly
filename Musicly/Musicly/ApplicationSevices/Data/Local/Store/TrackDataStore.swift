@@ -55,22 +55,21 @@ final class iTrackDataStore {
     // Hit with search terms, parse json and return objects
     
     func searchForTracks(completion: @escaping (_ playlist: Playlist? , _ error: Error?) -> Void) {
-        if let searchTerm = searchTerm {
-            iTunesAPIClient.search(for: searchTerm) { response in
-                switch response {
-                case .success(let data):
-                    let tracksData = data["results"] as! [[String: Any]]
-                    let playlist: Playlist? = Playlist()
-                    tracksData.forEach {
-                        let track = Track(json: $0)
-                        let newItem: PlaylistItem? = PlaylistItem()
-                        newItem?.track = track
-                        playlist?.append(newPlaylistItem: newItem)
-                    }
-                    completion(playlist, nil)
-                case .failed(let error):
-                    completion(nil, error)
+        guard let searchTerm = searchTerm else { return }
+        iTunesAPIClient.search(for: searchTerm) { response in
+            switch response {
+            case .success(let data):
+                let tracksData = data["results"] as! [[String: Any]]
+                let playlist: Playlist? = Playlist()
+                tracksData.forEach {
+                    let track = Track(json: $0)
+                    let newItem: PlaylistItem? = PlaylistItem()
+                    newItem?.track = track
+                    playlist?.append(newPlaylistItem: newItem)
                 }
+                completion(playlist, nil)
+            case .failed(let error):
+                completion(nil, error)
             }
         }
     }
