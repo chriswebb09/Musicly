@@ -5,12 +5,12 @@
 //  Created by Christopher Webb-Orenstein on 5/3/17.
 //  Copyright © 2017 Christopher Webb-Orenstein. All rights reserved.
 //
-// 
+//
 
 import UIKit
 
 final class LoadingPopover: BasePopoverAlert {
-
+    
     var popView: LoadingView = {
         let popView = LoadingView()
         popView.layer.cornerRadius = DetailPopoverConstants.cornerRadius
@@ -30,27 +30,9 @@ final class LoadingPopover: BasePopoverAlert {
         viewController.view.addSubview(popView)
         viewController.view.bringSubview(toFront: popView)
     }
-}
-
-extension LoadingPopover: ViewPop {
-    weak var delegate: PopDelegate?
-
+    
     func setupPop(popView: LoadingView) {
         popView.configureView()
         popView.backgroundColor = .clear
     }
-    
-    func showLoadingView(viewController: UIViewController) {
-        setupPop(popView: popView)
-        showPopView(viewController: viewController)
-        popView.isHidden = false
-    }
-    
-    
-    func hideLoadingView(controller: UIViewController) {
-        popView.removeFromSuperview()
-        hidePopView(viewController: controller)
-        controller.view.sendSubview(toBack: self)
-    }
 }
-

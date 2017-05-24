@@ -9,7 +9,7 @@ class LoginViewController: UIViewController {
         loginView.frame = UIScreen.main.bounds
         loginView.layoutSubviews()
         view.addSubview(loginView)
-        dump(loginView.usernameField.bounds)
+     
     }
     
 }

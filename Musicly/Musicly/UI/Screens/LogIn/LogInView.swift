@@ -1,8 +1,8 @@
 import UIKit
 
-class LoginView: UIView {
+final class LoginView: UIView {
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "Login"
         titleLabel.textColor = .black
@@ -10,18 +10,23 @@ class LoginView: UIView {
         return titleLabel
     }()
     
-    var usernameField: TextFieldExtension = {
+    private var usernameField: TextFieldExtension = {
         let usernameField = TextFieldExtension()
+        usernameField.placeholder = "Username"
         usernameField.layer.borderColor = UIColor.lightGray.cgColor
+        usernameField.layer.borderWidth = 1
         return usernameField
     }()
     
-    var passwordField: TextFieldExtension = {
+    private var passwordField: TextFieldExtension = {
         let passwordField = TextFieldExtension()
+        passwordField.placeholder = "Password"
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.layer.borderWidth = 1
         return passwordField
     }()
     
-    var submitButton: UIButton = {
+    private var submitButton: UIButton = {
         let submitButton = UIButton()
         return submitButton
     }()
@@ -29,28 +34,31 @@ class LoginView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         backgroundColor = .white
-        setupTitleLabel(label: titleLabel)
-        setupUsernameField(field: usernameField)
+        setup(titleLabel: titleLabel)
+        setup(usernamefield: usernameField)
+        setup(passwordField: passwordField)
     }
     
-    func setupTitleLabel(label: UILabel) {
-        addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * -0.25).isActive = true
-        label.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4).isActive = true
-        label.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
-    }
-
-    
-    func setupUsernameField(field: TextFieldExtension) {
-        addSubview(field)
-        field.translatesAutoresizingMaskIntoConstraints = false
-        field.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        field.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        field.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7).isActive = true
-        field.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2).isActive = true
-        dump(field)
+    private func sharedLayout(view: UIView) {
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        view.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
+        view.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7).isActive = true
     }
     
+    private func setup(titleLabel: UILabel) {
+        sharedLayout(view: titleLabel)
+        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: UIScreen.main.bounds.height * -0.25).isActive = true
+    }
+    
+    private func setup(usernamefield: TextFieldExtension) {
+        sharedLayout(view: usernameField)
+        usernamefield.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+    }
+    
+    private func setup(passwordField: TextFieldExtension) {
+        sharedLayout(view: passwordField)
+        passwordField.topAnchor.constraint(equalTo: usernameField.bottomAnchor).isActive = true
+    }
 }

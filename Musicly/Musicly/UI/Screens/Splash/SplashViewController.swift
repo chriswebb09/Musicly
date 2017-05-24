@@ -8,25 +8,17 @@
 
 import UIKit
 
-protocol SplashControllerDelegate: class {
-    func moveToStart()
-}
-
 final class SplashViewController: UIViewController {
     
-    private let splashView: SplashView = SplashView()
-    
-    weak var delegate: SplashControllerDelegate?
+    private let splashView: SplashView? = SplashView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         edgesForExtendedLayout = []
-        splashView.delegate = self
-        view.addSubview(splashView)
+        view.addSubview(splashView!)
         view.backgroundColor = .white
-        splashView.layoutSubviews()
-        
+        splashView?.layoutSubviews()
     }
     
     // Animates up and down
@@ -59,39 +51,21 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startAnimation { bool in
-            print(bool)
-        }
-  
-    }
-    
-    func startAnimation(completion: @escaping (Bool) -> Void) {
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             let duration: TimeInterval = SplashConstants.animationDuration
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                
-                self.splashView.zoomAnimation() {
-                    
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.splashView?.zoomAnimation() {
+                    print("animating")
                 }
             }
-            print("animating")
-            DispatchQueue.main.async {
-                self.delegate?.moveToStart()
-                completion(true)
-            }
         }
-        splashView.layer.add(animateXSlow(), forKey: "animation")
-        splashView.layer.add(animateYSlow(), forKey: "animation")
+        splashView?.layer.add(animateXSlow(), forKey: "animation")
+        splashView?.layer.add(animateYSlow(), forKey: "animation")
         CATransaction.commit()
-    }
-}
-
-extension SplashViewController: SplashViewDelegate {
-    
-    func animationHasCompleted() {
-        print("animation done")
-        delegate?.moveToStart()
     }
 }
 

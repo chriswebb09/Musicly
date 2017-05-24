@@ -89,7 +89,6 @@
 		A75C01361ECAF5E100AD0FF3 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */; };
 		A75C01381ECB199C00AD0FF3 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01371ECB199C00AD0FF3 /* Reusable.swift */; };
 		A75C013A1ECB25AD00AD0FF3 /* CellRespresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */; };
-		A75C013C1ECB293900AD0FF3 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C013B1ECB293900AD0FF3 /* NavigationCoordinator.swift */; };
 		A75C013E1ECB2A1700AD0FF3 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75C013D1ECB2A1700AD0FF3 /* ImageLoadOperation.swift */; };
 		A75F3BFE1EBE573A0008F01D /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */; };
 		A764B57D1EB988A400DB077C /* BottomMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */; };
@@ -231,7 +230,6 @@
 		A75C01351ECAF5E100AD0FF3 /* ButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonFactory.swift; path = Elements/ButtonFactory.swift; sourceTree = "<group>"; };
 		A75C01371ECB199C00AD0FF3 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reusable.swift; path = Screens/Protocols/Reusable.swift; sourceTree = "<group>"; };
 		A75C01391ECB25AD00AD0FF3 /* CellRespresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellRespresentable.swift; path = Screens/Protocols/CellRespresentable.swift; sourceTree = "<group>"; };
-		A75C013B1ECB293900AD0FF3 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationCoordinator.swift; path = Screens/NavigationCoordinator.swift; sourceTree = "<group>"; };
 		A75C013D1ECB2A1700AD0FF3 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
 		A75F3BFD1EBE573A0008F01D /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A764B57C1EB988A400DB077C /* BottomMenuPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomMenuPopover.swift; path = Elements/Menu/BottomMenuPopover.swift; sourceTree = "<group>"; };
@@ -676,7 +674,6 @@
 				A75C011E1ECAC98500AD0FF3 /* Start */,
 				A75C01231ECAC9CB00AD0FF3 /* CreateAccount */,
 				A75C01281ECACA0200AD0FF3 /* Login */,
-				A75C013B1ECB293900AD0FF3 /* NavigationCoordinator.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1255,7 +1252,6 @@
 				A71EF3271EBABE9200713669 /* AnimationDelegate.swift in Sources */,
 				A71F02A81EB986BB0012490D /* ButtonConstants.swift in Sources */,
 				A71AB7C61ECE75A9006B0178 /* UIView+Extension.swift in Sources */,
-				A75C013C1ECB293900AD0FF3 /* NavigationCoordinator.swift in Sources */,
 				A7B26D291ECA621400D1AF2D /* TopBarController.swift in Sources */,
 				A75C013A1ECB25AD00AD0FF3 /* CellRespresentable.swift in Sources */,
 				A71A09A31EB814A800CA35E4 /* URLConstructor.swift in Sources */,

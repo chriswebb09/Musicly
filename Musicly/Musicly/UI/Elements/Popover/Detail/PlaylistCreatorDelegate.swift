@@ -1,6 +1,6 @@
 import Foundation
 
-protocol PlaylistCreatorDelegate: PopDelegate {
+protocol PlaylistCreatorDelegate: class {
     func userDidEnterPlaylistName(name: String)
 }
 

@@ -3,19 +3,12 @@ import RealmSwift
 
 private let reuseIdentifier: String = "PlaylistCell"
 
-protocol ViewPop {
-    weak var delegate: PopDelegate? { get set }
-    var containerView: UIView { get }
-    func hidePopView(viewController: UIViewController)
-    func showPopView(viewController: UIViewController)
-}
-
 final class PlaylistsViewController: UIViewController {
     
-    let detailPop: ViewPop
+    let detailPop = NewPlaylistPopover()
     
     lazy var collectionView : UICollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: UICollectionViewFlowLayout())
-    var dataSource: ListControllerDataSource!
+    
     var tabController: TabBarController!
     var store: iTrackDataStore!
     var rightBarButtonItem: UIBarButtonItem!
@@ -23,24 +16,14 @@ final class PlaylistsViewController: UIViewController {
     let buttonImage = #imageLiteral(resourceName: "blue-musicnote").withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     
     var trackList: [TrackList] = []
+    var dataSource: ListControllerDataSource!
     
-    init(detailPop: ViewPop) {
-        self.detailPop = detailPop
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         title = "Playlists"
         setupPlaylistCollectionView()
         detailPop.delegate = self
         rightBarButtonItem = UIBarButtonItem.init(image: buttonImage, style: .done, target: self, action: #selector(pop))
         tabController = tabBarController as! TabBarController
-        dataSource = ListControllerDataSource(store: tabController.store!)
-//        dataSource.store = tabController.store
         collectionViewSetup(with: collectionView)
         detailPop.popView.playlistNameField.delegate = self
         guard let rightButtonItem = rightBarButtonItem else { return }
@@ -90,7 +73,9 @@ extension PlaylistsViewController: UICollectionViewDataSource {
     
     func pop() {
         UIView.animate(withDuration: 0.15) { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else {
+                return
+            }
             strongSelf.detailPop.showPopView(viewController: strongSelf)
             strongSelf.detailPop.popView.isHidden = false
         }
@@ -106,10 +91,9 @@ extension PlaylistsViewController: UICollectionViewDataSource {
 extension PlaylistsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = ListControllerDataSource(store: store)
-        let destinationVC = PlaylistViewController(dataSource: model)
+        let destinationVC = PlaylistViewController(dataSource: dataSource)
         store.currentPlaylistID = trackList[indexPath.row].listId
-        
+        let model = ListControllerDataSource(store: dataSource.store)
         model.store = store
         model.tracklist = store.setupCurrentPlaylist(currentPlaylistID: trackList[indexPath.row].listId, realmClient: store.realmClient)!
         destinationVC.title = trackList[indexPath.row].listName
@@ -132,7 +116,9 @@ extension PlaylistsViewController: PlaylistCreatorDelegate {
             trackList.append(last)
         }
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self else {
+                return
+            }
             strongSelf.trackList = strongSelf.store.lists
             strongSelf.collectionView.reloadData()
         }

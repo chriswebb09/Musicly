@@ -1,9 +1,5 @@
 import UIKit
 
-protocol PopDelegate: class {
-    
-}
-
 final class NewPlaylistPopover: BasePopoverAlert {
     
     weak var delegate: PlaylistCreatorDelegate?
@@ -32,13 +28,9 @@ final class NewPlaylistPopover: BasePopoverAlert {
         popView.clipsToBounds = true
         viewController.view.addSubview(popView)
         viewController.view.bringSubview(toFront: popView)
-        popView.isHidden = true 
+        popView.isHidden = true
     }
-}
-
-extension NewPlaylistPopover: ViewPop {
-  
-
+    
     func setupPop() {
         popView.configureView()
     }
@@ -52,6 +44,8 @@ extension NewPlaylistPopover: ViewPop {
         viewController.view.sendSubview(toBack: popView)
     }
 }
+
+
 
 
 
